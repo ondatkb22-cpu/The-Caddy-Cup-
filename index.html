@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+m<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -377,7 +377,7 @@ let _tt=null;
 const toast = msg=>{ const el=document.getElementById('toastEl'); el.textContent=msg; el.classList.add('show'); clearTimeout(_tt); _tt=setTimeout(()=>el.classList.remove('show'),3000); };
 const luCache = new Map();
 
-// ── TEAM DATABASE ────────────────────────────────────────
+// ── TEAM DATABASE (Reconstructed from provided images) ────
 const TEAMS_RAW =;
 
 // CHALK teams (will be highly owned)
@@ -478,7 +478,6 @@ function renderTeams() {
 </div>`;
   }).join('');
 
-  // Card click = lock
   document.querySelectorAll('.team-card').forEach(card => {
     card.addEventListener('click', e => {
       if (e.target.closest('.lock-btn')) return;
