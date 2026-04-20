@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐊 Swamp Classic V7.6 — Projected Points DP Optimizer</title>
+<title>🐊 Swamp Classic V7.7 — Dual Cash DP Optimizer</title>
 <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#03060A;--sf:#0A0F16;--sf2:#111820;--sf3:#1A2233;--bd:#1E2A3A;--bd2:#2A3A4E;--tx:#E8ECF2;--tx2:#8A96A8;--tx3:#4E5C70;--grn:#2ECC71;--grn2:#27AE60;--red:#E74C3C;--gld:#F1C40F;--blu:#3498DB;--pur:#9B59B6;--org:#E67E22;--cyan:#1ABC9C;--fn:'Anybody',sans-serif;--mn:'JetBrains Mono',monospace;--glow:0 0 20px rgba(46,204,113,.15)}
@@ -48,22 +48,25 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 .info-card{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:14px;position:relative;overflow:hidden}
 .info-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--pur),var(--cyan))}
 .info-label{font-size:9px;color:var(--tx3);font-family:var(--mn);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
-.info-val{font-size:22px;font-weight:800;font-family:var(--mn)}
+.info-val{font-size:20px;font-weight:800;font-family:var(--mn)}
 .info-note{font-size:10px;color:var(--tx2);margin-top:4px}
 .lineup-box{background:var(--sf);border:2px solid var(--bd2);border-radius:10px;margin-top:12px;overflow:hidden}
 .lineup-box.gpp{border-color:var(--pur)}
-.lineup-box.cash{border-color:var(--cyan)}
+.lineup-box.cash1{border-color:var(--cyan)}
+.lineup-box.cash2{border-color:var(--grn)}
 .lineup-hdr{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd)}
 .gpp .lineup-hdr{background:linear-gradient(135deg,rgba(155,89,182,.15),rgba(26,188,156,.05))}
-.cash .lineup-hdr{background:linear-gradient(135deg,rgba(26,188,156,.15),rgba(52,152,219,.05))}
+.cash1 .lineup-hdr{background:linear-gradient(135deg,rgba(26,188,156,.15),rgba(52,152,219,.05))}
+.cash2 .lineup-hdr{background:linear-gradient(135deg,rgba(46,204,113,.15),rgba(26,188,156,.05))}
 .lineup-hdr h3{font-size:14px;font-weight:800;color:#fff}
 .lineup-stats{display:flex;gap:16px;font-family:var(--mn);font-size:11px}
 .lineup-list{list-style:none}
 .lineup-list li{padding:10px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;font-size:12px;font-family:var(--mn);align-items:center}
 .lineup-list li:last-child{border:none}
-.gen-btn{color:#000;border:none;padding:12px 24px;border-radius:8px;font-family:var(--fn);font-size:13px;font-weight:800;cursor:pointer;transition:.2s;letter-spacing:.5px}
+.gen-btn{color:#000;border:none;padding:12px 20px;border-radius:8px;font-family:var(--fn);font-size:12px;font-weight:800;cursor:pointer;transition:.2s;letter-spacing:.5px}
 .gen-btn.gpp{background:linear-gradient(135deg,var(--pur),var(--blu))}
-.gen-btn.cash{background:linear-gradient(135deg,var(--grn),var(--cyan))}
+.gen-btn.cash1{background:linear-gradient(135deg,var(--cyan),var(--blu))}
+.gen-btn.cash2{background:linear-gradient(135deg,var(--grn),var(--cyan))}
 .gen-btn:hover{transform:translateY(-1px);filter:brightness(1.1)}
 .dict-table th, .dict-table td{text-align:left; font-size:12px; padding:12px;}
 .dict-table td code{background:var(--sf2); padding:2px 6px; border-radius:4px; color:var(--cyan)}
@@ -73,8 +76,8 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 <div class="c">
 <header class="hdr">
 <div>
-<h1>🐊 SWAMP CLASSIC V7.6</h1>
-<div style="font-size:11px;color:var(--tx2);margin-top:2px">Zurich Classic 2026 · Probability-Derived DFS Points Engine</div>
+<h1>🐊 SWAMP CLASSIC V7.7</h1>
+<div style="font-size:11px;color:var(--tx2);margin-top:2px">Zurich Classic 2026 · Dual Cash DP Engine Active</div>
 </div>
 <div class="hdr-meta">
 <div>STRICT $49K-$50K CAP · 6 TEAMS</div>
@@ -101,13 +104,14 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 
 <div class="pnl" id="p-build">
 <div class="info-grid">
-<div class="info-card"><div class="info-label">Optimizer Engine</div><div class="info-val gl">DP Knapsack</div><div class="info-note">Calculates the true global optimal out of 300,500,200 combinations.</div></div>
-<div class="info-card"><div class="info-label">GPP Constraint</div><div class="info-val pu">Ceiling 🚀</div><div class="info-note">Strictly locks 6 players, $49k-$50k, highest Proj + StdDev sum.</div></div>
-<div class="info-card"><div class="info-label">Cash Constraint</div><div class="info-val cy">Proj Pts 🎯</div><div class="info-note">Strictly locks 6 players, $49k-$50k, highest pure probability points.</div></div>
+<div class="info-card"><div class="info-label">Cash 1 (Optimal)</div><div class="info-val cy">Proj Pts 🎯</div><div class="info-note">Maximizes purely for expected DFS points. Highest raw projection.</div></div>
+<div class="info-card"><div class="info-label">Cash 2 (Safety)</div><div class="info-val g">Cut % ✂️</div><div class="info-note">Maximizes strictly for Make Cut Probability. The "Safe Floor" build.</div></div>
+<div class="info-card"><div class="info-label">GPP (Volatility)</div><div class="info-val pu">Ceiling 🚀</div><div class="info-note">Maximizes Proj Pts + StdDev to capture 90th percentile outcomes.</div></div>
 </div>
-<div style="display:flex;gap:12px;margin-bottom:12px">
-<button class="gen-btn gpp" onclick="genLineup('gpp')">🚀 GENERATE GPP (CEILING)</button>
-<button class="gen-btn cash" onclick="genLineup('cash')">🎯 GENERATE CASH (PROJ PTS)</button>
+<div style="display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap">
+<button class="gen-btn cash1" onclick="genLineup('cash1')">🎯 CASH 1 (PROJ PTS)</button>
+<button class="gen-btn cash2" onclick="genLineup('cash2')">✂️ CASH 2 (CUT %)</button>
+<button class="gen-btn gpp" onclick="genLineup('gpp')">🚀 GPP (CEILING)</button>
 </div>
 <div id="lineup-out"></div>
 </div>
@@ -121,12 +125,12 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 <tr><td>💰</td><td>Salary</td><td>Verified DraftKings Pricing for the 2026 Zurich Classic.</td></tr>
 <tr><td>🏆</td><td>Win Odds</td><td>American Outright Odds (e.g., +1100).</td></tr>
 <tr><td>🔟</td><td>T10 Odds</td><td>American Top 10 Finishing Odds.</td></tr>
-<tr><td>✂️</td><td>Cut Odds</td><td>American odds to Make the Cut.</td></tr>
+<tr><td>✂️</td><td>Cut %</td><td>DataGolf probability to make the weekend cut. Foundation for Cash 2.</td></tr>
 <tr><td>📊</td><td>DK Impl %</td><td>Implied probability of winning converted directly from DK odds.</td></tr>
 <tr><td>🔮</td><td>DG Pred %</td><td>DataGolf proprietary model win probability.</td></tr>
 <tr><td>📈</td><td>EV Edge</td><td><code>(DG Pred % - DK Impl %)</code>. Identifies positive expected value.</td></tr>
-<tr><td>🎯</td><td>Proj Pts</td><td>Expected DraftKings Points modeled from Cut, T20, T10, T5, and Win probabilities.</td></tr>
-<tr><td>🚀</td><td>Ceiling</td><td><code>(Proj Pts + DataGolf StdDev)</code>. Identifies highest potential point outcomes.</td></tr>
+<tr><td>🎯</td><td>Proj Pts</td><td>Expected DraftKings Points. Foundation for Cash 1.</td></tr>
+<tr><td>🚀</td><td>Ceiling</td><td><code>(Proj Pts + DataGolf StdDev)</code>. Foundation for GPPs.</td></tr>
 </tbody>
 </table>
 </div>
@@ -215,7 +219,6 @@ const RAW_TEAMS = [
 
 RAW_TEAMS.forEach(p => {
   p.impl_win = p.odds ? (100 / (p.odds + 100)) : 0;
-  p.impl_t10 = p.t10 ? (100 / (p.t10 + 100)) : 0;
   p.ev = p.dg_win && p.impl_win ? ((p.dg_win - p.impl_win) * 100) : 0;
   p.delta = p.proj + p.std;
 });
@@ -317,10 +320,12 @@ function genLineup(type){
   const maxSal = 500; 
   const minSal = 490; 
   
+  // Assign target value based on the requested button
+  // cash1 = Proj Pts, cash2 = Cut %, gpp = Ceiling (Proj Pts + StdDev)
   const items = RAW_TEAMS.filter(p => p.sal).map(p => ({
     ...p,
     w: Math.floor(p.sal / 100),
-    v: type === 'gpp' ? p.delta : p.proj 
+    v: type === 'gpp' ? p.delta : (type === 'cash1' ? p.proj : p.dg_cut)
   }));
 
   let dp = Array.from({length: 7}, () => Array(maxSal + 1).fill(null));
@@ -362,13 +367,20 @@ function genLineup(type){
   const totalSal=lineup.reduce((s,p)=>s+p.sal,0);
   const totalProj=lineup.reduce((s,p)=>s+p.proj,0);
   const totalCeil=lineup.reduce((s,p)=>s+p.delta,0);
+  const totalCut=(lineup.reduce((s,p)=>s+p.dg_cut,0)/6) * 100;
   
+  let headerText = '';
+  if (type === 'gpp') headerText = '🚀 GPP OPTIMAL (CEILING DRIVEN)';
+  if (type === 'cash1') headerText = '🎯 CASH 1 (PROJ PTS DRIVEN)';
+  if (type === 'cash2') headerText = '✂️ CASH 2 (MAKE CUT DRIVEN)';
+
   document.getElementById('lineup-out').innerHTML=`
 <div class="lineup-box ${type}">
 <div class="lineup-hdr">
-<h3>${type==='gpp'?'🚀 GPP OPTIMAL (CEILING DRIVEN)':'🎯 CASH OPTIMAL (PROJ PTS DRIVEN)'}</h3>
+<h3>${headerText}</h3>
 <div class="lineup-stats">
 <span>💰 SAL: <strong style="color:var(--cyan)">$${(totalSal/1000).toFixed(1)}k</strong></span>
+<span>✂️ AVG CUT: <strong>${totalCut.toFixed(1)}%</strong></span>
 <span>🎯 TOTAL PROJ: <strong class="g">${totalProj.toFixed(2)}</strong></span>
 <span>🚀 TOTAL CEILING: <strong style="color:var(--pur)">${totalCeil.toFixed(2)}</strong></span>
 </div>
@@ -377,8 +389,9 @@ function genLineup(type){
 <div style="flex:1"><strong>${p.tm}</strong></div>
 <div style="display:flex;gap:16px;font-weight:700">
 <span style="color:var(--cyan);width:50px">$${(p.sal/1000).toFixed(1)}k</span>
-<span class="g" style="width:70px">🎯 ${p.proj.toFixed(2)}</span>
-<span style="color:var(--pur);width:70px">🚀 ${p.delta.toFixed(2)}</span>
+<span style="width:60px">✂️ ${(p.dg_cut*100).toFixed(0)}%</span>
+<span class="g" style="width:60px">🎯 ${p.proj.toFixed(1)}</span>
+<span style="color:var(--pur);width:60px">🚀 ${p.delta.toFixed(1)}</span>
 </div></li>`).join('')}</ul>
 </div>`;
 }
