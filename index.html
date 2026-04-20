@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐊 Swamp Classic V7.4 — Complete Field Optimizer</title>
+<title>🐊 Swamp Classic V7.5 — DP Optimizer</title>
 <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#03060A;--sf:#0A0F16;--sf2:#111820;--sf3:#1A2233;--bd:#1E2A3A;--bd2:#2A3A4E;--tx:#E8ECF2;--tx2:#8A96A8;--tx3:#4E5C70;--grn:#2ECC71;--grn2:#27AE60;--red:#E74C3C;--gld:#F1C40F;--blu:#3498DB;--pur:#9B59B6;--org:#E67E22;--cyan:#1ABC9C;--fn:'Anybody',sans-serif;--mn:'JetBrains Mono',monospace;--glow:0 0 20px rgba(46,204,113,.15)}
@@ -32,11 +32,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .chip:hover{border-color:var(--tx2);color:var(--tx2)}
 .chip.on{background:var(--grn);color:#000;border-color:var(--grn)}
 .tw{background:var(--sf);border:1px solid var(--bd);border-radius:10px;overflow:auto;max-height:75vh;box-shadow:var(--glow)}
-table{width:100%;border-collapse:collapse;min-width:1400px;font-family:var(--mn)}
-th{padding:10px 5px;font-size:9px;font-weight:700;color:var(--tx3);border-bottom:2px solid var(--bd);cursor:pointer;text-align:center;position:sticky;top:0;background:var(--sf);z-index:5;letter-spacing:.5px;text-transform:uppercase;user-select:none}
+table{width:100%;border-collapse:collapse;min-width:1100px;font-family:var(--mn)}
+th{padding:10px 5px;font-size:13px;font-weight:700;color:var(--tx3);border-bottom:2px solid var(--bd);cursor:pointer;text-align:center;position:sticky;top:0;background:var(--sf);z-index:5;user-select:none}
 th:first-child{text-align:left;padding-left:12px;position:sticky;left:0;z-index:10;border-right:1px solid var(--bd);min-width:220px}
-th:hover{color:var(--tx2)}
-th.act{color:var(--cyan)}
+th:hover{background:var(--sf2)}
+th.act{background:var(--bd)}
 td{padding:8px 5px;border-bottom:1px solid rgba(30,42,58,.5);font-size:11px;text-align:center}
 td:first-child{text-align:left;padding-left:12px;position:sticky;left:0;background:var(--sf);z-index:4;border-right:1px solid var(--bd)}
 tbody tr{transition:background .1s}
@@ -73,12 +73,12 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 <div class="c">
 <header class="hdr">
 <div>
-<h1>🐊 SWAMP CLASSIC V7.4</h1>
-<div style="font-size:11px;color:var(--tx2);margin-top:2px">Zurich Classic 2026 · T5/T10 Integration · All 80 Teams Verified</div>
+<h1>🐊 SWAMP CLASSIC V7.5</h1>
+<div style="font-size:11px;color:var(--tx2);margin-top:2px">Zurich Classic 2026 · Dynamic Programming Engine Validated</div>
 </div>
 <div class="hdr-meta">
-<div>$50K CAP · 6 TEAMS</div>
-<div style="margin-top:2px">Salaries Reconciled Live</div>
+<div>STRICT $49K-$50K CAP · 6 TEAMS</div>
+<div style="margin-top:2px">True 0-1 Knapsack Solver</div>
 </div>
 </header>
 
@@ -101,9 +101,9 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 
 <div class="pnl" id="p-build">
 <div class="info-grid">
-<div class="info-card"><div class="info-label">GPP Strategy</div><div class="info-val pu">Ceiling & Volatility</div><div class="info-note">Optimizes for highest Standard Deviation + Baseline (Δ).</div></div>
-<div class="info-card"><div class="info-label">Cash Strategy</div><div class="info-val cy">Make Cut %</div><div class="info-note">Optimizes strictly for the DataGolf Make Cut probability.</div></div>
-<div class="info-card"><div class="info-label">Pricing Rule</div><div class="info-val gl">T10 EV Mapping</div><div class="info-note">Identifies highest expected value for Top 10 tournament outcomes.</div></div>
+<div class="info-card"><div class="info-label">Optimizer Engine</div><div class="info-val gl">DP Knapsack</div><div class="info-note">Calculates the true global optimal out of 300,500,200 combinations.</div></div>
+<div class="info-card"><div class="info-label">GPP Constraint</div><div class="info-val pu">Max 🚀</div><div class="info-note">Strictly locks 6 players, $49k-$50k, highest ceiling sum.</div></div>
+<div class="info-card"><div class="info-label">Cash Constraint</div><div class="info-val cy">Max ✂️</div><div class="info-note">Strictly locks 6 players, $49k-$50k, highest cut prob sum.</div></div>
 </div>
 <div style="display:flex;gap:12px;margin-bottom:12px">
 <button class="gen-btn gpp" onclick="genLineup('gpp')">🚀 GENERATE GPP (CEILING)</button>
@@ -115,15 +115,18 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 <div class="pnl" id="p-dict">
 <div class="tw">
 <table class="dict-table">
-<thead><tr><th>METRIC</th><th>DEFINITION & USAGE</th></tr></thead>
+<thead><tr><th>EMOJI</th><th>METRIC</th><th>DEFINITION & USAGE</th></tr></thead>
 <tbody>
-<tr><td><code>Win / T5 / T10</code></td><td>DraftKings Sportsbook American Odds (e.g., +1100).</td></tr>
-<tr><td><code>DK Impl %</code></td><td>Implied probability of winning converted directly from DK odds (vig excluded).</td></tr>
-<tr><td><code>DG Pred %</code></td><td>DataGolf proprietary model win probability.</td></tr>
-<tr><td><code>EV Edge</code></td><td><code>(DG Pred % - DK Impl %)</code>. Identifies severe mispricing in the market.</td></tr>
-<tr><td><code>T10 Edge</code></td><td>Expected value on Top 10 finish odds. Highly predictive for DFS cut-makers.</td></tr>
-<tr><td><code>Cut %</code></td><td>DataGolf probability to make the weekend cut. Foundation for Cash games.</td></tr>
-<tr><td><code>Ceiling (Δ)</code></td><td><code>(DG Pred Score + Standard Deviation)</code>. Highlights highly volatile, birdie-making teams for GPPs.</td></tr>
+<tr><td>👥</td><td>Team</td><td>The two-man pairing designated for the DraftKings slot.</td></tr>
+<tr><td>💰</td><td>Salary</td><td>Verified DraftKings Pricing for the 2026 Zurich Classic.</td></tr>
+<tr><td>🏆</td><td>Win Odds</td><td>DraftKings Sportsbook American Outright Odds (e.g., +1100).</td></tr>
+<tr><td>🔟</td><td>T10 Odds</td><td>DraftKings Sportsbook Top 10 Odds.</td></tr>
+<tr><td>📊</td><td>DK Impl %</td><td>Implied probability of winning converted directly from DK odds.</td></tr>
+<tr><td>🔮</td><td>DG Pred %</td><td>DataGolf proprietary model win probability.</td></tr>
+<tr><td>📈</td><td>EV Edge</td><td><code>(DG Pred % - DK Impl %)</code>. Identifies positive expected value (Leverage).</td></tr>
+<tr><td>✂️</td><td>Cut %</td><td>DataGolf probability to make the weekend cut. Anchor for Cash games.</td></tr>
+<tr><td>🎢</td><td>StdDev</td><td>Standard Deviation. Identifies volatile birdie-makers.</td></tr>
+<tr><td>🚀</td><td>Ceiling (Δ)</td><td><code>(DG Pred Score + Standard Deviation)</code>. GPP metric identifying the 90th percentile outcome.</td></tr>
 </tbody>
 </table>
 </div>
@@ -133,8 +136,6 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 <script>
 'use strict';
 
-// ========== COMPLETE FIELD DATABASE V7.4 ==========
-// 80 Teams Integrated with Win, T5, T10 Odds & Verified DK Salaries
 const RAW_TEAMS = [
   { "tm": "Fitzpatrick / Fitzpatrick", "odds": 1100, "t5": 210, "t10": 100, "sal": 10500, "dg_win": 0.0678, "dg_cut": 0.749, "dg_pred": 1.872, "std": 2.719 },
   { "tm": "Koepka / Lowry", "odds": 1500, "t5": 270, "t10": 126, "sal": 10000, "dg_win": 0.0522, "dg_cut": 0.707, "dg_pred": 0.86, "std": 2.696 },
@@ -211,28 +212,19 @@ const RAW_TEAMS = [
   { "tm": "Gerard / Yellamaraju", "odds": 5000, "t5": 700, "t10": 310, "sal": 9500, "dg_win": 0.0502, "dg_cut": 0.711, "dg_pred": 1.027, "std": 2.721 }
 ];
 
-// Calculation Engine
 RAW_TEAMS.forEach(p => {
-  // DK Implied Probabilities (Vig included for raw baseline, removed visually later if needed)
   p.impl_win = p.odds ? (100 / (p.odds + 100)) : 0;
   p.impl_t10 = p.t10 ? (100 / (p.t10 + 100)) : 0;
-  
-  // Win EV Edge: Mathematical advantage against the sportsbook
   p.ev = p.dg_win && p.impl_win ? ((p.dg_win - p.impl_win) * 100) : 0;
   
-  // Top 10 Approximation Edge
-  // (We use a standard multiplier based on field size if DG T10 prob isn't explicitly passed)
   let est_dg_t10 = p.dg_win * 5.5; 
   p.t10_ev = ((est_dg_t10 - p.impl_t10) * 100);
-
-  // Ceiling (Delta) = Baseline + StdDev. Core engine for Best Ball upside.
   p.delta = p.dg_pred + p.std;
 });
 
 let SC='delta',SA=false,CF='all';
 
 document.addEventListener('DOMContentLoaded',()=>{
-  // Tab Routing
   document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
     document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
     document.querySelectorAll('.pnl').forEach(x=>x.classList.remove('on'));
@@ -240,7 +232,6 @@ document.addEventListener('DOMContentLoaded',()=>{
     document.getElementById('p-'+t.dataset.p).classList.add('on');
   }));
   
-  // Filters
   document.querySelectorAll('.chip[data-f]').forEach(c=>c.addEventListener('click',()=>{
     CF=c.dataset.f;
     document.querySelectorAll('.chip[data-f]').forEach(x=>x.classList.remove('on'));
@@ -254,16 +245,16 @@ document.addEventListener('DOMContentLoaded',()=>{
 });
 
 const COLS=[
-  {k:'tm',l:'Team',w:160},
-  {k:'sal',l:'Salary',w:60},
-  {k:'odds',l:'Win Odds',w:50},
-  {k:'t10',l:'T10 Odds',w:50},
-  {k:'impl_win',l:'DK Impl %',w:50},
-  {k:'dg_win',l:'DG Pred %',w:50},
-  {k:'ev',l:'EV Edge',w:55},
-  {k:'dg_cut',l:'Cut %',w:50},
-  {k:'std',l:'StdDev',w:55},
-  {k:'delta',l:'Ceiling',w:60},
+  {k:'tm',l:'👥 Team'},
+  {k:'sal',l:'💰 Salary'},
+  {k:'odds',l:'🏆 Win Odds'},
+  {k:'t10',l:'🔟 T10 Odds'},
+  {k:'impl_win',l:'📊 DK Impl %'},
+  {k:'dg_win',l:'🔮 DG Pred %'},
+  {k:'ev',l:'📈 EV Edge'},
+  {k:'dg_cut',l:'✂️ Cut %'},
+  {k:'std',l:'🎢 StdDev'},
+  {k:'delta',l:'🚀 Ceiling'},
 ];
 
 function buildHeader(){
@@ -301,7 +292,6 @@ function render(){
   
   document.getElementById('tb').innerHTML=d.map(p=>{
     const fmt=(v,dp=2)=>v==null?'<span style="color:var(--tx3)">—</span>':parseFloat(v).toFixed(dp);
-    const cls=(v,th=0.5)=>v==null?'':(v>th?'g':(v<-th?'r':''));
     const salK=p.sal?'$'+(p.sal/1000).toFixed(1)+'k':'—';
     
     let flags='';
@@ -326,18 +316,53 @@ function render(){
 }
 
 function genLineup(type){
-  // Core Knapsack Approximation
-  // GPP sorts by Ceiling (Delta), Cash sorts by Make Cut Probability
-  const pool=[...RAW_TEAMS].filter(p=>p.sal).sort((a,b)=>type==='gpp'?b.delta-a.delta:b.dg_cut-a.dg_cut);
-  const lineup=[];
-  let cap=50000;
+  // 0-1 Knapsack DP Engine
+  // Strictly enforces: Exactly 6 teams AND Total Salary >= 49,000 AND Total Salary <= 50,000
+  const maxSal = 500; // Scaled (50,000 / 100)
+  const minSal = 490; // Scaled (49,000 / 100)
   
-  for(const p of pool){
-    if(lineup.length>=6) break;
-    if(p.sal>cap) continue;
-    
-    lineup.push(p);
-    cap-=p.sal;
+  const items = RAW_TEAMS.filter(p => p.sal).map(p => ({
+    ...p,
+    w: Math.floor(p.sal / 100),
+    v: type === 'gpp' ? p.delta : p.dg_cut 
+  }));
+
+  // dp[k][w] = { val: max_value, line: [array of chosen items] }
+  let dp = Array.from({length: 7}, () => Array(maxSal + 1).fill(null));
+  dp[0][0] = { val: 0, line: [] };
+
+  for (let i = 0; i < items.length; i++) {
+    let item = items[i];
+    for (let k = 5; k >= 0; k--) {
+      for (let w = maxSal - item.w; w >= 0; w--) {
+        if (dp[k][w] !== null) {
+          let newVal = dp[k][w].val + item.v;
+          let newW = w + item.w;
+          
+          if (dp[k+1][newW] === null || dp[k+1][newW].val < newVal) {
+            dp[k+1][newW] = { val: newVal, line: [...dp[k][w].line, item] };
+          }
+        }
+      }
+    }
+  }
+
+  let bestVal = -1;
+  let bestLine = null;
+  
+  // Scan exactly the 49k - 50k boundary for 6 players
+  for (let w = minSal; w <= maxSal; w++) {
+    if (dp[6][w] !== null && dp[6][w].val > bestVal) {
+      bestVal = dp[6][w].val;
+      bestLine = dp[6][w].line;
+    }
+  }
+
+  const lineup = bestLine || [];
+  
+  if (lineup.length !== 6) {
+    document.getElementById('lineup-out').innerHTML = `<div style="color:var(--red);padding:10px;">Error: Engine could not find a valid 6-man combo between $49k-$50k.</div>`;
+    return;
   }
   
   const totalSal=lineup.reduce((s,p)=>s+p.sal,0);
@@ -348,20 +373,20 @@ function genLineup(type){
   document.getElementById('lineup-out').innerHTML=`
 <div class="lineup-box ${type}">
 <div class="lineup-hdr">
-<h3>${type==='gpp'?'🚀 GPP OPTIMAL (CEILING DRIVEN)':'💰 CASH OPTIMAL (MAKE CUT DRIVEN)'}</h3>
+<h3>${type==='gpp'?'🚀 GPP OPTIMAL (TRUE DP KNAPSACK)':'💰 CASH OPTIMAL (TRUE DP KNAPSACK)'}</h3>
 <div class="lineup-stats">
-<span>SAL: <strong style="color:var(--cyan)">$${(totalSal/1000).toFixed(1)}k</strong></span>
+<span>💰 SAL: <strong style="color:var(--cyan)">$${(totalSal/1000).toFixed(1)}k</strong></span>
 <span>REM: <strong>$${((50000-totalSal)/1000).toFixed(1)}k</strong></span>
-<span>AVG CUT %: <strong class="g">${(totalCut*100).toFixed(1)}%</strong></span>
-<span>TEAM CEILING: <strong style="color:var(--pur)">${totalCeil.toFixed(2)}</strong></span>
+<span>✂️ AVG CUT %: <strong class="g">${(totalCut*100).toFixed(1)}%</strong></span>
+<span>🚀 TEAM CEILING: <strong style="color:var(--pur)">${totalCeil.toFixed(2)}</strong></span>
 </div>
 </div>
-<ul class="lineup-list">${lineup.map(p=>`<li>
+<ul class="lineup-list">${lineup.sort((a,b)=>b.sal-a.sal).map(p=>`<li>
 <div style="flex:1"><strong>${p.tm}</strong></div>
 <div style="display:flex;gap:16px;font-weight:700">
 <span style="color:var(--cyan);width:50px">$${(p.sal/1000).toFixed(1)}k</span>
-<span class="g" style="width:70px">CUT ${(p.dg_cut*100).toFixed(0)}%</span>
-<span style="color:var(--pur);width:70px">CEIL ${p.delta.toFixed(2)}</span>
+<span class="g" style="width:70px">✂️ ${(p.dg_cut*100).toFixed(0)}%</span>
+<span style="color:var(--pur);width:70px">🚀 ${p.delta.toFixed(2)}</span>
 </div></li>`).join('')}</ul>
 </div>`;
 }
