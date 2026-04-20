@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐊 Swamp Classic V7.6 — Synergy Engine Optimizer</title>
-<link href="[https://fonts.googleapis.com/css2?family=Anybody:wght@400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap](https://fonts.googleapis.com/css2?family=Anybody:wght@400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap)" rel="stylesheet">
+<title>🐊 Swamp Classic V7.7 — Final Synergy DP Optimizer</title>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#03060A;--sf:#0A0F16;--sf2:#111820;--sf3:#1A2233;--bd:#1E2A3A;--bd2:#2A3A4E;--tx:#E8ECF2;--tx2:#8A96A8;--tx3:#4E5C70;--grn:#2ECC71;--red:#E74C3C;--gld:#F1C40F;--pur:#9B59B6;--cyan:#1ABC9C;--fn:'Anybody',sans-serif;--mn:'JetBrains Mono',monospace;--glow:0 0 20px rgba(46,204,113,.15)}
 *{margin:0;padding:0;box-sizing:border-box}
@@ -18,6 +18,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .b-grn{background:rgba(46,204,113,.12);color:var(--grn);border:1px solid rgba(46,204,113,.3)}
 .b-gld{background:rgba(241,196,15,.12);color:var(--gld);border:1px solid rgba(241,196,15,.3)}
 .b-pur{background:rgba(155,89,182,.12);color:var(--pur);border:1px solid rgba(155,89,182,.3)}
+.b-red{background:rgba(231,76,60,.12);color:var(--red);border:1px solid rgba(231,76,60,.3)}
 .tabs{display:flex;gap:4px;margin-bottom:12px;flex-wrap:wrap}
 .tab{flex:1;min-width:120px;padding:10px;background:var(--sf);border:1px solid var(--bd);color:var(--tx3);font-family:var(--fn);font-size:11px;font-weight:600;cursor:pointer;border-radius:8px;text-align:center;transition:.2s}
 .tab:hover{color:var(--tx2);border-color:var(--bd2)}
@@ -32,8 +33,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .chip.on{background:var(--grn);color:#000;border-color:var(--grn)}
 .tw{background:var(--sf);border:1px solid var(--bd);border-radius:10px;overflow:auto;max-height:75vh;box-shadow:var(--glow)}
 table{width:100%;border-collapse:collapse;min-width:1000px;font-family:var(--mn)}
-th{padding:10px 5px;font-size:16px;color:var(--tx3);border-bottom:2px solid var(--bd);cursor:pointer;text-align:center;position:sticky;top:0;background:var(--sf);z-index:5;user-select:none}
-th:first-child{text-align:left;padding-left:12px;position:sticky;left:0;z-index:10;border-right:1px solid var(--bd);min-width:180px; font-size:11px; font-family:var(--fn)}
+th{padding:10px 5px;font-size:14px;color:var(--tx3);border-bottom:2px solid var(--bd);cursor:pointer;text-align:center;position:sticky;top:0;background:var(--sf);z-index:5;user-select:none}
+th:first-child{text-align:left;padding-left:12px;position:sticky;left:0;z-index:10;border-right:1px solid var(--bd);min-width:240px; font-size:11px; font-family:var(--fn)}
 th:hover{background:var(--sf2)}
 th.act{background:var(--bd)}
 td{padding:8px 5px;border-bottom:1px solid rgba(30,42,58,.5);font-size:12px;text-align:center}
@@ -42,7 +43,7 @@ tbody tr{transition:background .1s}
 tbody tr:hover{background:var(--sf2)}
 tbody tr:hover td:first-child{background:var(--sf2)}
 .g{color:var(--grn);font-weight:700}.r{color:var(--red)}.gl{color:var(--gld);font-weight:700}.cy{color:var(--cyan);font-weight:700}.pu{color:var(--pur);font-weight:700}
-.pname{font-weight:700;font-size:11px;color:#fff;font-family:var(--fn)}
+.pname{font-weight:700;font-size:12px;color:#fff;font-family:var(--fn)}
 .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:12px}
 .info-card{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:14px;position:relative;overflow:hidden}
 .info-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--pur),var(--cyan))}
@@ -72,12 +73,12 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 <div class="c">
 <header class="hdr">
 <div>
-<h1>🐊 SWAMP CLASSIC V7.6</h1>
-<div style="font-size:11px;color:var(--tx2);margin-top:2px">Zurich Classic 2026 · DataGolf Decomposition Synergy Engine Live</div>
+<h1>🐊 SWAMP CLASSIC V7.7</h1>
+<div style="font-size:11px;color:var(--tx2);margin-top:2px">Zurich Classic 2026 · LIVE DataGolf Extraction Engine</div>
 </div>
 <div class="hdr-meta">
 <div>STRICT $49K-$50K DP KNAPSACK</div>
-<div style="margin-top:2px">Four-ball vs Foursomes Variance</div>
+<div style="margin-top:2px">Fully Correlated Field Data</div>
 </div>
 </header>
 
@@ -118,11 +119,11 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 <tbody>
 <tr><td>👥</td><td>Team</td><td>The two-man pairing designated for the DraftKings slot.</td></tr>
 <tr><td>💰</td><td>Salary</td><td>Verified DraftKings Pricing for the 2026 Zurich Classic.</td></tr>
-<tr><td>🏆</td><td>Win Odds</td><td>DraftKings Sportsbook American Outright Odds.</td></tr>
-<tr><td>🔟</td><td>T10 Odds</td><td>DraftKings Sportsbook Top 10 Odds.</td></tr>
-<tr><td>📈</td><td>T10 Edge</td><td><code>(DG T10 % - DK Impl T10 %)</code>. Identifies positive expected value for cut-makers.</td></tr>
+<tr><td>🏆</td><td>Win %</td><td>DataGolf proprietary model win probability.</td></tr>
+<tr><td>🔟</td><td>T10 %</td><td>DataGolf probability to finish Top 10. Highly predictive for DFS cut-makers.</td></tr>
 <tr><td>✂️</td><td>Cut %</td><td>DataGolf probability to make the weekend cut. Anchor for Cash games.</td></tr>
-<tr><td>✨</td><td>Synergy</td><td>The core V7.6 Engine upgrade. Cross-references individual <code>driving_acc_adj</code> and <code>std_dev</code> to boost teams with perfect Alternate Shot/Best Ball complementary skillsets, while penalizing compound flaws.</td></tr>
+<tr><td>🎢</td><td>StdDev</td><td>Standard Deviation. Identifies volatile birdie-makers.</td></tr>
+<tr><td>✨</td><td>Synergy</td><td>The core V7.7 Engine upgrade. Cross-references individual <code>driving_acc_adj</code> and <code>std_dev</code> to boost teams with perfect Alternate Shot/Best Ball complementary skillsets, while penalizing compound flaws.</td></tr>
 <tr><td>🚀</td><td>Ceiling (Δ)</td><td><code>(DG Pred + StdDev + Synergy)</code>. The ultimate GPP metric.</td></tr>
 </tbody>
 </table>
@@ -133,239 +134,970 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 <script>
 'use strict';
 
-// Partial DataGolf Decomposition Lookup (Extracted from CSV for Key Players)
-// acc_adj = Driving Accuracy, std_dev = Scoring Volatility
-const DG_DECOMP = {
-  "Fitzpatrick": { acc_adj: -0.055, std_dev: 2.719 },
-  "Thorbjornsen": { acc_adj: -0.017, std_dev: 2.787 },
-  "Gerard": { acc_adj: -0.036, std_dev: 2.727 },
-  "Griffin": { acc_adj: -0.011, std_dev: 2.662 },
-  "Theegala": { acc_adj: 0.015, std_dev: 2.759 },
-  "Stevens": { acc_adj: -0.012, std_dev: 2.698 },
-  "Lowry": { acc_adj: -0.019, std_dev: 2.696 },
-  "Clark": { acc_adj: 0.022, std_dev: 2.748 },
-  "Koepka": { acc_adj: 0.021, std_dev: 2.806 },
-  "Smith": { acc_adj: -0.014, std_dev: 2.735 },
-  "Brennan": { acc_adj: 0.046, std_dev: 2.834 },
-  "Mitchell": { acc_adj: 0.001, std_dev: 2.771 },
-  "McCarty": { acc_adj: -0.074, std_dev: 2.686 },
-  "Penge": { acc_adj: 0.015, std_dev: 2.851 },
-  "Thompson": { acc_adj: -0.016, std_dev: 2.740 },
-  "Smalley": { acc_adj: -0.047, std_dev: 2.735 },
-  "Yellamaraju": { acc_adj: -0.031, std_dev: 2.768 },
-  "Reitan": { acc_adj: -0.012, std_dev: 2.849 },
-  "Novak": { acc_adj: -0.041, std_dev: 2.763 },
-  "Pendrith": { acc_adj: -0.005, std_dev: 2.754 },
-  "McGreevy": { acc_adj: -0.005, std_dev: 2.694 },
-  "Hoey": { acc_adj: 0.029, std_dev: 2.786 },
-  "Wallace": { acc_adj: -0.063, std_dev: 2.702 },
-  "Rai": { acc_adj: -0.019, std_dev: 2.646 }, // Rai usually hyper-accurate, DG adj factors baseline
-  "Meissner": { acc_adj: -0.051, std_dev: 2.673 },
-  "Li": { acc_adj: 0.003, std_dev: 2.775 },
-  "Parry": { acc_adj: -0.028, std_dev: 2.649 },
-  "Smotherman": { acc_adj: 0.041, std_dev: 2.762 },
-  "Keefer": { acc_adj: 0.046, std_dev: 2.804 },
-  "Brown": { acc_adj: 0.009, std_dev: 2.769 },
-  "Bezuidenhout": { acc_adj: -0.102, std_dev: 2.626 },
-  "Jarvis": { acc_adj: -0.011, std_dev: 2.751 },
-  "Yu": { acc_adj: 0.003, std_dev: 2.739 },
-  "Jaeger": { acc_adj: -0.072, std_dev: 2.770 },
-  "Moore": { acc_adj: -0.028, std_dev: 2.791 },
-  "Eckroat": { acc_adj: 0.007, std_dev: 2.713 },
-  "Kim": { acc_adj: -0.055, std_dev: 2.740 },
-  "Kirk": { acc_adj: 0.006, std_dev: 2.696 },
-  "Greyserman": { acc_adj: -0.055, std_dev: 2.823 },
-  "Roy": { acc_adj: -0.012, std_dev: 2.711 },
-  "Hodges": { acc_adj: 0.011, std_dev: 2.710 },
-  "Cole": { acc_adj: -0.108, std_dev: 2.721 },
-  "Blanchet": { acc_adj: 0.024, std_dev: 2.714 },
-  "Ramey": { acc_adj: -0.029, std_dev: 2.718 },
-  "Power": { acc_adj: -0.015, std_dev: 2.697 },
-  "Putnam": { acc_adj: -0.095, std_dev: 2.593 },
-  "Schmid": { acc_adj: 0.009, std_dev: 2.827 },
-  "Hughes": { acc_adj: -0.059, std_dev: 2.762 },
-  "Vilips": { acc_adj: -0.015, std_dev: 2.773 },
-  "Hossler": { acc_adj: -0.064, std_dev: 2.770 },
-  "Ventura": { acc_adj: 0.023, std_dev: 2.776 },
-  "Finau": { acc_adj: -0.051, std_dev: 2.795 },
-  "Horschel": { acc_adj: -0.004, std_dev: 2.752 },
-  "Dahmen": { acc_adj: 0.063, std_dev: 2.733 },
-  "Bauchou": { acc_adj: -0.009, std_dev: 2.739 },
-  "Higgo": { acc_adj: 0.010, std_dev: 2.810 },
-  "Wu": { acc_adj: 0.018, std_dev: 2.664 },
-  "Ewart": { acc_adj: -0.016, std_dev: 2.749 },
-  "Lipsky": { acc_adj: -0.022, std_dev: 2.696 },
-  "VanDerLaan": { acc_adj: 0.028, std_dev: 2.788 },
-  "Lebioda": { acc_adj: 0.018, std_dev: 2.708 },
-  "Couvra": { acc_adj: 0.022, std_dev: 2.747 },
-  "Champ": { acc_adj: 0.104, std_dev: 2.884 },
-  "Goodwin": { acc_adj: 0.020, std_dev: 2.743 },
-  "Hubbard": { acc_adj: 0.029, std_dev: 2.758 },
-  "Springer": { acc_adj: 0.026, std_dev: 2.826 },
-  "Ryder": { acc_adj: 0.001, std_dev: 2.770 },
-  "Nyholm": { acc_adj: 0.027, std_dev: 2.840 },
-  "Kanaya": { acc_adj: -0.020, std_dev: 2.692 },
-  "Hadwin": { acc_adj: 0.041, std_dev: 2.789 },
-  "Phillips": { acc_adj: -0.014, std_dev: 2.711 },
-  "Kohles": { acc_adj: 0.066, std_dev: 2.712 },
-  "Hoge": { acc_adj: 0.030, std_dev: 2.781 },
-  "Sigg": { acc_adj: 0.030, std_dev: 2.696 },
-  "Nakajima": { acc_adj: 0.038, std_dev: 2.786 },
-  "Lamprecht": { acc_adj: 0.054, std_dev: 2.908 },
-  "Pavon": { acc_adj: 0.026, std_dev: 2.769 },
-  "Olesen": { acc_adj: 0.003, std_dev: 2.748 },
-  "Shipley": { acc_adj: 0.098, std_dev: 2.834 },
-  "Skinns": { acc_adj: 0.051, std_dev: 2.799 },
-  "Schenk": { acc_adj: 0.044, std_dev: 2.828 },
-  "Clanton": { acc_adj: 0.080, std_dev: 2.832 },
-  "Fishburn": { acc_adj: 0.046, std_dev: 2.816 },
-  "Montgomery": { acc_adj: -0.085, std_dev: 2.811 },
-  "Mullinax": { acc_adj: 0.068, std_dev: 2.875 },
-  "Suber": { acc_adj: 0.050, std_dev: 2.816 },
-  "Chatfield": { acc_adj: 0.035, std_dev: 2.669 },
-  "Stanger": { acc_adj: 0.077, std_dev: 2.863 },
-  "Duncan": { acc_adj: 0.071, std_dev: 2.737 },
-  "Silverman": { acc_adj: 0.029, std_dev: 2.752 },
-  "Hirata": { acc_adj: 0.049, std_dev: 2.746 },
-  "Kuchar": { acc_adj: -0.035, std_dev: 2.612 },
-  "Sargent": { acc_adj: 0.089, std_dev: 2.965 },
-  "Streelman": { acc_adj: 0.044, std_dev: 2.760 },
-  "Walker": { acc_adj: 0.024, std_dev: 2.868 },
-  "Lower": { acc_adj: 0.077, std_dev: 2.814 },
-  "Hardy": { acc_adj: 0.092, std_dev: 2.777 },
-  "Tosti": { acc_adj: 0.110, std_dev: 2.932 },
-  "Snedeker": { acc_adj: -0.024, std_dev: 2.677 },
-  "Kizzire": { acc_adj: -0.003, std_dev: 2.778 },
-  "Paul": { acc_adj: 0.035, std_dev: 2.803 },
-  "List": { acc_adj: 0.112, std_dev: 2.898 },
-  "Peterson": { acc_adj: -0.013, std_dev: 2.628 },
-  "Norlander": { acc_adj: 0.072, std_dev: 2.727 },
-  "Higgs": { acc_adj: 0.094, std_dev: 2.852 },
-  "Kang": { acc_adj: 0.053, std_dev: 2.838 },
-  "Dunlap": { acc_adj: -0.013, std_dev: 2.835 },
-  "Knox": { acc_adj: 0.042, std_dev: 2.695 },
-  "Hoffman": { acc_adj: 0.131, std_dev: 2.878 },
-  "Reavie": { acc_adj: 0.064, std_dev: 2.716 },
-  "Malnati": { acc_adj: 0.004, std_dev: 2.832 },
-  "Gordon": { acc_adj: 0.131, std_dev: 2.913 },
-  "Merritt": { acc_adj: 0.073, std_dev: 2.808 },
-  "Garnett": { acc_adj: 0.057, std_dev: 2.734 },
-  "Riley": { acc_adj: 0.008, std_dev: 2.968 },
-  "Martin": { acc_adj: 0.075, std_dev: 2.754 },
-  "Rozo": { acc_adj: 0.122, std_dev: 2.815 },
-  "Davis": { acc_adj: 0.076, std_dev: 2.984 },
-  "Campos": { acc_adj: 0.129, std_dev: 2.888 },
-  "Villegas": { acc_adj: 0.039, std_dev: 2.841 },
-  "Watney": { acc_adj: 0.119, std_dev: 2.915 },
-  "Byrd": { acc_adj: 0.029, std_dev: 2.747 },
-  "Brehm": { acc_adj: 0.178, std_dev: 2.975 },
-  "Capan": { acc_adj: 0.032, std_dev: 2.914 },
-  "Dufner": { acc_adj: 0.151, std_dev: 2.859 },
-  "Hahn": { acc_adj: 0.105, std_dev: 2.847 },
-  "Piercy": { acc_adj: 0.142, std_dev: 2.871 },
-  "Streb": { acc_adj: 0.129, std_dev: 2.956 },
-  "Cook": { acc_adj: 0.100, std_dev: 2.880 },
-  "Palmer": { acc_adj: 0.188, std_dev: 2.957 },
-  "Ogilvy": { acc_adj: 0.169, std_dev: 3.010 },
-  "Stanley": { acc_adj: 0.294, std_dev: 3.228 }
-};
-
 const RAW_TEAMS = [
-  { "tm": "Fitzpatrick / Fitzpatrick", "odds": 1100, "t5": 210, "t10": 100, "sal": 10500, "dg_win": 0.0678, "dg_cut": 0.749, "dg_pred": 1.872, "std": 2.719, "dg_t5": 0.245, "dg_t10": 0.3937 },
-  { "tm": "Koepka / Lowry", "odds": 1500, "t5": 270, "t10": 126, "sal": 10000, "dg_win": 0.0522, "dg_cut": 0.707, "dg_pred": 0.86, "std": 2.696, "dg_t5": 0.2032, "dg_t10": 0.34125 },
-  { "tm": "Novak / Griffin", "odds": 1750, "t5": 305, "t10": 142, "sal": 9700, "dg_win": 0.0426, "dg_cut": 0.692, "dg_pred": 0.758, "std": 2.72, "dg_t5": 0.1795, "dg_t10": 0.31615 },
-  { "tm": "Thorbjornsen / Vilips", "odds": 1850, "t5": 325, "t10": 152, "sal": 9400, "dg_win": 0.0355, "dg_cut": 0.658, "dg_pred": 1.066, "std": 2.787, "dg_t5": 0.1494, "dg_t10": 0.2716 },
-  { "tm": "Rai / Theegala", "odds": 2050, "t5": 345, "t10": 158, "sal": 9200, "dg_win": 0.0346, "dg_cut": 0.674, "dg_pred": 1.144, "std": 2.766, "dg_t5": 0.1564, "dg_t10": 0.2808 },
-  { "tm": "Moore / Clark", "odds": 2200, "t5": 375, "t10": 172, "sal": 8900, "dg_win": 0.0355, "dg_cut": 0.654, "dg_pred": 1.155, "std": 2.748, "dg_t5": 0.1508, "dg_t10": 0.2736 },
-  { "tm": "Li / Smith", "odds": 2200, "t5": 370, "t10": 172, "sal": 9000, "dg_win": 0.0373, "dg_cut": 0.666, "dg_pred": 0.707, "std": 2.716, "dg_t5": 0.15585, "dg_t10": 0.27515 },
-  { "tm": "Penge / Wallace", "odds": 2250, "t5": 375, "t10": 175, "sal": 9100, "dg_win": 0.0367, "dg_cut": 0.66, "dg_pred": 0.291, "std": 2.752, "dg_t5": 0.15855, "dg_t10": 0.2783 },
-  { "tm": "Thompson / Eckroat", "odds": 2400, "t5": 395, "t10": 182, "sal": 8800, "dg_win": 0.0247, "dg_cut": 0.624, "dg_pred": 0.82, "std": 2.65, "dg_t5": 0.1203, "dg_t10": 0.2282 },
-  { "tm": "Keefer / Brennan", "odds": 2500, "t5": 410, "t10": 190, "sal": 8200, "dg_win": 0.0425, "dg_cut": 0.667, "dg_pred": 0.85, "std": 2.75, "dg_t5": 0.1707, "dg_t10": 0.2917 },
-  { "tm": "McCarty / Meissner", "odds": 2500, "t5": 405, "t10": 186, "sal": 8700, "dg_win": 0.027, "dg_cut": 0.641, "dg_pred": 0.65, "std": 2.6, "dg_t5": 0.1278, "dg_t10": 0.24535 },
-  { "tm": "Ventura / Reitan", "odds": 2800, "t5": 455, "t10": 205, "sal": 8600, "dg_win": 0.0268, "dg_cut": 0.616, "dg_pred": 0.41, "std": 2.62, "dg_t5": 0.12205, "dg_t10": 0.2249 },
-  { "tm": "Springer / Smalley", "odds": 2800, "t5": 460, "t10": 210, "sal": 8500, "dg_win": 0.0193, "dg_cut": 0.585, "dg_pred": 0.77, "std": 2.68, "dg_t5": 0.10045, "dg_t10": 0.19175 },
-  { "tm": "Hughes / Pendrith", "odds": 2900, "t5": 460, "t10": 205, "sal": 8400, "dg_win": 0.0223, "dg_cut": 0.609, "dg_pred": 0.14, "std": 2.65, "dg_t5": 0.10505, "dg_t10": 0.20905 },
-  { "tm": "Yu / Kim", "odds": 3000, "t5": 480, "t10": 215, "sal": 8000, "dg_win": 0.0198, "dg_cut": 0.587, "dg_pred": 0.3, "std": 2.55, "dg_t5": 0.09375, "dg_t10": 0.1876 },
-  { "tm": "Bauchou / Stevens", "odds": 3100, "t5": 485, "t10": 220, "sal": 8300, "dg_win": 0.0217, "dg_cut": 0.623, "dg_pred": 1.04, "std": 2.72, "dg_t5": 0.1139, "dg_t10": 0.22125 },
-  { "tm": "Mitchell / Snedeker", "odds": 3300, "t5": 510, "t10": 230, "sal": 8100, "dg_win": 0.0114, "dg_cut": 0.539, "dg_pred": 0.83, "std": 2.75, "dg_t5": 0.0661, "dg_t10": 0.14305 },
-  { "tm": "Finau / Greyserman", "odds": 3500, "t5": 550, "t10": 245, "sal": 7900, "dg_win": 0.0156, "dg_cut": 0.57, "dg_pred": 1.196, "std": 2.748, "dg_t5": 0.08855, "dg_t10": 0.1772 },
-  { "tm": "Roy / McGreevy", "odds": 3500, "t5": 530, "t10": 240, "sal": 7800, "dg_win": 0.0193, "dg_cut": 0.594, "dg_pred": 0.84, "std": 2.66, "dg_t5": 0.0953, "dg_t10": 0.1931 },
-  { "tm": "Schmid / Power", "odds": 3600, "t5": 550, "t10": 245, "sal": 7700, "dg_win": 0.0146, "dg_cut": 0.56, "dg_pred": 0.42, "std": 2.6, "dg_t5": 0.0792, "dg_t10": 0.1619 },
-  { "tm": "Hoey / Lipsky", "odds": 3800, "t5": 570, "t10": 250, "sal": 7600, "dg_win": 0.0156, "dg_cut": 0.568, "dg_pred": 0.31, "std": 2.58, "dg_t5": 0.0834, "dg_t10": 0.1744 },
-  { "tm": "Parry / Brown", "odds": 4100, "t5": 600, "t10": 265, "sal": 7600, "dg_win": 0.0137, "dg_cut": 0.549, "dg_pred": 0.62, "std": 2.55, "dg_t5": 0.07665, "dg_t10": 0.15665 },
-  { "tm": "Olesen / Neergaard-Petersen", "odds": 4100, "t5": 610, "t10": 270, "sal": 7500, "dg_win": 0.0105, "dg_cut": 0.533, "dg_pred": 0.4, "std": 2.5, "dg_t5": 0.0653, "dg_t10": 0.14035 },
-  { "tm": "Suber / Jaeger", "odds": 4400, "t5": 650, "t10": 280, "sal": 7500, "dg_win": 0.0105, "dg_cut": 0.517, "dg_pred": 0.45, "std": 2.54, "dg_t5": 0.0619, "dg_t10": 0.13095 },
-  { "tm": "Smotherman / Putnam", "odds": 4500, "t5": 650, "t10": 270, "sal": 7500, "dg_win": 0.0128, "dg_cut": 0.567, "dg_pred": 0.57, "std": 2.6, "dg_t5": 0.0751, "dg_t10": 0.1569 },
-  { "tm": "Van Rooyen / Bezuidenhout", "odds": 4700, "t5": 670, "t10": 295, "sal": 7400, "dg_win": 0.0089, "dg_cut": 0.508, "dg_pred": 0.72, "std": 2.65, "dg_t5": 0.0562, "dg_t10": 0.12395 },
-  { "tm": "Ewart / Jarvis", "odds": 4900, "t5": 700, "t10": 305, "sal": 7400, "dg_win": 0.0147, "dg_cut": 0.562, "dg_pred": 0.82, "std": 2.7, "dg_t5": 0.0796, "dg_t10": 0.16455 },
-  { "tm": "Lebioda / Cole", "odds": 5200, "t5": 730, "t10": 320, "sal": 7400, "dg_win": 0.0095, "dg_cut": 0.516, "dg_pred": 0.51, "std": 2.55, "dg_t5": 0.0565, "dg_t10": 0.1275 },
-  { "tm": "Hossler / Ryder", "odds": 5400, "t5": 750, "t10": 325, "sal": 7300, "dg_win": 0.0095, "dg_cut": 0.512, "dg_pred": 0.4, "std": 2.5, "dg_t5": 0.05945, "dg_t10": 0.1276 },
-  { "tm": "Whaley / Sigg", "odds": 5600, "t5": 780, "t10": 335, "sal": 7300, "dg_win": 0.0075, "dg_cut": 0.489, "dg_pred": 0.35, "std": 2.5, "dg_t5": 0.0479, "dg_t10": 0.10675 },
-  { "tm": "Dou / Wu", "odds": 5700, "t5": 790, "t10": 340, "sal": 7200, "dg_win": 0.0105, "dg_cut": 0.533, "dg_pred": 0.45, "std": 2.55, "dg_t5": 0.06355, "dg_t10": 0.138 },
-  { "tm": "Svensson / Nyholm", "odds": 5700, "t5": 810, "t10": 350, "sal": 7300, "dg_win": 0.0126, "dg_cut": 0.526, "dg_pred": 0.5, "std": 2.58, "dg_t5": 0.06575, "dg_t10": 0.1396 },
-  { "tm": "Mouw / Kanaya", "odds": 5700, "t5": 790, "t10": 340, "sal": 7200, "dg_win": 0.011, "dg_cut": 0.536, "dg_pred": 0.48, "std": 2.55, "dg_t5": 0.06905, "dg_t10": 0.1443 },
-  { "tm": "Dumont De Chassart / Chatfield", "odds": 6100, "t5": 820, "t10": 350, "sal": 7100, "dg_win": 0.009, "dg_cut": 0.512, "dg_pred": 0.47, "std": 2.5, "dg_t5": 0.0579, "dg_t10": 0.12505 },
-  { "tm": "Kuchar / Higgo", "odds": 6200, "t5": 840, "t10": 360, "sal": 7200, "dg_win": 0.0049, "dg_cut": 0.445, "dg_pred": 0.3, "std": 2.45, "dg_t5": 0.0357, "dg_t10": 0.08415 },
-  { "tm": "Horschel / Hoge", "odds": 6600, "t5": 900, "t10": 380, "sal": 7100, "dg_win": 0.01, "dg_cut": 0.504, "dg_pred": -0.23, "std": 2.4, "dg_t5": 0.05345, "dg_t10": 0.1206 },
-  { "tm": "Brown / Clanton", "odds": 6700, "t5": 910, "t10": 390, "sal": 7000, "dg_win": 0.0138, "dg_cut": 0.533, "dg_pred": 0.5, "std": 2.85, "dg_t5": 0.07305, "dg_t10": 0.14925 },
-  { "tm": "Kizzire / Kirk", "odds": 6900, "t5": 920, "t10": 390, "sal": 7100, "dg_win": 0.0066, "dg_cut": 0.48, "dg_pred": 0.2, "std": 2.45, "dg_t5": 0.043, "dg_t10": 0.0975 },
-  { "tm": "Ghim / Kang", "odds": 6900, "t5": 910, "t10": 390, "sal": 7000, "dg_win": 0.0082, "dg_cut": 0.487, "dg_pred": 0.16, "std": 2.48, "dg_t5": 0.04575, "dg_t10": 0.10455 },
-  { "tm": "Lower / Ramey", "odds": 6900, "t5": 920, "t10": 390, "sal": 7000, "dg_win": 0.0072, "dg_cut": 0.482, "dg_pred": 0.37, "std": 2.5, "dg_t5": 0.04625, "dg_t10": 0.10545 },
-  { "tm": "Couvra / Pavon", "odds": 7200, "t5": 960, "t10": 405, "sal": 6900, "dg_win": 0.0067, "dg_cut": 0.466, "dg_pred": 0.05, "std": 2.45, "dg_t5": 0.0423, "dg_t10": 0.0951 },
-  { "tm": "Young / Phillips", "odds": 7600, "t5": 990, "t10": 415, "sal": 6900, "dg_win": 0.0062, "dg_cut": 0.462, "dg_pred": 0.0, "std": 2.4, "dg_t5": 0.0405, "dg_t10": 0.09075 },
-  { "tm": "Vanderlaan / Blanchet", "odds": 7600, "t5": 1000, "t10": 420, "sal": 6900, "dg_win": 0.0111, "dg_cut": 0.521, "dg_pred": 0.4, "std": 2.5, "dg_t5": 0.0389, "dg_t10": 0.0666 },
-  { "tm": "Shipley / Lamprecht", "odds": 8000, "t5": 1025, "t10": 440, "sal": 6800, "dg_win": 0.0095, "dg_cut": 0.488, "dg_pred": 0.3, "std": 2.55, "dg_t5": 0.0558, "dg_t10": 0.11565 },
-  { "tm": "Hadwin / Svensson", "odds": 8200, "t5": 1050, "t10": 440, "sal": 6800, "dg_win": 0.0073, "dg_cut": 0.488, "dg_pred": 0.25, "std": 2.45, "dg_t5": 0.04765, "dg_t10": 0.10705 },
-  { "tm": "Griffin / Kohles", "odds": 8200, "t5": 1050, "t10": 440, "sal": 6700, "dg_win": 0.0047, "dg_cut": 0.437, "dg_pred": 0.1, "std": 2.4, "dg_t5": 0.03175, "dg_t10": 0.0785 },
-  { "tm": "Champ / Silverman", "odds": 8200, "t5": 1075, "t10": 450, "sal": 6800, "dg_win": 0.0062, "dg_cut": 0.466, "dg_pred": 0.2, "std": 2.48, "dg_t5": 0.0401, "dg_t10": 0.09545 },
-  { "tm": "Martin / Crowe", "odds": 8400, "t5": 1075, "t10": 450, "sal": 6700, "dg_win": 0.0037, "dg_cut": 0.43, "dg_pred": 0.15, "std": 2.4, "dg_t5": 0.0333, "dg_t10": 0.07475 },
-  { "tm": "Blair / Fishburn", "odds": 9200, "t5": 1125, "t10": 470, "sal": 6600, "dg_win": 0.0064, "dg_cut": 0.479, "dg_pred": 0.4, "std": 2.5, "dg_t5": 0.0426, "dg_t10": 0.0997 },
-  { "tm": "Streelman / Dahmen", "odds": 9600, "t5": 1175, "t10": 480, "sal": 6700, "dg_win": 0.0065, "dg_cut": 0.463, "dg_pred": 0.3, "std": 2.45, "dg_t5": 0.03955, "dg_t10": 0.09345 },
-  { "tm": "Hodges / Garnett", "odds": 9800, "t5": 1175, "t10": 485, "sal": 6600, "dg_win": 0.0038, "dg_cut": 0.434, "dg_pred": 0.1, "std": 2.4, "dg_t5": 0.03135, "dg_t10": 0.0764 },
-  { "tm": "Stanger / Walker", "odds": 10000, "t5": 1275, "t10": 520, "sal": 6600, "dg_win": 0.006, "dg_cut": 0.434, "dg_pred": -0.45, "std": 2.4, "dg_t5": 0.0375, "dg_t10": 0.0818 },
-  { "tm": "Nakajima / Hirata", "odds": 11000, "t5": 1325, "t10": 530, "sal": 6500, "dg_win": 0.0045, "dg_cut": 0.432, "dg_pred": 0.1, "std": 2.4, "dg_t5": 0.0313, "dg_t10": 0.0767 },
-  { "tm": "Duncan / Schenk", "odds": 11500, "t5": 1400, "t10": 570, "sal": 6400, "dg_win": 0.0035, "dg_cut": 0.41, "dg_pred": 0.05, "std": 2.38, "dg_t5": 0.03245, "dg_t10": 0.0759 },
-  { "tm": "Riley / Hardy", "odds": 11500, "t5": 1425, "t10": 580, "sal": 6500, "dg_win": 0.0025, "dg_cut": 0.38, "dg_pred": -1.32, "std": 2.4, "dg_t5": 0.02425, "dg_t10": 0.05925 },
-  { "tm": "Montgomery / Piercy", "odds": 11500, "t5": 1375, "t10": 560, "sal": 6400, "dg_win": 0.003, "dg_cut": 0.39, "dg_pred": -0.84, "std": 2.4, "dg_t5": 0.01545, "dg_t10": 0.03885 },
-  { "tm": "Paul / Higgs", "odds": 13500, "t5": 1550, "t10": 630, "sal": 6400, "dg_win": 0.002, "dg_cut": 0.35, "dg_pred": -0.87, "std": 2.35, "dg_t5": 0.02305, "dg_t10": 0.05805 },
-  { "tm": "Brehm / Hubbard", "odds": 15000, "t5": 1700, "t10": 690, "sal": 6300, "dg_win": 0.0018, "dg_cut": 0.32, "dg_pred": -1.0, "std": 2.3, "dg_t5": 0.02615, "dg_t10": 0.0666 },
-  { "tm": "Dunlap / Sargent", "odds": 16000, "t5": 1800, "t10": 730, "sal": 6300, "dg_win": 0.0045, "dg_cut": 0.409, "dg_pred": -0.5, "std": 2.45, "dg_t5": 0.03055, "dg_t10": 0.07065 },
-  { "tm": "Tosti / Campos", "odds": 19500, "t5": 2150, "t10": 840, "sal": 6300, "dg_win": 0.0039, "dg_cut": 0.379, "dg_pred": -0.7, "std": 2.4, "dg_t5": 0.0236, "dg_t10": 0.0547 },
-  { "tm": "Capan / Goodwin", "odds": 21000, "t5": 2250, "t10": 860, "sal": 6200, "dg_win": 0.0025, "dg_cut": 0.35, "dg_pred": -0.9, "std": 2.38, "dg_t5": 0.02035, "dg_t10": 0.0518 },
-  { "tm": "List / Norlander", "odds": 22000, "t5": 2300, "t10": 870, "sal": 6200, "dg_win": 0.002, "dg_cut": 0.32, "dg_pred": -1.1, "std": 2.35, "dg_t5": 0.02175, "dg_t10": 0.05415 },
-  { "tm": "Peterson / Gordon", "odds": 23000, "t5": 2350, "t10": 900, "sal": 6200, "dg_win": 0.0018, "dg_cut": 0.31, "dg_pred": -1.2, "std": 2.3, "dg_t5": 0.0166, "dg_t10": 0.0411 },
-  { "tm": "Malnati / Knox", "odds": 26000, "t5": 2600, "t10": 980, "sal": 6100, "dg_win": 0.0015, "dg_cut": 0.28, "dg_pred": -1.5, "std": 2.25, "dg_t5": 0.01255, "dg_t10": 0.03575 },
-  { "tm": "Kim / Palmer", "odds": 27000, "t5": 2700, "t10": 1000, "sal": 6100, "dg_win": 0.0012, "dg_cut": 0.25, "dg_pred": -1.8, "std": 2.2, "dg_t5": 0.01485, "dg_t10": 0.04005 },
-  { "tm": "Davis / Ogilvy", "odds": 32500, "t5": 3100, "t10": 1150, "sal": 6100, "dg_win": 0.0008, "dg_cut": 0.2, "dg_pred": -1.45, "std": 2.2, "dg_t5": 0.0094, "dg_t10": 0.02515 },
-  { "tm": "Villegas / Rozo", "odds": 35000, "t5": 3300, "t10": 1225, "sal": 6000, "dg_win": 0.0005, "dg_cut": 0.18, "dg_pred": -2.0, "std": 2.15, "dg_t5": 0.01145, "dg_t10": 0.03165 },
-  { "tm": "Watney / Hoffman", "odds": 36000, "t5": 3400, "t10": 1250, "sal": 6100, "dg_win": 0.0005, "dg_cut": 0.18, "dg_pred": -2.1, "std": 2.1, "dg_t5": 0.0174, "dg_t10": 0.04675 },
-  { "tm": "Reavie / Byrd", "odds": 40000, "t5": 3600, "t10": 1300, "sal": 6000, "dg_win": 0.0004, "dg_cut": 0.15, "dg_pred": -2.3, "std": 2.1, "dg_t5": 0.00905, "dg_t10": 0.02655 },
-  { "tm": "Streb / Merritt", "odds": 42500, "t5": 3800, "t10": 1375, "sal": 6000, "dg_win": 0.0003, "dg_cut": 0.14, "dg_pred": -1.48, "std": 2.1, "dg_t5": 0.0103, "dg_t10": 0.02715 },
-  { "tm": "Cook / Dufner", "odds": 70000, "t5": 5800, "t10": 1950, "sal": 6000, "dg_win": 0.0001, "dg_cut": 0.1, "dg_pred": -2.8, "std": 2.0, "dg_t5": 0.00485, "dg_t10": 0.0145 },
-  { "tm": "Stanley / Hahn", "odds": 105000, "t5": 8200, "t10": 2700, "sal": 6000, "dg_win": 0.0001, "dg_cut": 0.08, "dg_pred": -3.0, "std": 2.0, "dg_t5": 0.0023, "dg_t10": 0.00785 },
-  { "tm": "Gerard / Yellamaraju", "odds": 5000, "t5": 700, "t10": 310, "sal": 9500, "dg_win": 0.0502, "dg_cut": 0.711, "dg_pred": 1.027, "std": 2.721, "dg_t5": 0.1965, "dg_t10": 0.33395 }
-];
-
-RAW_TEAMS.forEach(p => {
-  p.impl_t10 = p.t10 ? (100 / (p.t10 + 100)) : 0;
-  p.t10_ev = p.dg_t10 && p.impl_t10 ? ((p.dg_t10 - p.impl_t10) * 100) : 0;
-
-  let syn = 0;
-  if (p.std > 2.72) syn += 0.25;
-  
-  let p1 = p.tm.split(' / ')[0];
-  let p2 = p.tm.split(' / ')[1];
-  
-  if (DG_DECOMP[p1] && DG_DECOMP[p2]) {
-      let a1 = DG_DECOMP[p1].acc_adj;
-      let a2 = DG_DECOMP[p2].acc_adj;
-      if ((a1 < 0 && a2 > 0.03) || (a2 < 0 && a1 > 0.03)) syn += 0.15;
-      if (a1 < 0 && a2 < 0) syn -= 0.35;
+  {
+    "tm": "M. Fitzpatrick / A. Fitzpatrick",
+    "sal": 10500,
+    "win": 0.0678,
+    "t5": 0.245,
+    "t10": 0.3937,
+    "cut": 0.749,
+    "pred": 2.095,
+    "std": 2.714,
+    "syn": -0.35,
+    "delta": 4.459,
+    "cash_score": 0.732
+  },
+  {
+    "tm": "Lowry / Koepka",
+    "sal": 10000,
+    "win": 0.0522,
+    "t5": 0.2032,
+    "t10": 0.3412,
+    "cut": 0.7071,
+    "pred": 1.661,
+    "std": 2.751,
+    "syn": 0.25,
+    "delta": 4.662,
+    "cash_score": 0.72
+  },
+  {
+    "tm": "Gerard / Yellamaraju",
+    "sal": 9500,
+    "win": 0.0503,
+    "t5": 0.1965,
+    "t10": 0.334,
+    "cut": 0.7118,
+    "pred": 1.655,
+    "std": 2.748,
+    "syn": -0.1,
+    "delta": 4.303,
+    "cash_score": 0.707
+  },
+  {
+    "tm": "Novak / Griffin",
+    "sal": 9700,
+    "win": 0.0426,
+    "t5": 0.1795,
+    "t10": 0.3161,
+    "cut": 0.6928,
+    "pred": 1.538,
+    "std": 2.698,
+    "syn": -0.35,
+    "delta": 3.886,
+    "cash_score": 0.675
+  },
+  {
+    "tm": "Brennan / Keefer",
+    "sal": 8200,
+    "win": 0.0425,
+    "t5": 0.1707,
+    "t10": 0.2917,
+    "cut": 0.667,
+    "pred": 1.106,
+    "std": 2.819,
+    "syn": 0.25,
+    "delta": 4.175,
+    "cash_score": 0.68
+  },
+  {
+    "tm": "Li / Smith",
+    "sal": 9000,
+    "win": 0.0373,
+    "t5": 0.1558,
+    "t10": 0.2751,
+    "cut": 0.6666,
+    "pred": 1.21,
+    "std": 2.755,
+    "syn": 0.25,
+    "delta": 4.215,
+    "cash_score": 0.679
+  },
+  {
+    "tm": "Wallace / Penge",
+    "sal": 9100,
+    "win": 0.0368,
+    "t5": 0.1585,
+    "t10": 0.2783,
+    "cut": 0.6608,
+    "pred": 1.142,
+    "std": 2.776,
+    "syn": 0.4,
+    "delta": 4.318,
+    "cash_score": 0.681
+  },
+  {
+    "tm": "Moore / Clark",
+    "sal": 8900,
+    "win": 0.0355,
+    "t5": 0.1508,
+    "t10": 0.2736,
+    "cut": 0.6547,
+    "pred": 1.031,
+    "std": 2.788,
+    "syn": 0.25,
+    "delta": 4.069,
+    "cash_score": 0.667
+  },
+  {
+    "tm": "Vilips / Thorbjornsen",
+    "sal": 9400,
+    "win": 0.0355,
+    "t5": 0.1494,
+    "t10": 0.2716,
+    "cut": 0.658,
+    "pred": 1.06,
+    "std": 2.78,
+    "syn": 0.25,
+    "delta": 4.09,
+    "cash_score": 0.671
+  },
+  {
+    "tm": "Rai / Theegala",
+    "sal": 9200,
+    "win": 0.0346,
+    "t5": 0.1564,
+    "t10": 0.2808,
+    "cut": 0.6745,
+    "pred": 1.353,
+    "std": 2.702,
+    "syn": 0.15,
+    "delta": 4.205,
+    "cash_score": 0.682
+  },
+  {
+    "tm": "Meissner / McCarty",
+    "sal": 8700,
+    "win": 0.027,
+    "t5": 0.1278,
+    "t10": 0.2453,
+    "cut": 0.6412,
+    "pred": 1.16,
+    "std": 2.68,
+    "syn": -0.35,
+    "delta": 3.49,
+    "cash_score": 0.624
+  },
+  {
+    "tm": "Ventura / Reitan",
+    "sal": 8600,
+    "win": 0.0268,
+    "t5": 0.1221,
+    "t10": 0.2249,
+    "cut": 0.6163,
+    "pred": 0.558,
+    "std": 2.812,
+    "syn": 0.25,
+    "delta": 3.62,
+    "cash_score": 0.629
+  },
+  {
+    "tm": "Eckroat / Thompson",
+    "sal": 8800,
+    "win": 0.0247,
+    "t5": 0.1203,
+    "t10": 0.2282,
+    "cut": 0.6241,
+    "pred": 0.87,
+    "std": 2.726,
+    "syn": 0.25,
+    "delta": 3.846,
+    "cash_score": 0.637
+  },
+  {
+    "tm": "Hughes / Pendrith",
+    "sal": 8400,
+    "win": 0.0223,
+    "t5": 0.1051,
+    "t10": 0.2091,
+    "cut": 0.6098,
+    "pred": 0.561,
+    "std": 2.758,
+    "syn": 0.25,
+    "delta": 3.569,
+    "cash_score": 0.622
+  },
+  {
+    "tm": "Bauchou / Stevens",
+    "sal": 8300,
+    "win": 0.0217,
+    "t5": 0.1139,
+    "t10": 0.2213,
+    "cut": 0.6238,
+    "pred": 0.811,
+    "std": 2.718,
+    "syn": -0.35,
+    "delta": 3.179,
+    "cash_score": 0.606
+  },
+  {
+    "tm": "Yu / Kim",
+    "sal": 8000,
+    "win": 0.0198,
+    "t5": 0.0937,
+    "t10": 0.1876,
+    "cut": 0.5872,
+    "pred": 0.47,
+    "std": 2.74,
+    "syn": 0.25,
+    "delta": 3.46,
+    "cash_score": 0.6
+  },
+  {
+    "tm": "Roy / McGreevy",
+    "sal": 7800,
+    "win": 0.0193,
+    "t5": 0.0953,
+    "t10": 0.1931,
+    "cut": 0.5941,
+    "pred": 0.646,
+    "std": 2.702,
+    "syn": -0.35,
+    "delta": 2.998,
+    "cash_score": 0.577
+  },
+  {
+    "tm": "Smalley / Springer",
+    "sal": 8500,
+    "win": 0.0193,
+    "t5": 0.1004,
+    "t10": 0.1918,
+    "cut": 0.5851,
+    "pred": 0.337,
+    "std": 2.78,
+    "syn": 0.25,
+    "delta": 3.367,
+    "cash_score": 0.598
+  },
+  {
+    "tm": "Finau / Greyserman",
+    "sal": 7900,
+    "win": 0.0156,
+    "t5": 0.0885,
+    "t10": 0.1772,
+    "cut": 0.5708,
+    "pred": 0.121,
+    "std": 2.809,
+    "syn": -0.1,
+    "delta": 2.83,
+    "cash_score": 0.566
+  },
+  {
+    "tm": "Lipsky / Hoey",
+    "sal": 7600,
+    "win": 0.0156,
+    "t5": 0.0834,
+    "t10": 0.1744,
+    "cut": 0.5687,
+    "pred": 0.287,
+    "std": 2.741,
+    "syn": 0.25,
+    "delta": 3.278,
+    "cash_score": 0.581
+  },
+  {
+    "tm": "Ewart / Jarvis",
+    "sal": 7400,
+    "win": 0.0147,
+    "t5": 0.0796,
+    "t10": 0.1645,
+    "cut": 0.5622,
+    "pred": 0.154,
+    "std": 2.75,
+    "syn": -0.1,
+    "delta": 2.804,
+    "cash_score": 0.557
+  },
+  {
+    "tm": "Power / Schmid",
+    "sal": 7700,
+    "win": 0.0146,
+    "t5": 0.0792,
+    "t10": 0.1619,
+    "cut": 0.5606,
+    "pred": 0.116,
+    "std": 2.762,
+    "syn": 0.25,
+    "delta": 3.128,
+    "cash_score": 0.573
+  },
+  {
+    "tm": "Brown / Clanton",
+    "sal": 7000,
+    "win": 0.0138,
+    "t5": 0.073,
+    "t10": 0.1492,
+    "cut": 0.5334,
+    "pred": -0.178,
+    "std": 2.8,
+    "syn": 0.25,
+    "delta": 2.872,
+    "cash_score": 0.546
+  },
+  {
+    "tm": "Parry / Brown",
+    "sal": 7600,
+    "win": 0.0137,
+    "t5": 0.0766,
+    "t10": 0.1566,
+    "cut": 0.5492,
+    "pred": 0.197,
+    "std": 2.714,
+    "syn": -0.35,
+    "delta": 2.561,
+    "cash_score": 0.532
+  },
+  {
+    "tm": "Putnam / Smotherman",
+    "sal": 7500,
+    "win": 0.0128,
+    "t5": 0.0751,
+    "t10": 0.1569,
+    "cut": 0.5671,
+    "pred": 0.366,
+    "std": 2.678,
+    "syn": 0.15,
+    "delta": 3.194,
+    "cash_score": 0.575
+  },
+  {
+    "tm": "Nyholm / Svensson",
+    "sal": 7300,
+    "win": 0.0126,
+    "t5": 0.0657,
+    "t10": 0.1396,
+    "cut": 0.5263,
+    "pred": -0.498,
+    "std": 2.768,
+    "syn": 0.25,
+    "delta": 2.52,
+    "cash_score": 0.539
+  },
+  {
+    "tm": "Snedeker / Mitchell",
+    "sal": 8100,
+    "win": 0.0114,
+    "t5": 0.0661,
+    "t10": 0.143,
+    "cut": 0.5396,
+    "pred": -0.02,
+    "std": 2.724,
+    "syn": 0.25,
+    "delta": 2.954,
+    "cash_score": 0.552
+  },
+  {
+    "tm": "Blanchet / VanDerLaan",
+    "sal": 6900,
+    "win": 0.0111,
+    "t5": 0.0389,
+    "t10": 0.0666,
+    "cut": 0.5216,
+    "pred": -0.165,
+    "std": 2.751,
+    "syn": 0.25,
+    "delta": 2.836,
+    "cash_score": 0.534
+  },
+  {
+    "tm": "Kanaya / Mouw",
+    "sal": 7200,
+    "win": 0.011,
+    "t5": 0.069,
+    "t10": 0.1443,
+    "cut": 0.5367,
+    "pred": 0.016,
+    "std": 2.733,
+    "syn": 0.25,
+    "delta": 3.009,
+    "cash_score": 0.549
+  },
+  {
+    "tm": "Neergaard-Petersen / Olesen",
+    "sal": 7500,
+    "win": 0.0105,
+    "t5": 0.0653,
+    "t10": 0.1403,
+    "cut": 0.5332,
+    "pred": -0.118,
+    "std": 2.754,
+    "syn": 0.25,
+    "delta": 2.886,
+    "cash_score": 0.546
+  },
+  {
+    "tm": "Jaeger / Suber",
+    "sal": 7500,
+    "win": 0.0105,
+    "t5": 0.0619,
+    "t10": 0.1309,
+    "cut": 0.517,
+    "pred": -0.366,
+    "std": 2.793,
+    "syn": 0.4,
+    "delta": 2.827,
+    "cash_score": 0.537
+  },
+  {
+    "tm": "Dou / Wu",
+    "sal": 7200,
+    "win": 0.0105,
+    "t5": 0.0635,
+    "t10": 0.138,
+    "cut": 0.5334,
+    "pred": -0.046,
+    "std": 2.714,
+    "syn": 0.15,
+    "delta": 2.818,
+    "cash_score": 0.541
+  },
+  {
+    "tm": "Horschel / Hoge",
+    "sal": 7100,
+    "win": 0.01,
+    "t5": 0.0534,
+    "t10": 0.1206,
+    "cut": 0.5048,
+    "pred": -0.412,
+    "std": 2.766,
+    "syn": 0.25,
+    "delta": 2.604,
+    "cash_score": 0.517
+  },
+  {
+    "tm": "Hossler / Ryder",
+    "sal": 7300,
+    "win": 0.0095,
+    "t5": 0.0594,
+    "t10": 0.1276,
+    "cut": 0.5129,
+    "pred": -0.339,
+    "std": 2.77,
+    "syn": 0.25,
+    "delta": 2.681,
+    "cash_score": 0.525
+  },
+  {
+    "tm": "Lamprecht / Shipley",
+    "sal": 6800,
+    "win": 0.0095,
+    "t5": 0.0558,
+    "t10": 0.1156,
+    "cut": 0.4886,
+    "pred": -0.851,
+    "std": 2.871,
+    "syn": 0.25,
+    "delta": 2.27,
+    "cash_score": 0.501
+  },
+  {
+    "tm": "Cole / Lebioda",
+    "sal": 7400,
+    "win": 0.0095,
+    "t5": 0.0565,
+    "t10": 0.1275,
+    "cut": 0.5167,
+    "pred": -0.147,
+    "std": 2.714,
+    "syn": 0.15,
+    "delta": 2.717,
+    "cash_score": 0.524
+  },
+  {
+    "tm": "Dumont De Chassart / Chatfield",
+    "sal": 7100,
+    "win": 0.009,
+    "t5": 0.0579,
+    "t10": 0.125,
+    "cut": 0.5127,
+    "pred": -0.198,
+    "std": 2.72,
+    "syn": 0,
+    "delta": 2.522,
+    "cash_score": 0.513
+  },
+  {
+    "tm": "Van Rooyen / Bezuidenhout",
+    "sal": 7400,
+    "win": 0.0089,
+    "t5": 0.0562,
+    "t10": 0.1239,
+    "cut": 0.5081,
+    "pred": -0.253,
+    "std": 2.726,
+    "syn": 0.25,
+    "delta": 2.723,
+    "cash_score": 0.521
+  },
+  {
+    "tm": "Kang / Ghim",
+    "sal": 7000,
+    "win": 0.0082,
+    "t5": 0.0457,
+    "t10": 0.1045,
+    "cut": 0.4872,
+    "pred": -0.636,
+    "std": 2.772,
+    "syn": 0.25,
+    "delta": 2.386,
+    "cash_score": 0.5
+  },
+  {
+    "tm": "Sigg / Whaley",
+    "sal": 7300,
+    "win": 0.0075,
+    "t5": 0.0479,
+    "t10": 0.1067,
+    "cut": 0.4897,
+    "pred": -0.347,
+    "std": 2.693,
+    "syn": 0,
+    "delta": 2.346,
+    "cash_score": 0.49
+  },
+  {
+    "tm": "Hadwin / Svensson",
+    "sal": 6800,
+    "win": 0.0073,
+    "t5": 0.0476,
+    "t10": 0.107,
+    "cut": 0.4889,
+    "pred": -0.511,
+    "std": 2.742,
+    "syn": 0.25,
+    "delta": 2.481,
+    "cash_score": 0.501
+  },
+  {
+    "tm": "Lower / Ramey",
+    "sal": 7000,
+    "win": 0.0072,
+    "t5": 0.0462,
+    "t10": 0.1054,
+    "cut": 0.4826,
+    "pred": -0.638,
+    "std": 2.766,
+    "syn": 0.25,
+    "delta": 2.378,
+    "cash_score": 0.495
+  },
+  {
+    "tm": "Skinns / Mullinax",
+    "sal": 6500,
+    "win": 0.0071,
+    "t5": 0.0318,
+    "t10": 0.0785,
+    "cut": 0.4518,
+    "pred": -1.049,
+    "std": 2.837,
+    "syn": 0.25,
+    "delta": 2.038,
+    "cash_score": 0.464
+  },
+  {
+    "tm": "Pavon / Couvra",
+    "sal": 6900,
+    "win": 0.0067,
+    "t5": 0.0423,
+    "t10": 0.0951,
+    "cut": 0.4661,
+    "pred": -0.696,
+    "std": 2.758,
+    "syn": 0.25,
+    "delta": 2.312,
+    "cash_score": 0.479
+  },
+  {
+    "tm": "Kirk / Kizzire",
+    "sal": 7100,
+    "win": 0.0066,
+    "t5": 0.043,
+    "t10": 0.0975,
+    "cut": 0.4807,
+    "pred": -0.614,
+    "std": 2.737,
+    "syn": 0.25,
+    "delta": 2.373,
+    "cash_score": 0.493
+  },
+  {
+    "tm": "Streelman / Dahmen",
+    "sal": 6700,
+    "win": 0.0065,
+    "t5": 0.0395,
+    "t10": 0.0934,
+    "cut": 0.4636,
+    "pred": -0.736,
+    "std": 2.746,
+    "syn": 0.25,
+    "delta": 2.26,
+    "cash_score": 0.476
+  },
+  {
+    "tm": "Blair / Fishburn",
+    "sal": 6600,
+    "win": 0.0064,
+    "t5": 0.0426,
+    "t10": 0.0997,
+    "cut": 0.4799,
+    "pred": -0.586,
+    "std": 2.721,
+    "syn": 0.15,
+    "delta": 2.285,
+    "cash_score": 0.487
+  },
+  {
+    "tm": "Young / Phillips",
+    "sal": 6900,
+    "win": 0.0062,
+    "t5": 0.0405,
+    "t10": 0.0907,
+    "cut": 0.4624,
+    "pred": -0.673,
+    "std": 2.731,
+    "syn": -0.35,
+    "delta": 1.708,
+    "cash_score": 0.445
+  },
+  {
+    "tm": "Champ / Silverman",
+    "sal": 6800,
+    "win": 0.0062,
+    "t5": 0.0401,
+    "t10": 0.0954,
+    "cut": 0.4664,
+    "pred": -0.965,
+    "std": 2.818,
+    "syn": 0.25,
+    "delta": 2.103,
+    "cash_score": 0.479
+  },
+  {
+    "tm": "Stanger / Walker",
+    "sal": 6600,
+    "win": 0.006,
+    "t5": 0.0375,
+    "t10": 0.0818,
+    "cut": 0.4346,
+    "pred": -1.361,
+    "std": 2.865,
+    "syn": 0.25,
+    "delta": 1.754,
+    "cash_score": 0.447
+  },
+  {
+    "tm": "Kuchar / Higgo",
+    "sal": 7200,
+    "win": 0.0049,
+    "t5": 0.0357,
+    "t10": 0.0841,
+    "cut": 0.4459,
+    "pred": -0.751,
+    "std": 2.711,
+    "syn": 0.15,
+    "delta": 2.11,
+    "cash_score": 0.453
+  },
+  {
+    "tm": "Griffin / Kohles",
+    "sal": 6700,
+    "win": 0.0047,
+    "t5": 0.0317,
+    "t10": 0.0785,
+    "cut": 0.4376,
+    "pred": -0.94,
+    "std": 2.722,
+    "syn": 0.25,
+    "delta": 2.032,
+    "cash_score": 0.45
+  },
+  {
+    "tm": "Nakajima / Hirata",
+    "sal": 6500,
+    "win": 0.0045,
+    "t5": 0.0313,
+    "t10": 0.0767,
+    "cut": 0.4327,
+    "pred": -1.061,
+    "std": 2.766,
+    "syn": 0.25,
+    "delta": 1.955,
+    "cash_score": 0.445
+  },
+  {
+    "tm": "Dunlap / Sargent",
+    "sal": 6300,
+    "win": 0.0045,
+    "t5": 0.0305,
+    "t10": 0.0706,
+    "cut": 0.409,
+    "pred": -1.658,
+    "std": 2.9,
+    "syn": 0.25,
+    "delta": 1.492,
+    "cash_score": 0.422
+  },
+  {
+    "tm": "Tosti / Campos",
+    "sal": 6300,
+    "win": 0.0039,
+    "t5": 0.0236,
+    "t10": 0.0547,
+    "cut": 0.3798,
+    "pred": -2.005,
+    "std": 2.91,
+    "syn": 0.25,
+    "delta": 1.155,
+    "cash_score": 0.392
+  },
+  {
+    "tm": "Hodges / Garnett",
+    "sal": 6600,
+    "win": 0.0038,
+    "t5": 0.0313,
+    "t10": 0.0764,
+    "cut": 0.4344,
+    "pred": -0.953,
+    "std": 2.722,
+    "syn": 0.25,
+    "delta": 2.019,
+    "cash_score": 0.447
+  },
+  {
+    "tm": "Martin / Crowe",
+    "sal": 6700,
+    "win": 0.0037,
+    "t5": 0.0333,
+    "t10": 0.0747,
+    "cut": 0.43,
+    "pred": -1.148,
+    "std": 2.766,
+    "syn": 0.25,
+    "delta": 1.868,
+    "cash_score": 0.442
+  },
+  {
+    "tm": "Duncan / Schenk",
+    "sal": 6400,
+    "win": 0.0035,
+    "t5": 0.0324,
+    "t10": 0.0759,
+    "cut": 0.41,
+    "pred": -1.133,
+    "std": 2.782,
+    "syn": 0.25,
+    "delta": 1.899,
+    "cash_score": 0.422
+  },
+  {
+    "tm": "Montgomery / Piercy",
+    "sal": 6400,
+    "win": 0.003,
+    "t5": 0.0154,
+    "t10": 0.0388,
+    "cut": 0.39,
+    "pred": -2.31,
+    "std": 2.841,
+    "syn": 0.25,
+    "delta": 0.781,
+    "cash_score": 0.402
+  },
+  {
+    "tm": "Capan / Goodwin",
+    "sal": 6200,
+    "win": 0.0025,
+    "t5": 0.0203,
+    "t10": 0.0518,
+    "cut": 0.35,
+    "pred": -1.919,
+    "std": 2.828,
+    "syn": 0.25,
+    "delta": 1.159,
+    "cash_score": 0.362
+  },
+  {
+    "tm": "Riley / Hardy",
+    "sal": 6500,
+    "win": 0.0025,
+    "t5": 0.0242,
+    "t10": 0.0592,
+    "cut": 0.38,
+    "pred": -1.834,
+    "std": 2.872,
+    "syn": 0.25,
+    "delta": 1.288,
+    "cash_score": 0.392
+  },
+  {
+    "tm": "Paul / Higgs",
+    "sal": 6400,
+    "win": 0.002,
+    "t5": 0.023,
+    "t10": 0.058,
+    "cut": 0.35,
+    "pred": -1.698,
+    "std": 2.828,
+    "syn": 0.25,
+    "delta": 1.38,
+    "cash_score": 0.362
+  },
+  {
+    "tm": "List / Norlander",
+    "sal": 6200,
+    "win": 0.002,
+    "t5": 0.0217,
+    "t10": 0.0541,
+    "cut": 0.32,
+    "pred": -1.739,
+    "std": 2.812,
+    "syn": 0.25,
+    "delta": 1.323,
+    "cash_score": 0.332
+  },
+  {
+    "tm": "Brehm / Hubbard",
+    "sal": 6300,
+    "win": 0.0018,
+    "t5": 0.0261,
+    "t10": 0.0666,
+    "cut": 0.32,
+    "pred": -1.641,
+    "std": 2.866,
+    "syn": 0.25,
+    "delta": 1.475,
+    "cash_score": 0.332
+  },
+  {
+    "tm": "Peterson / Gordon",
+    "sal": 6200,
+    "win": 0.0018,
+    "t5": 0.0166,
+    "t10": 0.0411,
+    "cut": 0.31,
+    "pred": -1.918,
+    "std": 2.77,
+    "syn": 0.25,
+    "delta": 1.102,
+    "cash_score": 0.322
+  },
+  {
+    "tm": "Malnati / Knox",
+    "sal": 6100,
+    "win": 0.0015,
+    "t5": 0.0125,
+    "t10": 0.0357,
+    "cut": 0.28,
+    "pred": -2.007,
+    "std": 2.764,
+    "syn": 0.25,
+    "delta": 1.007,
+    "cash_score": 0.292
+  },
+  {
+    "tm": "Kim / Palmer",
+    "sal": 6100,
+    "win": 0.0012,
+    "t5": 0.0148,
+    "t10": 0.04,
+    "cut": 0.25,
+    "pred": -2.411,
+    "std": 2.869,
+    "syn": 0.15,
+    "delta": 0.608,
+    "cash_score": 0.257
+  },
+  {
+    "tm": "Davis / Ogilvy",
+    "sal": 6100,
+    "win": 0.0008,
+    "t5": 0.0094,
+    "t10": 0.0251,
+    "cut": 0.2,
+    "pred": -3.405,
+    "std": 2.997,
+    "syn": 0.25,
+    "delta": -0.158,
+    "cash_score": 0.212
+  },
+  {
+    "tm": "Villegas / Rozo",
+    "sal": 6000,
+    "win": 0.0005,
+    "t5": 0.0114,
+    "t10": 0.0316,
+    "cut": 0.18,
+    "pred": -2.427,
+    "std": 2.828,
+    "syn": 0.25,
+    "delta": 0.651,
+    "cash_score": 0.192
+  },
+  {
+    "tm": "Watney / Hoffman",
+    "sal": 6100,
+    "win": 0.0005,
+    "t5": 0.0174,
+    "t10": 0.0467,
+    "cut": 0.18,
+    "pred": -2.244,
+    "std": 2.896,
+    "syn": 0.25,
+    "delta": 0.902,
+    "cash_score": 0.192
+  },
+  {
+    "tm": "Reavie / Byrd",
+    "sal": 6000,
+    "win": 0.0004,
+    "t5": 0.009,
+    "t10": 0.0265,
+    "cut": 0.15,
+    "pred": -2.287,
+    "std": 2.732,
+    "syn": 0.25,
+    "delta": 0.695,
+    "cash_score": 0.162
+  },
+  {
+    "tm": "Streb / Merritt",
+    "sal": 6000,
+    "win": 0.0003,
+    "t5": 0.0103,
+    "t10": 0.0271,
+    "cut": 0.14,
+    "pred": -2.827,
+    "std": 2.882,
+    "syn": 0.25,
+    "delta": 0.305,
+    "cash_score": 0.152
+  },
+  {
+    "tm": "Cook / Dufner",
+    "sal": 6000,
+    "win": 0.0001,
+    "t5": 0.0048,
+    "t10": 0.0145,
+    "cut": 0.1,
+    "pred": -3.531,
+    "std": 2.87,
+    "syn": 0.25,
+    "delta": -0.411,
+    "cash_score": 0.112
+  },
+  {
+    "tm": "Stanley / Hahn",
+    "sal": 6000,
+    "win": 0.0001,
+    "t5": 0.0023,
+    "t10": 0.0078,
+    "cut": 0.08,
+    "pred": -4.939,
+    "std": 3.038,
+    "syn": 0.25,
+    "delta": -1.651,
+    "cash_score": 0.092
   }
-  p.syn = syn;
-  p.delta = p.dg_pred + p.std + p.syn;
-  p.cash_score = p.dg_cut + (p.syn * 0.05); // Synergy applied slightly to cut %
-});
+];
 
 let SC='delta',SA=false,CF='all';
 
@@ -392,9 +1124,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 const COLS=[
   {k:'tm',l:'👥 Team'},
   {k:'sal',l:'💰 Sal'},
-  {k:'t10',l:'🔟 T10 Odds'},
-  {k:'t10_ev',l:'📈 T10 Edge'},
-  {k:'dg_cut',l:'✂️ Cut %'},
+  {k:'win',l:'🏆 Win %'},
+  {k:'t10',l:'🔟 T10 %'},
+  {k:'cut',l:'✂️ Cut %'},
   {k:'std',l:'🎢 StdDev'},
   {k:'syn',l:'✨ Syn'},
   {k:'delta',l:'🚀 Ceil (Δ)'},
@@ -438,16 +1170,16 @@ function render(){
     const salK=p.sal?'$'+(p.sal/1000).toFixed(1)+'k':'—';
     
     let flags='';
-    if(p.t10_ev > 2.0) flags+=`<span class="badge b-grn">T10 VALUE</span> `;
+    if(p.t10 > 0.20) flags+=`<span class="badge b-grn">TOP 10 EQUITY</span> `;
     if(p.syn > 0.1) flags+=`<span class="badge b-gld">ELITE FIT</span> `;
     if(p.syn < 0) flags+=`<span class="badge b-red">BAD FIT</span> `;
     
     return `<tr>
 <td><div class="pname">${p.tm}</div></td>
 <td style="font-weight:700;color:var(--cyan)">${salK}</td>
-<td style="color:var(--tx2)">+${p.t10}</td>
-<td class="${p.t10_ev>0?'g':(p.t10_ev<0?'r':'')}" style="font-weight:800">${p.t10_ev>0?'+':''}${fmt(p.t10_ev,2)}%</td>
-<td style="font-weight:700;color:var(--tx2)">${(p.dg_cut*100).toFixed(0)}%</td>
+<td style="font-weight:700">${(p.win*100).toFixed(1)}%</td>
+<td style="font-weight:700;color:var(--tx2)">${(p.t10*100).toFixed(1)}%</td>
+<td style="font-weight:700;color:var(--tx2)">${(p.cut*100).toFixed(0)}%</td>
 <td style="color:var(--tx3)">${fmt(p.std,2)}</td>
 <td class="${p.syn>0?'g':(p.syn<0?'r':'')}" style="font-weight:800">${p.syn>0?'+':''}${fmt(p.syn,2)}</td>
 <td style="font-weight:800;color:var(--pur);font-size:14px">${fmt(p.delta,2)}</td>
@@ -495,13 +1227,13 @@ function genLineup(type){
 
   const lineup = bestLine || [];
   if (lineup.length !== 6) {
-    document.getElementById('lineup-out').innerHTML = `<div style="color:var(--red);padding:10px;">Error solving constraint.</div>`;
+    document.getElementById('lineup-out').innerHTML = `<div style="color:var(--red);padding:10px;">Error solving constraint. No 6-man team found between $49K and $50K.</div>`;
     return;
   }
   
   const totalSal=lineup.reduce((s,p)=>s+p.sal,0);
   const totalCeil=lineup.reduce((s,p)=>s+p.delta,0);
-  const totalCut=lineup.reduce((s,p)=>s+p.dg_cut,0)/6; 
+  const totalCut=lineup.reduce((s,p)=>s+p.cut,0)/6; 
   
   document.getElementById('lineup-out').innerHTML=`
 <div class="lineup-box ${type}">
@@ -518,7 +1250,7 @@ function genLineup(type){
 <div style="display:flex;gap:16px;font-weight:700">
 <span style="color:var(--cyan);width:50px">$${(p.sal/1000).toFixed(1)}k</span>
 <span class="${p.syn>0?'g':(p.syn<0?'r':'')}" style="width:50px">✨ ${p.syn>0?'+':''}${p.syn.toFixed(2)}</span>
-<span class="g" style="width:60px">✂️ ${(p.dg_cut*100).toFixed(0)}%</span>
+<span class="g" style="width:60px">✂️ ${(p.cut*100).toFixed(0)}%</span>
 <span style="color:var(--pur);width:60px">🚀 ${p.delta.toFixed(2)}</span>
 </div></li>`).join('')}</ul>
 </div>`;
