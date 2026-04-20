@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐊 Swamp Classic V7.5 — DP Optimizer</title>
+<title>🐊 Swamp Classic V7.6 — Projected Points DP Optimizer</title>
 <link href="https://fonts.googleapis.com/css2?family=Anybody:wght@400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#03060A;--sf:#0A0F16;--sf2:#111820;--sf3:#1A2233;--bd:#1E2A3A;--bd2:#2A3A4E;--tx:#E8ECF2;--tx2:#8A96A8;--tx3:#4E5C70;--grn:#2ECC71;--grn2:#27AE60;--red:#E74C3C;--gld:#F1C40F;--blu:#3498DB;--pur:#9B59B6;--org:#E67E22;--cyan:#1ABC9C;--fn:'Anybody',sans-serif;--mn:'JetBrains Mono',monospace;--glow:0 0 20px rgba(46,204,113,.15)}
@@ -37,7 +37,7 @@ th{padding:10px 5px;font-size:13px;font-weight:700;color:var(--tx3);border-botto
 th:first-child{text-align:left;padding-left:12px;position:sticky;left:0;z-index:10;border-right:1px solid var(--bd);min-width:220px}
 th:hover{background:var(--sf2)}
 th.act{background:var(--bd)}
-td{padding:8px 5px;border-bottom:1px solid rgba(30,42,58,.5);font-size:11px;text-align:center}
+td{padding:8px 5px;border-bottom:1px solid rgba(30,42,58,.5);font-size:12px;text-align:center}
 td:first-child{text-align:left;padding-left:12px;position:sticky;left:0;background:var(--sf);z-index:4;border-right:1px solid var(--bd)}
 tbody tr{transition:background .1s}
 tbody tr:hover{background:var(--sf2)}
@@ -73,8 +73,8 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 <div class="c">
 <header class="hdr">
 <div>
-<h1>🐊 SWAMP CLASSIC V7.5</h1>
-<div style="font-size:11px;color:var(--tx2);margin-top:2px">Zurich Classic 2026 · Dynamic Programming Engine Validated</div>
+<h1>🐊 SWAMP CLASSIC V7.6</h1>
+<div style="font-size:11px;color:var(--tx2);margin-top:2px">Zurich Classic 2026 · Probability-Derived DFS Points Engine</div>
 </div>
 <div class="hdr-meta">
 <div>STRICT $49K-$50K CAP · 6 TEAMS</div>
@@ -92,8 +92,8 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 <div class="toolbar">
 <input class="srch" id="srch" placeholder="Search team..." type="search">
 <button class="chip on" data-f="all">ALL TEAMS</button>
-<button class="chip" data-f="top10edge">📈 T10 EDGE > 2%</button>
-<button class="chip" data-f="ceiling">🚀 HIGH CEILING (Δ > 3.0)</button>
+<button class="chip" data-f="top20edge">📈 T20 EDGE > 2%</button>
+<button class="chip" data-f="ceiling">🎯 HIGH PROJ (Pts > 60)</button>
 <button class="chip" data-f="value">💰 SUB $8K VALUE</button>
 </div>
 <div class="tw"><table><thead id="thd"></thead><tbody id="tb"></tbody></table></div>
@@ -102,12 +102,12 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 <div class="pnl" id="p-build">
 <div class="info-grid">
 <div class="info-card"><div class="info-label">Optimizer Engine</div><div class="info-val gl">DP Knapsack</div><div class="info-note">Calculates the true global optimal out of 300,500,200 combinations.</div></div>
-<div class="info-card"><div class="info-label">GPP Constraint</div><div class="info-val pu">Max 🚀</div><div class="info-note">Strictly locks 6 players, $49k-$50k, highest ceiling sum.</div></div>
-<div class="info-card"><div class="info-label">Cash Constraint</div><div class="info-val cy">Max ✂️</div><div class="info-note">Strictly locks 6 players, $49k-$50k, highest cut prob sum.</div></div>
+<div class="info-card"><div class="info-label">GPP Constraint</div><div class="info-val pu">Ceiling 🚀</div><div class="info-note">Strictly locks 6 players, $49k-$50k, highest Proj + StdDev sum.</div></div>
+<div class="info-card"><div class="info-label">Cash Constraint</div><div class="info-val cy">Proj Pts 🎯</div><div class="info-note">Strictly locks 6 players, $49k-$50k, highest pure probability points.</div></div>
 </div>
 <div style="display:flex;gap:12px;margin-bottom:12px">
 <button class="gen-btn gpp" onclick="genLineup('gpp')">🚀 GENERATE GPP (CEILING)</button>
-<button class="gen-btn cash" onclick="genLineup('cash')">💰 GENERATE CASH (FLOOR)</button>
+<button class="gen-btn cash" onclick="genLineup('cash')">🎯 GENERATE CASH (PROJ PTS)</button>
 </div>
 <div id="lineup-out"></div>
 </div>
@@ -119,14 +119,14 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 <tbody>
 <tr><td>👥</td><td>Team</td><td>The two-man pairing designated for the DraftKings slot.</td></tr>
 <tr><td>💰</td><td>Salary</td><td>Verified DraftKings Pricing for the 2026 Zurich Classic.</td></tr>
-<tr><td>🏆</td><td>Win Odds</td><td>DraftKings Sportsbook American Outright Odds (e.g., +1100).</td></tr>
-<tr><td>🔟</td><td>T10 Odds</td><td>DraftKings Sportsbook Top 10 Odds.</td></tr>
+<tr><td>🏆</td><td>Win Odds</td><td>American Outright Odds (e.g., +1100).</td></tr>
+<tr><td>🔟</td><td>T10 Odds</td><td>American Top 10 Finishing Odds.</td></tr>
+<tr><td>✂️</td><td>Cut Odds</td><td>American odds to Make the Cut.</td></tr>
 <tr><td>📊</td><td>DK Impl %</td><td>Implied probability of winning converted directly from DK odds.</td></tr>
 <tr><td>🔮</td><td>DG Pred %</td><td>DataGolf proprietary model win probability.</td></tr>
-<tr><td>📈</td><td>EV Edge</td><td><code>(DG Pred % - DK Impl %)</code>. Identifies positive expected value (Leverage).</td></tr>
-<tr><td>✂️</td><td>Cut %</td><td>DataGolf probability to make the weekend cut. Anchor for Cash games.</td></tr>
-<tr><td>🎢</td><td>StdDev</td><td>Standard Deviation. Identifies volatile birdie-makers.</td></tr>
-<tr><td>🚀</td><td>Ceiling (Δ)</td><td><code>(DG Pred Score + Standard Deviation)</code>. GPP metric identifying the 90th percentile outcome.</td></tr>
+<tr><td>📈</td><td>EV Edge</td><td><code>(DG Pred % - DK Impl %)</code>. Identifies positive expected value.</td></tr>
+<tr><td>🎯</td><td>Proj Pts</td><td>Expected DraftKings Points modeled from Cut, T20, T10, T5, and Win probabilities.</td></tr>
+<tr><td>🚀</td><td>Ceiling</td><td><code>(Proj Pts + DataGolf StdDev)</code>. Identifies highest potential point outcomes.</td></tr>
 </tbody>
 </table>
 </div>
@@ -137,92 +137,90 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 'use strict';
 
 const RAW_TEAMS = [
-  { "tm": "Fitzpatrick / Fitzpatrick", "odds": 1100, "t5": 210, "t10": 100, "sal": 10500, "dg_win": 0.0678, "dg_cut": 0.749, "dg_pred": 1.872, "std": 2.719 },
-  { "tm": "Koepka / Lowry", "odds": 1500, "t5": 270, "t10": 126, "sal": 10000, "dg_win": 0.0522, "dg_cut": 0.707, "dg_pred": 0.86, "std": 2.696 },
-  { "tm": "Novak / Griffin", "odds": 1750, "t5": 305, "t10": 142, "sal": 9700, "dg_win": 0.0426, "dg_cut": 0.692, "dg_pred": 0.758, "std": 2.72 },
-  { "tm": "Thorbjornsen / Vilips", "odds": 1850, "t5": 325, "t10": 152, "sal": 9400, "dg_win": 0.0355, "dg_cut": 0.658, "dg_pred": 1.066, "std": 2.787 },
-  { "tm": "Rai / Theegala", "odds": 2050, "t5": 345, "t10": 158, "sal": 9200, "dg_win": 0.0346, "dg_cut": 0.674, "dg_pred": 1.144, "std": 2.766 },
-  { "tm": "Moore / Clark", "odds": 2200, "t5": 375, "t10": 172, "sal": 8900, "dg_win": 0.0355, "dg_cut": 0.654, "dg_pred": 1.155, "std": 2.748 },
-  { "tm": "Li / Smith", "odds": 2200, "t5": 370, "t10": 172, "sal": 9000, "dg_win": 0.0373, "dg_cut": 0.666, "dg_pred": 0.707, "std": 2.716 },
-  { "tm": "Penge / Wallace", "odds": 2250, "t5": 375, "t10": 175, "sal": 9100, "dg_win": 0.0367, "dg_cut": 0.66, "dg_pred": 0.291, "std": 2.752 },
-  { "tm": "Thompson / Eckroat", "odds": 2400, "t5": 395, "t10": 182, "sal": 8800, "dg_win": 0.0247, "dg_cut": 0.624, "dg_pred": 0.82, "std": 2.65 },
-  { "tm": "Keefer / Brennan", "odds": 2500, "t5": 410, "t10": 190, "sal": 8200, "dg_win": 0.0425, "dg_cut": 0.667, "dg_pred": 0.85, "std": 2.75 },
-  { "tm": "McCarty / Meissner", "odds": 2500, "t5": 405, "t10": 186, "sal": 8700, "dg_win": 0.027, "dg_cut": 0.641, "dg_pred": 0.65, "std": 2.6 },
-  { "tm": "Ventura / Reitan", "odds": 2800, "t5": 455, "t10": 205, "sal": 8600, "dg_win": 0.0268, "dg_cut": 0.616, "dg_pred": 0.41, "std": 2.62 },
-  { "tm": "Springer / Smalley", "odds": 2800, "t5": 460, "t10": 210, "sal": 8500, "dg_win": 0.0193, "dg_cut": 0.585, "dg_pred": 0.77, "std": 2.68 },
-  { "tm": "Hughes / Pendrith", "odds": 2900, "t5": 460, "t10": 205, "sal": 8400, "dg_win": 0.0223, "dg_cut": 0.609, "dg_pred": 0.14, "std": 2.65 },
-  { "tm": "Yu / Kim", "odds": 3000, "t5": 480, "t10": 215, "sal": 8000, "dg_win": 0.0198, "dg_cut": 0.587, "dg_pred": 0.3, "std": 2.55 },
-  { "tm": "Bauchou / Stevens", "odds": 3100, "t5": 485, "t10": 220, "sal": 8300, "dg_win": 0.0217, "dg_cut": 0.623, "dg_pred": 1.04, "std": 2.72 },
-  { "tm": "Mitchell / Snedeker", "odds": 3300, "t5": 510, "t10": 230, "sal": 8100, "dg_win": 0.0114, "dg_cut": 0.539, "dg_pred": 0.83, "std": 2.75 },
-  { "tm": "Finau / Greyserman", "odds": 3500, "t5": 550, "t10": 245, "sal": 7900, "dg_win": 0.0156, "dg_cut": 0.57, "dg_pred": 1.196, "std": 2.748 },
-  { "tm": "Roy / McGreevy", "odds": 3500, "t5": 530, "t10": 240, "sal": 7800, "dg_win": 0.0193, "dg_cut": 0.594, "dg_pred": 0.84, "std": 2.66 },
-  { "tm": "Schmid / Power", "odds": 3600, "t5": 550, "t10": 245, "sal": 7700, "dg_win": 0.0146, "dg_cut": 0.56, "dg_pred": 0.42, "std": 2.6 },
-  { "tm": "Hoey / Lipsky", "odds": 3800, "t5": 570, "t10": 250, "sal": 7600, "dg_win": 0.0156, "dg_cut": 0.568, "dg_pred": 0.31, "std": 2.58 },
-  { "tm": "Parry / Brown", "odds": 4100, "t5": 600, "t10": 265, "sal": 7600, "dg_win": 0.0137, "dg_cut": 0.549, "dg_pred": 0.62, "std": 2.55 },
-  { "tm": "Olesen / Neergaard-Petersen", "odds": 4100, "t5": 610, "t10": 270, "sal": 7500, "dg_win": 0.0105, "dg_cut": 0.533, "dg_pred": 0.4, "std": 2.5 },
-  { "tm": "Suber / Jaeger", "odds": 4400, "t5": 650, "t10": 280, "sal": 7500, "dg_win": 0.0105, "dg_cut": 0.517, "dg_pred": 0.45, "std": 2.54 },
-  { "tm": "Smotherman / Putnam", "odds": 4500, "t5": 650, "t10": 270, "sal": 7500, "dg_win": 0.0128, "dg_cut": 0.567, "dg_pred": 0.57, "std": 2.6 },
-  { "tm": "Van Rooyen / Bezuidenhout", "odds": 4700, "t5": 670, "t10": 295, "sal": 7400, "dg_win": 0.0089, "dg_cut": 0.508, "dg_pred": 0.72, "std": 2.65 },
-  { "tm": "Ewart / Jarvis", "odds": 4900, "t5": 700, "t10": 305, "sal": 7400, "dg_win": 0.0147, "dg_cut": 0.562, "dg_pred": 0.82, "std": 2.7 },
-  { "tm": "Lebioda / Cole", "odds": 5200, "t5": 730, "t10": 320, "sal": 7400, "dg_win": 0.0095, "dg_cut": 0.516, "dg_pred": 0.51, "std": 2.55 },
-  { "tm": "Hossler / Ryder", "odds": 5400, "t5": 750, "t10": 325, "sal": 7300, "dg_win": 0.0095, "dg_cut": 0.512, "dg_pred": 0.4, "std": 2.5 },
-  { "tm": "Whaley / Sigg", "odds": 5600, "t5": 780, "t10": 335, "sal": 7300, "dg_win": 0.0075, "dg_cut": 0.489, "dg_pred": 0.35, "std": 2.5 },
-  { "tm": "Dou / Wu", "odds": 5700, "t5": 790, "t10": 340, "sal": 7200, "dg_win": 0.0105, "dg_cut": 0.533, "dg_pred": 0.45, "std": 2.55 },
-  { "tm": "Svensson / Nyholm", "odds": 5700, "t5": 810, "t10": 350, "sal": 7300, "dg_win": 0.0126, "dg_cut": 0.526, "dg_pred": 0.5, "std": 2.58 },
-  { "tm": "Mouw / Kanaya", "odds": 5700, "t5": 790, "t10": 340, "sal": 7200, "dg_win": 0.011, "dg_cut": 0.536, "dg_pred": 0.48, "std": 2.55 },
-  { "tm": "Dumont De Chassart / Chatfield", "odds": 6100, "t5": 820, "t10": 350, "sal": 7100, "dg_win": 0.009, "dg_cut": 0.512, "dg_pred": 0.47, "std": 2.5 },
-  { "tm": "Kuchar / Higgo", "odds": 6200, "t5": 840, "t10": 360, "sal": 7200, "dg_win": 0.0049, "dg_cut": 0.445, "dg_pred": 0.3, "std": 2.45 },
-  { "tm": "Horschel / Hoge", "odds": 6600, "t5": 900, "t10": 380, "sal": 7100, "dg_win": 0.01, "dg_cut": 0.504, "dg_pred": -0.23, "std": 2.4 },
-  { "tm": "Brown / Clanton", "odds": 6700, "t5": 910, "t10": 390, "sal": 7000, "dg_win": 0.0138, "dg_cut": 0.533, "dg_pred": 0.5, "std": 2.85 },
-  { "tm": "Kizzire / Kirk", "odds": 6900, "t5": 920, "t10": 390, "sal": 7100, "dg_win": 0.0066, "dg_cut": 0.48, "dg_pred": 0.2, "std": 2.45 },
-  { "tm": "Ghim / Kang", "odds": 6900, "t5": 910, "t10": 390, "sal": 7000, "dg_win": 0.0082, "dg_cut": 0.487, "dg_pred": 0.16, "std": 2.48 },
-  { "tm": "Lower / Ramey", "odds": 6900, "t5": 920, "t10": 390, "sal": 7000, "dg_win": 0.0072, "dg_cut": 0.482, "dg_pred": 0.37, "std": 2.5 },
-  { "tm": "Couvra / Pavon", "odds": 7200, "t5": 960, "t10": 405, "sal": 6900, "dg_win": 0.0067, "dg_cut": 0.466, "dg_pred": 0.05, "std": 2.45 },
-  { "tm": "Young / Phillips", "odds": 7600, "t5": 990, "t10": 415, "sal": 6900, "dg_win": 0.0062, "dg_cut": 0.462, "dg_pred": 0.0, "std": 2.4 },
-  { "tm": "Vanderlaan / Blanchet", "odds": 7600, "t5": 1000, "t10": 420, "sal": 6900, "dg_win": 0.0111, "dg_cut": 0.521, "dg_pred": 0.4, "std": 2.5 },
-  { "tm": "Shipley / Lamprecht", "odds": 8000, "t5": 1025, "t10": 440, "sal": 6800, "dg_win": 0.0095, "dg_cut": 0.488, "dg_pred": 0.3, "std": 2.55 },
-  { "tm": "Hadwin / Svensson", "odds": 8200, "t5": 1050, "t10": 440, "sal": 6800, "dg_win": 0.0073, "dg_cut": 0.488, "dg_pred": 0.25, "std": 2.45 },
-  { "tm": "Griffin / Kohles", "odds": 8200, "t5": 1050, "t10": 440, "sal": 6700, "dg_win": 0.0047, "dg_cut": 0.437, "dg_pred": 0.1, "std": 2.4 },
-  { "tm": "Champ / Silverman", "odds": 8200, "t5": 1075, "t10": 450, "sal": 6800, "dg_win": 0.0062, "dg_cut": 0.466, "dg_pred": 0.2, "std": 2.48 },
-  { "tm": "Martin / Crowe", "odds": 8400, "t5": 1075, "t10": 450, "sal": 6700, "dg_win": 0.0037, "dg_cut": 0.43, "dg_pred": 0.15, "std": 2.4 },
-  { "tm": "Blair / Fishburn", "odds": 9200, "t5": 1125, "t10": 470, "sal": 6600, "dg_win": 0.0064, "dg_cut": 0.479, "dg_pred": 0.4, "std": 2.5 },
-  { "tm": "Streelman / Dahmen", "odds": 9600, "t5": 1175, "t10": 480, "sal": 6700, "dg_win": 0.0065, "dg_cut": 0.463, "dg_pred": 0.3, "std": 2.45 },
-  { "tm": "Hodges / Garnett", "odds": 9800, "t5": 1175, "t10": 485, "sal": 6600, "dg_win": 0.0038, "dg_cut": 0.434, "dg_pred": 0.1, "std": 2.4 },
-  { "tm": "Stanger / Walker", "odds": 10000, "t5": 1275, "t10": 520, "sal": 6600, "dg_win": 0.006, "dg_cut": 0.434, "dg_pred": -0.45, "std": 2.4 },
-  { "tm": "Nakajima / Hirata", "odds": 11000, "t5": 1325, "t10": 530, "sal": 6500, "dg_win": 0.0045, "dg_cut": 0.432, "dg_pred": 0.1, "std": 2.4 },
-  { "tm": "Duncan / Schenk", "odds": 11500, "t5": 1400, "t10": 570, "sal": 6400, "dg_win": 0.0035, "dg_cut": 0.41, "dg_pred": 0.05, "std": 2.38 },
-  { "tm": "Riley / Hardy", "odds": 11500, "t5": 1425, "t10": 580, "sal": 6500, "dg_win": 0.0025, "dg_cut": 0.38, "dg_pred": -1.32, "std": 2.4 },
-  { "tm": "Montgomery / Piercy", "odds": 11500, "t5": 1375, "t10": 560, "sal": 6400, "dg_win": 0.003, "dg_cut": 0.39, "dg_pred": -0.84, "std": 2.4 },
-  { "tm": "Paul / Higgs", "odds": 13500, "t5": 1550, "t10": 630, "sal": 6400, "dg_win": 0.002, "dg_cut": 0.35, "dg_pred": -0.87, "std": 2.35 },
-  { "tm": "Brehm / Hubbard", "odds": 15000, "t5": 1700, "t10": 690, "sal": 6300, "dg_win": 0.0018, "dg_cut": 0.32, "dg_pred": -1.0, "std": 2.3 },
-  { "tm": "Dunlap / Sargent", "odds": 16000, "t5": 1800, "t10": 730, "sal": 6300, "dg_win": 0.0045, "dg_cut": 0.409, "dg_pred": -0.5, "std": 2.45 },
-  { "tm": "Tosti / Campos", "odds": 19500, "t5": 2150, "t10": 840, "sal": 6300, "dg_win": 0.0039, "dg_cut": 0.379, "dg_pred": -0.7, "std": 2.4 },
-  { "tm": "Capan / Goodwin", "odds": 21000, "t5": 2250, "t10": 860, "sal": 6200, "dg_win": 0.0025, "dg_cut": 0.35, "dg_pred": -0.9, "std": 2.38 },
-  { "tm": "List / Norlander", "odds": 22000, "t5": 2300, "t10": 870, "sal": 6200, "dg_win": 0.002, "dg_cut": 0.32, "dg_pred": -1.1, "std": 2.35 },
-  { "tm": "Peterson / Gordon", "odds": 23000, "t5": 2350, "t10": 900, "sal": 6200, "dg_win": 0.0018, "dg_cut": 0.31, "dg_pred": -1.2, "std": 2.3 },
-  { "tm": "Malnati / Knox", "odds": 26000, "t5": 2600, "t10": 980, "sal": 6100, "dg_win": 0.0015, "dg_cut": 0.28, "dg_pred": -1.5, "std": 2.25 },
-  { "tm": "Kim / Palmer", "odds": 27000, "t5": 2700, "t10": 1000, "sal": 6100, "dg_win": 0.0012, "dg_cut": 0.25, "dg_pred": -1.8, "std": 2.2 },
-  { "tm": "Davis / Ogilvy", "odds": 32500, "t5": 3100, "t10": 1150, "sal": 6100, "dg_win": 0.0008, "dg_cut": 0.2, "dg_pred": -1.45, "std": 2.2 },
-  { "tm": "Villegas / Rozo", "odds": 35000, "t5": 3300, "t10": 1225, "sal": 6000, "dg_win": 0.0005, "dg_cut": 0.18, "dg_pred": -2.0, "std": 2.15 },
-  { "tm": "Watney / Hoffman", "odds": 36000, "t5": 3400, "t10": 1250, "sal": 6100, "dg_win": 0.0005, "dg_cut": 0.18, "dg_pred": -2.1, "std": 2.1 },
-  { "tm": "Reavie / Byrd", "odds": 40000, "t5": 3600, "t10": 1300, "sal": 6000, "dg_win": 0.0004, "dg_cut": 0.15, "dg_pred": -2.3, "std": 2.1 },
-  { "tm": "Streb / Merritt", "odds": 42500, "t5": 3800, "t10": 1375, "sal": 6000, "dg_win": 0.0003, "dg_cut": 0.14, "dg_pred": -1.48, "std": 2.1 },
-  { "tm": "Cook / Dufner", "odds": 70000, "t5": 5800, "t10": 1950, "sal": 6000, "dg_win": 0.0001, "dg_cut": 0.1, "dg_pred": -2.8, "std": 2.0 },
-  { "tm": "Stanley / Hahn", "odds": 105000, "t5": 8200, "t10": 2700, "sal": 6000, "dg_win": 0.0001, "dg_cut": 0.08, "dg_pred": -3.0, "std": 2.0 },
-  { "tm": "Gerard / Yellamaraju", "odds": 5000, "t5": 700, "t10": 310, "sal": 9500, "dg_win": 0.0502, "dg_cut": 0.711, "dg_pred": 1.027, "std": 2.721 }
+{"tm":"Fitzpatrick / Fitzpatrick","odds":1375,"t5":308,"t10":154,"sal":10500,"dg_win":0.0678,"dg_cut":0.749,"dg_pred":1.872,"std":2.719,"proj":71.01},
+{"tm":"Koepka / Lowry","odds":1814,"t5":392,"t10":193,"sal":10000,"dg_win":0.0522,"dg_cut":0.707,"dg_pred":0.86,"std":2.696,"proj":68.33},
+{"tm":"Gerard / Yellamaraju","odds":1890,"t5":409,"t10":199,"sal":9500,"dg_win":0.0502,"dg_cut":0.711,"dg_pred":1.027,"std":2.721,"proj":68.46},
+{"tm":"Novak / Griffin","odds":2247,"t5":457,"t10":216,"sal":9700,"dg_win":0.0426,"dg_cut":0.692,"dg_pred":0.758,"std":2.72,"proj":67.27},
+{"tm":"Brennan / Keefer","odds":2253,"t5":486,"t10":243,"sal":8200,"dg_win":0.0425,"dg_cut":0.667,"dg_pred":0.85,"std":2.75,"proj":65.81},
+{"tm":"Li / Smith","odds":2577,"t5":542,"t10":263,"sal":9000,"dg_win":0.0373,"dg_cut":0.666,"dg_pred":0.707,"std":2.716,"proj":65.6},
+{"tm":"Wallace / Penge","odds":2621,"t5":531,"t10":259,"sal":9100,"dg_win":0.0367,"dg_cut":0.66,"dg_pred":0.291,"std":2.752,"proj":65.38},
+{"tm":"Moore / Clark","odds":2717,"t5":563,"t10":265,"sal":8900,"dg_win":0.0355,"dg_cut":0.654,"dg_pred":1.155,"std":2.748,"proj":64.98},
+{"tm":"Thorbjornsen / Vilips","odds":2717,"t5":569,"t10":268,"sal":9400,"dg_win":0.0355,"dg_cut":0.658,"dg_pred":1.066,"std":2.787,"proj":65.08},
+{"tm":"Rai / Theegala","odds":2790,"t5":539,"t10":256,"sal":9200,"dg_win":0.0346,"dg_cut":0.674,"dg_pred":1.144,"std":2.766,"proj":65.94},
+{"tm":"McCarty / Meissner","odds":3604,"t5":682,"t10":308,"sal":8700,"dg_win":0.027,"dg_cut":0.641,"dg_pred":0.65,"std":2.6,"proj":63.96},
+{"tm":"Ventura / Reitan","odds":3624,"t5":719,"t10":345,"sal":8600,"dg_win":0.0268,"dg_cut":0.616,"dg_pred":0.41,"std":2.62,"proj":62.62},
+{"tm":"Thompson / Eckroat","odds":3949,"t5":731,"t10":338,"sal":8800,"dg_win":0.0247,"dg_cut":0.624,"dg_pred":0.82,"std":2.65,"proj":62.98},
+{"tm":"Hughes / Pendrith","odds":4374,"t5":852,"t10":378,"sal":8400,"dg_win":0.0223,"dg_cut":0.609,"dg_pred":0.14,"std":2.65,"proj":62.0},
+{"tm":"Bauchou / Stevens","odds":4508,"t5":778,"t10":352,"sal":8300,"dg_win":0.0217,"dg_cut":0.623,"dg_pred":1.04,"std":2.72,"proj":62.83},
+{"tm":"Yu / Kim","odds":4938,"t5":967,"t10":433,"sal":8000,"dg_win":0.0198,"dg_cut":0.587,"dg_pred":0.3,"std":2.55,"proj":60.75},
+{"tm":"Roy / McGreevy","odds":5068,"t5":949,"t10":418,"sal":7800,"dg_win":0.0193,"dg_cut":0.594,"dg_pred":0.84,"std":2.66,"proj":61.11},
+{"tm":"Springer / Smalley","odds":5068,"t5":896,"t10":422,"sal":8500,"dg_win":0.0193,"dg_cut":0.585,"dg_pred":0.77,"std":2.68,"proj":60.75},
+{"tm":"Finau / Greyserman","odds":6290,"t5":1029,"t10":464,"sal":7900,"dg_win":0.0156,"dg_cut":0.57,"dg_pred":1.196,"std":2.748,"proj":59.88},
+{"tm":"Hoey / Lipsky","odds":6290,"t5":1099,"t10":473,"sal":7600,"dg_win":0.0156,"dg_cut":0.568,"dg_pred":0.31,"std":2.58,"proj":59.77},
+{"tm":"Ewart / Jarvis","odds":6703,"t5":1156,"t10":508,"sal":7400,"dg_win":0.0147,"dg_cut":0.562,"dg_pred":0.82,"std":2.7,"proj":59.32},
+{"tm":"Schmid / Power","odds":6726,"t5":1163,"t10":518,"sal":7700,"dg_win":0.0146,"dg_cut":0.56,"dg_pred":0.42,"std":2.6,"proj":59.24},
+{"tm":"Brown / Clanton","odds":7120,"t5":1269,"t10":570,"sal":7000,"dg_win":0.0138,"dg_cut":0.533,"dg_pred":0.5,"std":2.85,"proj":57.92},
+{"tm":"Parry / Brown","odds":7199,"t5":1205,"t10":538,"sal":7600,"dg_win":0.0137,"dg_cut":0.549,"dg_pred":0.62,"std":2.55,"proj":58.68},
+{"tm":"Smotherman / Putnam","odds":7713,"t5":1232,"t10":537,"sal":7500,"dg_win":0.0128,"dg_cut":0.567,"dg_pred":0.57,"std":2.6,"proj":59.46},
+{"tm":"Svensson / Nyholm","odds":7837,"t5":1421,"t10":616,"sal":7300,"dg_win":0.0126,"dg_cut":0.526,"dg_pred":0.5,"std":2.58,"proj":57.41},
+{"tm":"Mitchell / Snedeker","odds":8634,"t5":1413,"t10":599,"sal":8100,"dg_win":0.0114,"dg_cut":0.539,"dg_pred":0.83,"std":2.75,"proj":58.0},
+{"tm":"Vanderlaan / Blanchet","odds":8869,"t5":1472,"t10":633,"sal":6900,"dg_win":0.0111,"dg_cut":0.521,"dg_pred":0.4,"std":2.5,"proj":57.23},
+{"tm":"Mouw / Kanaya","odds":8991,"t5":1348,"t10":593,"sal":7200,"dg_win":0.011,"dg_cut":0.536,"dg_pred":0.48,"std":2.55,"proj":58.01},
+{"tm":"Olesen / Neergaard-Petersen","odds":9379,"t5":1431,"t10":613,"sal":7500,"dg_win":0.0105,"dg_cut":0.533,"dg_pred":0.4,"std":2.5,"proj":57.76},
+{"tm":"Suber / Jaeger","odds":9424,"t5":1516,"t10":664,"sal":7500,"dg_win":0.0105,"dg_cut":0.517,"dg_pred":0.45,"std":2.54,"proj":56.95},
+{"tm":"Dou / Wu","odds":9424,"t5":1474,"t10":625,"sal":7200,"dg_win":0.0105,"dg_cut":0.533,"dg_pred":0.45,"std":2.55,"proj":57.7},
+{"tm":"Horschel / Hoge","odds":9900,"t5":1771,"t10":729,"sal":7100,"dg_win":0.01,"dg_cut":0.504,"dg_pred":-0.23,"std":2.4,"proj":56.26},
+{"tm":"Hossler / Ryder","odds":10371,"t5":1582,"t10":684,"sal":7300,"dg_win":0.0095,"dg_cut":0.512,"dg_pred":0.4,"std":2.5,"proj":56.72},
+{"tm":"Shipley / Lamprecht","odds":10371,"t5":1692,"t10":765,"sal":6800,"dg_win":0.0095,"dg_cut":0.488,"dg_pred":0.3,"std":2.55,"proj":55.5},
+{"tm":"Lebioda / Cole","odds":10371,"t5":1670,"t10":684,"sal":7400,"dg_win":0.0095,"dg_cut":0.516,"dg_pred":0.51,"std":2.55,"proj":56.86},
+{"tm":"Dumont De Chassart / Chatfield","odds":11011,"t5":1627,"t10":700,"sal":7100,"dg_win":0.009,"dg_cut":0.512,"dg_pred":0.47,"std":2.5,"proj":56.68},
+{"tm":"Van Rooyen / Bezuidenhout","odds":11073,"t5":1679,"t10":707,"sal":7400,"dg_win":0.0089,"dg_cut":0.508,"dg_pred":0.72,"std":2.65,"proj":56.44},
+{"tm":"Ghim / Kang","odds":12021,"t5":2086,"t10":856,"sal":7000,"dg_win":0.0082,"dg_cut":0.487,"dg_pred":0.16,"std":2.48,"proj":55.32},
+{"tm":"Whaley / Sigg","odds":13145,"t5":1988,"t10":837,"sal":7300,"dg_win":0.0075,"dg_cut":0.489,"dg_pred":0.35,"std":2.5,"proj":55.48},
+{"tm":"Hadwin / Svensson","odds":13599,"t5":1999,"t10":834,"sal":6800,"dg_win":0.0073,"dg_cut":0.488,"dg_pred":0.25,"std":2.45,"proj":55.35},
+{"tm":"Lower / Ramey","odds":13693,"t5":2062,"t10":848,"sal":7000,"dg_win":0.0072,"dg_cut":0.482,"dg_pred":0.37,"std":2.5,"proj":55.13},
+{"tm":"Skinns / Mullinax","odds":13886,"t5":2250,"t10":962,"sal":6600,"dg_win":0.0071,"dg_cut":0.451,"dg_pred":-0.7,"std":2.4,"proj":53.4},
+{"tm":"Couvra / Pavon","odds":14825,"t5":2264,"t10":952,"sal":6900,"dg_win":0.0067,"dg_cut":0.466,"dg_pred":0.05,"std":2.45,"proj":54.3},
+{"tm":"Kizzire / Kirk","odds":15052,"t5":2226,"t10":926,"sal":7100,"dg_win":0.0066,"dg_cut":0.48,"dg_pred":0.2,"std":2.45,"proj":54.94},
+{"tm":"Streelman / Dahmen","odds":15285,"t5":2428,"t10":970,"sal":6700,"dg_win":0.0065,"dg_cut":0.463,"dg_pred":0.3,"std":2.45,"proj":54.14},
+{"tm":"Blair / Fishburn","odds":15404,"t5":2247,"t10":903,"sal":6600,"dg_win":0.0064,"dg_cut":0.479,"dg_pred":0.4,"std":2.5,"proj":54.89},
+{"tm":"Young / Phillips","odds":15900,"t5":2369,"t10":1002,"sal":6900,"dg_win":0.0062,"dg_cut":0.462,"dg_pred":0.0,"std":2.4,"proj":54.1},
+{"tm":"Champ / Silverman","odds":16029,"t5":2394,"t10":948,"sal":6800,"dg_win":0.0062,"dg_cut":0.466,"dg_pred":0.2,"std":2.48,"proj":54.28},
+{"tm":"Stanger / Walker","odds":16567,"t5":2567,"t10":1122,"sal":6600,"dg_win":0.006,"dg_cut":0.434,"dg_pred":-0.45,"std":2.4,"proj":52.82},
+{"tm":"Duncan / Schenk","odds":19900,"t5":2982,"t10":1218,"sal":6400,"dg_win":0.0035,"dg_cut":0.41,"dg_pred":0.05,"std":2.38,"proj":52.62},
+{"tm":"Kuchar / Higgo","odds":20102,"t5":2701,"t10":1088,"sal":7200,"dg_win":0.0049,"dg_cut":0.445,"dg_pred":0.3,"std":2.45,"proj":53.32},
+{"tm":"Griffin / Kohles","odds":21177,"t5":3050,"t10":1174,"sal":6700,"dg_win":0.0047,"dg_cut":0.437,"dg_pred":0.1,"std":2.4,"proj":52.82},
+{"tm":"Nakajima / Hirata","odds":21878,"t5":3095,"t10":1204,"sal":6500,"dg_win":0.0045,"dg_cut":0.432,"dg_pred":0.1,"std":2.4,"proj":52.65},
+{"tm":"Dunlap / Sargent","odds":21878,"t5":3173,"t10":1315,"sal":6300,"dg_win":0.0045,"dg_cut":0.409,"dg_pred":-0.5,"std":2.45,"proj":51.58},
+{"tm":"Tosti / Campos","odds":25541,"t5":4137,"t10":1728,"sal":6300,"dg_win":0.0039,"dg_cut":0.379,"dg_pred":-0.7,"std":2.4,"proj":50.15},
+{"tm":"Hodges / Garnett","odds":25874,"t5":3090,"t10":1209,"sal":6600,"dg_win":0.0038,"dg_cut":0.434,"dg_pred":0.1,"std":2.4,"proj":52.66},
+{"tm":"Martin / Crowe","odds":26567,"t5":2903,"t10":1238,"sal":6700,"dg_win":0.0037,"dg_cut":0.43,"dg_pred":0.15,"std":2.4,"proj":52.11},
+{"tm":"Brehm / Hubbard","odds":27678,"t5":3724,"t10":1402,"sal":6300,"dg_win":0.0018,"dg_cut":0.32,"dg_pred":-1.0,"std":2.3,"proj":51.13},
+{"tm":"Paul / Higgs","odds":30203,"t5":4238,"t10":1623,"sal":6400,"dg_win":0.002,"dg_cut":0.35,"dg_pred":-0.87,"std":2.35,"proj":50.57},
+{"tm":"Riley / Hardy","odds":32158,"t5":4024,"t10":1588,"sal":6500,"dg_win":0.0025,"dg_cut":0.38,"dg_pred":-1.32,"std":2.4,"proj":50.49},
+{"tm":"List / Norlander","odds":34383,"t5":4498,"t10":1747,"sal":6200,"dg_win":0.002,"dg_cut":0.32,"dg_pred":-1.1,"std":2.35,"proj":50.17},
+{"tm":"Capan / Goodwin","odds":39116,"t5":4814,"t10":1831,"sal":6200,"dg_win":0.0025,"dg_cut":0.35,"dg_pred":-0.9,"std":2.38,"proj":49.72},
+{"tm":"Peterson / Gordon","odds":41567,"t5":5924,"t10":2333,"sal":6200,"dg_win":0.0018,"dg_cut":0.31,"dg_pred":-1.2,"std":2.3,"proj":48.89},
+{"tm":"Watney / Hoffman","odds":41567,"t5":5647,"t10":2039,"sal":6100,"dg_win":0.0005,"dg_cut":0.18,"dg_pred":-2.1,"std":2.1,"proj":48.85},
+{"tm":"Montgomery / Piercy","odds":42453,"t5":6372,"t10":2474,"sal":6400,"dg_win":0.003,"dg_cut":0.39,"dg_pred":-0.84,"std":2.4,"proj":47.91},
+{"tm":"Malnati / Knox","odds":57043,"t5":7868,"t10":2697,"sal":6100,"dg_win":0.0015,"dg_cut":0.28,"dg_pred":-1.5,"std":2.25,"proj":48.1},
+{"tm":"Villegas / Rozo","odds":58724,"t5":8634,"t10":3060,"sal":6000,"dg_win":0.0005,"dg_cut":0.18,"dg_pred":-2.0,"std":2.15,"proj":47.26},
+{"tm":"Kim / Palmer","odds":64416,"t5":6634,"t10":2397,"sal":6100,"dg_win":0.0012,"dg_cut":0.25,"dg_pred":-1.8,"std":2.2,"proj":48.24},
+{"tm":"Davis / Ogilvy","odds":99900,"t5":10538,"t10":3876,"sal":6100,"dg_win":0.0008,"dg_cut":0.2,"dg_pred":-1.45,"std":2.2,"proj":45.74},
+{"tm":"Reavie / Byrd","odds":111011,"t5":10950,"t10":3666,"sal":6000,"dg_win":0.0004,"dg_cut":0.15,"dg_pred":-2.3,"std":2.1,"proj":46.61},
+{"tm":"Streb / Merritt","odds":117547,"t5":9609,"t10":3583,"sal":6000,"dg_win":0.0003,"dg_cut":0.14,"dg_pred":-1.48,"std":2.1,"proj":46.26},
+{"tm":"Cook / Dufner","odds":999999,"t5":20519,"t10":6797,"sal":6000,"dg_win":0.0001,"dg_cut":0.1,"dg_pred":-2.8,"std":2.0,"proj":43.61},
+{"tm":"Stanley / Hahn","odds":999999,"t5":43378,"t10":12639,"sal":6000,"dg_win":0.0001,"dg_cut":0.08,"dg_pred":-3.0,"std":2.0,"proj":41.51}
 ];
 
 RAW_TEAMS.forEach(p => {
   p.impl_win = p.odds ? (100 / (p.odds + 100)) : 0;
   p.impl_t10 = p.t10 ? (100 / (p.t10 + 100)) : 0;
   p.ev = p.dg_win && p.impl_win ? ((p.dg_win - p.impl_win) * 100) : 0;
-  
-  let est_dg_t10 = p.dg_win * 5.5; 
-  p.t10_ev = ((est_dg_t10 - p.impl_t10) * 100);
-  p.delta = p.dg_pred + p.std;
+  p.delta = p.proj + p.std;
 });
 
-let SC='delta',SA=false,CF='all';
+let SC='proj',SA=false,CF='all';
 
 document.addEventListener('DOMContentLoaded',()=>{
   document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
@@ -248,12 +246,12 @@ const COLS=[
   {k:'tm',l:'👥 Team'},
   {k:'sal',l:'💰 Salary'},
   {k:'odds',l:'🏆 Win Odds'},
-  {k:'t10',l:'🔟 T10 Odds'},
   {k:'impl_win',l:'📊 DK Impl %'},
   {k:'dg_win',l:'🔮 DG Pred %'},
   {k:'ev',l:'📈 EV Edge'},
   {k:'dg_cut',l:'✂️ Cut %'},
   {k:'std',l:'🎢 StdDev'},
+  {k:'proj',l:'🎯 Proj Pts'},
   {k:'delta',l:'🚀 Ceiling'},
 ];
 
@@ -271,8 +269,8 @@ function render(){
   const q=(document.getElementById('srch').value||'').toLowerCase();
   let d=RAW_TEAMS.filter(p=>{
     if(q&&!p.tm.toLowerCase().includes(q)) return false;
-    if(CF==='top10edge') return p.t10_ev > 2.0;
-    if(CF==='ceiling') return p.delta >= 3.0;
+    if(CF==='top20edge') return p.ev > 0.5;
+    if(CF==='ceiling') return p.proj >= 60;
     if(CF==='value') return p.sal && p.sal<=8000;
     return true;
   });
@@ -296,19 +294,19 @@ function render(){
     
     let flags='';
     if(p.ev > 1.0) flags+=`<span class="badge b-grn">WIN LEVERAGE</span> `;
-    if(p.t10_ev > 2.5) flags+=`<span class="badge b-gld">T10 VALUE</span> `;
-    if(p.delta >= 3.5) flags+=`<span class="badge b-pur">GPP CEILING</span> `;
+    if(p.proj >= 65) flags+=`<span class="badge b-gld">ELITE PROJ</span> `;
+    if(p.delta >= 67) flags+=`<span class="badge b-pur">GPP CEILING</span> `;
     
     return `<tr>
 <td><div class="pname">${p.tm}</div></td>
 <td style="font-weight:700;color:var(--cyan)">${salK}</td>
 <td style="color:var(--gld)">+${p.odds}</td>
-<td style="color:var(--tx2)">+${p.t10}</td>
 <td style="color:var(--tx3)">${(p.impl_win*100).toFixed(1)}%</td>
 <td style="font-weight:700">${(p.dg_win*100).toFixed(1)}%</td>
 <td class="${p.ev>0?'g':(p.ev<0?'r':'')}" style="font-weight:800">${p.ev>0?'+':''}${fmt(p.ev,2)}%</td>
 <td style="font-weight:700;color:var(--tx2)">${(p.dg_cut*100).toFixed(0)}%</td>
 <td style="color:var(--pur)">${fmt(p.std,2)}</td>
+<td class="g" style="font-weight:800">${fmt(p.proj,2)}</td>
 <td style="font-weight:800;color:var(--cyan)">${fmt(p.delta,2)}</td>
 <td style="text-align:left;font-size:8px">${flags}</td>
 </tr>`;
@@ -316,18 +314,15 @@ function render(){
 }
 
 function genLineup(type){
-  // 0-1 Knapsack DP Engine
-  // Strictly enforces: Exactly 6 teams AND Total Salary >= 49,000 AND Total Salary <= 50,000
-  const maxSal = 500; // Scaled (50,000 / 100)
-  const minSal = 490; // Scaled (49,000 / 100)
+  const maxSal = 500; 
+  const minSal = 490; 
   
   const items = RAW_TEAMS.filter(p => p.sal).map(p => ({
     ...p,
     w: Math.floor(p.sal / 100),
-    v: type === 'gpp' ? p.delta : p.dg_cut 
+    v: type === 'gpp' ? p.delta : p.proj 
   }));
 
-  // dp[k][w] = { val: max_value, line: [array of chosen items] }
   let dp = Array.from({length: 7}, () => Array(maxSal + 1).fill(null));
   dp[0][0] = { val: 0, line: [] };
 
@@ -350,7 +345,6 @@ function genLineup(type){
   let bestVal = -1;
   let bestLine = null;
   
-  // Scan exactly the 49k - 50k boundary for 6 players
   for (let w = minSal; w <= maxSal; w++) {
     if (dp[6][w] !== null && dp[6][w].val > bestVal) {
       bestVal = dp[6][w].val;
@@ -366,26 +360,24 @@ function genLineup(type){
   }
   
   const totalSal=lineup.reduce((s,p)=>s+p.sal,0);
-  const totalFloor=lineup.reduce((s,p)=>s+p.dg_pred,0);
+  const totalProj=lineup.reduce((s,p)=>s+p.proj,0);
   const totalCeil=lineup.reduce((s,p)=>s+p.delta,0);
-  const totalCut=lineup.reduce((s,p)=>s+p.dg_cut,0)/6; 
   
   document.getElementById('lineup-out').innerHTML=`
 <div class="lineup-box ${type}">
 <div class="lineup-hdr">
-<h3>${type==='gpp'?'🚀 GPP OPTIMAL (TRUE DP KNAPSACK)':'💰 CASH OPTIMAL (TRUE DP KNAPSACK)'}</h3>
+<h3>${type==='gpp'?'🚀 GPP OPTIMAL (CEILING DRIVEN)':'🎯 CASH OPTIMAL (PROJ PTS DRIVEN)'}</h3>
 <div class="lineup-stats">
 <span>💰 SAL: <strong style="color:var(--cyan)">$${(totalSal/1000).toFixed(1)}k</strong></span>
-<span>REM: <strong>$${((50000-totalSal)/1000).toFixed(1)}k</strong></span>
-<span>✂️ AVG CUT %: <strong class="g">${(totalCut*100).toFixed(1)}%</strong></span>
-<span>🚀 TEAM CEILING: <strong style="color:var(--pur)">${totalCeil.toFixed(2)}</strong></span>
+<span>🎯 TOTAL PROJ: <strong class="g">${totalProj.toFixed(2)}</strong></span>
+<span>🚀 TOTAL CEILING: <strong style="color:var(--pur)">${totalCeil.toFixed(2)}</strong></span>
 </div>
 </div>
 <ul class="lineup-list">${lineup.sort((a,b)=>b.sal-a.sal).map(p=>`<li>
 <div style="flex:1"><strong>${p.tm}</strong></div>
 <div style="display:flex;gap:16px;font-weight:700">
 <span style="color:var(--cyan);width:50px">$${(p.sal/1000).toFixed(1)}k</span>
-<span class="g" style="width:70px">✂️ ${(p.dg_cut*100).toFixed(0)}%</span>
+<span class="g" style="width:70px">🎯 ${p.proj.toFixed(2)}</span>
 <span style="color:var(--pur);width:70px">🚀 ${p.delta.toFixed(2)}</span>
 </div></li>`).join('')}</ul>
 </div>`;
