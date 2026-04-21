@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>🐊 Swamp Classic V9 — Zurich DFS Engine</title>
+<title>🐊 Swamp Classic V11 — Zurich DFS Engine</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -15,53 +15,42 @@
   --fn:'JetBrains Mono',monospace;--ui:'Inter',system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{background:var(--bg);color:var(--tx);font-family:var(--fn);font-size:13px;line-height:1.5;min-height:100vh;-webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--tx);font-family:var(--fn);font-size:13px;line-height:1.5;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 
 /* ── Layout ── */
-.wrap{max-width:1500px;margin:0 auto;padding:16px;display:flex;flex-direction:column;min-height:100vh}
+.wrap{max-width:1600px;margin:0 auto;padding:16px;display:flex;flex-direction:column;min-height:100vh}
 header{border-bottom:1px solid var(--bd);padding-bottom:14px;margin-bottom:14px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px}
 .logo{display:flex;align-items:center;gap:12px}
-.logo-icon{font-size:40px;filter:drop-shadow(0 0 16px rgba(56,139,253,.4))}
+.logo-icon{font-size:40px;filter:drop-shadow(0 0 16px rgba(163,113,247,.4))}
 .logo-text h1{font-size:22px;font-weight:800;color:#fff;letter-spacing:-1px}
 .logo-text .sub{font-size:10px;color:var(--tx2);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
 .hdr-meta{font-size:10px;color:var(--tx3);text-align:right;line-height:1.8}
-.hdr-meta span{color:var(--cyan);font-weight:700}
+.hdr-meta span{color:var(--pur);font-weight:700}
 
-/* ── Banners ── */
-.banner{padding:12px 16px;border-radius:8px;font-size:12px;margin-bottom:8px;display:flex;gap:12px;align-items:flex-start;line-height:1.55;border:1px solid}
-.banner-gpp{background:rgba(58,183,80,.06);border-color:rgba(58,183,80,.3);color:var(--tx)}
-.banner-nf{background:rgba(163,113,247,.06);border-color:rgba(163,113,247,.3);color:var(--tx);margin-bottom:16px}
-.banner strong{font-weight:700}
-.banner .m{font-family:var(--fn);font-weight:800;color:var(--gld)}
-.b-icon{font-size:18px;flex-shrink:0;margin-top:1px}
-
-/* ── Tabs ── */
+/* ── Tabs & Toolbars ── */
 .tabs{display:flex;gap:4px;margin-bottom:16px;background:var(--sf);padding:4px;border-radius:8px;overflow-x:auto}
 .tab{flex:1;min-width:110px;background:transparent;border:none;color:var(--tx2);padding:10px 8px;cursor:pointer;font-weight:700;border-radius:6px;transition:.18s;font-size:11px;font-family:var(--fn);white-space:nowrap}
 .tab:hover{color:var(--tx);background:var(--sf2)}
-.tab.on{background:var(--sf2);color:var(--cyan);box-shadow:0 0 0 1px var(--bd)}
-.tab:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.tab.on{background:var(--sf2);color:var(--pur);box-shadow:0 0 0 1px var(--bd)}
+.tab:focus-visible{outline:2px solid var(--pur);outline-offset:2px}
 .pnl{display:none}.pnl.on{display:flex;flex-direction:column}
-
-/* ── Toolbar ── */
 .toolbar{display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:center}
 .srch{background:var(--sf);border:1px solid var(--bd);color:#fff;padding:10px 14px;border-radius:8px;font-size:13px;font-family:var(--fn);outline:none;width:240px}
-.srch:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(121,192,255,.1)}
+.srch:focus{border-color:var(--pur);box-shadow:0 0 0 3px rgba(163,113,247,.1)}
 .chip{background:var(--sf);border:1px solid var(--bd);color:var(--tx2);padding:8px 13px;border-radius:20px;cursor:pointer;font-size:10px;font-weight:700;white-space:nowrap;font-family:var(--fn);transition:.15s}
 .chip:hover{color:var(--tx);border-color:var(--tx2)}
-.chip.on{background:rgba(121,192,255,.1);color:var(--cyan);border-color:var(--cyan)}
+.chip.on{background:rgba(163,113,247,.1);color:var(--pur);border-color:var(--pur)}
 .chip.grn{border-color:rgba(63,185,80,.4);color:var(--grn)}
 .chip.pur{border-color:rgba(163,113,247,.4);color:var(--pur)}
-.chip.red{border-color:rgba(248,81,73,.4);color:var(--red)}
 .chip.gld{border-color:rgba(210,153,34,.4);color:var(--gld)}
 
 /* ── Tables ── */
 .tw{flex:1;overflow:auto;border:1px solid var(--bd);border-radius:8px;background:var(--sf);max-height:65vh;-webkit-overflow-scrolling:touch}
 .tw::-webkit-scrollbar{width:6px;height:6px}.tw::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}
-table{width:100%;border-collapse:collapse;min-width:900px}
+table{width:100%;border-collapse:collapse;min-width:1000px}
 th{position:sticky;top:0;background:var(--sf2);padding:12px 10px;text-align:center;border-bottom:2px solid var(--bd);z-index:5;cursor:pointer;color:var(--tx2);font-size:10px;font-family:var(--fn);white-space:nowrap;user-select:none}
 th:first-child{text-align:left;padding-left:14px;left:0;z-index:10;background:var(--sf2)}
-th.act{color:var(--cyan)}
+th.act{color:var(--pur)}
 th .arr{opacity:.3;font-size:8px;margin-left:2px}
 th.act .arr{opacity:1}
 td{padding:10px;border-bottom:1px solid var(--bd2);text-align:center;font-size:11px;vertical-align:middle}
@@ -71,47 +60,14 @@ tbody tr:hover td{background:var(--sf2)}
 tbody tr:hover td:first-child{background:var(--sf2)}
 .row-lk td{background:rgba(210,153,34,.04)}
 .row-ex td{opacity:.3}.row-ex td:first-child{opacity:1}
-.row-bl td{opacity:.4}.row-bl td:first-child{opacity:1}
 .pn{font-weight:800;color:#fff;font-size:11px;display:flex;align-items:center;gap:5px;flex-wrap:wrap}
-.partner-note{font-size:8px;color:var(--tx3);font-weight:400}
-.blocked-chip{font-size:7px;background:rgba(248,81,73,.1);color:var(--red);border:1px solid rgba(248,81,73,.25);padding:1px 5px;border-radius:3px;font-weight:700}
 .acts{display:flex;gap:3px;margin-top:3px}
 .bi{width:22px;height:22px;border-radius:5px;border:1px solid var(--bd);background:transparent;color:var(--tx3);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:9px;font-family:var(--fn);transition:.12s}
 .bi:hover{background:var(--bd);color:#fff}
-.bi:disabled{opacity:.25;cursor:not-allowed}
 .bi.lk{background:rgba(210,153,34,.1);border-color:var(--gld);color:var(--gld)}
 .bi.ex{background:rgba(248,81,73,.1);border-color:var(--red);color:var(--red)}
 .tm{font-size:8px;padding:1px 5px;border-radius:3px;font-weight:800;background:var(--sf2);color:var(--tx2);border:1px solid var(--bd);cursor:pointer;font-family:var(--fn)}
-.tm:hover{border-color:var(--cyan);color:var(--cyan)}
-
-/* ── Lineup cards ── */
-.lu-list{display:flex;flex-direction:column;gap:10px}
-.lu-card{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:14px 16px;transition:.15s}
-.lu-card:hover{border-color:var(--cyan)}
-.lu-card.hero{border-color:var(--gld);background:linear-gradient(135deg,rgba(210,153,34,.05),transparent)}
-.lu-head{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px}
-.lu-rk{font-size:14px;font-weight:800;color:var(--gld);font-family:var(--fn)}
-.lu-badges{display:flex;gap:5px;flex-wrap:wrap}
-.badge{padding:2px 8px;border-radius:4px;font-size:9px;font-weight:800;font-family:var(--fn);letter-spacing:.3px}
-.b-gpp{background:rgba(163,113,247,.1);color:var(--pur);border:1px solid rgba(163,113,247,.3)}
-.b-cash{background:rgba(63,185,80,.1);color:var(--grn);border:1px solid rgba(63,185,80,.3)}
-.b-nf{background:rgba(79,140,201,.1);color:var(--cyan);border:1px solid rgba(79,140,201,.3)}
-.b-hero{background:rgba(210,153,34,.1);color:var(--gld);border:1px solid rgba(210,153,34,.3)}
-.b-gld{background:rgba(210,153,34,.1);color:var(--gld)}
-.lu-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:5px;padding:8px;background:var(--sf2);border:1px solid var(--bd2);border-radius:6px;margin-bottom:10px}
-.lm{text-align:center}
-.lm-l{font-size:8px;color:var(--tx3);text-transform:uppercase;letter-spacing:.3px;font-family:var(--fn);margin-bottom:2px}
-.lm-v{font-size:14px;font-weight:800;font-family:var(--fn)}
 .v-grn{color:var(--grn)}.v-pur{color:var(--pur)}.v-gld{color:var(--gld)}.v-red{color:var(--red)}.v-cy{color:var(--cyan)}.v-wh{color:#fff}
-.lu-players{display:grid;grid-template-columns:repeat(auto-fill,minmax(185px,1fr));gap:4px}
-.lu-p{background:var(--sf2);border-radius:5px;padding:5px 8px;font-size:10px;display:flex;justify-content:space-between;align-items:center;gap:6px}
-.lu-p strong{font-weight:700;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.lu-p span{color:var(--tx3);font-family:var(--fn);font-size:9px;white-space:nowrap}
-.lu-btns{display:flex;gap:6px;margin-top:10px}
-.lu-btn{flex:1;background:var(--sf2);border:1px solid var(--bd);color:var(--tx2);padding:7px 10px;border-radius:5px;font-size:9px;font-family:var(--fn);font-weight:800;cursor:pointer;transition:.12s;letter-spacing:.5px}
-.lu-btn:hover{border-color:var(--cyan);color:var(--cyan)}
-.lu-btn.ex{border-color:rgba(63,185,80,.4);color:var(--grn)}
-.lu-btn.ex:hover{background:var(--grn);color:#000}
 
 /* ── Build tab ── */
 .build-grid{display:grid;grid-template-columns:1fr 320px;gap:16px}
@@ -119,151 +75,105 @@ tbody tr:hover td:first-child{background:var(--sf2)}
 .build-main{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:18px}
 .build-main h3{font-size:15px;font-weight:800;color:#fff;margin-bottom:4px}
 .build-main p{color:var(--tx2);font-size:11px;margin-bottom:14px;line-height:1.5}
-.opt-btns{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.opt-btns{display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:8px;margin-bottom:14px}
 .opt-btn{background:var(--sf2);border:1px solid var(--bd);color:var(--tx);padding:14px;border-radius:8px;cursor:pointer;text-align:left;font-family:var(--fn);transition:.15s}
-.opt-btn:hover{border-color:var(--cyan);transform:translateY(-1px)}
-.opt-btn.gpp{border-left:3px solid var(--pur)}
+.opt-btn:hover{border-color:var(--pur);transform:translateY(-1px)}
+.opt-btn.gpp{border-left:3px solid var(--gld)}
+.opt-btn.lev{border-left:3px solid var(--pur); background:rgba(163,113,247,.05)}
 .opt-btn.cash{border-left:3px solid var(--grn)}
 .opt-btn strong{font-size:12px;font-weight:800;display:block;margin-bottom:2px}
 .opt-btn span{font-size:9px;color:var(--tx2);line-height:1.3}
-.rule-note{background:rgba(79,140,201,.05);border:1px solid rgba(79,140,201,.2);border-radius:6px;padding:10px 12px;margin-bottom:12px;font-size:11px;color:var(--tx2);display:flex;gap:8px;align-items:center;line-height:1.4}
-.rule-note strong{color:var(--cyan)}
 .locks-box{background:var(--sf2);border:1px solid var(--bd);border-radius:8px;padding:12px}
 .locks-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .locks-hd h4{font-size:10px;color:var(--tx2);text-transform:uppercase;letter-spacing:.5px}
 .clr-btn{background:transparent;border:1px solid var(--tx3);color:var(--tx2);padding:3px 7px;border-radius:4px;font-size:8px;font-weight:700;cursor:pointer;font-family:var(--fn);transition:.12s}
 .clr-btn:hover{border-color:var(--red);color:var(--red)}
 .lock-item{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px dashed var(--bd2);font-size:11px;gap:8px}
-.lock-item:last-child{border:none}
 .lock-empty{color:var(--tx3);font-size:10px;font-style:italic;text-align:center;padding:8px 0}
-.opt-out{background:var(--sf);border:2px solid var(--cyan);border-radius:8px;margin-top:14px;overflow:hidden;display:none}
+.opt-out{background:var(--sf);border:2px solid var(--pur);border-radius:8px;margin-top:14px;overflow:hidden;display:none}
 .opt-out.show{display:block}
-.opt-head{background:var(--cyan);color:var(--bg);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.opt-head{background:var(--pur);color:var(--bg);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
 .opt-head h4{font-size:14px;font-weight:800}
 .opt-stats{font-family:var(--fn);font-size:11px;display:flex;gap:12px;flex-wrap:wrap}
 .opt-list{list-style:none}
 .opt-list li{padding:10px 16px;border-bottom:1px solid var(--bd2);display:flex;justify-content:space-between;align-items:center;font-size:12px;gap:8px}
-.opt-list li:last-child{border:none}
-.exp-btn{margin:8px 16px 12px;background:transparent;border:1px solid var(--grn);color:var(--grn);padding:8px;border-radius:6px;font-size:10px;font-weight:800;cursor:pointer;font-family:var(--fn);width:calc(100% - 32px);text-align:center;transition:.15s}
-.exp-btn:hover{background:var(--grn);color:#000}
-
-/* Sidebar state */
 .build-side{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:16px;height:fit-content}
 .build-side h4{font-size:14px;font-weight:800;color:#fff;margin-bottom:12px}
 .stat-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed var(--bd2)}
-.stat-row:last-child{border:none}
 .stat-l{font-size:10px;color:var(--tx2);font-family:var(--fn)}
 .stat-v{font-weight:800;font-size:12px;font-family:var(--fn)}
 
-/* MC backtest tab */
-.bt-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-@media(max-width:700px){.bt-grid{grid-template-columns:1fr}}
-.bt-card{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:14px}
-.bt-card h4{font-size:10px;color:var(--tx2);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
-.bt-stat{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:1px dashed var(--bd2);font-size:11px}
-.bt-stat:last-child{border:none}
-.bt-label{color:var(--tx2)}
-.bt-val{font-weight:800;font-family:var(--fn)}
-.run-btn{background:var(--sf2);border:1px solid var(--pur);color:var(--pur);padding:14px 24px;border-radius:8px;font-size:12px;font-weight:800;cursor:pointer;font-family:var(--fn);transition:.15s;width:100%;text-align:center;margin-top:14px}
-.run-btn:hover{background:var(--pur);color:#fff}
-.run-btn:disabled{opacity:.35;cursor:not-allowed;background:transparent}
-.audit-box{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:16px;font-size:11px;line-height:1.7}
-.audit-box h4{font-size:13px;font-weight:800;color:#fff;margin-bottom:10px}
-.audit-row{display:flex;gap:10px;padding:5px 0;border-bottom:1px dashed var(--bd2)}
-.audit-row:last-child{border:none}
-.audit-status{font-weight:800;width:24px;flex-shrink:0}
-.audit-name{color:var(--tx2);flex:1}
+/* ── Loader Overlay ── */
+#loader-overlay{position:fixed;inset:0;background:rgba(5,7,10,0.95);z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(10px)}
+.loader-box{background:var(--sf);border:1px solid var(--bd);border-radius:12px;padding:30px;max-width:600px;width:100%;text-align:center;box-shadow:0 12px 48px rgba(0,0,0,0.5)}
+.loader-box h2{font-size:24px;color:#fff;margin-bottom:8px;font-weight:800}
+.loader-box p{color:var(--tx2);font-size:12px;margin-bottom:24px}
+.file-drop{border:2px dashed var(--pur);background:rgba(163,113,247,0.05);border-radius:8px;padding:40px 20px;cursor:pointer;transition:0.2s}
+.file-drop:hover, .file-drop.dragover{background:rgba(163,113,247,0.1);border-color:var(--cyan)}
+.file-drop input{display:none}
+.file-list{margin-top:20px;text-align:left;font-size:11px;color:var(--tx2)}
+.file-list li{padding:6px 0;border-bottom:1px dashed var(--bd2);display:flex;justify-content:space-between}
+.file-list li span.status{font-weight:800;color:var(--gld)}
+.file-list li span.status.ok{color:var(--grn)}
 
-/* Guide */
-.guide-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px;margin-bottom:14px}
-.g-card{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:14px}
-.g-card h4{font-size:11px;color:var(--cyan);text-transform:uppercase;letter-spacing:.8px;font-weight:800;margin-bottom:8px}
-.g-card p,.g-card li{font-size:11px;color:var(--tx2);line-height:1.65}
-.g-card li{list-style:none;padding:3px 0;border-bottom:1px dashed var(--bd2)}
-.g-card li:before{content:"→ ";color:var(--cyan)}
-.g-card code{background:var(--sf2);padding:1px 5px;border-radius:3px;color:var(--gld);font-size:10px}
-.bug-list li{list-style:none;padding:4px 0;border-bottom:1px dashed var(--bd2)}
-.bug-list .fa{color:var(--red);font-weight:800}.bug-list .pass{color:var(--grn)}
-
-/* Floating bar */
+/* Floating bar & Toast */
 .fab-wrap{position:fixed;bottom:12px;left:50%;transform:translateX(-50%);width:94%;max-width:720px;z-index:100}
 .fab{background:rgba(13,17,23,.88);backdrop-filter:blur(20px);border:1px solid var(--bd);border-radius:14px;padding:10px 18px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 8px 32px rgba(0,0,0,.6);cursor:pointer}
-.fab:focus-visible{outline:2px solid var(--cyan)}
+.fab:focus-visible{outline:2px solid var(--pur)}
 .fab-stats{display:flex;gap:16px}
 .fab-s{display:flex;flex-direction:column}
 .fab-v{font-size:13px;font-weight:800;font-family:var(--fn)}
 .fab-l{font-size:8px;color:var(--tx3);text-transform:uppercase;letter-spacing:.5px;margin-top:1px}
-
-.toast{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-20px);background:var(--sf2);border:1px solid var(--cyan);color:var(--cyan);padding:10px 16px;border-radius:6px;font-size:12px;font-weight:700;z-index:300;box-shadow:0 4px 16px rgba(0,0,0,.5);opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;max-width:90vw}
+.toast{position:fixed;top:14px;left:50%;transform:translateX(-50%) translateY(-20px);background:var(--sf2);border:1px solid var(--pur);color:var(--pur);padding:10px 16px;border-radius:6px;font-size:12px;font-weight:700;z-index:300;box-shadow:0 4px 16px rgba(0,0,0,.5);opacity:0;transition:opacity .2s,transform .2s;pointer-events:none;max-width:90vw}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .toast.err{border-color:var(--red);color:var(--red)}
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0)}
-
-@media(max-width:768px){
-  .wrap{padding:8px}
-  .srch{width:100%}
-  .chip{flex:1;text-align:center;font-size:9px;padding:6px 4px}
-  table{min-width:720px}
-  th,td{padding:6px 4px;font-size:9px}
-  .lu-players{grid-template-columns:1fr}
-  .lu-metrics{grid-template-columns:repeat(3,1fr)}
-  .build-grid{grid-template-columns:1fr}
-  .opt-btns{grid-template-columns:1fr}
-}
 </style>
 </head>
 <body>
-<div class="wrap">
 
+<div id="loader-overlay">
+  <div class="loader-box">
+    <h2>🐊 V11 Field Ingestion</h2>
+    <p>Upload the 4 required CSVs to dynamically build the full Zurich field, resolve player IDs, and calculate projections. No data leaves your browser.</p>
+    <label class="file-drop" id="drop-zone">
+      <div style="font-size:32px;margin-bottom:12px">📁</div>
+      <div style="font-weight:700;color:var(--pur)">Click or Drag to Upload CSVs</div>
+      <div style="font-size:10px;color:var(--tx3);margin-top:6px">Requires: DKSalaries.csv, pga_field.csv, dg_decomposition.csv, preds_ch_model.csv</div>
+      <input type="file" id="file-input" multiple accept=".csv">
+    </label>
+    <ul class="file-list" id="file-list">
+      <li id="status-dk">DraftKings Salaries <span class="status">Waiting...</span></li>
+      <li id="status-field">DataGolf Field <span class="status">Waiting...</span></li>
+      <li id="status-decomp">DataGolf Decomposition <span class="status">Waiting...</span></li>
+      <li id="status-preds">DataGolf Predictions <span class="status">Waiting...</span></li>
+    </ul>
+    <button id="btn-build" style="margin-top:20px;width:100%;padding:12px;background:var(--pur);color:#000;border:none;border-radius:6px;font-weight:800;cursor:pointer;display:none;font-family:var(--fn)">INITIALIZE ENGINE</button>
+  </div>
+</div>
+
+<div class="wrap">
 <header>
   <div class="logo">
     <div class="logo-icon" aria-hidden="true">🐊</div>
     <div class="logo-text">
-      <h1>SWAMP CLASSIC V9</h1>
-      <div class="sub">Zurich DFS · MC+Odds Fusion · Steam/CourseFit/Delta</div>
+      <h1>SWAMP CLASSIC V11</h1>
+      <div class="sub">Dynamic CSV Ingestion · Zurich Variance Compression</div>
     </div>
   </div>
-  <div class="hdr-meta" id="hdrMeta"></div>
+  <div class="hdr-meta" id="hdrMeta">Waiting for Data...</div>
 </header>
 
-<div class="banner banner-gpp" id="bannerGpp"></div>
-<div class="banner banner-nf" id="bannerNf"></div>
-
 <div class="tabs" role="tablist">
-  <button class="tab on" role="tab" aria-selected="true" data-panel="lineups">🏆 LINEUPS</button>
-  <button class="tab" role="tab" aria-selected="false" data-panel="pool">📊 POOL</button>
-  <button class="tab" role="tab" aria-selected="false" data-panel="teams">👥 TEAMS</button>
-  <button class="tab" role="tab" aria-selected="false" data-panel="build">🛠 BUILD</button>
-  <button class="tab" role="tab" aria-selected="false" data-panel="backtest">📈 BACKTEST</button>
-  <button class="tab" role="tab" aria-selected="false" data-panel="audit">🔬 AUDIT</button>
+  <button class="tab on" role="tab" aria-selected="true" data-panel="pool">📊 POOL & LEVERAGE</button>
+  <button class="tab" role="tab" aria-selected="false" data-panel="build">🛠 BUILD & EXPORT</button>
 </div>
 
-<!-- LINEUPS -->
-<div class="pnl on" id="pnl-lineups" role="tabpanel">
+<div class="pnl on" id="pnl-pool" role="tabpanel">
   <div class="toolbar">
-    <button class="chip on" data-lrank="fusionScore">🔮 FUSION</button>
-      <button class="chip" data-lrank="gppScore">🎯 GPP</button>
-    <button class="chip grn" data-lrank="cashScore">💰 CASH</button>
-    <button class="chip" data-lrank="mcMean">📈 MEAN</button>
-    <button class="chip" data-lrank="p90">🔥 P90</button>
-    <button class="chip" data-lrank="p99">💎 P99</button>
-    <button class="chip" data-lrank="sharpe">📐 SHARPE</button>
-    <button class="chip" data-lrank="boomRate">💥 BOOM</button>
-    <button class="chip pur" id="nfToggle" data-lfilter="nofitz">🚫 NO-FITZ</button>
-  </div>
-  <div class="lu-list" id="luList"></div>
-</div>
-
-<!-- POOL -->
-<div class="pnl" id="pnl-pool" role="tabpanel">
-  <div class="toolbar">
-    <label for="srch" class="sr-only">Search players</label>
     <input class="srch" id="srch" type="search" placeholder="🔍 Search player / team…">
     <button class="chip on" data-filter="all">ALL</button>
-    <button class="chip grn" data-filter="elite">⚡ PROJ &gt;40</button>
+    <button class="chip pur" data-filter="lev">🎯 HIGH LEVERAGE</button>
     <button class="chip gld" data-filter="value">💎 VALUE &gt;4.5</button>
-    <button class="chip pur" data-filter="winup">👑 WIN &gt;3%</button>
-    <button class="chip red" data-filter="lev">🎯 LEVERAGE</button>
   </div>
   <div class="tw">
     <table id="pool-table">
@@ -272,55 +182,27 @@ tbody tr:hover td:first-child{background:var(--sf2)}
         <th data-c="salary">SALARY <span class="arr">▼</span></th>
         <th data-c="team">TEAM <span class="arr">▼</span></th>
         <th data-c="proj">PROJ <span class="arr">▼</span></th>
-        <th data-c="val">VAL <span class="arr">▼</span></th>
         <th data-c="sg">SG/RD <span class="arr">▼</span></th>
-        <th data-c="win">WIN% <span class="arr">▼</span></th>
-        <th data-c="cut">CUT% <span class="arr">▼</span></th>
-        <th data-c="courseFit">FIT <span class="arr">▼</span></th>
-        <th data-c="sigma">σ <span class="arr">▼</span></th>
-        <th data-c="steam" title="Steam: (odds_win - ch_win) / ch_win. Positive = money moved ON">💨 STEAM <span class="arr">▼</span></th>
-        <th data-c="indicator" title="Fusion: 0.35×z_steam + 0.30×z_courseFit + 0.35×z_delta">🔮 FUSION IND <span class="arr">▼</span></th>
+        <th data-c="zSigma" title="Zurich Compressed Variance">z-σ <span class="arr">▼</span></th>
+        <th data-c="winCh">WIN% <span class="arr">▼</span></th>
+        <th data-c="own" title="Projected Ownership">OWN% <span class="arr">▼</span></th>
+        <th data-c="leverage" title="Win% minus Own%">LEV <span class="arr">▼</span></th>
       </tr></thead>
       <tbody id="pool-tb"></tbody>
     </table>
   </div>
 </div>
 
-<!-- TEAMS -->
-<div class="pnl" id="pnl-teams" role="tabpanel">
-  <div class="toolbar">
-    <label for="tsrch" class="sr-only">Search teams</label>
-    <input class="srch" id="tsrch" type="search" placeholder="🔍 Search teams…">
-    <button class="chip on" data-tsort="win">👑 WIN%</button>
-    <button class="chip" data-tsort="teamProj">⚡ PROJ</button>
-    <button class="chip" data-tsort="cut">✂️ CUT%</button>
-    <button class="chip" data-tsort="t10">🔟 TOP10%</button>
-    <button class="chip" data-tsort="teamSg">🎯 TEAM SG</button>
-  </div>
-  <div class="tw">
-    <table id="team-table">
-      <thead><tr>
-        <th>TEAM</th>
-        <th>P1</th><th>P2</th>
-        <th>WIN%</th><th>T5%</th><th>T10%</th><th>T20%</th>
-        <th>CUT%</th><th>TEAM PROJ</th><th>TEAM SG</th><th>STEAM <span title="Avg odds movement vs CH model">💨</span></th><th>AVG FIT</th>
-      </tr></thead>
-      <tbody id="team-tb"></tbody>
-    </table>
-  </div>
-</div>
-
-<!-- BUILD -->
 <div class="pnl" id="pnl-build" role="tabpanel">
   <div class="build-grid">
     <div class="build-main">
-      <h3>🛠 LINEUP BUILDER</h3>
-      <p>Lock players from Pool. Knapsack DP on DK fantasy point projections, $50k cap, 6 players, 1-per-pair enforced. GPP = ceiling-weighted; Cash = floor-weighted.</p>
+      <h3>🛠 ZURICH LINEUP BUILDER</h3>
+      <p>Dynamic Programming Knapsack. Enforces 6 players, 1-per-pair strictly. V11 applies `zSigma` compression.</p>
       <div class="opt-btns">
-        <button class="opt-btn gpp" data-gen="gpp"><strong>🎯 GPP — CEILING MAX</strong><span>proj + 0.5σ · win-spike bonus</span></button>
-        <button class="opt-btn cash" data-gen="cash"><strong>💰 CASH — FLOOR MAX</strong><span>proj − 0.25σ · cut-weighted</span></button>
+        <button class="opt-btn gpp" data-gen="gpp"><strong>🎯 GPP — CEILING MAX</strong><span>proj + 0.5(zSigma)</span></button>
+        <button class="opt-btn lev" data-gen="lev"><strong>⚖️ GPP — LEVERAGE MAX</strong><span>proj + 0.5(zSigma) − 0.25(own)</span></button>
+        <button class="opt-btn cash" data-gen="cash"><strong>💰 CASH — FLOOR MAX</strong><span>proj − 0.25(zSigma)</span></button>
       </div>
-      <div class="rule-note">📋 <span><strong>DK rule</strong>: 1 player per pair. Builder enforces strictly — locking A blocks B.</span></div>
       <div class="locks-box">
         <div class="locks-hd"><h4>🔒 Locked Players</h4><button class="clr-btn" id="clrLocks">CLEAR ALL</button></div>
         <div id="locks-list"><div class="lock-empty">No players locked.</div></div>
@@ -328,7 +210,6 @@ tbody tr:hover td:first-child{background:var(--sf2)}
       <div class="opt-out" id="opt-out">
         <div class="opt-head"><h4 id="opt-title">OPTIMAL LINEUP</h4><div class="opt-stats" id="opt-stats"></div></div>
         <ul class="opt-list" id="opt-list"></ul>
-        <button class="exp-btn" id="expBtn">📥 EXPORT DRAFTKINGS CSV</button>
       </div>
     </div>
     <div class="build-side">
@@ -338,147 +219,33 @@ tbody tr:hover td:first-child{background:var(--sf2)}
       <div class="stat-row"><span class="stat-l">CAP USED</span><span class="stat-v v-grn" id="sS">$0</span></div>
       <div class="stat-row"><span class="stat-l">CAP LEFT</span><span class="stat-v" id="sR">$50,000</span></div>
       <div class="stat-row"><span class="stat-l">PROJ SUM</span><span class="stat-v v-gld" id="sProj">0.0</span></div>
-      <div class="stat-row"><span class="stat-l">WIN SUM</span><span class="stat-v v-cy" id="sWin">0.0%</span></div>
+      <div class="stat-row"><span class="stat-l">OWN% SUM</span><span class="stat-v v-pur" id="sOwn">0.0%</span></div>
     </div>
   </div>
 </div>
-
-<!-- BACKTEST -->
-<div class="pnl" id="pnl-backtest" role="tabpanel">
-  <div class="bt-grid">
-    <div class="bt-card" id="bt-mc">
-      <h4>MC SIMULATION (50k trials, ρ=0.65 teammate corr)</h4>
-      <p style="color:var(--tx2);font-size:11px">Select a pre-computed lineup to run the distribution analysis, or build a custom lineup in the Builder tab.</p>
-      <div id="bt-select" style="display:flex;flex-direction:column;gap:6px;margin-top:10px;max-height:320px;overflow-y:auto"></div>
-    </div>
-    <div class="bt-card" id="bt-results">
-      <h4>DISTRIBUTION METRICS</h4>
-      <div id="bt-stats"><p style="color:var(--tx3);font-size:11px">Select a lineup to display.</p></div>
-    </div>
-  </div>
-  <div class="bt-grid">
-    <div class="bt-card">
-      <h4>LINEUP DIAGNOSTICS</h4>
-      <div id="bt-diag"><p style="color:var(--tx3);font-size:11px">Select a lineup to display.</p></div>
-    </div>
-    <div class="bt-card">
-      <h4>CORRELATION MODEL</h4>
-      <ul class="bug-list" style="list-style:none">
-        <li><span class="pass">✅</span> Teammate ρ = 0.65 (shared course + alt-shot)</li>
-        <li><span class="pass">✅</span> Scoring: N(EV, σ√rounds) per player</li>
-        <li><span class="pass">✅</span> Finish: categorical draw from CH model probs</li>
-        <li><span class="pass">✅</span> Finish bonus: Win+30, T5+14, T10+7, T20+5, T30+2</li>
-        <li><span class="pass">✅</span> CH win/cut treated as probabilities (not odds)</li>
-        <li><span class="pass">✅</span> 1-per-pair constraint verified on every lineup</li>
-        <li><span class="pass">✅</span> Steam = (odds_win − CH_win) / CH_win, vig removed (total=1.428×)</li>
-        <li><span class="pass">✅</span> Fusion = 0.35×z_steam + 0.30×z_course_fit + 0.35×z_delta</li>
-        <li><span class="pass">✅</span> 10 objective functions inc. fusion_gpp, fusion_steam, full_fusion</li>
-      </ul>
-    </div>
-  </div>
 </div>
-
-<!-- AUDIT -->
-<div class="pnl" id="pnl-audit" role="tabpanel">
-  <div class="guide-grid">
-    <div class="g-card">
-      <h4>V12 CODE AUDIT — 8 BUGS FOUND</h4>
-      <ul class="bug-list">
-        <li><span class="fa">❌ BUG1</span> CH model win/cut are probs, not odds. odds_to_prob(0.068)→0.999 (catastrophic inversion)</li>
-        <li><span class="fa">❌ BUG2</span> Salary match on last name only → Brown×2, Kim×2, Svensson×2 collisions</li>
-        <li><span class="fa">❌ BUG3</span> Synergy t_std>2.72 fires for 100% of pairs (all stds 2.59–3.23). syn=0.25 is a constant, not a signal</li>
-        <li><span class="fa">❌ BUG4</span> gpp_obj uses SG/round units, not DK fantasy pts. Scale error: ~1.87 SG vs 57.76 DK pts for Fitz</li>
-        <li><span class="fa">❌ BUG5</span> Backtest multiplies 6 independent cut probs → badly underestimates P(6/6 cut) due to correlation</li>
-        <li><span class="fa">❌ BUG6</span> Knapsack picks 6 teams (pairs); DK requires 6 individual players, 1 per pair</li>
-        <li><span class="fa">❌ BUG7</span> "Total Win%" is sum of 6 team win probs — not a lineup win probability</li>
-        <li><span class="fa">❌ BUG8</span> "Safe" mode multiplies values starting from 0 → 0×anything = 0 forever, always breaks</li>
-      </ul>
-    </div>
-    <div class="g-card">
-      <h4>V8 FIXES — TDD GREEN</h4>
-      <ul class="bug-list">
-        <li><span class="pass">✅ T01</span> CH values used as raw probabilities (verified: win[0]=0.0678)</li>
-        <li><span class="pass">✅ T02</span> No odds conversion — probabilities flow directly into finish EV formula</li>
-        <li><span class="pass">✅ T03</span> Projections in DK fantasy points (Fitz=57.76, not 1.87)</li>
-        <li><span class="pass">✅ T04</span> Synergy replaced with real course_fit_total_adj from DG decomp</li>
-        <li><span class="pass">✅ T05</span> Name matching via dg_id cross-reference — zero collisions</li>
-        <li><span class="pass">✅ T06</span> Knapsack picks 6 individual players, 1 per pair enforced in DP loop</li>
-        <li><span class="pass">✅ T07</span> $6,000–$10,500 individual salary range verified</li>
-        <li><span class="pass">✅ T08</span> proj-salary correlation = 0.896 (well-calibrated)</li>
-        <li><span class="pass">✅ T09</span> Zero 1-per-pair violations across all 40 embedded lineups</li>
-        <li><span class="pass">✅ T10</span> MC mean within 0.2 of analytic projection (50k trials, ρ=0.65)</li>
-        <li><span class="pass">✅ T11</span> Best non-Fitz lineup mcMean=245.2 (verified)</li>
-        <li><span class="pass">✅ T12</span> course_fit differentiates teams (range −0.26 to +0.29)</li>
-      </ul>
-    </div>
-    <div class="g-card">
-      <h4>PROJECTION MODEL</h4>
-      <ul>
-        <li>DK pts = scoring_EV + finish_EV</li>
-        <li>scoring_EV = <code>(9.0 + 3.0 × SG/rd) × exp_rounds</code></li>
-        <li>finish_EV = 30×P(win) + 14×P(T5) + 7×P(T10) + 5×P(T20) + 2×P(T30)</li>
-        <li>exp_rounds = 4×P(cut) + 2×(1−P(cut))</li>
-        <li>σ_scoring = 3.0 × SG_std × √exp_rounds</li>
-        <li>σ_finish = 0.5 × finish_EV + 2.0</li>
-        <li>σ_total = √(σ_scoring² + σ_finish²)</li>
-      </ul>
-    </div>
-    <div class="g-card">
-      <h4>OPTIMIZER — 8 OBJECTIVES</h4>
-      <ul>
-        <li><code>proj</code> — raw expected DK pts</li>
-        <li><code>ceil_50</code> — proj + 0.5σ (GPP ceiling)</li>
-        <li><code>ceil_75</code> — proj + 0.75σ (aggressive)</li>
-        <li><code>floor</code> — proj − 0.25σ (cash floor)</li>
-        <li><code>win_spike</code> — proj + 0.5σ + 15×P(win)</li>
-        <li><code>value</code> — proj / salary × 1000</li>
-        <li><code>course</code> — proj + 10×course_fit</li>
-        <li><code>cut_adj</code> — proj × P(cut) + 0.5σ × P(cut)</li>
-        <li>+ all 8 repeated with Fitz team banned</li>
-        <li>→ 126 unique candidates, all MC-scored</li>
-      </ul>
-    </div>
-  </div>
-</div>
-</div><!-- .wrap -->
 
 <div class="fab-wrap">
-  <div class="fab" id="fabBtn" tabindex="0" role="button" aria-label="Open builder">
+  <div class="fab" id="fabBtn" tabindex="0" role="button">
     <div class="fab-stats">
       <div class="fab-s"><span class="fab-v" id="fC">0/6</span><span class="fab-l">Roster</span></div>
       <div class="fab-s"><span class="fab-v v-grn" id="fS">$50,000</span><span class="fab-l">Rem Cap</span></div>
-      <div class="fab-s"><span class="fab-v" id="fProj">0.0</span><span class="fab-l">Proj</span></div>
+      <div class="fab-s"><span class="fab-v v-pur" id="fLev">0.0</span><span class="fab-l">Lev Σ</span></div>
     </div>
-    <div style="color:var(--tx3);font-size:11px;font-family:var(--fn)">BUILD →</div>
+    <div style="color:var(--tx3);font-size:11px;font-family:var(--fn)">BUILDER →</div>
   </div>
 </div>
-<div class="toast" id="toast" role="alert" aria-live="assertive"></div>
+<div class="toast" id="toast" role="alert"></div>
 
 <script>
 'use strict';
-/* ══════════════════════════════════════════
-   DATA — generated from 4 sources, MC-validated
-   ══════════════════════════════════════════ */
-const DATA = {"players":[{"name":"Matt Fitzpatrick","dkId":"42705947","salary":10500,"team":"T41","proj":53.75,"projCh":57.76,"sigma":16.16,"dkPpg":93.5,"sg":1.872,"courseFit":-0.205,"expRounds":3.5,"winOdds":0.056,"winCh":0.0678,"t5Odds":0.0376,"t10Odds":0.0302,"cut":0.749,"steam":-0.5101,"delta":5.501,"indicator":-0.3072,"zSteam":-0.895,"zCf":-2.396,"zDelta":2.071,"age":31,"locked":false,"excluded":false},{"name":"Ryan Gerard","dkId":"42705953","salary":9500,"team":"T73","proj":43.51,"projCh":46.99,"sigma":15.88,"dkPpg":80.5,"sg":1.027,"courseFit":-0.093,"expRounds":3.42,"winOdds":0.0389,"winCh":0.0503,"t5Odds":0.0278,"t10Odds":0.024,"cut":0.7118,"steam":-0.5422,"delta":4.946,"indicator":-0.2059,"zSteam":-1.006,"zCf":-1.206,"zDelta":1.451,"age":26,"locked":false,"excluded":false},{"name":"Ben Griffin","dkId":"42705951","salary":9700,"team":"T61","proj":42.39,"projCh":45.54,"sigma":15.4,"dkPpg":64.2,"sg":0.971,"courseFit":-0.149,"expRounds":3.39,"winOdds":0.0359,"winCh":0.0426,"t5Odds":0.0288,"t10Odds":0.025,"cut":0.6928,"steam":-0.4983,"delta":4.695,"indicator":-0.4294,"zSteam":-0.854,"zCf":-1.801,"zDelta":1.171,"age":29,"locked":false,"excluded":false},{"name":"Michael Thorbjornsen","dkId":"42705956","salary":9400,"team":"T65","proj":42.38,"projCh":45.01,"sigma":15.82,"dkPpg":66.1,"sg":1.066,"courseFit":-0.029,"expRounds":3.32,"winOdds":0.0342,"winCh":0.0355,"t5Odds":0.0275,"t10Odds":0.024,"cut":0.658,"steam":-0.427,"delta":4.788,"indicator":0.0753,"zSteam":-0.609,"zCf":-0.527,"zDelta":1.275,"age":24,"locked":false,"excluded":false},{"name":"Shane Lowry","dkId":"42705950","salary":10000,"team":"T24","proj":41.77,"projCh":45.24,"sigma":15.71,"dkPpg":74.2,"sg":0.86,"courseFit":-0.093,"expRounds":3.41,"winOdds":0.0424,"winCh":0.0522,"t5Odds":0.0315,"t10Odds":0.0267,"cut":0.7071,"steam":-0.5163,"delta":4.524,"indicator":-0.3397,"zSteam":-0.916,"zCf":-1.206,"zDelta":0.98,"age":39,"locked":false,"excluded":false},{"name":"Sahith Theegala","dkId":"42705958","salary":9200,"team":"T47","proj":41.28,"projCh":44.08,"sigma":15.76,"dkPpg":79.1,"sg":0.919,"courseFit":-0.078,"expRounds":3.35,"winOdds":0.0311,"winCh":0.0346,"t5Odds":0.0262,"t10Odds":0.0234,"cut":0.6745,"steam":-0.4664,"delta":4.792,"indicator":-0.127,"zSteam":-0.744,"zCf":-1.047,"zDelta":1.279,"age":28,"locked":false,"excluded":false},{"name":"Brooks Koepka","dkId":"42705949","salary":10000,"team":"T24","proj":41.17,"projCh":44.63,"sigma":16.29,"dkPpg":56.9,"sg":0.801,"courseFit":0.02,"expRounds":3.41,"winOdds":0.0424,"winCh":0.0522,"t5Odds":0.0315,"t10Odds":0.0267,"cut":0.7071,"steam":-0.5163,"delta":4.463,"indicator":-0.0032,"zSteam":-0.916,"zCf":-0.006,"zDelta":0.912,"age":35,"locked":false,"excluded":false},{"name":"Jordan Smith","dkId":"42705962","salary":9000,"team":"T29","proj":39.8,"projCh":42.68,"sigma":15.6,"dkPpg":63.8,"sg":0.798,"courseFit":-0.029,"expRounds":3.33,"winOdds":0.028,"winCh":0.0374,"t5Odds":0.0248,"t10Odds":0.0222,"cut":0.6666,"steam":-0.5454,"delta":4.743,"indicator":-0.0854,"zSteam":-1.016,"zCf":-0.527,"zDelta":1.224,"age":33,"locked":false,"excluded":false},{"name":"Michael Brennan","dkId":"42705977","salary":8200,"team":"T72","proj":39.73,"projCh":42.82,"sigma":16.15,"dkPpg":59.8,"sg":0.789,"courseFit":0.094,"expRounds":3.33,"winOdds":0.0304,"winCh":0.0425,"t5Odds":0.0229,"t10Odds":0.0208,"cut":0.667,"steam":-0.5748,"delta":5.222,"indicator":0.4585,"zSteam":-1.118,"zCf":0.78,"zDelta":1.759,"age":24,"locked":false,"excluded":false},{"name":"Wyndham Clark","dkId":"42705963","salary":8900,"team":"T58","proj":39.65,"projCh":42.4,"sigma":15.79,"dkPpg":68.7,"sg":0.812,"courseFit":-0.032,"expRounds":3.31,"winOdds":0.0292,"winCh":0.0355,"t5Odds":0.0246,"t10Odds":0.0222,"cut":0.6547,"steam":-0.5076,"delta":4.764,"indicator":-0.041,"zSteam":-0.886,"zCf":-0.558,"zDelta":1.248,"age":32,"locked":false,"excluded":false},{"name":"Sudarshan Yellamaraju","dkId":"42705954","salary":9500,"team":"T73","proj":39.41,"projCh":42.89,"sigma":16.1,"dkPpg":80.9,"sg":0.628,"courseFit":-0.022,"expRounds":3.42,"winOdds":0.0389,"winCh":0.0503,"t5Odds":0.0278,"t10Odds":0.024,"cut":0.7118,"steam":-0.5422,"delta":4.515,"indicator":-0.1483,"zSteam":-1.006,"zCf":-0.452,"zDelta":0.97,"age":24,"locked":false,"excluded":false},{"name":"Sam Stevens","dkId":"42705975","salary":8300,"team":"T49","proj":39.23,"projCh":41.42,"sigma":15.09,"dkPpg":74.6,"sg":0.868,"courseFit":-0.048,"expRounds":3.25,"winOdds":0.0212,"winCh":0.0217,"t5Odds":0.0199,"t10Odds":0.0189,"cut":0.6238,"steam":-0.4235,"delta":4.991,"indicator":0.0982,"zSteam":-0.596,"zCf":-0.728,"zDelta":1.501,"age":29,"locked":false,"excluded":false},{"name":"Marco Penge","dkId":"42705959","salary":9100,"team":"T52","proj":38.5,"projCh":41.38,"sigma":16.18,"dkPpg":56.7,"sg":0.681,"courseFit":0.131,"expRounds":3.32,"winOdds":0.0286,"winCh":0.0367,"t5Odds":0.0246,"t10Odds":0.022,"cut":0.6609,"steam":-0.5337,"delta":4.547,"indicator":0.3623,"zSteam":-0.976,"zCf":1.173,"zDelta":1.006,"age":27,"locked":false,"excluded":false},{"name":"Matt McCarty","dkId":"42705967","salary":8700,"team":"T70","proj":38.4,"projCh":40.8,"sigma":15.15,"dkPpg":64.4,"sg":0.726,"courseFit":-0.124,"expRounds":3.28,"winOdds":0.0259,"winCh":0.027,"t5Odds":0.0231,"t10Odds":0.0211,"cut":0.6412,"steam":-0.4293,"delta":4.689,"indicator":-0.2689,"zSteam":-0.617,"zCf":-1.536,"zDelta":1.165,"age":28,"locked":false,"excluded":false},{"name":"Andrew Novak","dkId":"42705952","salary":9700,"team":"T61","proj":38.29,"projCh":41.44,"sigma":15.93,"dkPpg":59.4,"sg":0.567,"courseFit":-0.041,"expRounds":3.39,"winOdds":0.0359,"winCh":0.0426,"t5Odds":0.0288,"t10Odds":0.025,"cut":0.6928,"steam":-0.4983,"delta":4.272,"indicator":-0.2506,"zSteam":-0.854,"zCf":-0.654,"zDelta":0.699,"age":31,"locked":false,"excluded":false},{"name":"Davis Thompson","dkId":"42705966","salary":8800,"team":"T69","proj":37.35,"projCh":39.53,"sigma":15.33,"dkPpg":59.5,"sg":0.659,"courseFit":-0.036,"expRounds":3.25,"winOdds":0.0269,"winCh":0.0247,"t5Odds":0.0236,"t10Odds":0.0214,"cut":0.6241,"steam":-0.3568,"delta":4.492,"indicator":0.0219,"zSteam":-0.367,"zCf":-0.601,"zDelta":0.944,"age":26,"locked":false,"excluded":false},{"name":"Alex Fitzpatrick","dkId":"42705948","salary":10500,"team":"T41","proj":36.44,"projCh":40.45,"sigma":16.1,"dkPpg":80.0,"sg":0.223,"courseFit":-0.074,"expRounds":3.5,"winOdds":0.056,"winCh":0.0678,"t5Odds":0.0376,"t10Odds":0.0302,"cut":0.749,"steam":-0.5101,"delta":3.853,"indicator":-0.534,"zSteam":-0.895,"zCf":-1.005,"zDelta":0.23,"age":27,"locked":false,"excluded":false},{"name":"Aaron Rai","dkId":"42705957","salary":9200,"team":"T47","proj":36.41,"projCh":39.21,"sigma":15.17,"dkPpg":53.9,"sg":0.434,"courseFit":-0.155,"expRounds":3.35,"winOdds":0.0311,"winCh":0.0346,"t5Odds":0.0262,"t10Odds":0.0234,"cut":0.6745,"steam":-0.4664,"delta":4.262,"indicator":-0.5794,"zSteam":-0.744,"zCf":-1.865,"zDelta":0.687,"age":31,"locked":false,"excluded":false},{"name":"Matt Wallace","dkId":"42705960","salary":9100,"team":"T52","proj":36.31,"projCh":39.19,"sigma":15.4,"dkPpg":64.7,"sg":0.461,"courseFit":-0.071,"expRounds":3.32,"winOdds":0.0286,"winCh":0.0367,"t5Odds":0.0246,"t10Odds":0.022,"cut":0.6609,"steam":-0.5337,"delta":4.306,"indicator":-0.3756,"zSteam":-0.976,"zCf":-0.973,"zDelta":0.737,"age":36,"locked":false,"excluded":false},{"name":"Kristoffer Reitan","dkId":"42705969","salary":8600,"team":"T33","proj":36.22,"projCh":38.51,"sigma":15.86,"dkPpg":63.4,"sg":0.573,"courseFit":0.017,"expRounds":3.23,"winOdds":0.0226,"winCh":0.0268,"t5Odds":0.021,"t10Odds":0.0198,"cut":0.6163,"steam":-0.4932,"delta":4.478,"indicator":0.0206,"zSteam":-0.837,"zCf":-0.038,"zDelta":0.928,"age":28,"locked":false,"excluded":false},{"name":"Alex Smalley","dkId":"42705971","salary":8500,"team":"T46","proj":36.09,"projCh":37.92,"sigma":15.06,"dkPpg":71.9,"sg":0.638,"courseFit":-0.049,"expRounds":3.17,"winOdds":0.0226,"winCh":0.0193,"t5Odds":0.0208,"t10Odds":0.0195,"cut":0.5851,"steam":-0.3126,"delta":4.461,"indicator":0.0215,"zSteam":-0.214,"zCf":-0.739,"zDelta":0.909,"age":29,"locked":false,"excluded":false},{"name":"Keith Mitchell","dkId":"42705979","salary":8100,"team":"T10","proj":36.03,"projCh":37.25,"sigma":14.95,"dkPpg":72.5,"sg":0.758,"courseFit":0.033,"expRounds":3.08,"winOdds":0.0195,"winCh":0.0115,"t5Odds":0.0191,"t10Odds":0.0183,"cut":0.5396,"steam":-0.0059,"delta":4.599,"indicator":0.7068,"zSteam":0.842,"zCf":0.132,"zDelta":1.064,"age":34,"locked":false,"excluded":false},{"name":"Haotong Li","dkId":"42705961","salary":9000,"team":"T29","proj":35.94,"projCh":38.82,"sigma":15.81,"dkPpg":59.0,"sg":0.412,"courseFit":0.017,"expRounds":3.33,"winOdds":0.028,"winCh":0.0374,"t5Odds":0.0248,"t10Odds":0.0222,"cut":0.6666,"steam":-0.5454,"delta":4.314,"indicator":-0.1064,"zSteam":-1.016,"zCf":-0.038,"zDelta":0.745,"age":30,"locked":false,"excluded":false},{"name":"Taylor Pendrith","dkId":"42705973","salary":8400,"team":"T32","proj":35.56,"projCh":37.58,"sigma":15.3,"dkPpg":57.1,"sg":0.522,"courseFit":0.037,"expRounds":3.22,"winOdds":0.0226,"winCh":0.0223,"t5Odds":0.0208,"t10Odds":0.0198,"cut":0.6099,"steam":-0.3955,"delta":4.474,"indicator":0.2006,"zSteam":-0.5,"zCf":0.174,"zDelta":0.923,"age":34,"locked":false,"excluded":false},{"name":"Mac Meissner","dkId":"42705968","salary":8700,"team":"T70","proj":35.52,"projCh":37.92,"sigma":15.08,"dkPpg":58.6,"sg":0.434,"courseFit":-0.044,"expRounds":3.28,"winOdds":0.0259,"winCh":0.027,"t5Odds":0.0231,"t10Odds":0.0211,"cut":0.6412,"steam":-0.4293,"delta":4.359,"indicator":-0.1432,"zSteam":-0.617,"zCf":-0.686,"zDelta":0.795,"age":27,"locked":false,"excluded":false},{"name":"Johnny Keefer","dkId":"42705978","salary":8200,"team":"T72","proj":35.01,"projCh":38.1,"sigma":15.99,"dkPpg":52.5,"sg":0.317,"courseFit":0.091,"expRounds":3.33,"winOdds":0.0304,"winCh":0.0425,"t5Odds":0.0229,"t10Odds":0.0208,"cut":0.667,"steam":-0.5748,"delta":4.646,"indicator":0.2239,"zSteam":-1.118,"zCf":0.748,"zDelta":1.116,"age":25,"locked":false,"excluded":false},{"name":"Max McGreevy","dkId":"42705985","salary":7800,"team":"T45","proj":34.95,"projCh":36.86,"sigma":14.89,"dkPpg":61.0,"sg":0.506,"courseFit":-0.082,"expRounds":3.19,"winOdds":0.0184,"winCh":0.0193,"t5Odds":0.0185,"t10Odds":0.0178,"cut":0.594,"steam":-0.4267,"delta":4.726,"indicator":-0.1177,"zSteam":-0.607,"zCf":-1.09,"zDelta":1.205,"age":30,"locked":false,"excluded":false},{"name":"Rico Hoey","dkId":"42705989","salary":7600,"team":"T34","proj":34.02,"projCh":35.7,"sigma":15.21,"dkPpg":56.4,"sg":0.474,"courseFit":0.025,"expRounds":3.14,"winOdds":0.0171,"winCh":0.0157,"t5Odds":0.0174,"t10Odds":0.0173,"cut":0.5687,"steam":-0.3499,"delta":4.697,"indicator":0.3047,"zSteam":-0.343,"zCf":0.047,"zDelta":1.173,"age":30,"locked":false,"excluded":false},{"name":"Taylor Moore","dkId":"42705964","salary":8900,"team":"T58","proj":33.77,"projCh":36.51,"sigma":15.82,"dkPpg":61.4,"sg":0.219,"courseFit":0.036,"expRounds":3.31,"winOdds":0.0292,"winCh":0.0355,"t5Odds":0.0246,"t10Odds":0.0222,"cut":0.6547,"steam":-0.5076,"delta":4.103,"indicator":-0.0828,"zSteam":-0.886,"zCf":0.164,"zDelta":0.509,"age":32,"locked":false,"excluded":false},{"name":"Austin Eckroat","dkId":"42705965","salary":8800,"team":"T69","proj":32.98,"projCh":35.17,"sigma":15.19,"dkPpg":56.3,"sg":0.211,"courseFit":-0.015,"expRounds":3.25,"winOdds":0.0269,"winCh":0.0247,"t5Odds":0.0236,"t10Odds":0.0214,"cut":0.6241,"steam":-0.3568,"delta":3.996,"indicator":-0.1051,"zSteam":-0.367,"zCf":-0.378,"zDelta":0.39,"age":27,"locked":false,"excluded":false},{"name":"John Parry","dkId":"42705991","salary":7600,"team":"T22","proj":32.77,"projCh":34.29,"sigma":14.39,"dkPpg":74.9,"sg":0.392,"courseFit":-0.075,"expRounds":3.1,"winOdds":0.0152,"winCh":0.0137,"t5Odds":0.0167,"t10Odds":0.0166,"cut":0.5492,"steam":-0.3357,"delta":4.512,"indicator":-0.0693,"zSteam":-0.294,"zCf":-1.015,"zDelta":0.966,"age":39,"locked":false,"excluded":false},{"name":"Kevin Yu","dkId":"42705982","salary":8000,"team":"T43","proj":32.56,"projCh":34.36,"sigma":15.08,"dkPpg":50.1,"sg":0.265,"courseFit":0.03,"expRounds":3.17,"winOdds":0.0212,"winCh":0.0198,"t5Odds":0.0201,"t10Odds":0.0192,"cut":0.5872,"steam":-0.3582,"delta":4.295,"indicator":0.1536,"zSteam":-0.371,"zCf":0.1,"zDelta":0.724,"age":27,"locked":false,"excluded":false},{"name":"Austin Smotherman","dkId":"42705997","salary":7500,"team":"T28","proj":32.5,"projCh":34.06,"sigma":15.06,"dkPpg":59.0,"sg":0.322,"courseFit":-0.012,"expRounds":3.13,"winOdds":0.0146,"winCh":0.0128,"t5Odds":0.0156,"t10Odds":0.0163,"cut":0.5672,"steam":-0.3266,"delta":4.541,"indicator":0.154,"zSteam":-0.262,"zCf":-0.346,"zDelta":0.999,"age":31,"locked":false,"excluded":false},{"name":"Adrien Dumont De Chassart","dkId":"42706017","salary":7100,"team":"T59","proj":32.21,"projCh":33.46,"sigma":14.8,"dkPpg":67.4,"sg":0.434,"courseFit":0.01,"expRounds":3.03,"winOdds":0.0105,"winCh":0.009,"t5Odds":0.0127,"t10Odds":0.0134,"cut":0.5127,"steam":-0.3098,"delta":4.713,"indicator":0.3113,"zSteam":-0.205,"zCf":-0.112,"zDelta":1.19,"age":26,"locked":false,"excluded":false},{"name":"Casey Jarvis","dkId":"42706001","salary":7400,"team":"T56","proj":32.04,"projCh":33.72,"sigma":14.99,"dkPpg":85.9,"sg":0.29,"courseFit":-0.058,"expRounds":3.12,"winOdds":0.0127,"winCh":0.0147,"t5Odds":0.0146,"t10Odds":0.0149,"cut":0.5622,"steam":-0.4753,"delta":4.557,"indicator":-0.1657,"zSteam":-0.775,"zCf":-0.835,"zDelta":1.017,"age":22,"locked":false,"excluded":false},{"name":"William Mouw","dkId":"42706013","salary":7200,"team":"T48","proj":32.01,"projCh":33.48,"sigma":14.96,"dkPpg":55.3,"sg":0.351,"courseFit":0.007,"expRounds":3.07,"winOdds":0.0113,"winCh":0.011,"t5Odds":0.0131,"t10Odds":0.0137,"cut":0.5367,"steam":-0.3917,"delta":4.65,"indicator":0.1786,"zSteam":-0.487,"zCf":-0.144,"zDelta":1.121,"age":25,"locked":false,"excluded":false},{"name":"Tom Kim","dkId":"42705981","salary":8000,"team":"T43","proj":31.99,"projCh":33.79,"sigma":15.09,"dkPpg":65.9,"sg":0.205,"courseFit":-0.086,"expRounds":3.17,"winOdds":0.0212,"winCh":0.0198,"t5Odds":0.0201,"t10Odds":0.0192,"cut":0.5872,"steam":-0.3582,"delta":4.224,"indicator":-0.244,"zSteam":-0.371,"zCf":-1.132,"zDelta":0.645,"age":23,"locked":false,"excluded":false},{"name":"Karl Vilips","dkId":"42705955","salary":9400,"team":"T65","proj":31.71,"projCh":34.35,"sigma":15.74,"dkPpg":51.7,"sg":-0.006,"courseFit":0.049,"expRounds":3.32,"winOdds":0.0342,"winCh":0.0355,"t5Odds":0.0275,"t10Odds":0.024,"cut":0.658,"steam":-0.427,"delta":3.654,"indicator":-0.1196,"zSteam":-0.609,"zCf":0.302,"zDelta":0.008,"age":24,"locked":false,"excluded":false},{"name":"Rasmus Neergaard-Petersen","dkId":"42705994","salary":7500,"team":"T64","proj":31.67,"projCh":32.97,"sigma":14.86,"dkPpg":59.1,"sg":0.311,"courseFit":0.006,"expRounds":3.07,"winOdds":0.0156,"winCh":0.0106,"t5Odds":0.0164,"t10Odds":0.0163,"cut":0.5333,"steam":-0.1367,"delta":4.397,"indicator":0.3838,"zSteam":0.392,"zCf":-0.155,"zDelta":0.838,"age":26,"locked":false,"excluded":false},{"name":"Blades Brown","dkId":"42706027","salary":7000,"team":"T74","proj":31.55,"projCh":33.15,"sigma":14.92,"dkPpg":71.9,"sg":0.314,"courseFit":0.027,"expRounds":3.07,"winOdds":0.0099,"winCh":0.0138,"t5Odds":0.0116,"t10Odds":0.0123,"cut":0.5334,"steam":-0.5649,"delta":4.736,"indicator":0.0669,"zSteam":-1.084,"zCf":0.068,"zDelta":1.216,"age":18,"locked":false,"excluded":false},{"name":"Kevin Roy","dkId":"42705986","salary":7800,"team":"T45","proj":31.45,"projCh":33.36,"sigma":14.98,"dkPpg":65.4,"sg":0.14,"courseFit":-0.031,"expRounds":3.19,"winOdds":0.0184,"winCh":0.0193,"t5Odds":0.0185,"t10Odds":0.0178,"cut":0.594,"steam":-0.4267,"delta":4.277,"indicator":-0.1306,"zSteam":-0.607,"zCf":-0.548,"zDelta":0.704,"age":36,"locked":false,"excluded":false},{"name":"Max Greyserman","dkId":"42705984","salary":7900,"team":"T18","proj":31.05,"projCh":32.74,"sigma":15.42,"dkPpg":51.6,"sg":0.151,"courseFit":0.022,"expRounds":3.14,"winOdds":0.0184,"winCh":0.0157,"t5Odds":0.018,"t10Odds":0.0175,"cut":0.5708,"steam":-0.3099,"delta":4.145,"indicator":0.1275,"zSteam":-0.205,"zCf":0.015,"zDelta":0.556,"age":30,"locked":false,"excluded":false},{"name":"Christiaan Bezuidenhout","dkId":"42706000","salary":7400,"team":"T39","proj":30.99,"projCh":32.12,"sigma":14.03,"dkPpg":68.0,"sg":0.301,"courseFit":-0.187,"expRounds":3.02,"winOdds":0.014,"winCh":0.0089,"t5Odds":0.0152,"t10Odds":0.0153,"cut":0.5081,"steam":-0.0828,"delta":4.34,"indicator":-0.1882,"zSteam":0.577,"zCf":-2.205,"zDelta":0.775,"age":31,"locked":false,"excluded":false},{"name":"Mackenzie Hughes","dkId":"42705974","salary":8400,"team":"T32","proj":30.9,"projCh":32.91,"sigma":15.34,"dkPpg":54.8,"sg":0.039,"courseFit":-0.017,"expRounds":3.22,"winOdds":0.0226,"winCh":0.0223,"t5Odds":0.0208,"t10Odds":0.0198,"cut":0.6099,"steam":-0.3955,"delta":3.918,"indicator":-0.1886,"zSteam":-0.5,"zCf":-0.399,"zDelta":0.303,"age":35,"locked":false,"excluded":false},{"name":"Doug Ghim","dkId":"42706026","salary":7000,"team":"T57","proj":30.57,"projCh":31.62,"sigma":14.31,"dkPpg":58.8,"sg":0.32,"courseFit":-0.014,"expRounds":2.97,"winOdds":0.0093,"winCh":0.0083,"t5Odds":0.0116,"t10Odds":0.0123,"cut":0.4872,"steam":-0.3079,"delta":4.517,"indicator":0.1605,"zSteam":-0.198,"zCf":-0.367,"zDelta":0.971,"age":30,"locked":false,"excluded":false},{"name":"Stephan Jaeger","dkId":"42705995","salary":7500,"team":"T36","proj":30.52,"projCh":31.75,"sigma":14.82,"dkPpg":69.4,"sg":0.227,"courseFit":0.013,"expRounds":3.03,"winOdds":0.0146,"winCh":0.0105,"t5Odds":0.0156,"t10Odds":0.0159,"cut":0.517,"steam":-0.1797,"delta":4.233,"indicator":0.2903,"zSteam":0.244,"zCf":-0.08,"zDelta":0.655,"age":36,"locked":false,"excluded":false},{"name":"Kris Ventura","dkId":"42705970","salary":8600,"team":"T33","proj":30.52,"projCh":32.81,"sigma":15.48,"dkPpg":40.4,"sg":-0.015,"courseFit":0.041,"expRounds":3.23,"winOdds":0.0226,"winCh":0.0268,"t5Odds":0.021,"t10Odds":0.0198,"cut":0.6163,"steam":-0.4932,"delta":3.815,"indicator":-0.1621,"zSteam":-0.837,"zCf":0.217,"zDelta":0.188,"age":31,"locked":false,"excluded":false},{"name":"Zach Bauchou","dkId":"42705976","salary":8300,"team":"T49","proj":30.22,"projCh":32.41,"sigma":15.31,"dkPpg":62.5,"sg":-0.057,"courseFit":-0.004,"expRounds":3.25,"winOdds":0.0212,"winCh":0.0217,"t5Odds":0.0199,"t10Odds":0.0189,"cut":0.6238,"steam":-0.4235,"delta":3.905,"indicator":-0.1861,"zSteam":-0.596,"zCf":-0.261,"zDelta":0.289,"age":30,"locked":false,"excluded":false},{"name":"Seamus Power","dkId":"42705988","salary":7700,"team":"T12","proj":30.11,"projCh":31.64,"sigma":14.7,"dkPpg":56.7,"sg":0.075,"courseFit":-0.057,"expRounds":3.12,"winOdds":0.0175,"winCh":0.0146,"t5Odds":0.018,"t10Odds":0.0175,"cut":0.5606,"steam":-0.2892,"delta":4.11,"indicator":-0.113,"zSteam":-0.134,"zCf":-0.824,"zDelta":0.517,"age":39,"locked":false,"excluded":false},{"name":"Andrew Putnam","dkId":"42705998","salary":7500,"team":"T28","proj":29.88,"projCh":31.44,"sigma":14.19,"dkPpg":65.4,"sg":0.044,"courseFit":-0.256,"expRounds":3.13,"winOdds":0.0146,"winCh":0.0128,"t5Odds":0.0156,"t10Odds":0.0163,"cut":0.5672,"steam":-0.3266,"delta":4.193,"indicator":-0.7598,"zSteam":-0.262,"zCf":-2.938,"zDelta":0.61,"age":37,"locked":false,"excluded":false},{"name":"Matti Schmid","dkId":"42705987","salary":7700,"team":"T12","proj":29.79,"projCh":31.33,"sigma":15.37,"dkPpg":61.1,"sg":0.041,"courseFit":0.075,"expRounds":3.12,"winOdds":0.0175,"winCh":0.0146,"t5Odds":0.018,"t10Odds":0.0175,"cut":0.5606,"steam":-0.2892,"delta":4.068,"indicator":0.2914,"zSteam":-0.134,"zCf":0.578,"zDelta":0.471,"age":28,"locked":false,"excluded":false},{"name":"Zecheng Dou","dkId":"42706011","salary":7200,"team":"T37","proj":29.45,"projCh":30.83,"sigma":14.87,"dkPpg":58.2,"sg":0.082,"courseFit":0.058,"expRounds":3.07,"winOdds":0.0113,"winCh":0.0105,"t5Odds":0.0131,"t10Odds":0.0137,"cut":0.5334,"steam":-0.359,"delta":4.282,"indicator":0.2368,"zSteam":-0.374,"zCf":0.398,"zDelta":0.71,"age":29,"locked":false,"excluded":false},{"name":"Eric Cole","dkId":"42706003","salary":7400,"team":"T55","proj":29.39,"projCh":30.59,"sigma":14.56,"dkPpg":56.4,"sg":0.109,"courseFit":-0.074,"expRounds":3.03,"winOdds":0.0127,"winCh":0.0095,"t5Odds":0.0141,"t10Odds":0.0144,"cut":0.5168,"steam":-0.209,"delta":4.134,"indicator":-0.0608,"zSteam":0.143,"zCf":-1.005,"zDelta":0.545,"age":37,"locked":false,"excluded":false},{"name":"Tony Finau","dkId":"42705983","salary":7900,"team":"T18","proj":29.35,"projCh":31.04,"sigma":15.27,"dkPpg":62.5,"sg":-0.03,"courseFit":0.01,"expRounds":3.14,"winOdds":0.0184,"winCh":0.0157,"t5Odds":0.018,"t10Odds":0.0175,"cut":0.5708,"steam":-0.3099,"delta":3.929,"indicator":0.0048,"zSteam":-0.205,"zCf":-0.112,"zDelta":0.315,"age":36,"locked":false,"excluded":false},{"name":"Chris Kirk","dkId":"42706021","salary":7100,"team":"T19","proj":29.34,"projCh":30.3,"sigma":14.23,"dkPpg":55.3,"sg":0.197,"courseFit":-0.022,"expRounds":2.96,"winOdds":0.0096,"winCh":0.0066,"t5Odds":0.0114,"t10Odds":0.0123,"cut":0.4807,"steam":-0.1403,"delta":4.267,"indicator":0.2397,"zSteam":0.379,"zCf":-0.452,"zDelta":0.693,"age":40,"locked":false,"excluded":false},{"name":"Chandler Blanchet","dkId":"42706031","salary":6900,"team":"T67","proj":29.19,"projCh":30.65,"sigma":14.56,"dkPpg":46.9,"sg":0.089,"courseFit":-0.063,"expRounds":3.04,"winOdds":0.0082,"winCh":0.0112,"t5Odds":0.0106,"t10Odds":0.0116,"cut":0.5216,"steam":-0.5472,"delta":4.442,"indicator":-0.3135,"zSteam":-1.023,"zCf":-0.888,"zDelta":0.888,"age":31,"locked":false,"excluded":false},{"name":"Chad Ramey","dkId":"42706023","salary":7000,"team":"T42","proj":28.4,"projCh":29.43,"sigma":14.35,"dkPpg":66.8,"sg":0.087,"courseFit":-0.044,"expRounds":2.97,"winOdds":0.0096,"winCh":0.0073,"t5Odds":0.0114,"t10Odds":0.0123,"cut":0.4827,"steam":-0.2148,"delta":4.204,"indicator":0.0549,"zSteam":0.123,"zCf":-0.686,"zDelta":0.622,"age":33,"locked":false,"excluded":false},{"name":"Beau Hossler","dkId":"42706005","salary":7300,"team":"T31","proj":28.19,"projCh":29.43,"sigma":14.8,"dkPpg":54.4,"sg":-0.014,"courseFit":-0.044,"expRounds":3.03,"winOdds":0.0123,"winCh":0.0095,"t5Odds":0.0137,"t10Odds":0.0142,"cut":0.513,"steam":-0.2414,"delta":4.032,"indicator":-0.0444,"zSteam":0.031,"zCf":-0.686,"zDelta":0.43,"age":31,"locked":false,"excluded":false},{"name":"Vince Whaley","dkId":"42706009","salary":7300,"team":"T62","proj":28.11,"projCh":29.12,"sigma":14.25,"dkPpg":50.0,"sg":0.031,"courseFit":-0.011,"expRounds":2.98,"winOdds":0.0117,"winCh":0.0076,"t5Odds":0.0133,"t10Odds":0.0139,"cut":0.4898,"steam":-0.0887,"delta":3.989,"indicator":0.2282,"zSteam":0.557,"zCf":-0.335,"zDelta":0.382,"age":31,"locked":false,"excluded":false},{"name":"A.J. Ewart","dkId":"42706002","salary":7400,"team":"T56","proj":28.05,"projCh":29.73,"sigma":14.98,"dkPpg":60.5,"sg":-0.136,"courseFit":-0.008,"expRounds":3.12,"winOdds":0.0127,"winCh":0.0147,"t5Odds":0.0146,"t10Odds":0.0149,"cut":0.5622,"steam":-0.4753,"delta":4.018,"indicator":-0.2173,"zSteam":-0.775,"zCf":-0.304,"zDelta":0.414,"age":26,"locked":false,"excluded":false},{"name":"David Lipsky","dkId":"42705990","salary":7600,"team":"T34","proj":27.8,"projCh":29.48,"sigma":14.75,"dkPpg":65.2,"sg":-0.187,"courseFit":-0.085,"expRounds":3.14,"winOdds":0.0171,"winCh":0.0157,"t5Odds":0.0174,"t10Odds":0.0173,"cut":0.5687,"steam":-0.3499,"delta":3.879,"indicator":-0.3658,"zSteam":-0.343,"zCf":-1.121,"zDelta":0.259,"age":37,"locked":false,"excluded":false},{"name":"Billy Horschel","dkId":"42706019","salary":7100,"team":"T15","proj":27.74,"projCh":28.96,"sigma":14.66,"dkPpg":57.5,"sg":-0.037,"courseFit":0.006,"expRounds":3.01,"winOdds":0.0099,"winCh":0.01,"t5Odds":0.0117,"t10Odds":0.0126,"cut":0.5049,"steam":-0.3977,"delta":4.079,"indicator":-0.0553,"zSteam":-0.508,"zCf":-0.155,"zDelta":0.482,"age":39,"locked":false,"excluded":false},{"name":"Lee Hodges","dkId":"42706050","salary":6600,"team":"T17","proj":27.67,"projCh":28.39,"sigma":14.04,"dkPpg":56.4,"sg":0.126,"courseFit":-0.045,"expRounds":2.87,"winOdds":0.0069,"winCh":0.0039,"t5Odds":0.0092,"t10Odds":0.0103,"cut":0.4345,"steam":0.0463,"delta":4.302,"indicator":0.405,"zSteam":1.022,"zCf":-0.697,"zDelta":0.732,"age":30,"locked":false,"excluded":false},{"name":"Dylan Wu","dkId":"42706012","salary":7200,"team":"T37","proj":27.52,"projCh":28.9,"sigma":14.37,"dkPpg":58.6,"sg":-0.128,"courseFit":-0.001,"expRounds":3.07,"winOdds":0.0113,"winCh":0.0105,"t5Odds":0.0131,"t10Odds":0.0137,"cut":0.5334,"steam":-0.359,"delta":4.014,"indicator":-0.0561,"zSteam":-0.374,"zCf":-0.229,"zDelta":0.41,"age":29,"locked":false,"excluded":false},{"name":"Dan Brown","dkId":"42705992","salary":7600,"team":"T22","proj":27.31,"projCh":28.83,"sigma":15.06,"dkPpg":53.8,"sg":-0.195,"courseFit":-0.024,"expRounds":3.1,"winOdds":0.0152,"winCh":0.0137,"t5Odds":0.0167,"t10Odds":0.0166,"cut":0.5492,"steam":-0.3357,"delta":3.794,"indicator":-0.1874,"zSteam":-0.294,"zCf":-0.473,"zDelta":0.164,"age":31,"locked":false,"excluded":false},{"name":"Hayden Springer","dkId":"42705972","salary":8500,"team":"T46","proj":27.16,"projCh":28.99,"sigma":15.53,"dkPpg":70.2,"sg":-0.301,"courseFit":0.096,"expRounds":3.17,"winOdds":0.0226,"winCh":0.0193,"t5Odds":0.0208,"t10Odds":0.0195,"cut":0.5851,"steam":-0.3126,"delta":3.41,"indicator":0.0729,"zSteam":-0.214,"zCf":0.801,"zDelta":-0.264,"age":29,"locked":false,"excluded":false},{"name":"Zac Blair","dkId":"42706048","salary":6600,"team":"T40","proj":27.07,"projCh":28.08,"sigma":13.87,"dkPpg":68.9,"sg":-0.048,"courseFit":-0.135,"expRounds":2.96,"winOdds":0.0071,"winCh":0.0065,"t5Odds":0.0095,"t10Odds":0.0106,"cut":0.4799,"steam":-0.3399,"delta":4.255,"indicator":-0.3659,"zSteam":-0.308,"zCf":-1.653,"zDelta":0.679,"age":35,"locked":false,"excluded":false},{"name":"Jesper Svensson","dkId":"42706008","salary":7300,"team":"T68","proj":27.04,"projCh":28.46,"sigma":15.4,"dkPpg":50.7,"sg":-0.164,"courseFit":0.161,"expRounds":3.05,"winOdds":0.0111,"winCh":0.0126,"t5Odds":0.0128,"t10Odds":0.0134,"cut":0.5263,"steam":-0.4614,"delta":3.899,"indicator":0.2915,"zSteam":-0.727,"zCf":1.492,"zDelta":0.281,"age":30,"locked":false,"excluded":false},{"name":"Joel Dahmen","dkId":"42706046","salary":6700,"team":"T09","proj":26.84,"projCh":27.8,"sigma":14.32,"dkPpg":52.1,"sg":-0.038,"courseFit":-0.036,"expRounds":2.93,"winOdds":0.0069,"winCh":0.0065,"t5Odds":0.0092,"t10Odds":0.0104,"cut":0.4636,"steam":-0.351,"delta":4.15,"indicator":-0.1049,"zSteam":-0.347,"zCf":-0.601,"zDelta":0.562,"age":38,"locked":false,"excluded":false},{"name":"Garrick Higgo","dkId":"42706015","salary":7200,"team":"T03","proj":26.32,"projCh":27.05,"sigma":14.61,"dkPpg":40.2,"sg":-0.071,"courseFit":0.056,"expRounds":2.89,"winOdds":0.0106,"winCh":0.005,"t5Odds":0.0124,"t10Odds":0.0131,"cut":0.4459,"steam":0.2454,"delta":3.757,"indicator":0.7542,"zSteam":1.709,"zCf":0.376,"zDelta":0.124,"age":26,"locked":false,"excluded":false},{"name":"Adam Svensson","dkId":"42706037","salary":6800,"team":"T25","proj":26.18,"projCh":27.28,"sigma":14.28,"dkPpg":50.0,"sg":-0.171,"courseFit":-0.032,"expRounds":2.98,"winOdds":0.008,"winCh":0.0073,"t5Odds":0.0101,"t10Odds":0.0112,"cut":0.4889,"steam":-0.3423,"delta":4.011,"indicator":-0.1358,"zSteam":-0.316,"zCf":-0.558,"zDelta":0.407,"age":32,"locked":false,"excluded":false},{"name":"Hank Lebioda","dkId":"42706004","salary":7400,"team":"T55","proj":26.07,"projCh":27.27,"sigma":14.5,"dkPpg":50.3,"sg":-0.256,"courseFit":0.001,"expRounds":3.03,"winOdds":0.0127,"winCh":0.0095,"t5Odds":0.0141,"t10Odds":0.0144,"cut":0.5168,"steam":-0.209,"delta":3.686,"indicator":0.0027,"zSteam":0.143,"zCf":-0.208,"zDelta":0.043,"age":32,"locked":false,"excluded":false},{"name":"John VanDerLaan","dkId":"42706032","salary":6900,"team":"T67","proj":26.06,"projCh":27.52,"sigma":14.94,"dkPpg":48.6,"sg":-0.254,"courseFit":0.035,"expRounds":3.04,"winOdds":0.0082,"winCh":0.0112,"t5Odds":0.0106,"t10Odds":0.0116,"cut":0.5216,"steam":-0.5472,"delta":3.988,"indicator":-0.1786,"zSteam":-1.023,"zCf":0.153,"zDelta":0.381,"age":29,"locked":false,"excluded":false},{"name":"Trace Crowe","dkId":"42706043","salary":6700,"team":"T26","proj":25.93,"projCh":26.62,"sigma":14.3,"dkPpg":104.5,"sg":-0.049,"courseFit":0.054,"expRounds":2.84,"winOdds":0.008,"winCh":0.0037,"t5Odds":0.0099,"t10Odds":0.011,"cut":0.4202,"steam":0.2221,"delta":3.973,"indicator":0.804,"zSteam":1.628,"zCf":0.355,"zDelta":0.365,"age":29,"locked":false,"excluded":false},{"name":"Takumi Kanaya","dkId":"42706014","salary":7200,"team":"T48","proj":25.68,"projCh":27.15,"sigma":14.54,"dkPpg":53.2,"sg":-0.335,"courseFit":-0.113,"expRounds":3.07,"winOdds":0.0113,"winCh":0.011,"t5Odds":0.0131,"t10Odds":0.0137,"cut":0.5367,"steam":-0.3917,"delta":3.772,"indicator":-0.5472,"zSteam":-0.487,"zCf":-1.419,"zDelta":0.139,"age":27,"locked":false,"excluded":false},{"name":"Pontus Nyholm","dkId":"42706007","salary":7300,"team":"T68","proj":25.48,"projCh":26.9,"sigma":15.24,"dkPpg":47.5,"sg":-0.334,"courseFit":0.161,"expRounds":3.05,"winOdds":0.0111,"winCh":0.0126,"t5Odds":0.0128,"t10Odds":0.0134,"cut":0.5263,"steam":-0.4614,"delta":3.685,"indicator":0.2081,"zSteam":-0.727,"zCf":1.492,"zDelta":0.043,"age":28,"locked":false,"excluded":false},{"name":"Sam Ryder","dkId":"42706006","salary":7300,"team":"T31","proj":25.37,"projCh":26.61,"sigma":14.8,"dkPpg":59.9,"sg":-0.325,"courseFit":-0.001,"expRounds":3.03,"winOdds":0.0123,"winCh":0.0095,"t5Odds":0.0137,"t10Odds":0.0142,"cut":0.513,"steam":-0.2414,"delta":3.645,"indicator":-0.0586,"zSteam":0.031,"zCf":-0.229,"zDelta":-0.002,"age":36,"locked":false,"excluded":false},{"name":"Jacob Skov Olesen","dkId":"42705993","salary":7500,"team":"T64","proj":24.87,"projCh":26.17,"sigma":14.8,"dkPpg":67.6,"sg":-0.429,"courseFit":0.0,"expRounds":3.07,"winOdds":0.0156,"winCh":0.0106,"t5Odds":0.0164,"t10Odds":0.0163,"cut":0.5333,"steam":-0.1367,"delta":3.489,"indicator":0.0099,"zSteam":0.392,"zCf":-0.219,"zDelta":-0.176,"age":26,"locked":false,"excluded":false},{"name":"Martin Couvra","dkId":"42706030","salary":6900,"team":"T51","proj":24.86,"projCh":25.81,"sigma":14.41,"dkPpg":62.2,"sg":-0.276,"courseFit":-0.012,"expRounds":2.93,"winOdds":0.0089,"winCh":0.0067,"t5Odds":0.011,"t10Odds":0.012,"cut":0.4661,"steam":-0.2084,"delta":3.741,"indicator":-0.0165,"zSteam":0.145,"zCf":-0.346,"zDelta":0.105,"age":23,"locked":false,"excluded":false},{"name":"Cameron Champ","dkId":"42706040","salary":6800,"team":"T38","proj":24.72,"projCh":25.65,"sigma":15.1,"dkPpg":53.8,"sg":-0.288,"courseFit":0.173,"expRounds":2.93,"winOdds":0.008,"winCh":0.0062,"t5Odds":0.0099,"t10Odds":0.011,"cut":0.4664,"steam":-0.2271,"delta":3.772,"indicator":0.5628,"zSteam":0.08,"zCf":1.619,"zDelta":0.14,"age":30,"locked":false,"excluded":false},{"name":"Tom Hoge","dkId":"42706020","salary":7100,"team":"T15","proj":24.69,"projCh":25.91,"sigma":14.8,"dkPpg":54.7,"sg":-0.375,"courseFit":0.023,"expRounds":3.01,"winOdds":0.0099,"winCh":0.01,"t5Odds":0.0117,"t10Odds":0.0126,"cut":0.5049,"steam":-0.3977,"delta":3.649,"indicator":-0.1691,"zSteam":-0.508,"zCf":0.026,"zDelta":0.002,"age":36,"locked":false,"excluded":false},{"name":"Adam Hadwin","dkId":"42706038","salary":6800,"team":"T25","proj":24.67,"projCh":25.77,"sigma":14.75,"dkPpg":53.2,"sg":-0.34,"courseFit":0.049,"expRounds":2.98,"winOdds":0.008,"winCh":0.0073,"t5Odds":0.0101,"t10Odds":0.0112,"cut":0.4889,"steam":-0.3423,"delta":3.789,"indicator":0.0355,"zSteam":-0.316,"zCf":0.302,"zDelta":0.159,"age":38,"locked":false,"excluded":false},{"name":"Greyson Sigg","dkId":"42706010","salary":7300,"team":"T62","proj":24.46,"projCh":25.46,"sigma":14.28,"dkPpg":46.8,"sg":-0.378,"courseFit":-0.012,"expRounds":2.98,"winOdds":0.0117,"winCh":0.0076,"t5Odds":0.0133,"t10Odds":0.0139,"cut":0.4898,"steam":-0.0887,"delta":3.488,"indicator":0.0293,"zSteam":0.557,"zCf":-0.346,"zDelta":-0.177,"age":31,"locked":false,"excluded":false},{"name":"Carson Young","dkId":"42706034","salary":6900,"team":"T63","proj":24.45,"projCh":25.35,"sigma":14.41,"dkPpg":69.0,"sg":-0.313,"courseFit":-0.029,"expRounds":2.92,"winOdds":0.0086,"winCh":0.0063,"t5Odds":0.0107,"t10Odds":0.0117,"cut":0.4624,"steam":-0.1763,"delta":3.674,"indicator":-0.0579,"zSteam":0.255,"zCf":-0.527,"zDelta":0.031,"age":31,"locked":false,"excluded":false},{"name":"Luke Clanton","dkId":"42706028","salary":7000,"team":"T74","proj":24.13,"projCh":25.73,"sigma":15.25,"dkPpg":37.8,"sg":-0.492,"courseFit":0.111,"expRounds":3.07,"winOdds":0.0099,"winCh":0.0138,"t5Odds":0.0116,"t10Odds":0.0123,"cut":0.5334,"steam":-0.5649,"delta":3.676,"indicator":-0.0795,"zSteam":-1.084,"zCf":0.961,"zDelta":0.033,"age":22,"locked":false,"excluded":false},{"name":"Christo Lamprecht","dkId":"42706036","salary":6800,"team":"T66","proj":24.12,"projCh":25.34,"sigma":15.36,"dkPpg":46.9,"sg":-0.402,"courseFit":0.188,"expRounds":2.98,"winOdds":0.008,"winCh":0.0095,"t5Odds":0.0104,"t10Odds":0.0112,"cut":0.4886,"steam":-0.4856,"delta":3.726,"indicator":0.2809,"zSteam":-0.811,"zCf":1.778,"zDelta":0.089,"age":25,"locked":false,"excluded":false},{"name":"Chandler Phillips","dkId":"42706033","salary":6900,"team":"T63","proj":24.04,"projCh":24.94,"sigma":14.21,"dkPpg":53.7,"sg":-0.36,"courseFit":-0.042,"expRounds":2.92,"winOdds":0.0086,"winCh":0.0063,"t5Odds":0.0107,"t10Odds":0.0117,"cut":0.4624,"steam":-0.1763,"delta":3.614,"indicator":-0.1227,"zSteam":0.255,"zCf":-0.665,"zDelta":-0.036,"age":29,"locked":false,"excluded":false},{"name":"Neal Shipley","dkId":"42706035","salary":6800,"team":"T66","proj":23.7,"projCh":24.92,"sigma":14.99,"dkPpg":34.1,"sg":-0.449,"courseFit":0.099,"expRounds":2.98,"winOdds":0.008,"winCh":0.0095,"t5Odds":0.0104,"t10Odds":0.0112,"cut":0.4886,"steam":-0.4856,"delta":3.664,"indicator":-0.0269,"zSteam":-0.811,"zCf":0.833,"zDelta":0.02,"age":25,"locked":false,"excluded":false},{"name":"Matthieu Pavon","dkId":"42706029","salary":6900,"team":"T51","proj":23.6,"projCh":24.54,"sigma":14.52,"dkPpg":59.5,"sg":-0.42,"courseFit":0.028,"expRounds":2.93,"winOdds":0.0089,"winCh":0.0067,"t5Odds":0.011,"t10Odds":0.012,"cut":0.4661,"steam":-0.2084,"delta":3.557,"indicator":0.0392,"zSteam":0.145,"zCf":0.079,"zDelta":-0.1,"age":33,"locked":false,"excluded":false},{"name":"Ben Kohles","dkId":"42706042","salary":6700,"team":"T30","proj":23.47,"projCh":24.2,"sigma":14.07,"dkPpg":58.2,"sg":-0.373,"courseFit":-0.031,"expRounds":2.88,"winOdds":0.008,"winCh":0.0047,"t5Odds":0.0101,"t10Odds":0.0112,"cut":0.4376,"steam":0.016,"delta":3.612,"indicator":0.1435,"zSteam":0.918,"zCf":-0.548,"zDelta":-0.038,"age":36,"locked":false,"excluded":false},{"name":"Mark Hubbard","dkId":"42706065","salary":6300,"team":"T13","proj":23.31,"projCh":24.0,"sigma":14.09,"dkPpg":46.7,"sg":-0.297,"courseFit":0.002,"expRounds":2.8,"winOdds":0.0045,"winCh":0.0036,"t5Odds":0.0065,"t10Odds":0.0076,"cut":0.3978,"steam":-0.2526,"delta":3.81,"indicator":0.0018,"zSteam":-0.008,"zCf":-0.197,"zDelta":0.182,"age":36,"locked":false,"excluded":false},{"name":"Erik Van Rooyen","dkId":"42705999","salary":7400,"team":"T39","proj":23.25,"projCh":24.38,"sigma":15.06,"dkPpg":38.5,"sg":-0.554,"courseFit":0.102,"expRounds":3.02,"winOdds":0.014,"winCh":0.0089,"t5Odds":0.0152,"t10Odds":0.0153,"cut":0.5081,"steam":-0.0828,"delta":3.295,"indicator":0.324,"zSteam":0.577,"zCf":0.865,"zDelta":-0.393,"age":36,"locked":false,"excluded":false},{"name":"Keita Nakajima","dkId":"42706057","salary":6500,"team":"T53","proj":23.23,"projCh":24.01,"sigma":14.41,"dkPpg":43.9,"sg":-0.384,"courseFit":0.035,"expRounds":2.87,"winOdds":0.0058,"winCh":0.0046,"t5Odds":0.0082,"t10Odds":0.0096,"cut":0.4327,"steam":-0.2333,"delta":3.694,"indicator":0.0851,"zSteam":0.059,"zCf":0.153,"zDelta":0.053,"age":25,"locked":false,"excluded":false},{"name":"Jackson Suber","dkId":"42705996","salary":7500,"team":"T36","proj":23.06,"projCh":24.28,"sigma":15.06,"dkPpg":53.1,"sg":-0.593,"courseFit":0.098,"expRounds":3.03,"winOdds":0.0146,"winCh":0.0105,"t5Odds":0.0156,"t10Odds":0.0159,"cut":0.517,"steam":-0.1797,"delta":3.238,"indicator":0.1722,"zSteam":0.244,"zCf":0.822,"zDelta":-0.457,"age":26,"locked":false,"excluded":false},{"name":"David Skinns","dkId":"42706053","salary":6600,"team":"T14","proj":22.92,"projCh":23.93,"sigma":14.6,"dkPpg":64.4,"sg":-0.459,"courseFit":0.085,"expRounds":2.9,"winOdds":0.0066,"winCh":0.0072,"t5Odds":0.0079,"t10Odds":0.0089,"cut":0.4518,"steam":-0.4451,"delta":3.626,"indicator":-0.0377,"zSteam":-0.671,"zCf":0.684,"zDelta":-0.024,"age":44,"locked":false,"excluded":false},{"name":"Noah Goodwin","dkId":"42706072","salary":6200,"team":"T54","proj":22.78,"projCh":23.33,"sigma":13.86,"dkPpg":56.0,"sg":-0.295,"courseFit":-0.023,"expRounds":2.74,"winOdds":0.003,"winCh":0.0026,"t5Odds":0.005,"t10Odds":0.0063,"cut":0.3707,"steam":-0.2836,"delta":3.764,"indicator":-0.1332,"zSteam":-0.115,"zCf":-0.463,"zDelta":0.131,"age":25,"locked":false,"excluded":false},{"name":"Patrick Fishburn","dkId":"42706047","salary":6600,"team":"T40","proj":22.72,"projCh":23.73,"sigma":14.83,"dkPpg":38.3,"sg":-0.538,"courseFit":0.073,"expRounds":2.96,"winOdds":0.0071,"winCh":0.0065,"t5Odds":0.0095,"t10Odds":0.0106,"cut":0.4799,"steam":-0.3399,"delta":3.596,"indicator":0.0392,"zSteam":-0.308,"zCf":0.557,"zDelta":-0.057,"age":33,"locked":false,"excluded":false},{"name":"Adam Schenk","dkId":"42706061","salary":6400,"team":"T44","proj":22.55,"projCh":23.34,"sigma":14.63,"dkPpg":45.6,"sg":-0.463,"courseFit":0.077,"expRounds":2.87,"winOdds":0.0056,"winCh":0.005,"t5Odds":0.0078,"t10Odds":0.009,"cut":0.4334,"steam":-0.3244,"delta":3.647,"indicator":0.0906,"zSteam":-0.255,"zCf":0.599,"zDelta":0.0,"age":34,"locked":false,"excluded":false},{"name":"Davis Chatfield","dkId":"42706018","salary":7100,"team":"T59","proj":22.53,"projCh":23.78,"sigma":14.28,"dkPpg":39.6,"sg":-0.632,"courseFit":-0.097,"expRounds":3.03,"winOdds":0.0105,"winCh":0.009,"t5Odds":0.0127,"t10Odds":0.0134,"cut":0.5127,"steam":-0.3098,"delta":3.35,"indicator":-0.5624,"zSteam":-0.205,"zCf":-1.249,"zDelta":-0.331,"age":26,"locked":false,"excluded":false},{"name":"Brandt Snedeker","dkId":"42705980","salary":8100,"team":"T10","proj":21.84,"projCh":23.06,"sigma":14.47,"dkPpg":48.6,"sg":-0.778,"courseFit":-0.141,"expRounds":3.08,"winOdds":0.0195,"winCh":0.0115,"t5Odds":0.0191,"t10Odds":0.0183,"cut":0.5396,"steam":-0.0059,"delta":2.847,"indicator":-0.5324,"zSteam":0.842,"zCf":-1.716,"zDelta":-0.893,"age":45,"locked":false,"excluded":false},{"name":"Lanto Griffin","dkId":"42706041","salary":6700,"team":"T30","proj":21.8,"projCh":22.53,"sigma":14.17,"dkPpg":46.1,"sg":-0.567,"courseFit":0.012,"expRounds":2.88,"winOdds":0.008,"winCh":0.0047,"t5Odds":0.0101,"t10Odds":0.0112,"cut":0.4376,"steam":0.016,"delta":3.363,"indicator":0.1829,"zSteam":0.918,"zCf":-0.091,"zDelta":-0.317,"age":37,"locked":false,"excluded":false},{"name":"Trey Mullinax","dkId":"42706054","salary":6600,"team":"T14","proj":21.78,"projCh":22.79,"sigma":14.98,"dkPpg":22.5,"sg":-0.59,"courseFit":0.167,"expRounds":2.9,"winOdds":0.0066,"winCh":0.0072,"t5Odds":0.0079,"t10Odds":0.0089,"cut":0.4518,"steam":-0.4451,"delta":3.453,"indicator":0.156,"zSteam":-0.671,"zCf":1.555,"zDelta":-0.217,"age":33,"locked":false,"excluded":false},{"name":"Ben Silverman","dkId":"42706039","salary":6800,"team":"T38","proj":21.3,"projCh":22.23,"sigma":14.43,"dkPpg":53.4,"sg":-0.677,"courseFit":-0.016,"expRounds":2.93,"winOdds":0.008,"winCh":0.0062,"t5Odds":0.0099,"t10Odds":0.011,"cut":0.4664,"steam":-0.2271,"delta":3.269,"indicator":-0.2362,"zSteam":0.08,"zCf":-0.388,"zDelta":-0.422,"age":38,"locked":false,"excluded":false},{"name":"Justin Lower","dkId":"42706024","salary":7000,"team":"T42","proj":21.18,"projCh":22.2,"sigma":14.84,"dkPpg":41.6,"sg":-0.725,"courseFit":0.032,"expRounds":2.97,"winOdds":0.0096,"winCh":0.0073,"t5Odds":0.0114,"t10Odds":0.0123,"cut":0.4827,"steam":-0.2148,"delta":3.172,"indicator":-0.1062,"zSteam":0.123,"zCf":0.121,"zDelta":-0.53,"age":37,"locked":false,"excluded":false},{"name":"Kevin Streelman","dkId":"42706045","salary":6700,"team":"T09","proj":21.05,"projCh":22.01,"sigma":14.46,"dkPpg":59.8,"sg":-0.698,"courseFit":0.006,"expRounds":2.93,"winOdds":0.0069,"winCh":0.0065,"t5Odds":0.0092,"t10Odds":0.0104,"cut":0.4636,"steam":-0.351,"delta":3.285,"indicator":-0.3092,"zSteam":-0.347,"zCf":-0.155,"zDelta":-0.404,"age":47,"locked":false,"excluded":false},{"name":"Matt Kuchar","dkId":"42706016","salary":7200,"team":"T03","proj":21.04,"projCh":21.77,"sigma":13.62,"dkPpg":40.8,"sg":-0.68,"courseFit":-0.15,"expRounds":2.89,"winOdds":0.0106,"winCh":0.005,"t5Odds":0.0124,"t10Odds":0.0131,"cut":0.4459,"steam":0.2454,"delta":3.024,"indicator":-0.1891,"zSteam":1.709,"zCf":-1.812,"zDelta":-0.696,"age":47,"locked":false,"excluded":false},{"name":"Jimmy Stanger","dkId":"42706052","salary":6600,"team":"T60","proj":20.96,"projCh":21.81,"sigma":14.82,"dkPpg":56.9,"sg":-0.654,"courseFit":0.123,"expRounds":2.87,"winOdds":0.0066,"winCh":0.006,"t5Odds":0.0085,"t10Odds":0.0097,"cut":0.4346,"steam":-0.3363,"delta":3.304,"indicator":0.0889,"zSteam":-0.296,"zCf":1.088,"zDelta":-0.382,"age":31,"locked":false,"excluded":false},{"name":"Tyler Duncan","dkId":"42706062","salary":6400,"team":"T44","proj":20.76,"projCh":21.56,"sigma":14.17,"dkPpg":49.3,"sg":-0.67,"courseFit":-0.007,"expRounds":2.87,"winOdds":0.0056,"winCh":0.005,"t5Odds":0.0078,"t10Odds":0.009,"cut":0.4334,"steam":-0.3244,"delta":3.369,"indicator":-0.2858,"zSteam":-0.255,"zCf":-0.293,"zDelta":-0.311,"age":36,"locked":false,"excluded":false},{"name":"Kensei Hirata","dkId":"42706058","salary":6500,"team":"T53","proj":20.71,"projCh":21.49,"sigma":14.22,"dkPpg":44.7,"sg":-0.677,"courseFit":-0.051,"expRounds":2.87,"winOdds":0.0058,"winCh":0.0046,"t5Odds":0.0082,"t10Odds":0.0096,"cut":0.4327,"steam":-0.2333,"delta":3.306,"indicator":-0.3404,"zSteam":0.059,"zCf":-0.76,"zDelta":-0.38,"age":25,"locked":false,"excluded":false},{"name":"Danny Walker","dkId":"42706051","salary":6600,"team":"T60","proj":20.5,"projCh":21.35,"sigma":14.84,"dkPpg":59.0,"sg":-0.707,"courseFit":0.107,"expRounds":2.87,"winOdds":0.0066,"winCh":0.006,"t5Odds":0.0085,"t10Odds":0.0097,"cut":0.4346,"steam":-0.3363,"delta":3.235,"indicator":0.0109,"zSteam":-0.296,"zCf":0.918,"zDelta":-0.46,"age":30,"locked":false,"excluded":false},{"name":"Patton Kizzire","dkId":"42706022","salary":7100,"team":"T19","proj":20.39,"projCh":21.34,"sigma":14.64,"dkPpg":45.1,"sg":-0.811,"courseFit":0.013,"expRounds":2.96,"winOdds":0.0096,"winCh":0.0066,"t5Odds":0.0114,"t10Odds":0.0123,"cut":0.4807,"steam":-0.1403,"delta":3.006,"indicator":-0.1418,"zSteam":0.379,"zCf":-0.08,"zDelta":-0.716,"age":40,"locked":false,"excluded":false},{"name":"Chan Kim","dkId":"42706079","salary":6100,"team":"T06","proj":20.37,"projCh":20.78,"sigma":13.87,"dkPpg":55.2,"sg":-0.521,"courseFit":0.013,"expRounds":2.68,"winOdds":0.0024,"winCh":0.0015,"t5Odds":0.0042,"t10Odds":0.0055,"cut":0.3387,"steam":-0.0836,"delta":3.406,"indicator":0.0832,"zSteam":0.575,"zCf":-0.08,"zDelta":-0.268,"age":36,"locked":false,"excluded":false},{"name":"Gordon Sargent","dkId":"42706068","salary":6300,"team":"T71","proj":20.09,"projCh":20.85,"sigma":15.17,"dkPpg":42.7,"sg":-0.698,"courseFit":0.219,"expRounds":2.82,"winOdds":0.004,"winCh":0.0046,"t5Odds":0.0061,"t10Odds":0.0073,"cut":0.4091,"steam":-0.4623,"delta":3.31,"indicator":0.2452,"zSteam":-0.73,"zCf":2.108,"zDelta":-0.376,"age":22,"locked":false,"excluded":false},{"name":"Taylor Montgomery","dkId":"42706059","salary":6400,"team":"T07","proj":20.01,"projCh":20.31,"sigma":13.97,"dkPpg":57.6,"sg":-0.563,"courseFit":-0.018,"expRounds":2.66,"winOdds":0.0058,"winCh":0.0024,"t5Odds":0.0079,"t10Odds":0.0092,"cut":0.3295,"steam":0.487,"delta":3.173,"indicator":0.5814,"zSteam":2.541,"zCf":-0.41,"zDelta":-0.529,"age":31,"locked":false,"excluded":false},{"name":"Nick Hardy","dkId":"42706056","salary":6500,"team":"T50","proj":19.33,"projCh":19.9,"sigma":14.12,"dkPpg":47.4,"sg":-0.754,"courseFit":0.138,"expRounds":2.77,"winOdds":0.0056,"winCh":0.0031,"t5Odds":0.0077,"t10Odds":0.0089,"cut":0.3864,"steam":0.054,"delta":3.062,"indicator":0.5128,"zSteam":1.049,"zCf":1.247,"zDelta":-0.653,"age":30,"locked":false,"excluded":false},{"name":"Jeffrey Kang","dkId":"42706025","salary":7000,"team":"T57","proj":19.18,"projCh":20.23,"sigma":14.99,"dkPpg":35.0,"sg":-0.956,"courseFit":0.105,"expRounds":2.97,"winOdds":0.0093,"winCh":0.0083,"t5Odds":0.0116,"t10Odds":0.0123,"cut":0.4872,"steam":-0.3079,"delta":2.89,"indicator":-0.0961,"zSteam":-0.198,"zCf":0.897,"zDelta":-0.845,"age":34,"locked":false,"excluded":false},{"name":"Alejandro Tosti","dkId":"42706070","salary":6300,"team":"T20","proj":19.15,"projCh":19.76,"sigma":14.84,"dkPpg":32.6,"sg":-0.754,"courseFit":0.186,"expRounds":2.76,"winOdds":0.0033,"winCh":0.0039,"t5Odds":0.0052,"t10Odds":0.0064,"cut":0.3799,"steam":-0.4646,"delta":3.136,"indicator":0.0693,"zSteam":-0.738,"zCf":1.757,"zDelta":-0.57,"age":29,"locked":false,"excluded":false},{"name":"Jeremy Paul","dkId":"42706064","salary":6400,"team":"T27","proj":18.87,"projCh":19.44,"sigma":14.25,"dkPpg":61.6,"sg":-0.811,"courseFit":0.085,"expRounds":2.78,"winOdds":0.005,"winCh":0.0033,"t5Odds":0.0071,"t10Odds":0.0083,"cut":0.3887,"steam":-0.0942,"delta":3.038,"indicator":0.1557,"zSteam":0.538,"zCf":0.684,"zDelta":-0.68,"age":32,"locked":false,"excluded":false},{"name":"Luke List","dkId":"42706074","salary":6200,"team":"T08","proj":18.26,"projCh":18.85,"sigma":14.67,"dkPpg":47.8,"sg":-0.864,"courseFit":0.143,"expRounds":2.76,"winOdds":0.0038,"winCh":0.0029,"t5Odds":0.0049,"t10Odds":0.0062,"cut":0.3807,"steam":-0.2392,"delta":3.04,"indicator":0.1664,"zSteam":0.039,"zCf":1.3,"zDelta":-0.678,"age":41,"locked":false,"excluded":false},{"name":"Harry Higgs","dkId":"42706063","salary":6400,"team":"T27","proj":18.24,"projCh":18.81,"sigma":14.49,"dkPpg":51.8,"sg":-0.887,"courseFit":0.122,"expRounds":2.78,"winOdds":0.005,"winCh":0.0033,"t5Odds":0.0071,"t10Odds":0.0083,"cut":0.3887,"steam":-0.0942,"delta":2.939,"indicator":0.235,"zSteam":0.538,"zCf":1.077,"zDelta":-0.79,"age":34,"locked":false,"excluded":false},{"name":"Henrik Norlander","dkId":"42706073","salary":6200,"team":"T08","proj":18.17,"projCh":18.75,"sigma":13.84,"dkPpg":53.8,"sg":-0.875,"courseFit":0.021,"expRounds":2.76,"winOdds":0.0038,"winCh":0.0029,"t5Odds":0.0049,"t10Odds":0.0062,"cut":0.3807,"steam":-0.2392,"delta":3.025,"indicator":-0.2282,"zSteam":0.039,"zCf":0.005,"zDelta":-0.694,"age":39,"locked":false,"excluded":false},{"name":"Nick Dunlap","dkId":"42706067","salary":6300,"team":"T71","proj":17.88,"projCh":18.64,"sigma":14.53,"dkPpg":30.1,"sg":-0.96,"courseFit":0.074,"expRounds":2.82,"winOdds":0.004,"winCh":0.0046,"t5Odds":0.0061,"t10Odds":0.0073,"cut":0.4091,"steam":-0.4623,"delta":2.958,"indicator":-0.3543,"zSteam":-0.73,"zCf":0.567,"zDelta":-0.769,"age":22,"locked":false,"excluded":false},{"name":"Paul Peterson","dkId":"42706075","salary":6200,"team":"T35","proj":17.79,"projCh":18.25,"sigma":13.21,"dkPpg":54.4,"sg":-0.871,"courseFit":-0.165,"expRounds":2.71,"winOdds":0.0028,"winCh":0.0024,"t5Odds":0.0048,"t10Odds":0.006,"cut":0.3534,"steam":-0.2754,"delta":2.943,"indicator":-0.8964,"zSteam":-0.086,"zCf":-1.971,"zDelta":-0.786,"age":37,"locked":false,"excluded":false},{"name":"Brice Garnett","dkId":"42706049","salary":6600,"team":"T17","proj":17.3,"projCh":18.02,"sigma":14.16,"dkPpg":38.7,"sg":-1.079,"courseFit":-0.04,"expRounds":2.87,"winOdds":0.0069,"winCh":0.0039,"t5Odds":0.0092,"t10Odds":0.0103,"cut":0.4345,"steam":0.0463,"delta":2.731,"indicator":-0.1933,"zSteam":1.022,"zCf":-0.643,"zDelta":-1.023,"age":42,"locked":false,"excluded":false},{"name":"Ben Martin","dkId":"42706044","salary":6700,"team":"T26","proj":16.98,"projCh":17.67,"sigma":14.19,"dkPpg":50.5,"sg":-1.099,"courseFit":0.037,"expRounds":2.84,"winOdds":0.008,"winCh":0.0037,"t5Odds":0.0099,"t10Odds":0.011,"cut":0.4202,"steam":0.2221,"delta":2.638,"indicator":0.2279,"zSteam":1.628,"zCf":0.174,"zDelta":-1.127,"age":38,"locked":false,"excluded":false},{"name":"Charley Hoffman","dkId":"42706083","salary":6100,"team":"T02","proj":16.83,"projCh":17.36,"sigma":14.4,"dkPpg":27.1,"sg":-0.98,"courseFit":0.156,"expRounds":2.7,"winOdds":0.0021,"winCh":0.0024,"t5Odds":0.0033,"t10Odds":0.0045,"cut":0.3499,"steam":-0.4567,"delta":2.846,"indicator":-0.1303,"zSteam":-0.711,"zCf":1.439,"zDelta":-0.895,"age":49,"locked":false,"excluded":false},{"name":"Russell Knox","dkId":"42706078","salary":6100,"team":"T23","proj":16.7,"projCh":17.08,"sigma":13.44,"dkPpg":56.1,"sg":-0.975,"courseFit":-0.015,"expRounds":2.67,"winOdds":0.0026,"winCh":0.0018,"t5Odds":0.0043,"t10Odds":0.0056,"cut":0.336,"steam":-0.0897,"delta":2.8,"indicator":-0.2504,"zSteam":0.554,"zCf":-0.378,"zDelta":-0.945,"age":40,"locked":false,"excluded":false},{"name":"Davis Riley","dkId":"42706055","salary":6500,"team":"T50","proj":16.62,"projCh":17.19,"sigma":15.05,"dkPpg":44.4,"sg":-1.08,"courseFit":0.095,"expRounds":2.77,"winOdds":0.0056,"winCh":0.0031,"t5Odds":0.0077,"t10Odds":0.0089,"cut":0.3864,"steam":0.054,"delta":2.645,"indicator":0.2127,"zSteam":1.049,"zCf":0.791,"zDelta":-1.119,"age":29,"locked":false,"excluded":false},{"name":"Will Gordon","dkId":"42706076","salary":6200,"team":"T35","proj":16.36,"projCh":16.82,"sigma":14.59,"dkPpg":46.3,"sg":-1.047,"courseFit":0.184,"expRounds":2.71,"winOdds":0.0028,"winCh":0.0024,"t5Odds":0.0048,"t10Odds":0.006,"cut":0.3534,"steam":-0.2754,"delta":2.713,"indicator":0.1256,"zSteam":-0.086,"zCf":1.736,"zDelta":-1.043,"age":29,"locked":false,"excluded":false},{"name":"Peter Malnati","dkId":"42706077","salary":6100,"team":"T23","proj":16.24,"projCh":16.62,"sigma":14.1,"dkPpg":45.3,"sg":-1.032,"courseFit":0.059,"expRounds":2.67,"winOdds":0.0026,"winCh":0.0018,"t5Odds":0.0043,"t10Odds":0.0056,"cut":0.336,"steam":-0.0897,"delta":2.725,"indicator":-0.0439,"zSteam":0.554,"zCf":0.408,"zDelta":-1.029,"age":38,"locked":false,"excluded":false},{"name":"Chez Reavie","dkId":"42706088","salary":6000,"team":"T04","proj":15.82,"projCh":16.11,"sigma":13.35,"dkPpg":45.1,"sg":-1.023,"courseFit":-0.025,"expRounds":2.6,"winOdds":0.0016,"winCh":0.0009,"t5Odds":0.0032,"t10Odds":0.0043,"cut":0.3019,"steam":0.056,"delta":2.685,"indicator":-0.1518,"zSteam":1.056,"zCf":-0.484,"zDelta":-1.074,"age":44,"locked":false,"excluded":false},{"name":"Troy Merritt","dkId":"42706089","salary":6000,"team":"T21","proj":15.4,"projCh":15.7,"sigma":13.74,"dkPpg":52.1,"sg":-1.061,"courseFit":0.06,"expRounds":2.59,"winOdds":0.0016,"winCh":0.0008,"t5Odds":0.003,"t10Odds":0.0041,"cut":0.2927,"steam":0.0788,"delta":2.617,"indicator":0.1201,"zSteam":1.134,"zCf":0.419,"zDelta":-1.15,"age":40,"locked":false,"excluded":false},{"name":"Rafael Campos","dkId":"42706069","salary":6300,"team":"T20","proj":15.03,"projCh":15.64,"sigma":14.62,"dkPpg":38.8,"sg":-1.251,"courseFit":0.177,"expRounds":2.76,"winOdds":0.0033,"winCh":0.0039,"t5Odds":0.0052,"t10Odds":0.0064,"cut":0.3799,"steam":-0.4646,"delta":2.483,"indicator":-0.2147,"zSteam":-0.738,"zCf":1.662,"zDelta":-1.299,"age":38,"locked":false,"excluded":false},{"name":"Marcelo Rozo","dkId":"42706085","salary":6000,"team":"T11","proj":14.84,"projCh":15.19,"sigma":13.91,"dkPpg":37.2,"sg":-1.172,"courseFit":0.063,"expRounds":2.63,"winOdds":0.0018,"winCh":0.0017,"t5Odds":0.0034,"t10Odds":0.0046,"cut":0.3161,"steam":-0.3096,"delta":2.532,"indicator":-0.3719,"zSteam":-0.204,"zCf":0.451,"zDelta":-1.245,"age":36,"locked":false,"excluded":false},{"name":"Ryan Brehm","dkId":"42706066","salary":6300,"team":"T13","proj":14.53,"projCh":15.22,"sigma":15.16,"dkPpg":46.8,"sg":-1.344,"courseFit":0.264,"expRounds":2.8,"winOdds":0.0045,"winCh":0.0036,"t5Odds":0.0065,"t10Odds":0.0076,"cut":0.3978,"steam":-0.2526,"delta":2.416,"indicator":0.2919,"zSteam":-0.008,"zCf":2.586,"zDelta":-1.375,"age":40,"locked":false,"excluded":false},{"name":"Nick Watney","dkId":"42706084","salary":6100,"team":"T02","proj":14.53,"projCh":15.06,"sigma":14.58,"dkPpg":43.2,"sg":-1.264,"courseFit":0.185,"expRounds":2.7,"winOdds":0.0021,"winCh":0.0024,"t5Odds":0.0033,"t10Odds":0.0045,"cut":0.3499,"steam":-0.4567,"delta":2.469,"indicator":-0.1853,"zSteam":-0.711,"zCf":1.747,"zDelta":-1.316,"age":45,"locked":false,"excluded":false},{"name":"Camilo Villegas","dkId":"42706086","salary":6000,"team":"T11","proj":14.18,"projCh":14.54,"sigma":14.03,"dkPpg":55.2,"sg":-1.255,"courseFit":0.055,"expRounds":2.63,"winOdds":0.0018,"winCh":0.0017,"t5Odds":0.0034,"t10Odds":0.0046,"cut":0.3161,"steam":-0.3096,"delta":2.423,"indicator":-0.4401,"zSteam":-0.204,"zCf":0.366,"zDelta":-1.367,"age":44,"locked":false,"excluded":false},{"name":"Cam Davis","dkId":"42706081","salary":6100,"team":"T01","proj":14.13,"projCh":14.39,"sigma":14.51,"dkPpg":41.4,"sg":-1.207,"courseFit":0.13,"expRounds":2.56,"winOdds":0.002,"winCh":0.001,"t5Odds":0.0036,"t10Odds":0.0048,"cut":0.2794,"steam":0.191,"delta":2.359,"indicator":0.3775,"zSteam":1.521,"zCf":1.162,"zDelta":-1.439,"age":31,"locked":false,"excluded":false},{"name":"Jonathan Byrd","dkId":"42706087","salary":6000,"team":"T04","proj":13.94,"projCh":14.23,"sigma":13.5,"dkPpg":35.6,"sg":-1.264,"courseFit":-0.011,"expRounds":2.6,"winOdds":0.0016,"winCh":0.0009,"t5Odds":0.0032,"t10Odds":0.0043,"cut":0.3019,"steam":0.056,"delta":2.371,"indicator":-0.2298,"zSteam":1.056,"zCf":-0.335,"zDelta":-1.425,"age":48,"locked":false,"excluded":false},{"name":"Frankie Capan III","dkId":"42706071","salary":6200,"team":"T54","proj":11.85,"projCh":12.4,"sigma":14.7,"dkPpg":35.7,"sg":-1.624,"courseFit":0.133,"expRounds":2.74,"winOdds":0.003,"winCh":0.0026,"t5Odds":0.005,"t10Odds":0.0063,"cut":0.3707,"steam":-0.2836,"delta":2.001,"indicator":-0.3252,"zSteam":-0.115,"zCf":1.194,"zDelta":-1.838,"age":26,"locked":false,"excluded":false},{"name":"Scott Piercy","dkId":"42706060","salary":6400,"team":"T07","proj":10.56,"projCh":10.86,"sigma":14.25,"dkPpg":20.5,"sg":-1.747,"courseFit":0.131,"expRounds":2.66,"winOdds":0.0058,"winCh":0.0024,"t5Odds":0.0079,"t10Odds":0.0092,"cut":0.3295,"steam":0.487,"delta":1.698,"indicator":0.4794,"zSteam":2.541,"zCf":1.173,"zDelta":-2.177,"age":47,"locked":false,"excluded":false},{"name":"Robert Streb","dkId":"42706090","salary":6000,"team":"T21","proj":9.93,"projCh":10.23,"sigma":14.45,"dkPpg":70.0,"sg":-1.766,"courseFit":0.149,"expRounds":2.59,"winOdds":0.0016,"winCh":0.0008,"t5Odds":0.003,"t10Odds":0.0041,"cut":0.2927,"steam":0.0788,"delta":1.705,"indicator":0.0475,"zSteam":1.134,"zCf":1.364,"zDelta":-2.168,"age":39,"locked":false,"excluded":false},{"name":"Jason Dufner","dkId":"42706092","salary":6000,"team":"T05","proj":9.89,"projCh":10.04,"sigma":13.63,"dkPpg":46.8,"sg":-1.693,"courseFit":0.098,"expRounds":2.46,"winOdds":0.001,"winCh":0.0004,"t5Odds":0.002,"t10Odds":0.0029,"cut":0.2293,"steam":0.2744,"delta":1.674,"indicator":0.1085,"zSteam":1.808,"zCf":0.822,"zDelta":-2.203,"age":49,"locked":false,"excluded":false},{"name":"Ryan Palmer","dkId":"42706080","salary":6100,"team":"T06","proj":9.37,"projCh":9.78,"sigma":14.72,"dkPpg":25.5,"sg":-1.89,"courseFit":0.177,"expRounds":2.68,"winOdds":0.0024,"winCh":0.0015,"t5Odds":0.0042,"t10Odds":0.0055,"cut":0.3387,"steam":-0.0836,"delta":1.604,"indicator":-0.0989,"zSteam":0.575,"zCf":1.662,"zDelta":-2.281,"age":49,"locked":false,"excluded":false},{"name":"James Hahn","dkId":"42706093","salary":6000,"team":"T16","proj":9.32,"projCh":9.4,"sigma":13.27,"dkPpg":54.0,"sg":-1.705,"courseFit":0.118,"expRounds":2.35,"winOdds":0.0006,"winCh":0.0001,"t5Odds":0.0014,"t10Odds":0.0022,"cut":0.1757,"steam":1.3235,"delta":1.566,"indicator":1.3953,"zSteam":5.423,"zCf":1.035,"zDelta":-2.324,"age":44,"locked":false,"excluded":false},{"name":"Austin Cook","dkId":"42706091","salary":6000,"team":"T05","proj":8.82,"projCh":8.97,"sigma":13.73,"dkPpg":28.4,"sg":-1.838,"courseFit":0.058,"expRounds":2.46,"winOdds":0.001,"winCh":0.0004,"t5Odds":0.002,"t10Odds":0.0029,"cut":0.2293,"steam":0.2744,"delta":1.496,"indicator":-0.0887,"zSteam":1.808,"zCf":0.398,"zDelta":-2.402,"age":35,"locked":false,"excluded":false},{"name":"Geoff Ogilvy","dkId":"42706082","salary":6100,"team":"T01","proj":6.53,"projCh":6.78,"sigma":14.63,"dkPpg":63.5,"sg":-2.198,"courseFit":0.19,"expRounds":2.56,"winOdds":0.002,"winCh":0.001,"t5Odds":0.0036,"t10Odds":0.0048,"cut":0.2794,"steam":0.191,"delta":1.111,"indicator":0.0812,"zSteam":1.521,"zCf":1.8,"zDelta":-2.831,"age":48,"locked":false,"excluded":false},{"name":"Kyle Stanley","dkId":"42706094","salary":6000,"team":"T16","proj":-1.47,"projCh":-1.39,"sigma":15.0,"dkPpg":23.7,"sg":-3.234,"courseFit":0.287,"expRounds":2.35,"winOdds":0.0006,"winCh":0.0001,"t5Odds":0.0014,"t10Odds":0.0022,"cut":0.1757,"steam":1.3235,"delta":-0.232,"indicator":1.2312,"zSteam":5.423,"zCf":2.83,"zDelta":-4.331,"age":38,"locked":false,"excluded":false}],"teams":[{"teamId":"T41","oddsName":"Fitzpatrick / Fitzpatrick","p1":"Matt Fitzpatrick","p1sal":10500,"p1proj":53.75,"p2":"Alex Fitzpatrick","p2sal":10500,"p2proj":36.44,"winOdds":0.056,"winCh":0.0678,"t5Odds":0.0376,"t10Odds":0.0302,"cut":0.749,"teamProj":90.19,"teamSg":2.095,"avgSteam":-0.5101,"avgCf":-0.1395},{"teamId":"T24","oddsName":"Koepka / Lowry","p1":"Shane Lowry","p1sal":10000,"p1proj":41.77,"p2":"Brooks Koepka","p2sal":10000,"p2proj":41.17,"winOdds":0.0424,"winCh":0.0522,"t5Odds":0.0315,"t10Odds":0.0267,"cut":0.7071,"teamProj":82.94,"teamSg":1.661,"avgSteam":-0.5163,"avgCf":-0.0365},{"teamId":"T73","oddsName":"Yellamaraju / Gerard","p1":"Ryan Gerard","p1sal":9500,"p1proj":43.51,"p2":"Sudarshan Yellamaraju","p2sal":9500,"p2proj":39.41,"winOdds":0.0389,"winCh":0.0503,"t5Odds":0.0278,"t10Odds":0.024,"cut":0.7118,"teamProj":82.92,"teamSg":1.655,"avgSteam":-0.5422,"avgCf":-0.0575},{"teamId":"T61","oddsName":"Novak / Griffin","p1":"Ben Griffin","p1sal":9700,"p1proj":42.39,"p2":"Andrew Novak","p2sal":9700,"p2proj":38.29,"winOdds":0.0359,"winCh":0.0426,"t5Odds":0.0288,"t10Odds":0.025,"cut":0.6928,"teamProj":80.68,"teamSg":1.538,"avgSteam":-0.4983,"avgCf":-0.095},{"teamId":"T65","oddsName":"Thorbjornsen / Vilips","p1":"Michael Thorbjornsen","p1sal":9400,"p1proj":42.38,"p2":"Karl Vilips","p2sal":9400,"p2proj":31.71,"winOdds":0.0342,"winCh":0.0355,"t5Odds":0.0275,"t10Odds":0.024,"cut":0.658,"teamProj":74.09,"teamSg":1.06,"avgSteam":-0.427,"avgCf":0.01},{"teamId":"T47","oddsName":"Rai / Theegala","p1":"Sahith Theegala","p1sal":9200,"p1proj":41.28,"p2":"Aaron Rai","p2sal":9200,"p2proj":36.41,"winOdds":0.0311,"winCh":0.0346,"t5Odds":0.0262,"t10Odds":0.0234,"cut":0.6745,"teamProj":77.69,"teamSg":1.353,"avgSteam":-0.4664,"avgCf":-0.1165},{"teamId":"T72","oddsName":"Keefer / Brennan","p1":"Michael Brennan","p1sal":8200,"p1proj":39.73,"p2":"Johnny Keefer","p2sal":8200,"p2proj":35.01,"winOdds":0.0304,"winCh":0.0425,"t5Odds":0.0229,"t10Odds":0.0208,"cut":0.667,"teamProj":74.74,"teamSg":1.106,"avgSteam":-0.5748,"avgCf":0.0925},{"teamId":"T58","oddsName":"Moore / Clark","p1":"Wyndham Clark","p1sal":8900,"p1proj":39.65,"p2":"Taylor Moore","p2sal":8900,"p2proj":33.77,"winOdds":0.0292,"winCh":0.0355,"t5Odds":0.0246,"t10Odds":0.0222,"cut":0.6547,"teamProj":73.42,"teamSg":1.031,"avgSteam":-0.5076,"avgCf":0.002},{"teamId":"T52","oddsName":"Penge / Wallace","p1":"Marco Penge","p1sal":9100,"p1proj":38.5,"p2":"Matt Wallace","p2sal":9100,"p2proj":36.31,"winOdds":0.0286,"winCh":0.0367,"t5Odds":0.0246,"t10Odds":0.022,"cut":0.6609,"teamProj":74.81,"teamSg":1.142,"avgSteam":-0.5337,"avgCf":0.03},{"teamId":"T29","oddsName":"Li / Smith","p1":"Jordan Smith","p1sal":9000,"p1proj":39.8,"p2":"Haotong Li","p2sal":9000,"p2proj":35.94,"winOdds":0.028,"winCh":0.0374,"t5Odds":0.0248,"t10Odds":0.0222,"cut":0.6666,"teamProj":75.74,"teamSg":1.21,"avgSteam":-0.5454,"avgCf":-0.006},{"teamId":"T69","oddsName":"Thompson / Eckroat","p1":"Davis Thompson","p1sal":8800,"p1proj":37.35,"p2":"Austin Eckroat","p2sal":8800,"p2proj":32.98,"winOdds":0.0269,"winCh":0.0247,"t5Odds":0.0236,"t10Odds":0.0214,"cut":0.6241,"teamProj":70.33,"teamSg":0.87,"avgSteam":-0.3568,"avgCf":-0.0255},{"teamId":"T70","oddsName":"McCarty / Meissner","p1":"Matt McCarty","p1sal":8700,"p1proj":38.4,"p2":"Mac Meissner","p2sal":8700,"p2proj":35.52,"winOdds":0.0259,"winCh":0.027,"t5Odds":0.0231,"t10Odds":0.0211,"cut":0.6412,"teamProj":73.92,"teamSg":1.16,"avgSteam":-0.4293,"avgCf":-0.084},{"teamId":"T32","oddsName":"Hughes / Pendrith","p1":"Taylor Pendrith","p1sal":8400,"p1proj":35.56,"p2":"Mackenzie Hughes","p2sal":8400,"p2proj":30.9,"winOdds":0.0226,"winCh":0.0223,"t5Odds":0.0208,"t10Odds":0.0198,"cut":0.6099,"teamProj":66.46,"teamSg":0.561,"avgSteam":-0.3955,"avgCf":0.01},{"teamId":"T33","oddsName":"Ventura / Reitan","p1":"Kristoffer Reitan","p1sal":8600,"p1proj":36.22,"p2":"Kris Ventura","p2sal":8600,"p2proj":30.52,"winOdds":0.0226,"winCh":0.0268,"t5Odds":0.021,"t10Odds":0.0198,"cut":0.6163,"teamProj":66.74,"teamSg":0.558,"avgSteam":-0.4932,"avgCf":0.029},{"teamId":"T46","oddsName":"Springer / Smalley","p1":"Alex Smalley","p1sal":8500,"p1proj":36.09,"p2":"Hayden Springer","p2sal":8500,"p2proj":27.16,"winOdds":0.0226,"winCh":0.0193,"t5Odds":0.0208,"t10Odds":0.0195,"cut":0.5851,"teamProj":63.25,"teamSg":0.337,"avgSteam":-0.3126,"avgCf":0.0235},{"teamId":"T43","oddsName":"Yu / Kim","p1":"Kevin Yu","p1sal":8000,"p1proj":32.56,"p2":"Tom Kim","p2sal":8000,"p2proj":31.99,"winOdds":0.0212,"winCh":0.0198,"t5Odds":0.0201,"t10Odds":0.0192,"cut":0.5872,"teamProj":64.55,"teamSg":0.47,"avgSteam":-0.3582,"avgCf":-0.028},{"teamId":"T49","oddsName":"Bauchou / Stevens","p1":"Sam Stevens","p1sal":8300,"p1proj":39.23,"p2":"Zach Bauchou","p2sal":8300,"p2proj":30.22,"winOdds":0.0212,"winCh":0.0217,"t5Odds":0.0199,"t10Odds":0.0189,"cut":0.6238,"teamProj":69.45,"teamSg":0.811,"avgSteam":-0.4235,"avgCf":-0.026},{"teamId":"T10","oddsName":"Mitchell / Snedeker","p1":"Keith Mitchell","p1sal":8100,"p1proj":36.03,"p2":"Brandt Snedeker","p2sal":8100,"p2proj":21.84,"winOdds":0.0195,"winCh":0.0115,"t5Odds":0.0191,"t10Odds":0.0183,"cut":0.5396,"teamProj":57.87,"teamSg":-0.02,"avgSteam":-0.0059,"avgCf":-0.054},{"teamId":"T18","oddsName":"Finau / Greyserman","p1":"Max Greyserman","p1sal":7900,"p1proj":31.05,"p2":"Tony Finau","p2sal":7900,"p2proj":29.35,"winOdds":0.0184,"winCh":0.0157,"t5Odds":0.018,"t10Odds":0.0175,"cut":0.5708,"teamProj":60.4,"teamSg":0.121,"avgSteam":-0.3099,"avgCf":0.016},{"teamId":"T45","oddsName":"Roy / McGreevy","p1":"Max McGreevy","p1sal":7800,"p1proj":34.95,"p2":"Kevin Roy","p2sal":7800,"p2proj":31.45,"winOdds":0.0184,"winCh":0.0193,"t5Odds":0.0185,"t10Odds":0.0178,"cut":0.594,"teamProj":66.4,"teamSg":0.646,"avgSteam":-0.4267,"avgCf":-0.0565},{"teamId":"T12","oddsName":"Schmid / Power","p1":"Seamus Power","p1sal":7700,"p1proj":30.11,"p2":"Matti Schmid","p2sal":7700,"p2proj":29.79,"winOdds":0.0175,"winCh":0.0146,"t5Odds":0.018,"t10Odds":0.0175,"cut":0.5606,"teamProj":59.9,"teamSg":0.116,"avgSteam":-0.2892,"avgCf":0.009},{"teamId":"T34","oddsName":"Hoey / Lipsky","p1":"Rico Hoey","p1sal":7600,"p1proj":34.02,"p2":"David Lipsky","p2sal":7600,"p2proj":27.8,"winOdds":0.0171,"winCh":0.0157,"t5Odds":0.0174,"t10Odds":0.0173,"cut":0.5687,"teamProj":61.82,"teamSg":0.287,"avgSteam":-0.3499,"avgCf":-0.03},{"teamId":"T64","oddsName":"Olesen / Neergaard-Petersen","p1":"Rasmus Neergaard-Petersen","p1sal":7500,"p1proj":31.67,"p2":"Jacob Skov Olesen","p2sal":7500,"p2proj":24.87,"winOdds":0.0156,"winCh":0.0106,"t5Odds":0.0164,"t10Odds":0.0163,"cut":0.5333,"teamProj":56.54,"teamSg":-0.118,"avgSteam":-0.1367,"avgCf":0.003},{"teamId":"T22","oddsName":"Parry / Brown","p1":"John Parry","p1sal":7600,"p1proj":32.77,"p2":"Dan Brown","p2sal":7600,"p2proj":27.31,"winOdds":0.0152,"winCh":0.0137,"t5Odds":0.0167,"t10Odds":0.0166,"cut":0.5492,"teamProj":60.08,"teamSg":0.197,"avgSteam":-0.3357,"avgCf":-0.0495},{"teamId":"T28","oddsName":"Smotherman / Putnam","p1":"Austin Smotherman","p1sal":7500,"p1proj":32.5,"p2":"Andrew Putnam","p2sal":7500,"p2proj":29.88,"winOdds":0.0146,"winCh":0.0128,"t5Odds":0.0156,"t10Odds":0.0163,"cut":0.5672,"teamProj":62.38,"teamSg":0.366,"avgSteam":-0.3266,"avgCf":-0.134},{"teamId":"T36","oddsName":"Suber / Jaeger","p1":"Stephan Jaeger","p1sal":7500,"p1proj":30.52,"p2":"Jackson Suber","p2sal":7500,"p2proj":23.06,"winOdds":0.0146,"winCh":0.0105,"t5Odds":0.0156,"t10Odds":0.0159,"cut":0.517,"teamProj":53.58,"teamSg":-0.366,"avgSteam":-0.1797,"avgCf":0.0555},{"teamId":"T39","oddsName":"Van Rooyen / Bezuidenhout","p1":"Christiaan Bezuidenhout","p1sal":7400,"p1proj":30.99,"p2":"Erik Van Rooyen","p2sal":7400,"p2proj":23.25,"winOdds":0.014,"winCh":0.0089,"t5Odds":0.0152,"t10Odds":0.0153,"cut":0.5081,"teamProj":54.24,"teamSg":-0.253,"avgSteam":-0.0828,"avgCf":-0.0425},{"teamId":"T55","oddsName":"Lebioda / Cole","p1":"Eric Cole","p1sal":7400,"p1proj":29.39,"p2":"Hank Lebioda","p2sal":7400,"p2proj":26.07,"winOdds":0.0127,"winCh":0.0095,"t5Odds":0.0141,"t10Odds":0.0144,"cut":0.5168,"teamProj":55.46,"teamSg":-0.147,"avgSteam":-0.209,"avgCf":-0.0365},{"teamId":"T56","oddsName":"Ewart / Jarvis","p1":"Casey Jarvis","p1sal":7400,"p1proj":32.04,"p2":"A.J. Ewart","p2sal":7400,"p2proj":28.05,"winOdds":0.0127,"winCh":0.0147,"t5Odds":0.0146,"t10Odds":0.0149,"cut":0.5622,"teamProj":60.09,"teamSg":0.154,"avgSteam":-0.4753,"avgCf":-0.033},{"teamId":"T31","oddsName":"Hossler / Ryder","p1":"Beau Hossler","p1sal":7300,"p1proj":28.19,"p2":"Sam Ryder","p2sal":7300,"p2proj":25.37,"winOdds":0.0123,"winCh":0.0095,"t5Odds":0.0137,"t10Odds":0.0142,"cut":0.513,"teamProj":53.56,"teamSg":-0.339,"avgSteam":-0.2414,"avgCf":-0.0225},{"teamId":"T62","oddsName":"Whaley / Sigg","p1":"Vince Whaley","p1sal":7300,"p1proj":28.11,"p2":"Greyson Sigg","p2sal":7300,"p2proj":24.46,"winOdds":0.0117,"winCh":0.0076,"t5Odds":0.0133,"t10Odds":0.0139,"cut":0.4898,"teamProj":52.57,"teamSg":-0.347,"avgSteam":-0.0887,"avgCf":-0.0115},{"teamId":"T37","oddsName":"Dou / Wu","p1":"Zecheng Dou","p1sal":7200,"p1proj":29.45,"p2":"Dylan Wu","p2sal":7200,"p2proj":27.52,"winOdds":0.0113,"winCh":0.0105,"t5Odds":0.0131,"t10Odds":0.0137,"cut":0.5334,"teamProj":56.97,"teamSg":-0.046,"avgSteam":-0.359,"avgCf":0.0285},{"teamId":"T48","oddsName":"Mouw / Kanaya","p1":"William Mouw","p1sal":7200,"p1proj":32.01,"p2":"Takumi Kanaya","p2sal":7200,"p2proj":25.68,"winOdds":0.0113,"winCh":0.011,"t5Odds":0.0131,"t10Odds":0.0137,"cut":0.5367,"teamProj":57.69,"teamSg":0.016,"avgSteam":-0.3917,"avgCf":-0.053},{"teamId":"T68","oddsName":"Svensson / Nyholm","p1":"Jesper Svensson","p1sal":7300,"p1proj":27.04,"p2":"Pontus Nyholm","p2sal":7300,"p2proj":25.48,"winOdds":0.0111,"winCh":0.0126,"t5Odds":0.0128,"t10Odds":0.0134,"cut":0.5263,"teamProj":52.52,"teamSg":-0.498,"avgSteam":-0.4614,"avgCf":0.161},{"teamId":"T03","oddsName":"Kuchar / Higgo","p1":"Garrick Higgo","p1sal":7200,"p1proj":26.32,"p2":"Matt Kuchar","p2sal":7200,"p2proj":21.04,"winOdds":0.0106,"winCh":0.005,"t5Odds":0.0124,"t10Odds":0.0131,"cut":0.4459,"teamProj":47.36,"teamSg":-0.751,"avgSteam":0.2454,"avgCf":-0.047},{"teamId":"T59","oddsName":"Dumont De Chassart / Chatfield","p1":"Adrien Dumont De Chassart","p1sal":7100,"p1proj":32.21,"p2":"Davis Chatfield","p2sal":7100,"p2proj":22.53,"winOdds":0.0105,"winCh":0.009,"t5Odds":0.0127,"t10Odds":0.0134,"cut":0.5127,"teamProj":54.74,"teamSg":-0.198,"avgSteam":-0.3098,"avgCf":-0.0435},{"teamId":"T15","oddsName":"Horschel / Hoge","p1":"Billy Horschel","p1sal":7100,"p1proj":27.74,"p2":"Tom Hoge","p2sal":7100,"p2proj":24.69,"winOdds":0.0099,"winCh":0.01,"t5Odds":0.0117,"t10Odds":0.0126,"cut":0.5049,"teamProj":52.43,"teamSg":-0.412,"avgSteam":-0.3977,"avgCf":0.0145},{"teamId":"T74","oddsName":"Brown / Clanton","p1":"Blades Brown","p1sal":7000,"p1proj":31.55,"p2":"Luke Clanton","p2sal":7000,"p2proj":24.13,"winOdds":0.0099,"winCh":0.0138,"t5Odds":0.0116,"t10Odds":0.0123,"cut":0.5334,"teamProj":55.68,"teamSg":-0.178,"avgSteam":-0.5649,"avgCf":0.069},{"teamId":"T19","oddsName":"Kizzire / Kirk","p1":"Chris Kirk","p1sal":7100,"p1proj":29.34,"p2":"Patton Kizzire","p2sal":7100,"p2proj":20.39,"winOdds":0.0096,"winCh":0.0066,"t5Odds":0.0114,"t10Odds":0.0123,"cut":0.4807,"teamProj":49.73,"teamSg":-0.614,"avgSteam":-0.1403,"avgCf":-0.0045},{"teamId":"T42","oddsName":"Lower / Ramey","p1":"Chad Ramey","p1sal":7000,"p1proj":28.4,"p2":"Justin Lower","p2sal":7000,"p2proj":21.18,"winOdds":0.0096,"winCh":0.0073,"t5Odds":0.0114,"t10Odds":0.0123,"cut":0.4827,"teamProj":49.58,"teamSg":-0.638,"avgSteam":-0.2148,"avgCf":-0.006},{"teamId":"T57","oddsName":"Ghim / Kang","p1":"Doug Ghim","p1sal":7000,"p1proj":30.57,"p2":"Jeffrey Kang","p2sal":7000,"p2proj":19.18,"winOdds":0.0093,"winCh":0.0083,"t5Odds":0.0116,"t10Odds":0.0123,"cut":0.4872,"teamProj":49.75,"teamSg":-0.636,"avgSteam":-0.3079,"avgCf":0.0455},{"teamId":"T51","oddsName":"Couvra / Pavon","p1":"Martin Couvra","p1sal":6900,"p1proj":24.86,"p2":"Matthieu Pavon","p2sal":6900,"p2proj":23.6,"winOdds":0.0089,"winCh":0.0067,"t5Odds":0.011,"t10Odds":0.012,"cut":0.4661,"teamProj":48.46,"teamSg":-0.696,"avgSteam":-0.2084,"avgCf":0.008},{"teamId":"T63","oddsName":"Young / Phillips","p1":"Carson Young","p1sal":6900,"p1proj":24.45,"p2":"Chandler Phillips","p2sal":6900,"p2proj":24.04,"winOdds":0.0086,"winCh":0.0063,"t5Odds":0.0107,"t10Odds":0.0117,"cut":0.4624,"teamProj":48.49,"teamSg":-0.673,"avgSteam":-0.1763,"avgCf":-0.0355},{"teamId":"T67","oddsName":"Vanderlaan / Blanchet","p1":"Chandler Blanchet","p1sal":6900,"p1proj":29.19,"p2":"John VanDerLaan","p2sal":6900,"p2proj":26.06,"winOdds":0.0082,"winCh":0.0112,"t5Odds":0.0106,"t10Odds":0.0116,"cut":0.5216,"teamProj":55.25,"teamSg":-0.165,"avgSteam":-0.5472,"avgCf":-0.014},{"teamId":"T25","oddsName":"Hadwin / Svensson","p1":"Adam Svensson","p1sal":6800,"p1proj":26.18,"p2":"Adam Hadwin","p2sal":6800,"p2proj":24.67,"winOdds":0.008,"winCh":0.0073,"t5Odds":0.0101,"t10Odds":0.0112,"cut":0.4889,"teamProj":50.85,"teamSg":-0.511,"avgSteam":-0.3423,"avgCf":0.0085},{"teamId":"T26","oddsName":"Martin / Crowe","p1":"Trace Crowe","p1sal":6700,"p1proj":25.93,"p2":"Ben Martin","p2sal":6700,"p2proj":16.98,"winOdds":0.008,"winCh":0.0037,"t5Odds":0.0099,"t10Odds":0.011,"cut":0.4202,"teamProj":42.91,"teamSg":-1.148,"avgSteam":0.2221,"avgCf":0.0455},{"teamId":"T30","oddsName":"Griffin / Kohles","p1":"Ben Kohles","p1sal":6700,"p1proj":23.47,"p2":"Lanto Griffin","p2sal":6700,"p2proj":21.8,"winOdds":0.008,"winCh":0.0047,"t5Odds":0.0101,"t10Odds":0.0112,"cut":0.4376,"teamProj":45.27,"teamSg":-0.94,"avgSteam":0.016,"avgCf":-0.0095},{"teamId":"T38","oddsName":"Champ / Silverman","p1":"Cameron Champ","p1sal":6800,"p1proj":24.72,"p2":"Ben Silverman","p2sal":6800,"p2proj":21.3,"winOdds":0.008,"winCh":0.0062,"t5Odds":0.0099,"t10Odds":0.011,"cut":0.4664,"teamProj":46.02,"teamSg":-0.965,"avgSteam":-0.2271,"avgCf":0.0785},{"teamId":"T66","oddsName":"Shipley / Lamprecht","p1":"Christo Lamprecht","p1sal":6800,"p1proj":24.12,"p2":"Neal Shipley","p2sal":6800,"p2proj":23.7,"winOdds":0.008,"winCh":0.0095,"t5Odds":0.0104,"t10Odds":0.0112,"cut":0.4886,"teamProj":47.82,"teamSg":-0.851,"avgSteam":-0.4856,"avgCf":0.1435},{"teamId":"T40","oddsName":"Blair / Fishburn","p1":"Zac Blair","p1sal":6600,"p1proj":27.07,"p2":"Patrick Fishburn","p2sal":6600,"p2proj":22.72,"winOdds":0.0071,"winCh":0.0065,"t5Odds":0.0095,"t10Odds":0.0106,"cut":0.4799,"teamProj":49.79,"teamSg":-0.586,"avgSteam":-0.3399,"avgCf":-0.031},{"teamId":"T09","oddsName":"Streelman / Dahmen","p1":"Joel Dahmen","p1sal":6700,"p1proj":26.84,"p2":"Kevin Streelman","p2sal":6700,"p2proj":21.05,"winOdds":0.0069,"winCh":0.0065,"t5Odds":0.0092,"t10Odds":0.0104,"cut":0.4636,"teamProj":47.89,"teamSg":-0.736,"avgSteam":-0.351,"avgCf":-0.015},{"teamId":"T17","oddsName":"Hodges / Garnett","p1":"Lee Hodges","p1sal":6600,"p1proj":27.67,"p2":"Brice Garnett","p2sal":6600,"p2proj":17.3,"winOdds":0.0069,"winCh":0.0039,"t5Odds":0.0092,"t10Odds":0.0103,"cut":0.4345,"teamProj":44.97,"teamSg":-0.953,"avgSteam":0.0463,"avgCf":-0.0425},{"teamId":"T14","oddsName":"Mullinax / Skinns","p1":"David Skinns","p1sal":6600,"p1proj":22.92,"p2":"Trey Mullinax","p2sal":6600,"p2proj":21.78,"winOdds":0.0066,"winCh":0.0072,"t5Odds":0.0079,"t10Odds":0.0089,"cut":0.4518,"teamProj":44.7,"teamSg":-1.049,"avgSteam":-0.4451,"avgCf":0.126},{"teamId":"T60","oddsName":"Stanger / Walker","p1":"Jimmy Stanger","p1sal":6600,"p1proj":20.96,"p2":"Danny Walker","p2sal":6600,"p2proj":20.5,"winOdds":0.0066,"winCh":0.006,"t5Odds":0.0085,"t10Odds":0.0097,"cut":0.4346,"teamProj":41.46,"teamSg":-1.361,"avgSteam":-0.3363,"avgCf":0.115},{"teamId":"T07","oddsName":"Montgomery / Piercy","p1":"Taylor Montgomery","p1sal":6400,"p1proj":20.01,"p2":"Scott Piercy","p2sal":6400,"p2proj":10.56,"winOdds":0.0058,"winCh":0.0024,"t5Odds":0.0079,"t10Odds":0.0092,"cut":0.3295,"teamProj":30.57,"teamSg":-2.31,"avgSteam":0.487,"avgCf":0.0565},{"teamId":"T53","oddsName":"Nakajima / Hirata","p1":"Keita Nakajima","p1sal":6500,"p1proj":23.23,"p2":"Kensei Hirata","p2sal":6500,"p2proj":20.71,"winOdds":0.0058,"winCh":0.0046,"t5Odds":0.0082,"t10Odds":0.0096,"cut":0.4327,"teamProj":43.94,"teamSg":-1.061,"avgSteam":-0.2333,"avgCf":-0.008},{"teamId":"T44","oddsName":"Duncan / Schenk","p1":"Adam Schenk","p1sal":6400,"p1proj":22.55,"p2":"Tyler Duncan","p2sal":6400,"p2proj":20.76,"winOdds":0.0056,"winCh":0.005,"t5Odds":0.0078,"t10Odds":0.009,"cut":0.4334,"teamProj":43.31,"teamSg":-1.133,"avgSteam":-0.3244,"avgCf":0.035},{"teamId":"T50","oddsName":"Riley / Hardy","p1":"Nick Hardy","p1sal":6500,"p1proj":19.33,"p2":"Davis Riley","p2sal":6500,"p2proj":16.62,"winOdds":0.0056,"winCh":0.0031,"t5Odds":0.0077,"t10Odds":0.0089,"cut":0.3864,"teamProj":35.95,"teamSg":-1.834,"avgSteam":0.054,"avgCf":0.1165},{"teamId":"T27","oddsName":"Paul / Higgs","p1":"Jeremy Paul","p1sal":6400,"p1proj":18.87,"p2":"Harry Higgs","p2sal":6400,"p2proj":18.24,"winOdds":0.005,"winCh":0.0033,"t5Odds":0.0071,"t10Odds":0.0083,"cut":0.3887,"teamProj":37.11,"teamSg":-1.698,"avgSteam":-0.0942,"avgCf":0.1035},{"teamId":"T13","oddsName":"Brehm / Hubbard","p1":"Mark Hubbard","p1sal":6300,"p1proj":23.31,"p2":"Ryan Brehm","p2sal":6300,"p2proj":14.53,"winOdds":0.0045,"winCh":0.0036,"t5Odds":0.0065,"t10Odds":0.0076,"cut":0.3978,"teamProj":37.84,"teamSg":-1.641,"avgSteam":-0.2526,"avgCf":0.133},{"teamId":"T71","oddsName":"Dunlap / Sargent","p1":"Gordon Sargent","p1sal":6300,"p1proj":20.09,"p2":"Nick Dunlap","p2sal":6300,"p2proj":17.88,"winOdds":0.004,"winCh":0.0046,"t5Odds":0.0061,"t10Odds":0.0073,"cut":0.4091,"teamProj":37.97,"teamSg":-1.658,"avgSteam":-0.4623,"avgCf":0.1465},{"teamId":"T08","oddsName":"List / Norlander","p1":"Luke List","p1sal":6200,"p1proj":18.26,"p2":"Henrik Norlander","p2sal":6200,"p2proj":18.17,"winOdds":0.0038,"winCh":0.0029,"t5Odds":0.0049,"t10Odds":0.0062,"cut":0.3807,"teamProj":36.43,"teamSg":-1.739,"avgSteam":-0.2392,"avgCf":0.082},{"teamId":"T20","oddsName":"Tosti / Campos","p1":"Alejandro Tosti","p1sal":6300,"p1proj":19.15,"p2":"Rafael Campos","p2sal":6300,"p2proj":15.03,"winOdds":0.0033,"winCh":0.0039,"t5Odds":0.0052,"t10Odds":0.0064,"cut":0.3799,"teamProj":34.18,"teamSg":-2.005,"avgSteam":-0.4646,"avgCf":0.1815},{"teamId":"T54","oddsName":"Capan / Goodwin","p1":"Noah Goodwin","p1sal":6200,"p1proj":22.78,"p2":"Frankie Capan III","p2sal":6200,"p2proj":11.85,"winOdds":0.003,"winCh":0.0026,"t5Odds":0.005,"t10Odds":0.0063,"cut":0.3707,"teamProj":34.63,"teamSg":-1.919,"avgSteam":-0.2836,"avgCf":0.055},{"teamId":"T35","oddsName":"Peterson / Gordon","p1":"Paul Peterson","p1sal":6200,"p1proj":17.79,"p2":"Will Gordon","p2sal":6200,"p2proj":16.36,"winOdds":0.0028,"winCh":0.0024,"t5Odds":0.0048,"t10Odds":0.006,"cut":0.3534,"teamProj":34.15,"teamSg":-1.918,"avgSteam":-0.2754,"avgCf":0.0095},{"teamId":"T23","oddsName":"Malnati / Knox","p1":"Russell Knox","p1sal":6100,"p1proj":16.7,"p2":"Peter Malnati","p2sal":6100,"p2proj":16.24,"winOdds":0.0026,"winCh":0.0018,"t5Odds":0.0043,"t10Odds":0.0056,"cut":0.336,"teamProj":32.94,"teamSg":-2.007,"avgSteam":-0.0897,"avgCf":0.022},{"teamId":"T06","oddsName":"Kim / Palmer","p1":"Chan Kim","p1sal":6100,"p1proj":20.37,"p2":"Ryan Palmer","p2sal":6100,"p2proj":9.37,"winOdds":0.0024,"winCh":0.0015,"t5Odds":0.0042,"t10Odds":0.0055,"cut":0.3387,"teamProj":29.74,"teamSg":-2.411,"avgSteam":-0.0836,"avgCf":0.095},{"teamId":"T02","oddsName":"Watney / Hoffman","p1":"Charley Hoffman","p1sal":6100,"p1proj":16.83,"p2":"Nick Watney","p2sal":6100,"p2proj":14.53,"winOdds":0.0021,"winCh":0.0024,"t5Odds":0.0033,"t10Odds":0.0045,"cut":0.3499,"teamProj":31.36,"teamSg":-2.244,"avgSteam":-0.4567,"avgCf":0.1705},{"teamId":"T01","oddsName":"Davis / Ogilvy","p1":"Cam Davis","p1sal":6100,"p1proj":14.13,"p2":"Geoff Ogilvy","p2sal":6100,"p2proj":6.53,"winOdds":0.002,"winCh":0.001,"t5Odds":0.0036,"t10Odds":0.0048,"cut":0.2794,"teamProj":20.66,"teamSg":-3.405,"avgSteam":0.191,"avgCf":0.16},{"teamId":"T11","oddsName":"Villegas / Rozo","p1":"Marcelo Rozo","p1sal":6000,"p1proj":14.84,"p2":"Camilo Villegas","p2sal":6000,"p2proj":14.18,"winOdds":0.0018,"winCh":0.0017,"t5Odds":0.0034,"t10Odds":0.0046,"cut":0.3161,"teamProj":29.02,"teamSg":-2.427,"avgSteam":-0.3096,"avgCf":0.059},{"teamId":"T04","oddsName":"Reavie / Byrd","p1":"Chez Reavie","p1sal":6000,"p1proj":15.82,"p2":"Jonathan Byrd","p2sal":6000,"p2proj":13.94,"winOdds":0.0016,"winCh":0.0009,"t5Odds":0.0032,"t10Odds":0.0043,"cut":0.3019,"teamProj":29.76,"teamSg":-2.287,"avgSteam":0.056,"avgCf":-0.018},{"teamId":"T21","oddsName":"Streb / Merritt","p1":"Troy Merritt","p1sal":6000,"p1proj":15.4,"p2":"Robert Streb","p2sal":6000,"p2proj":9.93,"winOdds":0.0016,"winCh":0.0008,"t5Odds":0.003,"t10Odds":0.0041,"cut":0.2927,"teamProj":25.33,"teamSg":-2.827,"avgSteam":0.0788,"avgCf":0.1045},{"teamId":"T05","oddsName":"Cook / Dufner","p1":"Jason Dufner","p1sal":6000,"p1proj":9.89,"p2":"Austin Cook","p2sal":6000,"p2proj":8.82,"winOdds":0.001,"winCh":0.0004,"t5Odds":0.002,"t10Odds":0.0029,"cut":0.2293,"teamProj":18.71,"teamSg":-3.531,"avgSteam":0.2744,"avgCf":0.078},{"teamId":"T16","oddsName":"Stanley / Hahn","p1":"James Hahn","p1sal":6000,"p1proj":9.32,"p2":"Kyle Stanley","p2sal":6000,"p2proj":-1.47,"winOdds":0.0006,"winCh":0.0001,"t5Odds":0.0014,"t10Odds":0.0022,"cut":0.1757,"teamProj":7.85,"teamSg":-4.939,"avgSteam":1.3235,"avgCf":0.2025}],"lineups":[{"lineup":"Matt Fitzpatrick | Wyndham Clark | Sam Stevens | Michael Brennan | Adrien Dumont De Chassart | Blades Brown","teams":"T41,T58,T49,T72,T59,T74","salary":50000,"proj":236.12,"mcMean":251.18,"mcMedian":250.68,"mcStd":39.8,"p10":200.71,"p25":224.33,"p75":277.65,"p90":302.32,"p95":317.2,"p99":346.34,"pOver300":0.1107,"pOver350":0.0078,"sumWin":0.1572,"avgSteam":-0.4818,"avgCf":-0.0257,"avgDelta":4.988,"indSum":0.587,"gppScore":292.87,"cashScore":240.44,"fusionScore":248.05,"sharpe":6.311,"boomRate":0.1107,"noFitz":false},{"lineup":"Matt Fitzpatrick | Ryan Gerard | Michael Brennan | Rico Hoey | William Mouw | Blades Brown","teams":"T41,T73,T72,T34,T48,T74","salary":50000,"proj":234.57,"mcMean":250.02,"mcMedian":249.37,"mcStd":39.98,"p10":199.09,"p25":222.95,"p75":276.39,"p90":301.49,"p95":316.91,"p99":346.22,"pOver300":0.1064,"pOver350":0.0079,"sumWin":0.1636,"avgSteam":-0.4889,"avgCf":-0.0242,"avgDelta":4.959,"indSum":0.496,"gppScore":292.09,"cashScore":239.2,"fusionScore":247.35,"sharpe":6.254,"boomRate":0.1064,"noFitz":false},{"lineup":"Matt Fitzpatrick | Ryan Gerard | Michael Brennan | Rico Hoey | Adrien Dumont De Chassart | Blades Brown","teams":"T41,T73,T72,T34,T59,T74","salary":49900,"proj":234.77,"mcMean":249.99,"mcMedian":249.31,"mcStd":39.95,"p10":199.17,"p25":223.07,"p75":276.61,"p90":301.57,"p95":316.58,"p99":345.49,"pOver300":0.1066,"pOver350":0.0075,"sumWin":0.1628,"avgSteam":-0.4753,"avgCf":-0.0237,"avgDelta":4.969,"indSum":0.628,"gppScore":291.92,"cashScore":239.23,"fusionScore":247.26,"sharpe":6.258,"boomRate":0.1066,"noFitz":false},{"lineup":"Matt Fitzpatrick | Sam Stevens | Michael Brennan | Keith Mitchell | Max McGreevy | Adrien Dumont De Chassart","teams":"T41,T49,T72,T10,T45,T59","salary":50000,"proj":235.89,"mcMean":249.77,"mcMedian":249.38,"mcStd":39.37,"p10":199.61,"p25":223.19,"p75":276.02,"p90":300.42,"p95":315.34,"p99":343.09,"pOver300":0.1018,"pOver350":0.0065,"sumWin":0.156,"avgSteam":-0.3751,"avgCf":-0.033,"avgDelta":4.959,"indSum":1.15,"gppScore":290.83,"cashScore":239.14,"fusionScore":246.51,"sharpe":6.344,"boomRate":0.1018,"noFitz":false},{"lineup":"Matt Fitzpatrick | Matt McCarty | Sam Stevens | Michael Brennan | William Mouw | Adrien Dumont De Chassart","teams":"T41,T70,T49,T72,T48,T59","salary":50000,"proj":235.33,"mcMean":249.9,"mcMedian":249.44,"mcStd":39.46,"p10":199.54,"p25":223.21,"p75":276.23,"p90":300.79,"p95":315.5,"p99":342.89,"pOver300":0.1033,"pOver350":0.0062,"sumWin":0.1554,"avgSteam":-0.4399,"avgCf":-0.0443,"avgDelta":4.961,"indSum":0.47,"gppScore":290.96,"cashScore":239.22,"fusionScore":246.42,"sharpe":6.333,"boomRate":0.1033,"noFitz":false},{"lineup":"Matt Fitzpatrick | Sam Stevens | Michael Brennan | Keith Mitchell | Max McGreevy | Blades Brown","teams":"T41,T49,T72,T10,T45,T74","salary":49900,"proj":235.24,"mcMean":249.53,"mcMedian":249.07,"mcStd":39.39,"p10":199.38,"p25":222.8,"p75":275.42,"p90":300.15,"p95":315.44,"p99":343.48,"pOver300":0.1005,"pOver350":0.0067,"sumWin":0.1554,"avgSteam":-0.4176,"avgCf":-0.0302,"avgDelta":4.962,"indSum":0.905,"gppScore":290.74,"cashScore":238.84,"fusionScore":246.35,"sharpe":6.334,"boomRate":0.1005,"noFitz":false},{"lineup":"Matt Fitzpatrick | Jordan Smith | Sam Stevens | Michael Brennan | Doug Ghim | Blades Brown","teams":"T41,T29,T49,T72,T57,T74","salary":50000,"proj":234.64,"mcMean":249.6,"mcMedian":249.3,"mcStd":39.47,"p10":199.15,"p25":222.78,"p75":276.02,"p90":300.41,"p95":314.75,"p99":343.31,"pOver300":0.1014,"pOver350":0.0066,"sumWin":0.1549,"avgSteam":-0.4878,"avgCf":-0.0292,"avgDelta":4.951,"indSum":0.391,"gppScore":290.81,"cashScore":238.87,"fusionScore":246.26,"sharpe":6.325,"boomRate":0.1014,"noFitz":false},{"lineup":"Matt Fitzpatrick | Matt McCarty | Sam Stevens | Michael Brennan | Adrien Dumont De Chassart | Blades Brown","teams":"T41,T70,T49,T72,T59,T74","salary":49800,"proj":234.87,"mcMean":249.63,"mcMedian":249.23,"mcStd":39.49,"p10":199.31,"p25":223.01,"p75":276.05,"p90":300.37,"p95":315.32,"p99":343.32,"pOver300":0.1015,"pOver350":0.0066,"sumWin":0.1539,"avgSteam":-0.4687,"avgCf":-0.041,"avgDelta":4.975,"indSum":0.359,"gppScore":290.81,"cashScore":238.98,"fusionScore":246.25,"sharpe":6.322,"boomRate":0.1015,"noFitz":false},{"lineup":"Matt Fitzpatrick | Wyndham Clark | Sam Stevens | Michael Brennan | Adrien Dumont De Chassart | Doug Ghim","teams":"T41,T58,T49,T72,T59,T57","salary":50000,"proj":235.14,"mcMean":249.46,"mcMedian":249.25,"mcStd":39.65,"p10":199.06,"p25":222.67,"p75":275.72,"p90":300.36,"p95":315.36,"p99":343.09,"pOver300":0.1015,"pOver350":0.0065,"sumWin":0.1566,"avgSteam":-0.439,"avgCf":-0.0325,"avgDelta":4.951,"indSum":0.68,"gppScore":290.68,"cashScore":238.74,"fusionScore":246.24,"sharpe":6.292,"boomRate":0.1015,"noFitz":false},{"lineup":"Matt Fitzpatrick | Matt McCarty | Sam Stevens | Michael Brennan | William Mouw | Blades Brown","teams":"T41,T70,T49,T72,T48,T74","salary":49900,"proj":234.67,"mcMean":249.66,"mcMedian":249.25,"mcStd":39.54,"p10":199.27,"p25":222.77,"p75":276.08,"p90":300.44,"p95":315.62,"p99":343.24,"pOver300":0.1022,"pOver350":0.0062,"sumWin":0.1548,"avgSteam":-0.4824,"avgCf":-0.0415,"avgDelta":4.965,"indSum":0.226,"gppScore":290.83,"cashScore":238.9,"fusionScore":246.23,"sharpe":6.314,"boomRate":0.1022,"noFitz":false},{"lineup":"Matt Fitzpatrick | Ryan Gerard | Michael Brennan | Austin Smotherman | William Mouw | Adrien Dumont De Chassart","teams":"T41,T73,T72,T28,T48,T59","salary":50000,"proj":233.7,"mcMean":248.83,"mcMedian":248.13,"mcStd":39.9,"p10":198.15,"p25":221.73,"p75":275.24,"p90":300.45,"p95":314.98,"p99":344.06,"pOver300":0.1021,"pOver350":0.0067,"sumWin":0.1617,"avgSteam":-0.4425,"avgCf":-0.0332,"avgDelta":4.929,"indSum":0.589,"gppScore":290.7,"cashScore":237.99,"fusionScore":246.21,"sharpe":6.237,"boomRate":0.1021,"noFitz":false},{"lineup":"Matt Fitzpatrick | Michael Thorbjornsen | Michael Brennan | Max McGreevy | Adrien Dumont De Chassart | Blades Brown","teams":"T41,T65,T72,T45,T59,T74","salary":50000,"proj":234.56,"mcMean":249.27,"mcMedian":248.95,"mcStd":39.62,"p10":198.5,"p25":222.36,"p75":275.7,"p90":300.11,"p95":315.04,"p99":343.78,"pOver300":0.1006,"pOver350":0.0066,"sumWin":0.1594,"avgSteam":-0.4689,"avgCf":-0.0308,"avgDelta":4.948,"indSum":0.487,"gppScore":290.69,"cashScore":238.51,"fusionScore":246.18,"sharpe":6.292,"boomRate":0.1006,"noFitz":false},{"lineup":"Matt Fitzpatrick | Ryan Gerard | Michael Brennan | Max McGreevy | Doug Ghim | Blades Brown","teams":"T41,T73,T72,T45,T57,T74","salary":50000,"proj":234.05,"mcMean":249.27,"mcMedian":248.94,"mcStd":39.58,"p10":198.91,"p25":222.17,"p75":275.7,"p90":300.4,"p95":315.16,"p99":343.32,"pOver300":0.1014,"pOver350":0.0062,"sumWin":0.163,"avgSteam":-0.4877,"avgCf":-0.0455,"avgDelta":4.941,"indSum":0.055,"gppScore":290.68,"cashScore":238.43,"fusionScore":246.04,"sharpe":6.299,"boomRate":0.1014,"noFitz":false},{"lineup":"Matt Fitzpatrick | Wyndham Clark | Michael Brennan | Max McGreevy | Rico Hoey | Blades Brown","teams":"T41,T58,T72,T45,T34,T74","salary":50000,"proj":233.66,"mcMean":248.66,"mcMedian":248.0,"mcStd":39.75,"p10":198.22,"p25":221.55,"p75":274.94,"p90":300.09,"p95":314.91,"p99":344.11,"pOver300":0.1004,"pOver350":0.0069,"sumWin":0.161,"avgSteam":-0.489,"avgCf":-0.0288,"avgDelta":4.941,"indSum":0.364,"gppScore":290.52,"cashScore":237.82,"fusionScore":245.99,"sharpe":6.256,"boomRate":0.1004,"noFitz":false},{"lineup":"Matt Fitzpatrick | Wyndham Clark | Sam Stevens | Michael Brennan | Doug Ghim | Blades Brown","teams":"T41,T58,T49,T72,T57,T74","salary":49900,"proj":234.49,"mcMean":249.22,"mcMedian":248.78,"mcStd":39.54,"p10":199.16,"p25":222.42,"p75":275.45,"p90":299.84,"p95":315.17,"p99":343.3,"pOver300":0.0992,"pOver350":0.0065,"sumWin":0.1561,"avgSteam":-0.4815,"avgCf":-0.0297,"avgDelta":4.955,"indSum":0.436,"gppScore":290.46,"cashScore":238.5,"fusionScore":245.97,"sharpe":6.303,"boomRate":0.0992,"noFitz":false},{"lineup":"Matt Fitzpatrick | Jordan Smith | Sam Stevens | Michael Brennan | Adrien Dumont De Chassart | Chandler Blanchet","teams":"T41,T29,T49,T72,T59,T67","salary":50000,"proj":233.92,"mcMean":249.0,"mcMedian":248.72,"mcStd":39.62,"p10":198.3,"p25":222.25,"p75":275.43,"p90":300.07,"p95":314.57,"p99":343.26,"pOver300":0.1003,"pOver350":0.0064,"sumWin":0.1544,"avgSteam":-0.4851,"avgCf":-0.0402,"avgDelta":4.935,"indSum":0.162,"gppScore":290.44,"cashScore":238.3,"fusionScore":245.87,"sharpe":6.285,"boomRate":0.1003,"noFitz":false},{"lineup":"Matt Fitzpatrick | Taylor Pendrith | Sam Stevens | Michael Brennan | Rico Hoey | Blades Brown","teams":"T41,T32,T49,T72,T34,T74","salary":50000,"proj":233.85,"mcMean":248.56,"mcMedian":248.04,"mcStd":39.74,"p10":198.2,"p25":221.64,"p75":274.81,"p90":299.92,"p95":314.9,"p99":342.78,"pOver300":0.0997,"pOver350":0.0061,"sumWin":0.1572,"avgSteam":-0.4698,"avgCf":-0.0117,"avgDelta":4.937,"indSum":0.822,"gppScore":290.09,"cashScore":237.79,"fusionScore":245.78,"sharpe":6.255,"boomRate":0.0997,"noFitz":false},{"lineup":"Matt Fitzpatrick | Sam Stevens | Michael Brennan | Max McGreevy | Rico Hoey | Austin Smotherman","teams":"T41,T49,T72,T45,T34,T28","salary":49900,"proj":234.18,"mcMean":248.82,"mcMedian":248.49,"mcStd":39.67,"p10":198.32,"p25":221.89,"p75":275.31,"p90":299.59,"p95":314.55,"p99":343.09,"pOver300":0.0983,"pOver350":0.0063,"sumWin":0.1578,"avgSteam":-0.4353,"avgCf":-0.038,"avgDelta":4.946,"indSum":0.591,"gppScore":290.16,"cashScore":238.05,"fusionScore":245.76,"sharpe":6.272,"boomRate":0.0983,"noFitz":false},{"lineup":"Matt Fitzpatrick | Sam Stevens | Michael Brennan | Keith Mitchell | Rico Hoey | Adrien Dumont De Chassart","teams":"T41,T49,T72,T10,T34,T59","salary":49800,"proj":234.97,"mcMean":248.53,"mcMedian":247.93,"mcStd":39.54,"p10":198.16,"p25":221.84,"p75":275.1,"p90":299.73,"p95":314.54,"p99":341.89,"pOver300":0.0989,"pOver350":0.0057,"sumWin":0.1547,"avgSteam":-0.3624,"avgCf":-0.0152,"avgDelta":4.954,"indSum":1.572,"gppScore":289.79,"cashScore":237.86,"fusionScore":245.76,"sharpe":6.285,"boomRate":0.0989,"noFitz":false},{"lineup":"Matt Fitzpatrick | Michael Thorbjornsen | Michael Brennan | Rico Hoey | William Mouw | Adrien Dumont De Chassart","teams":"T41,T65,T72,T34,T48,T59","salary":50000,"proj":234.1,"mcMean":248.3,"mcMedian":248.03,"mcStd":39.76,"p10":197.45,"p25":221.4,"p75":274.87,"p90":299.16,"p95":313.93,"p99":343.73,"pOver300":0.0964,"pOver350":0.0067,"sumWin":0.1594,"avgSteam":-0.4272,"avgCf":-0.0163,"avgDelta":4.929,"indSum":1.021,"gppScore":289.96,"cashScore":237.54,"fusionScore":245.71,"sharpe":6.245,"boomRate":0.0964,"noFitz":false},{"lineup":"Matt Fitzpatrick | Sam Stevens | Michael Brennan | Keith Mitchell | Rico Hoey | William Mouw","teams":"T41,T49,T72,T10,T34,T48","salary":49900,"proj":234.77,"mcMean":248.56,"mcMedian":247.98,"mcStd":39.53,"p10":198.48,"p25":221.59,"p75":275.17,"p90":299.25,"p95":314.44,"p99":342.25,"pOver300":0.0967,"pOver350":0.0057,"sumWin":0.1555,"avgSteam":-0.376,"avgCf":-0.0157,"avgDelta":4.943,"indSum":1.44,"gppScore":289.73,"cashScore":237.77,"fusionScore":245.65,"sharpe":6.288,"boomRate":0.0967,"noFitz":false},{"lineup":"Matt Fitzpatrick | Ryan Gerard | Michael Brennan | Rico Hoey | Adrien Dumont De Chassart | Doug Ghim","teams":"T41,T73,T72,T34,T59,T57","salary":49900,"proj":233.79,"mcMean":248.27,"mcMedian":247.79,"mcStd":39.76,"p10":197.64,"p25":221.14,"p75":274.93,"p90":299.59,"p95":314.53,"p99":343.12,"pOver300":0.0982,"pOver350":0.0063,"sumWin":0.1622,"avgSteam":-0.4325,"avgCf":-0.0305,"avgDelta":4.933,"indSum":0.722,"gppScore":289.95,"cashScore":237.42,"fusionScore":245.61,"sharpe":6.244,"boomRate":0.0982,"noFitz":false},{"lineup":"Matt Fitzpatrick | Wyndham Clark | Sam Stevens | Michael Brennan | Adrien Dumont De Chassart | Chandler Blanchet","teams":"T41,T58,T49,T72,T59,T67","salary":49900,"proj":233.77,"mcMean":248.62,"mcMedian":248.16,"mcStd":39.76,"p10":197.91,"p25":221.98,"p75":274.96,"p90":299.82,"p95":314.32,"p99":342.87,"pOver300":0.0993,"pOver350":0.0064,"sumWin":0.1555,"avgSteam":-0.4788,"avgCf":-0.0407,"avgDelta":4.939,"indSum":0.206,"gppScore":290.1,"cashScore":237.96,"fusionScore":245.6,"sharpe":6.254,"boomRate":0.0993,"noFitz":false},{"lineup":"Matt Fitzpatrick | Sam Stevens | Michael Brennan | Max McGreevy | Rico Hoey | John Parry","teams":"T41,T49,T72,T45,T34,T22","salary":50000,"proj":234.45,"mcMean":248.94,"mcMedian":248.51,"mcStd":39.21,"p10":198.99,"p25":222.4,"p75":275.17,"p90":299.36,"p95":313.93,"p99":342.72,"pOver300":0.0975,"pOver350":0.0062,"sumWin":0.1584,"avgSteam":-0.4368,"avgCf":-0.0485,"avgDelta":4.941,"indSum":0.367,"gppScore":290.04,"cashScore":238.33,"fusionScore":245.59,"sharpe":6.349,"boomRate":0.0975,"noFitz":false},{"lineup":"Matt Fitzpatrick | Michael Thorbjornsen | Sam Stevens | Michael Brennan | Blades Brown | Lee Hodges","teams":"T41,T65,T49,T72,T74,T17","salary":50000,"proj":234.31,"mcMean":248.79,"mcMedian":248.44,"mcStd":39.41,"p10":198.54,"p25":222.15,"p75":275.16,"p90":299.2,"p95":313.75,"p99":342.38,"pOver300":0.0964,"pOver350":0.006,"sumWin":0.1586,"avgSteam":-0.409,"avgCf":-0.0343,"avgDelta":4.923,"indSum":0.797,"gppScore":289.83,"cashScore":238.13,"fusionScore":245.55,"sharpe":6.312,"boomRate":0.0964,"noFitz":false},{"lineup":"Matt Fitzpatrick | Davis Thompson | Sam Stevens | Michael Brennan | William Mouw | Blades Brown","teams":"T41,T69,T49,T72,T48,T74","salary":50000,"proj":233.62,"mcMean":248.52,"mcMedian":248.22,"mcStd":39.72,"p10":198.07,"p25":221.55,"p75":275.03,"p90":299.6,"p95":314.71,"p99":342.45,"pOver300":0.0985,"pOver350":0.0062,"sumWin":0.1558,"avgSteam":-0.4703,"avgCf":-0.0268,"avgDelta":4.932,"indSum":0.517,"gppScore":289.88,"cashScore":237.73,"fusionScore":245.51,"sharpe":6.257,"boomRate":0.0985,"noFitz":false},{"lineup":"Matt Fitzpatrick | Sam Stevens | Michael Brennan | Keith Mitchell | Rico Hoey | Blades Brown","teams":"T41,T49,T72,T10,T34,T74","salary":49700,"proj":234.31,"mcMean":248.29,"mcMedian":247.73,"mcStd":39.6,"p10":198.12,"p25":221.48,"p75":274.44,"p90":299.61,"p95":314.28,"p99":341.6,"pOver300":0.098,"pOver350":0.0062,"sumWin":0.1541,"avgSteam":-0.4049,"avgCf":-0.0123,"avgDelta":4.958,"indSum":1.328,"gppScore":289.58,"cashScore":237.57,"fusionScore":245.5,"sharpe":6.271,"boomRate":0.098,"noFitz":false},{"lineup":"Matt Fitzpatrick | Davis Thompson | Sam Stevens | Michael Brennan | Adrien Dumont De Chassart | Blades Brown","teams":"T41,T69,T49,T72,T59,T74","salary":49900,"proj":233.82,"mcMean":248.49,"mcMedian":248.33,"mcStd":39.7,"p10":197.98,"p25":221.64,"p75":274.78,"p90":299.67,"p95":314.09,"p99":342.06,"pOver300":0.0984,"pOver350":0.0059,"sumWin":0.1549,"avgSteam":-0.4567,"avgCf":-0.0263,"avgDelta":4.942,"indSum":0.65,"gppScore":289.8,"cashScore":237.75,"fusionScore":245.48,"sharpe":6.259,"boomRate":0.0984,"noFitz":false},{"lineup":"Matt Fitzpatrick | Michael Thorbjornsen | Michael Brennan | Rico Hoey | William Mouw | Blades Brown","teams":"T41,T65,T72,T34,T48,T74","salary":49900,"proj":233.44,"mcMean":248.06,"mcMedian":247.71,"mcStd":39.79,"p10":197.14,"p25":221.21,"p75":274.39,"p90":298.97,"p95":314.28,"p99":343.25,"pOver300":0.0955,"pOver350":0.0067,"sumWin":0.1589,"avgSteam":-0.4697,"avgCf":-0.0135,"avgDelta":4.932,"indSum":0.777,"gppScore":289.68,"cashScore":237.32,"fusionScore":245.4,"sharpe":6.234,"boomRate":0.0955,"noFitz":false},{"lineup":"Matt Fitzpatrick | Sahith Theegala | Michael Brennan | Max McGreevy | William Mouw | Adrien Dumont De Chassart","teams":"T41,T47,T72,T45,T48,T59","salary":50000,"proj":233.93,"mcMean":248.55,"mcMedian":248.27,"mcStd":39.59,"p10":198.08,"p25":221.67,"p75":275.04,"p90":299.31,"p95":314.03,"p99":342.43,"pOver300":0.0974,"pOver350":0.0063,"sumWin":0.1578,"avgSteam":-0.4466,"avgCf":-0.0423,"avgDelta":4.934,"indSum":0.396,"gppScore":289.79,"cashScore":237.8,"fusionScore":245.39,"sharpe":6.278,"boomRate":0.0974,"noFitz":false},{"lineup":"Ryan Gerard | Michael Thorbjornsen | Sam Stevens | Michael Brennan | Rico Hoey | Blades Brown","teams":"T73,T65,T49,T72,T34,T74","salary":50000,"proj":230.42,"mcMean":245.16,"mcMedian":244.84,"mcStd":39.68,"p10":194.6,"p25":218.47,"p75":271.48,"p90":295.81,"p95":310.66,"p99":340.42,"pOver300":0.083,"pOver350":0.0049,"sumWin":0.1517,"avgSteam":-0.4804,"avgCf":-0.004,"avgDelta":4.897,"indSum":0.798,"gppScore":286.7,"cashScore":234.49,"fusionScore":242.87,"sharpe":6.178,"boomRate":0.083,"noFitz":true},{"lineup":"Ryan Gerard | Sahith Theegala | Sam Stevens | Michael Brennan | Max McGreevy | Blades Brown","teams":"T73,T47,T49,T72,T45,T74","salary":50000,"proj":230.25,"mcMean":245.41,"mcMedian":245.13,"mcStd":39.53,"p10":194.98,"p25":218.55,"p75":271.83,"p90":296.16,"p95":311.5,"p99":338.92,"pOver300":0.0843,"pOver350":0.0046,"sumWin":0.15,"avgSteam":-0.4997,"avgCf":-0.03,"avgDelta":4.902,"indSum":0.173,"gppScore":286.55,"cashScore":234.67,"fusionScore":242.58,"sharpe":6.208,"boomRate":0.0843,"noFitz":true},{"lineup":"Ryan Gerard | Sahith Theegala | Sam Stevens | Michael Brennan | Rico Hoey | Adrien Dumont De Chassart","teams":"T73,T47,T49,T72,T34,T59","salary":49900,"proj":229.98,"mcMean":244.41,"mcMedian":244.08,"mcStd":39.63,"p10":194.03,"p25":217.45,"p75":270.87,"p90":295.23,"p95":310.35,"p99":338.7,"pOver300":0.081,"pOver350":0.0052,"sumWin":0.1492,"avgSteam":-0.4445,"avgCf":-0.015,"avgDelta":4.893,"indSum":0.84,"gppScore":285.77,"cashScore":233.63,"fusionScore":242.11,"sharpe":6.167,"boomRate":0.081,"noFitz":true},{"lineup":"Ryan Gerard | Wyndham Clark | Sam Stevens | Michael Brennan | Keith Mitchell | Blades Brown","teams":"T73,T58,T49,T72,T10,T74","salary":50000,"proj":229.7,"mcMean":244.06,"mcMedian":243.69,"mcStd":39.44,"p10":194.08,"p25":217.62,"p75":270.03,"p90":295.07,"p95":309.53,"p99":338.39,"pOver300":0.0799,"pOver350":0.0043,"sumWin":0.1491,"avgSteam":-0.4365,"avgCf":-0.0032,"avgDelta":4.876,"indSum":1.083,"gppScore":285.5,"cashScore":233.49,"fusionScore":241.94,"sharpe":6.188,"boomRate":0.0799,"noFitz":true},{"lineup":"Ryan Gerard | Sahith Theegala | Sam Stevens | Michael Brennan | Rico Hoey | Blades Brown","teams":"T73,T47,T49,T72,T34,T74","salary":49800,"proj":229.32,"mcMean":244.18,"mcMedian":243.69,"mcStd":39.66,"p10":193.76,"p25":217.26,"p75":270.69,"p90":295.16,"p95":310.15,"p99":338.47,"pOver300":0.0814,"pOver350":0.0045,"sumWin":0.1486,"avgSteam":-0.487,"avgCf":-0.0122,"avgDelta":4.897,"indSum":0.595,"gppScore":285.59,"cashScore":233.41,"fusionScore":241.88,"sharpe":6.157,"boomRate":0.0814,"noFitz":true},{"lineup":"Ryan Gerard | Sahith Theegala | Sam Stevens | Michael Brennan | Rico Hoey | William Mouw","teams":"T73,T47,T49,T72,T34,T48","salary":50000,"proj":229.78,"mcMean":244.44,"mcMedian":244.13,"mcStd":39.57,"p10":193.74,"p25":217.6,"p75":271.06,"p90":295.08,"p95":310.09,"p99":337.76,"pOver300":0.081,"pOver350":0.0044,"sumWin":0.1501,"avgSteam":-0.4581,"avgCf":-0.0155,"avgDelta":4.883,"indSum":0.707,"gppScore":285.5,"cashScore":233.71,"fusionScore":241.84,"sharpe":6.178,"boomRate":0.081,"noFitz":true},{"lineup":"Ryan Gerard | Wyndham Clark | Sam Stevens | Michael Brennan | Max McGreevy | Adrien Dumont De Chassart","teams":"T73,T58,T49,T72,T45,T59","salary":49800,"proj":229.28,"mcMean":243.89,"mcMedian":243.39,"mcStd":39.49,"p10":193.62,"p25":217.24,"p75":270.17,"p90":294.72,"p95":309.51,"p99":339.01,"pOver300":0.0789,"pOver350":0.0048,"sumWin":0.1486,"avgSteam":-0.4641,"avgCf":-0.0252,"avgDelta":4.894,"indSum":0.503,"gppScore":285.46,"cashScore":233.23,"fusionScore":241.73,"sharpe":6.176,"boomRate":0.0789,"noFitz":true},{"lineup":"Ryan Gerard | Michael Thorbjornsen | Sam Stevens | Michael Brennan | Austin Smotherman | Blades Brown","teams":"T73,T65,T49,T72,T28,T74","salary":49900,"proj":228.89,"mcMean":243.73,"mcMedian":243.28,"mcStd":39.68,"p10":193.2,"p25":216.95,"p75":270.17,"p90":294.59,"p95":309.35,"p99":338.95,"pOver300":0.0792,"pOver350":0.0048,"sumWin":0.1492,"avgSteam":-0.4765,"avgCf":-0.0102,"avgDelta":4.871,"indSum":0.647,"gppScore":285.33,"cashScore":233.02,"fusionScore":241.66,"sharpe":6.143,"boomRate":0.0792,"noFitz":true},{"lineup":"Ryan Gerard | Michael Thorbjornsen | Sam Stevens | Michael Brennan | Austin Smotherman | Adrien Dumont De Chassart","teams":"T73,T65,T49,T72,T28,T59","salary":50000,"proj":229.55,"mcMean":243.97,"mcMedian":243.7,"mcStd":39.61,"p10":193.47,"p25":217.1,"p75":270.49,"p90":294.71,"p95":309.36,"p99":337.63,"pOver300":0.0791,"pOver350":0.0044,"sumWin":0.1498,"avgSteam":-0.434,"avgCf":-0.013,"avgDelta":4.867,"indSum":0.891,"gppScore":285.14,"cashScore":233.22,"fusionScore":241.59,"sharpe":6.159,"boomRate":0.0791,"noFitz":true},{"lineup":"Ryan Gerard | Jordan Smith | Sam Stevens | Michael Brennan | Max McGreevy | Adrien Dumont De Chassart","teams":"T73,T29,T49,T72,T45,T59","salary":49900,"proj":229.43,"mcMean":244.27,"mcMedian":243.96,"mcStd":39.3,"p10":193.88,"p25":217.91,"p75":270.41,"p90":294.89,"p95":309.82,"p99":337.46,"pOver300":0.0807,"pOver350":0.0044,"sumWin":0.1475,"avgSteam":-0.4704,"avgCf":-0.0247,"avgDelta":4.89,"indSum":0.459,"gppScore":285.29,"cashScore":233.73,"fusionScore":241.59,"sharpe":6.215,"boomRate":0.0807,"noFitz":true}],"topLineup":{"lineup":"Matt Fitzpatrick | Wyndham Clark | Sam Stevens | Michael Brennan | Adrien Dumont De Chassart | Blades Brown","teams":"T41,T58,T49,T72,T59,T74","salary":50000,"proj":236.12,"mcMean":251.18,"mcMedian":250.68,"mcStd":39.8,"p10":200.71,"p25":224.33,"p75":277.65,"p90":302.32,"p95":317.2,"p99":346.34,"pOver300":0.1107,"pOver350":0.0078,"sumWin":0.1572,"avgSteam":-0.4818,"avgCf":-0.0257,"avgDelta":4.988,"indSum":0.587,"gppScore":292.87,"cashScore":240.44,"fusionScore":248.05,"sharpe":6.311,"boomRate":0.1107,"noFitz":false},"topNonFitz":{"lineup":"Ryan Gerard | Michael Thorbjornsen | Sam Stevens | Michael Brennan | Rico Hoey | Blades Brown","teams":"T73,T65,T49,T72,T34,T74","salary":50000,"proj":230.42,"mcMean":245.16,"mcMedian":244.84,"mcStd":39.68,"p10":194.6,"p25":218.47,"p75":271.48,"p90":295.81,"p95":310.66,"p99":340.42,"pOver300":0.083,"pOver350":0.0049,"sumWin":0.1517,"avgSteam":-0.4804,"avgCf":-0.004,"avgDelta":4.897,"indSum":0.798,"gppScore":286.7,"cashScore":234.49,"fusionScore":242.87,"sharpe":6.178,"boomRate":0.083,"noFitz":true},"meta":{"nTrials":50000,"nPlayers":148,"nTeams":74,"nLineups":40,"cap":50000,"roster":6,"sgMult":3.0,"baseRound":9.0,"correlation":0.65,"objectives":10,"vigWin":1.428,"vigT5":8.57,"vigT10":16.55}};
 
-/* ══ STATE ══════════════════════════════════ */
-let P = DATA.players.map(p => ({...p}));
-const TEAMS = DATA.teams;
-const LINEUPS = DATA.lineups;
-
-let PSORT = 'proj', PASC = false, PFILTER = 'all';
-let TSORT = 'win';
-let LRANK = 'fusionScore', LFILTER = 'all';
-let BT_LINEUP = null;
-
-/* ══ UTILS ══════════════════════════════════ */
-const esc   = s => String(s??'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const escCsv= s => { let v=String(s??''); if(/^[=+\-@\t\r]/.test(v)) v="'"+v; if(/[",\n\r]/.test(v)) v='"'+v.replace(/"/g,'""')+'"'; return v; };
-const f2    = v => v==null?'—':Number(v).toFixed(2);
-const f1    = v => v==null?'—':Number(v).toFixed(1);
-const f3    = v => v==null?'—':Number(v).toFixed(3);
-const pct   = (v,d=1) => v==null?'—':(Number(v)*100).toFixed(d)+'%';
-const sgn   = (v,d=2) => v==null?'—':(v>=0?'+':'')+Number(v).toFixed(d);
+/* ══ UTILS & FORMATTING ══════════════════════════════════ */
+const esc = s => String(s??'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const f1 = v => v==null?'—':Number(v).toFixed(1);
+const f2 = v => v==null?'—':Number(v).toFixed(2);
+const pct = (v,d=1) => v==null?'—':(Number(v)*100).toFixed(d)+'%';
+const sgn = (v,d=2) => v==null?'—':(v>=0?'+':'')+Number(v).toFixed(d);
 const dollar= v => '$'+Number(v).toLocaleString();
 
 let _tt=null;
@@ -489,105 +256,274 @@ function toast(m,k='ok'){
   _tt=setTimeout(()=>el.classList.remove('show'),3000);
 }
 
-/* ══ INIT ════════════════════════════════════ */
-window.addEventListener('DOMContentLoaded', ()=>{
-  renderHeader(); renderBanners();
-  renderLineups(); renderPool(); renderTeams();
-  renderBtSelect(); updateFloating(); wire();
+/* ══ STATE ══════════════════════════════════ */
+let P = [];
+let PSORT = 'proj', PASC = false, PFILTER = 'all';
+
+// File Parsing State
+const RAW = { dk: null, field: null, decomp: null, preds: null };
+
+/* ══ CSV PARSER ENGINE ══════════════════════════════════ */
+function parseCSV(text) {
+    let p = '', row = [''], ret = [row], i = 0, r = 0, s = !0, l;
+    for (l of text) {
+        if ('"' === l) { if (s && l === p) row[i] += l; s = !s; }
+        else if (',' === l && s) l = row[++i] = '';
+        else if ('\n' === l && s) { if ('\r' === p) row[i] = row[i].slice(0, -1); row = ret[++r] = [l = '']; i = 0; }
+        else row[i] += l; p = l;
+    }
+    // Remove empty trailing row if exists
+    if(ret[ret.length-1].length === 1 && ret[ret.length-1][0] === "") ret.pop();
+    return ret;
+}
+
+function oddsToProb(oddsStr) {
+    if(!oddsStr) return 0;
+    const odds = parseInt(oddsStr, 10);
+    if(isNaN(odds)) return 0;
+    if (odds > 0) return 100 / (odds + 100);
+    return Math.abs(odds) / (Math.abs(odds) + 100);
+}
+
+// Convert "Last, First" to "First Last"
+function reverseName(name) {
+    if(!name) return "";
+    if(name.includes(',')) {
+        const parts = name.split(',');
+        return (parts[1].trim() + " " + parts[0].trim()).replace(/\s+/g, ' ');
+    }
+    return name.trim();
+}
+
+/* ══ FILE UPLOAD LOGIC ══════════════════════════════════ */
+const dropZone = document.getElementById('drop-zone');
+const fileInput = document.getElementById('file-input');
+const btnBuild = document.getElementById('btn-build');
+
+['dragenter', 'dragover', 'dragleave', 'drop'].forEach(evt => {
+    dropZone.addEventListener(evt, e => { e.preventDefault(); e.stopPropagation(); }, false);
 });
+dropZone.addEventListener('dragover', () => dropZone.classList.add('dragover'));
+dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
+dropZone.addEventListener('drop', e => {
+    dropZone.classList.remove('dragover');
+    handleFiles(e.dataTransfer.files);
+});
+fileInput.addEventListener('change', e => handleFiles(e.target.files));
 
-function renderHeader(){
-  const m = DATA.meta;
-  document.getElementById('hdrMeta').innerHTML =
-    `<span>${m.nPlayers}</span> players · <span>${m.nTeams}</span> teams · `+
-    `<span>${(m.nTrials/1000).toFixed(0)}k</span> MC trials · `+
-    `<span>${m.objectives}</span> objectives · Field LOCKED Tue<br>`+
-    `ρ=<span>${m.correlation}</span> · SG×<span>${m.sgMult}</span> · base <span>${m.baseRound}</span>`;
-}
-function renderBanners(){
-  const t = DATA.topLineup;
-  const nf = DATA.topNonFitz;
-  const n1 = t.lineup.split(' | ');
-  const n2 = nf.lineup.split(' | ');
-  // banners updated below
-document.getElementById('bannerGpp').innerHTML =
-    `<span class="b-icon">🏆</span><div><strong>#1 GPP</strong> — MC mean <span class="m">${f1(t.mcMean)}</span> · `+
-    `p90 <span class="m">${f1(t.p90)}</span> · p99 <span class="m">${f1(t.p99)}</span> · `+
-    `boom <span class="m">${pct(t.boomRate)}</span> · cap <span class="m">${dollar(t.salary)}</span><br>`+
-    n1.map(n=>esc(n)).join(' · ')+'</div>';
-  document.getElementById('bannerNf').innerHTML =
-    `<span class="b-icon">🎯</span><div><strong>TOP NO-FITZ</strong> — MC mean <span class="m">${f1(nf.mcMean)}</span> `+
-    `(−${(t.mcMean-nf.mcMean).toFixed(1)} vs #1) · p90 <span class="m">${f1(nf.p90)}</span> · cap <span class="m">${dollar(nf.salary)}</span><br>`+
-    n2.map(n=>esc(n)).join(' · ')+'</div>';
-}
-
-/* ══ LINEUPS ══════════════════════════════════ */
-function renderLineups(){
-  let pool = LINEUPS.slice();
-  if(LFILTER==='nofitz') pool = pool.filter(l=>l.noFitz);
-  pool.sort((a,b) => b[LRANK]-a[LRANK]);
-  document.getElementById('luList').innerHTML = pool.length
-    ? pool.map((lu,i) => lineupCard(lu,i+1)).join('')
-    : `<div style="padding:24px;text-align:center;color:var(--tx3)">No lineups match filter.</div>`;
-}
-
-function lineupCard(lu, rank){
-  const names   = lu.lineup.split(' | ');
-  const teams   = lu.teams.split(',');
-  const isHero  = rank===1 && LFILTER==='all' && LRANK==='gppScore';
-  const badges  = [];
-  if(isHero) badges.push(`<span class="badge b-hero">🥇 #1 GPP</span>`);
-  badges.push(`<span class="badge b-gpp">GPP ${f1(lu.gppScore)}</span>`);
-  badges.push(`<span class="badge b-cash">CASH ${f1(lu.cashScore)}</span>`);
-  if(lu.noFitz) badges.push(`<span class="badge b-nf">🚫 NO-FITZ</span>`);
-  const players = names.map((n,i)=>{
-    const pl = P.find(x=>x.name===n);
-    return `<div class="lu-p">
-      <strong>${esc(n)}</strong>
-      <span>${esc(teams[i]||'')} · ${pl?dollar(pl.salary):'—'} · ${pl?f1(pl.proj):'—'}</span>
-    </div>`;
-  }).join('');
-  return `<div class="lu-card ${isHero?'hero':''}">
-    <div class="lu-head">
-      <div class="lu-rk">#${rank}</div>
-      <div class="lu-badges">${badges.join('')}</div>
-    </div>
-    <div class="lu-metrics">
-      <div class="lm"><div class="lm-l">Salary</div><div class="lm-v v-wh">${dollar(lu.salary)}</div></div>
-      <div class="lm"><div class="lm-l">Proj</div><div class="lm-v v-gld">${f1(lu.proj)}</div></div>
-      <div class="lm"><div class="lm-l">MC Mean</div><div class="lm-v v-cy">${f1(lu.mcMean)}</div></div>
-      <div class="lm"><div class="lm-l">σ</div><div class="lm-v v-wh">${f1(lu.mcStd)}</div></div>
-      <div class="lm"><div class="lm-l">p10</div><div class="lm-v v-red">${f1(lu.p10)}</div></div>
-      <div class="lm"><div class="lm-l">p25</div><div class="lm-v v-wh">${f1(lu.p25)}</div></div>
-      <div class="lm"><div class="lm-l">p75</div><div class="lm-v v-wh">${f1(lu.p75)}</div></div>
-      <div class="lm"><div class="lm-l">p90</div><div class="lm-v v-grn">${f1(lu.p90)}</div></div>
-      <div class="lm"><div class="lm-l">p99</div><div class="lm-v v-pur">${f1(lu.p99)}</div></div>
-      <div class="lm"><div class="lm-l">Boom%</div><div class="lm-v v-gld">${pct(lu.boomRate)}</div></div>
-      <div class="lm"><div class="lm-l">Sharpe</div><div class="lm-v v-cy">${f2(lu.sharpe)}</div></div>
-      <div class="lm"><div class="lm-l">P(>350)</div><div class="lm-v">${pct(lu.pOver350)}</div></div>
-      <div class="lm"><div class="lm-l">FUSION</div><div class="lm-v v-gld">${f1(lu.fusionScore)}</div></div>
-      <div class="lm"><div class="lm-l">AVG STEAM</div><div class="lm-v" style="color:${lu.avgSteam>0.05?'var(--grn)':(lu.avgSteam<-0.05?'var(--red)':'var(--tx2)')}">${lu.avgSteam>=0?'+':''}${(lu.avgSteam).toFixed(3)}</div></div>
-      <div class="lm"><div class="lm-l">AVG CF</div><div class="lm-v" style="color:${lu.avgCf>0?'var(--grn)':'var(--red)'}">${lu.avgCf>=0?'+':''}${(lu.avgCf).toFixed(3)}</div></div>
-      <div class="lm"><div class="lm-l">IND SUM</div><div class="lm-v v-gld">${(lu.indSum>=0?'+':'')+f2(lu.indSum)}</div></div>
-    </div>
-    <div class="lu-players">${players}</div>
-    <div class="lu-btns">
-      <button class="lu-btn ex" data-lu-exp="${rank-1}">📥 DK CSV</button>
-      <button class="lu-btn" data-lu-lock="${rank-1}">🔒 LOCK TO BUILDER</button>
-      <button class="lu-btn" data-lu-bt="${rank-1}">📈 BACKTEST</button>
-    </div>
-  </div>`;
+function handleFiles(files) {
+    Array.from(files).forEach(file => {
+        const reader = new FileReader();
+        reader.onload = e => {
+            const text = e.target.result;
+            const lines = text.split('\n');
+            const header = lines[0].toLowerCase();
+            
+            if(header.includes('salary') && header.includes('position')) {
+                RAW.dk = parseCSV(text);
+                document.getElementById('status-dk').innerHTML = 'DraftKings Salaries <span class="status ok">Loaded ✅</span>';
+            } else if (header.includes('dg_rank') || header.includes('partner_dg_id')) {
+                RAW.field = parseCSV(text);
+                document.getElementById('status-field').innerHTML = 'DataGolf Field <span class="status ok">Loaded ✅</span>';
+            } else if (header.includes('baseline') && header.includes('course_fit')) {
+                RAW.decomp = parseCSV(text);
+                document.getElementById('status-decomp').innerHTML = 'DataGolf Decomposition <span class="status ok">Loaded ✅</span>';
+            } else if (header.includes('make_cut') && header.includes('p1_dg_id')) {
+                RAW.preds = parseCSV(text);
+                document.getElementById('status-preds').innerHTML = 'DataGolf Predictions <span class="status ok">Loaded ✅</span>';
+            }
+            checkReady();
+        };
+        reader.readAsText(file);
+    });
 }
 
-/* ══ POOL ════════════════════════════════════ */
+function checkReady() {
+    if (RAW.dk && RAW.field && RAW.decomp && RAW.preds) {
+        btnBuild.style.display = 'block';
+    }
+}
+
+btnBuild.addEventListener('click', buildEngine);
+
+/* ══ DATA INGESTION PIPELINE ══════════════════════════════════ */
+function buildEngine() {
+    try {
+        const playersMap = new Map(); // Key: dg_id
+        
+        // 1. Process Field (Establishes dg_id identity and team pairings)
+        const fieldHdr = RAW.field[0];
+        const fIdIdx = fieldHdr.indexOf('dg_id');
+        const fNameIdx = fieldHdr.indexOf('player_name');
+        const fPartnerIdx = fieldHdr.indexOf('partner_dg_id');
+        
+        // Give teams an arbitrary ID
+        let teamCounter = 1;
+        const assignedTeams = new Map();
+
+        for(let i=1; i<RAW.field.length; i++) {
+            const row = RAW.field[i];
+            if(row.length < fIdIdx) continue;
+            const dgId = row[fIdIdx];
+            const nameReversed = reverseName(row[fNameIdx]);
+            const partnerId = row[fPartnerIdx];
+            
+            if(!dgId) continue;
+
+            let tId = assignedTeams.get(dgId) || assignedTeams.get(partnerId);
+            if(!tId) {
+                tId = "T" + String(teamCounter).padStart(2, '0');
+                teamCounter++;
+                assignedTeams.set(dgId, tId);
+                assignedTeams.set(partnerId, tId);
+            }
+
+            playersMap.set(dgId, {
+                dgId: dgId,
+                name: nameReversed,
+                team: tId,
+                dkId: null,
+                salary: 0,
+                sg: 0,
+                courseFit: 0,
+                sigma: 0,
+                winCh: 0,
+                cutCh: 0,
+                locked: false,
+                excluded: false
+            });
+        }
+
+        // 2. Process DK Salaries (Map by Name)
+        const dkHdr = RAW.dk[0];
+        const dkNameIdx = dkHdr.indexOf('Name');
+        const dkSalIdx = dkHdr.indexOf('Salary');
+        const dkIdIdx = dkHdr.indexOf('ID');
+
+        for(let i=1; i<RAW.dk.length; i++){
+            const row = RAW.dk[i];
+            if(!row[dkNameIdx]) continue;
+            const dkName = row[dkNameIdx].trim();
+            const sal = parseInt(row[dkSalIdx], 10);
+            
+            // Find player in map by Name
+            let matchedId = null;
+            for(const [id, p] of playersMap.entries()){
+                // basic string matching, handle variations if needed
+                if(p.name.toLowerCase() === dkName.toLowerCase() || p.name.includes(dkName) || dkName.includes(p.name)) {
+                    matchedId = id;
+                    break;
+                }
+            }
+            if(matchedId) {
+                playersMap.get(matchedId).salary = sal;
+                playersMap.get(matchedId).dkId = row[dkIdIdx];
+            }
+        }
+
+        // 3. Process DG Decomposition (Map by Name)
+        const decHdr = RAW.decomp[0];
+        const decNameIdx = decHdr.indexOf('player_name');
+        const decSgIdx = decHdr.indexOf('final_prediction');
+        const decSigIdx = decHdr.indexOf('std_dev');
+        const decFitIdx = decHdr.indexOf('course_fit_total_adj');
+
+        for(let i=1; i<RAW.decomp.length; i++){
+            const row = RAW.decomp[i];
+            if(!row[decNameIdx]) continue;
+            const revName = reverseName(row[decNameIdx]);
+            
+            let matchedId = null;
+            for(const [id, p] of playersMap.entries()){
+                if(p.name.toLowerCase() === revName.toLowerCase()) { matchedId = id; break; }
+            }
+            if(matchedId) {
+                playersMap.get(matchedId).sg = parseFloat(row[decSgIdx] || 0);
+                playersMap.get(matchedId).sigma = parseFloat(row[decSigIdx] || 0);
+                playersMap.get(matchedId).courseFit = parseFloat(row[decFitIdx] || 0);
+            }
+        }
+
+        // 4. Process Preds (Odds)
+        const predHdr = RAW.preds[0];
+        const p1Idx = predHdr.indexOf('p1_dg_id');
+        const p2Idx = predHdr.indexOf('p2_dg_id');
+        const winIdx = predHdr.indexOf('win');
+        const cutIdx = predHdr.indexOf('make_cut');
+        const t5Idx = predHdr.indexOf('top_5');
+        const t10Idx = predHdr.indexOf('top_10');
+        const t20Idx = predHdr.indexOf('top_20');
+
+        for(let i=1; i<RAW.preds.length; i++){
+            const row = RAW.preds[i];
+            if(!row[p1Idx]) continue;
+            
+            const winProb = oddsToProb(row[winIdx]);
+            const cutProb = oddsToProb(row[cutIdx]);
+            const t5Prob = oddsToProb(row[t5Idx]);
+            const t10Prob = oddsToProb(row[t10Idx]);
+            const t20Prob = oddsToProb(row[t20Idx]);
+
+            // Assign probabilities to both partners
+            [row[p1Idx], row[p2Idx]].forEach(id => {
+                if(playersMap.has(id)){
+                    const pl = playersMap.get(id);
+                    pl.winCh = winProb;
+                    pl.cutCh = cutProb;
+                    pl.t5Ch = t5Prob;
+                    pl.t10Ch = t10Prob;
+                    pl.t20Ch = t20Prob;
+                }
+            });
+        }
+
+        // 5. Build Final Array & Calculate Projections
+        P = [];
+        for(const [id, p] of playersMap.entries()) {
+            if(p.salary > 0) {
+                // V9/V10 Math Transformation
+                const exp_rounds = (4 * p.cutCh) + (2 * (1 - p.cutCh));
+                const scoring_EV = (9.0 + (3.0 * p.sg)) * exp_rounds;
+                const finish_EV = (30 * p.winCh) + (14 * p.t5Ch) + (7 * p.t10Ch) + (5 * p.t20Ch) + (2 * (p.t20Ch * 0.5)); // Approx T30
+                
+                p.proj = scoring_EV + finish_EV;
+                
+                // V11 Additions
+                p.zSigma = p.sigma * 0.85; // Foursomes variance compression
+                p.val = p.proj / (p.salary / 1000);
+                
+                // Ownership Mock based on Value
+                let rawOwn = (p.val * 5) - 15; 
+                if (rawOwn < 0.5) rawOwn = Math.random() * 2 + 0.5;
+                p.own = Math.min(35, Math.max(0.5, rawOwn + (p.winCh * 200)));
+                
+                // Leverage Score
+                p.leverage = (p.winCh * 100) - p.own;
+
+                P.push(p);
+            }
+        }
+
+        document.getElementById('loader-overlay').style.display = 'none';
+        document.getElementById('hdrMeta').innerHTML = `<span>${P.length}</span> players · <span>${new Set(P.map(x=>x.team)).size}</span> teams · ρ=<span>0.65</span>`;
+        
+        renderPool();
+        wire();
+        toast('Field ingestion complete. Engine Ready.', 'ok');
+
+    } catch(err) {
+        toast('Error parsing CSVs. Check file formats.', 'err');
+        console.error(err);
+    }
+}
+
+/* ══ POOL RENDERING ════════════════════════════════════ */
 function renderPool(){
   const q=(document.getElementById('srch')?.value||'').toLowerCase();
   let d = P.filter(p=>{
     if(q && !p.name.toLowerCase().includes(q) && !p.team.toLowerCase().includes(q)) return false;
-    if(PFILTER==='elite' && p.proj<=40) return false;
+    if(PFILTER==='lev' && p.leverage <= -5) return false;
     if(PFILTER==='value' && p.val<=4.5) return false;
-    if(PFILTER==='winup' && p.win<=0.03) return false;
-    if(PFILTER==='lev'   && !(p.proj>30 && p.salary<=8000)) return false;
     return true;
   });
   d.sort((a,b)=>{
@@ -595,326 +531,177 @@ function renderPool(){
     if(va==null) return 1; if(vb==null) return -1;
     return PASC ? va-vb : vb-va;
   });
+  
   document.querySelectorAll('#pool-table th[data-c]').forEach(th=>{
     const on=th.dataset.c===PSORT;
     th.classList.toggle('act',on);
     const arr=th.querySelector('.arr');
     if(arr) arr.textContent = on?(PASC?'▲':'▼'):'▼';
   });
-  document.getElementById('pool-tb').innerHTML = d.map(poolRow).join('') ||
-    `<tr><td colspan="10" style="padding:24px;text-align:center;color:var(--tx3)">No players match.</td></tr>`;
-}
-function poolRow(pl){
-  const partnerLocked = P.some(x=>x.team===pl.team && x.name!==pl.name && x.locked);
-  const rc = pl.locked?'row-lk':(pl.excluded?'row-ex':(partnerLocked?'row-bl':''));
-  const sn = esc(pl.name);
-  const partner = P.find(x=>x.team===pl.team && x.name!==pl.name);
-  const pChip = partner ? `<span class="partner-note">w/ ${esc(partner.name.split(' ').slice(-1)[0])}</span>` : '';
-  const bChip = partnerLocked ? `<span class="blocked-chip">PARTNER LOCKED</span>` : '';
-  const pC = pl.proj>45?'v-grn':(pl.proj<20?'v-red':'');
-  const vC = pl.val>4.5?'v-grn':(pl.val<3?'v-red':'');
-  const wC = pl.win>0.03?'v-gld':'';
-  return `<tr class="${rc}">
-    <td><div class="pn">${sn} ${pChip} ${bChip}</div>
-      <div class="acts">
-        <button class="bi ${pl.locked?'lk':''}" data-act="lock" data-name="${sn}" ${partnerLocked&&!pl.locked?'disabled':''} aria-label="Lock">🔒</button>
-        <button class="bi ${pl.excluded?'ex':''}" data-act="excl" data-name="${sn}" aria-label="Exclude">✕</button>
-      </div></td>
-    <td>${dollar(pl.salary)}</td>
-    <td><span class="tm" data-tf="${esc(pl.team)}">${esc(pl.team)}</span></td>
-    <td class="${pC}" style="font-weight:800">${f1(pl.proj)}</td>
-    <td class="${vC}">${f2(pl.val)}</td>
-    <td>${sgn(pl.sg,3)}</td>
-    <td class="${wC}">${pct(pl.win,2)}</td>
-    <td>${pct(pl.cut,1)}</td>
-    <td style="color:${pl.courseFit>0?'var(--grn)':'var(--red)'}">${sgn(pl.courseFit,3)}</td>
-    <td style="color:var(--tx2)">${f1(pl.sigma)}</td>
-    <td style="color:${pl.steam>0.1?'var(--grn)':(pl.steam<-0.1?'var(--red)':'var(--tx2)')};font-weight:${Math.abs(pl.steam)>0.2?'800':'400'}">${pl.steam>0?'+':''}${(pl.steam).toFixed(3)}</td>
-    <td style="font-weight:${Math.abs(pl.indicator)>0.5?800:400}" class="${pl.indicator>0.5?'v-gld':(pl.indicator>0?'v-grn':(pl.indicator<-0.5?'v-red':''))}">${pl.indicator>=0?'+':''}${(pl.indicator).toFixed(3)}</td>
-  </tr>`;
-}
-
-/* ══ TEAMS ════════════════════════════════════ */
-function renderTeams(){
-  const q=(document.getElementById('tsrch')?.value||'').toLowerCase();
-  let d = TEAMS.filter(t=>!q||t.teamId.toLowerCase().includes(q)||t.p1.toLowerCase().includes(q)||t.p2.toLowerCase().includes(q));
-  d.sort((a,b)=>b[TSORT]-a[TSORT]);
-  document.getElementById('team-tb').innerHTML = d.map((t,i)=>{
-    const wc = t.win>0.04?'v-gld':(t.win>0.02?'v-grn':'');
-    return `<tr>
-      <td><strong>${esc(t.teamId)}</strong> <span style="color:var(--tx3);font-size:9px">#${i+1}</span></td>
-      <td>${esc(t.p1)}</td><td>${esc(t.p2)}</td>
-      <td class="${wc}" style="font-weight:800">${pct(t.win,2)}</td>
-      <td>${pct(t.t5,1)}</td><td>${pct(t.t10,1)}</td><td>${pct(t.t20,1)}</td>
-      <td>${pct(t.cut,1)}</td>
-      <td style="font-weight:800;color:var(--gld)">${f1(t.teamProj)}</td>
-      <td style="color:var(--cyan)">${sgn(t.teamSg,3)}</td>
-      <td style="color:${t.avgSteam>0.05?'var(--grn)':(t.avgSteam<-0.05?'var(--red)':'var(--tx2)')};font-weight:${Math.abs(t.avgSteam)>0.1?'800':'400'}">${t.avgSteam>=0?'+':''}${t.avgSteam.toFixed(3)}</td>
-      <td style="color:${t.avgCf>0.05?'var(--grn)':(t.avgCf<-0.05?'var(--red)':'var(--tx2)')}">${t.avgCf>=0?'+':''}${t.avgCf.toFixed(3)}</td>
+  
+  document.getElementById('pool-tb').innerHTML = d.map(p=>{
+    const sn = esc(p.name);
+    const pC = p.proj>35?'v-grn':(p.proj<20?'v-red':'');
+    const lC = p.leverage > 0 ? 'v-gld' : (p.leverage < -10 ? 'v-red' : 'v-tx2');
+    return `<tr class="${p.locked?'row-lk':''}">
+      <td><div class="pn">${sn}</div>
+        <div class="acts">
+          <button class="bi ${p.locked?'lk':''}" data-act="lock" data-name="${sn}">🔒</button>
+          <button class="bi ${p.excluded?'ex':''}" data-act="excl" data-name="${sn}">✕</button>
+        </div></td>
+      <td>${dollar(p.salary)}</td>
+      <td><span class="tm">${esc(p.team)}</span></td>
+      <td class="${pC}" style="font-weight:800">${f1(p.proj)}</td>
+      <td>${sgn(p.sg, 3)}</td>
+      <td style="color:var(--pur)">${f1(p.zSigma)}</td>
+      <td>${pct(p.winCh,2)}</td>
+      <td style="color:var(--tx2)">${p.own.toFixed(1)}%</td>
+      <td class="${lC}" style="font-weight:800">${sgn(p.leverage,1)}</td>
     </tr>`;
-  }).join('');
+  }).join('') || `<tr><td colspan="9" style="padding:24px;text-align:center;color:var(--tx3)">No matches.</td></tr>`;
 }
 
-/* ══ BUILDER OPTIMIZER ════════════════════════ */
+/* ══ BUILDER ════════════════════════════════ */
 function updateFloating(){
   const lk = P.filter(x=>x.locked);
   const tms = new Set(lk.map(p=>p.team));
   const sal = lk.reduce((s,p)=>s+p.salary,0);
   const proj = lk.reduce((s,p)=>s+p.proj,0);
-  const win  = lk.reduce((s,p)=>s+p.win,0);
+  const own = lk.reduce((s,p)=>s+p.own,0);
+  const lev = lk.reduce((s,p)=>s+p.leverage,0);
+  
   document.getElementById('fC').textContent=`${lk.length}/6`;
   document.getElementById('fS').textContent=dollar(50000-sal);
-  document.getElementById('fProj').textContent=f1(proj);
+  document.getElementById('fLev').textContent=sgn(lev,1);
+  
   document.getElementById('sL').textContent=`${lk.length}/6`;
   document.getElementById('sTm').textContent=tms.size;
   document.getElementById('sS').textContent=dollar(sal);
   document.getElementById('sR').textContent=dollar(50000-sal);
   document.getElementById('sProj').textContent=f1(proj);
-  document.getElementById('sWin').textContent=pct(win,2);
-  const ll = document.getElementById('locks-list');
-  ll.innerHTML = lk.length
+  document.getElementById('sOwn').textContent=own.toFixed(1) + '%';
+  
+  document.getElementById('locks-list').innerHTML = lk.length
     ? lk.map(p=>`<div class="lock-item">
         <span>🔒 <strong>${esc(p.name)}</strong> <span class="tm">${esc(p.team)}</span> ${dollar(p.salary)}</span>
-        <span style="color:var(--gld);font-weight:800">${f1(p.proj)}</span>
+        <span style="color:var(--pur);font-weight:800">${p.own.toFixed(1)}%</span>
       </div>`).join('')
     : `<div class="lock-empty">No players locked.</div>`;
 }
 
 function runOptimizer(mode){
+  if(P.length === 0) { toast('Please upload CSVs first.', 'err'); return; }
   const CAP=50000, ROSTER=6, STEP=100;
   const pool = P.filter(p=>!p.excluded);
   const locked = pool.filter(p=>p.locked);
   if(locked.length>ROSTER){ toast('Max 6 locked.','err'); return; }
+  
   const lockedSal = locked.reduce((s,p)=>s+p.salary,0);
   if(lockedSal>CAP){ toast('Locked exceeds cap.','err'); return; }
+  
   const lockedTeams = new Set(locked.map(p=>p.team));
   if(lockedTeams.size !== locked.length){ toast('Partner conflict — 1 per pair.','err'); return; }
-  const val = mode==='gpp'
-    ? p => p.proj + 0.5*p.sigma + 15*p.win
-    : p => p.proj - 0.25*p.sigma;
+  
+  const valFn = {
+    'gpp': p => p.proj + (0.5 * p.zSigma),
+    'lev': p => p.proj + (0.5 * p.zSigma) - (0.25 * p.own), 
+    'cash': p => p.proj - (0.25 * p.zSigma)
+  }[mode];
+
   let cands = pool.filter(p=>!p.locked && !lockedTeams.has(p.team));
   const slotsRem = ROSTER-locked.length;
-  const capRem   = CAP-lockedSal;
-  const buckets  = capRem/STEP+1|0;
+  const capRem = CAP-lockedSal;
+  const buckets = Math.floor(capRem/STEP) + 1;
   const dp = Array.from({length:slotsRem+1},()=>Array(buckets).fill(null));
-  dp[0][0]={score:0,picks:[],teams:new Set()};
-  cands.sort((a,b)=>val(b)-val(a));
+  dp[0][0] = {score:0, picks:[], teams:new Set()};
+  
+  cands.sort((a,b)=>valFn(b)-valFn(a));
+  
   for(const c of cands){
-    const sb=c.salary/STEP|0;
-    if(sb>=buckets) continue;
-    const vc=val(c);
-    for(let k=slotsRem;k>=1;k--){
-      for(let cap=buckets-1;cap>=sb;cap--){
-        const prev=dp[k-1][cap-sb];
-        if(!prev||prev.teams.has(c.team)) continue;
-        const ns=prev.score+vc;
-        const cur=dp[k][cap];
-        if(!cur||ns>cur.score) dp[k][cap]={score:ns,picks:[...prev.picks,c],teams:new Set([...prev.teams,c.team])};
+    const sb = Math.floor(c.salary/STEP);
+    if(sb >= buckets) continue;
+    const vc = valFn(c);
+    for(let k=slotsRem; k>=1; k--){
+      for(let cap=buckets-1; cap>=sb; cap--){
+        const prev = dp[k-1][cap-sb];
+        if(!prev || prev.teams.has(c.team)) continue;
+        const ns = prev.score + vc;
+        const cur = dp[k][cap];
+        if(!cur || ns > cur.score) dp[k][cap] = {score:ns, picks:[...prev.picks, c], teams:new Set([...prev.teams, c.team])};
       }
     }
   }
+  
   let best=null;
-  for(let cap=0;cap<buckets;cap++){
-    const c=dp[slotsRem][cap];
-    if(c&&(!best||c.score>best.score)) best=c;
+  for(let cap=0; cap<buckets; cap++){
+    const c = dp[slotsRem][cap];
+    if(c && (!best || c.score > best.score)) best=c;
   }
+  
   if(!best){ toast('No valid lineup within constraints.','err'); return; }
-  const lineup=[...locked,...best.picks];
-  const tSal=lineup.reduce((s,p)=>s+p.salary,0);
-  const tProj=lineup.reduce((s,p)=>s+p.proj,0);
-  const tWin=lineup.reduce((s,p)=>s+p.win,0);
-  const oo=document.getElementById('opt-out');
+  
+  const lineup = [...locked, ...best.picks];
+  const tSal = lineup.reduce((s,p)=>s+p.salary,0);
+  const tProj = lineup.reduce((s,p)=>s+p.proj,0);
+  const tOwn = lineup.reduce((s,p)=>s+p.own,0);
+  const tLev = lineup.reduce((s,p)=>s+p.leverage,0);
+  
+  const oo = document.getElementById('opt-out');
   oo.classList.add('show');
-  document.getElementById('opt-title').textContent=`${mode.toUpperCase()} OPTIMAL`;
-  document.getElementById('opt-stats').innerHTML=
-    `<span>${dollar(tSal)} / $50k</span><span>Proj: ${f1(tProj)}</span><span>Win Σ: ${pct(tWin,2)}</span>`;
+  document.getElementById('opt-title').textContent = `${mode.toUpperCase()} OPTIMAL`;
+  document.getElementById('opt-stats').innerHTML = 
+    `<span>${dollar(tSal)}</span><span>Proj: ${f1(tProj)}</span><span>Own: ${tOwn.toFixed(1)}%</span><span class="v-pur">Lev: ${sgn(tLev,1)}</span>`;
+  
   document.getElementById('opt-list').innerHTML = lineup.sort((a,b)=>b.proj-a.proj)
     .map(p=>`<li><span><strong>${esc(p.name)}</strong> <span class="tm">${esc(p.team)}</span></span>
-              <span>${dollar(p.salary)} · ${f1(p.proj)}</span></li>`).join('');
-  oo.dataset.lineup=JSON.stringify(lineup.map(p=>({n:p.name,id:p.dkId})));
-  BT_LINEUP = lineup;
-  renderBtResults(lineup);
-  toast(`${mode.toUpperCase()} lineup built. ${dollar(tSal)} used.`);
-}
-
-function exportCustomCsv(){
-  const oo=document.getElementById('opt-out');
-  if(!oo.dataset.lineup){ toast('No lineup.','err'); return; }
-  const data=JSON.parse(oo.dataset.lineup);
-  const csv='G,G,G,G,G,G\n'+data.map(p=>escCsv(`${p.n} (${p.id})`)).join(',');
-  dlCsv(csv,'swamp_custom.csv');
-  toast('CSV exported.');
-}
-function exportLineCsv(idx){
-  const sorted=[...LINEUPS].sort((a,b)=>b[LRANK]-a[LRANK]);
-  const lu=sorted[idx];
-  if(!lu){ toast('Not found.','err'); return; }
-  const names=lu.lineup.split(' | ');
-  const data=names.map(n=>{ const pl=P.find(x=>x.name===n); return pl?{n:pl.name,id:pl.dkId}:{n,id:''}; });
-  const csv='G,G,G,G,G,G\n'+data.map(p=>escCsv(`${p.n} (${p.id})`)).join(',');
-  dlCsv(csv,'swamp_lineup.csv');
-  toast('CSV exported.');
-}
-function dlCsv(csv,name){
-  const b=new Blob([csv],{type:'text/csv'});
-  const u=URL.createObjectURL(b);
-  const a=document.createElement('a');
-  a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(u);
-}
-
-/* ══ BACKTEST ════════════════════════════════ */
-function renderBtSelect(){
-  const top10 = [...LINEUPS].sort((a,b)=>b.gppScore-a.gppScore).slice(0,10);
-  document.getElementById('bt-select').innerHTML = top10.map((lu,i)=>{
-    const label = lu.noFitz ? `🚫 #${i+1} NO-FITZ` : `#${i+1}`;
-    const names = lu.lineup.split(' | ').slice(0,3).join(', ')+'…';
-    return `<button class="chip" style="text-align:left;padding:8px 12px;font-size:10px;border-radius:6px" data-btsel="${i}">
-      <strong>${label}</strong> GPP=${f1(lu.gppScore)} · ${esc(names)}
-    </button>`;
-  }).join('');
-}
-
-function renderBtResults(lineup){
-  // Use pre-computed MC metrics if lineup matches a stored lineup
-  const luStr = lineup.map(p=>p.name).sort().join('|');
-  const stored = LINEUPS.find(lu=>{
-    const s=lu.lineup.split(' | ').sort().join('|');
-    return s===luStr;
-  });
-  const d = stored || null;
-  if(!d){ document.getElementById('bt-stats').innerHTML=`<p style="color:var(--tx3);font-size:11px">Custom lineup — use builder stats for reference.</p>`; return; }
-  document.getElementById('bt-stats').innerHTML = `
-    <div class="bt-stat"><span class="bt-label">MEDIAN (p50)</span><span class="bt-val v-cy">${f1(d.mcMedian)}</span></div>
-    <div class="bt-stat"><span class="bt-label">MEAN</span><span class="bt-val v-cy">${f1(d.mcMean)}</span></div>
-    <div class="bt-stat"><span class="bt-label">STD DEV</span><span class="bt-val">${f1(d.mcStd)}</span></div>
-    <div class="bt-stat"><span class="bt-label">P10 (floor)</span><span class="bt-val v-red">${f1(d.p10)}</span></div>
-    <div class="bt-stat"><span class="bt-label">P25</span><span class="bt-val">${f1(d.p25)}</span></div>
-    <div class="bt-stat"><span class="bt-label">P75</span><span class="bt-val">${f1(d.p75)}</span></div>
-    <div class="bt-stat"><span class="bt-label">P90 (GPP ceiling)</span><span class="bt-val v-grn">${f1(d.p90)}</span></div>
-    <div class="bt-stat"><span class="bt-label">P95</span><span class="bt-val v-grn">${f1(d.p95)}</span></div>
-    <div class="bt-stat"><span class="bt-label">P99 (lottery)</span><span class="bt-val v-pur">${f1(d.p99)}</span></div>
-    <div class="bt-stat"><span class="bt-label">BOOM RATE (P>300)</span><span class="bt-val v-gld">${pct(d.boomRate)}</span></div>
-    <div class="bt-stat"><span class="bt-label">P(>350)</span><span class="bt-val">${pct(d.pOver350)}</span></div>
-    <div class="bt-stat"><span class="bt-label">SHARPE RATIO</span><span class="bt-val v-cy">${f2(d.sharpe)}</span></div>
-    <div class="bt-stat"><span class="bt-label">GPP SCORE</span><span class="bt-val v-pur">${f1(d.gppScore)}</span></div>
-    <div class="bt-stat"><span class="bt-label">CASH SCORE</span><span class="bt-val v-grn">${f1(d.cashScore)}</span></div>
-  `;
-  const names = d.lineup.split(' | ');
-  const weakCut  = names.reduce((w,n)=>{ const pl=P.find(x=>x.name===n); return !w||pl.cut<w.cut?pl:w; }, null);
-  const highWin  = names.reduce((w,n)=>{ const pl=P.find(x=>x.name===n); return !w||pl.win>w.win?pl:w; }, null);
-  const highSig  = names.reduce((w,n)=>{ const pl=P.find(x=>x.name===n); return !w||pl.sigma>w.sigma?pl:w; }, null);
-  document.getElementById('bt-diag').innerHTML = weakCut ? `
-    <div class="bt-stat"><span class="bt-label">WEAKEST CUT LINK</span><span class="bt-val v-red">${esc(weakCut.name)} ${pct(weakCut.cut,0)}</span></div>
-    <div class="bt-stat"><span class="bt-label">HIGHEST WIN EQ</span><span class="bt-val v-gld">${esc(highWin.name)} ${pct(highWin.win,2)}</span></div>
-    <div class="bt-stat"><span class="bt-label">CEILING DICTATOR (σ)</span><span class="bt-val v-pur">${esc(highSig.name)} σ=${f1(highSig.sigma)}</span></div>
-    <div class="bt-stat"><span class="bt-label">SALARY USED</span><span class="bt-val">${dollar(d.salary)}</span></div>
-    <div class="bt-stat"><span class="bt-label">NO-FITZ</span><span class="bt-val" style="color:${d.noFitz?'var(--pur)':'var(--tx3)'}">${d.noFitz?'YES':'NO'}</span></div>
-  ` : '';
+              <span>${dollar(p.salary)} · Lev ${sgn(p.leverage,1)}</span></li>`).join('');
+  toast(`${mode.toUpperCase()} Lineup Built.`);
 }
 
 /* ══ WIRING ══════════════════════════════════ */
 function wire(){
-  document.querySelectorAll('[role="tab"]').forEach(t=>{
-    t.addEventListener('click',()=>activateTab(t));
-    t.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();activateTab(t);} });
-  });
-  document.querySelectorAll('.chip[data-lrank]').forEach(c=>c.addEventListener('click',()=>{
-    LRANK=c.dataset.lrank;
-    document.querySelectorAll('.chip[data-lrank]').forEach(x=>x.classList.remove('on'));
-    c.classList.add('on'); renderLineups();
+  document.querySelectorAll('[role="tab"]').forEach(t=>t.addEventListener('click', ()=>{
+    document.querySelectorAll('[role="tab"]').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.pnl').forEach(x=>x.classList.remove('on'));
+    t.classList.add('on');
+    document.getElementById('pnl-'+t.dataset.panel).classList.add('on');
   }));
-  document.getElementById('nfToggle').addEventListener('click',()=>{
-    LFILTER = LFILTER==='nofitz'?'all':'nofitz';
-    document.getElementById('nfToggle').classList.toggle('on', LFILTER==='nofitz');
-    renderLineups();
-  });
+  
   document.querySelectorAll('.chip[data-filter]').forEach(c=>c.addEventListener('click',()=>{
     PFILTER=c.dataset.filter;
     document.querySelectorAll('.chip[data-filter]').forEach(x=>x.classList.remove('on'));
     c.classList.add('on'); renderPool();
   }));
-  document.querySelectorAll('.chip[data-tsort]').forEach(c=>c.addEventListener('click',()=>{
-    TSORT=c.dataset.tsort;
-    document.querySelectorAll('.chip[data-tsort]').forEach(x=>x.classList.remove('on'));
-    c.classList.add('on'); renderTeams();
-  }));
+  
   document.getElementById('srch').addEventListener('input', renderPool);
-  document.getElementById('tsrch').addEventListener('input', renderTeams);
   document.querySelectorAll('#pool-table th[data-c]').forEach(th=>th.addEventListener('click',()=>{
     PASC = PSORT===th.dataset.c?!PASC:false;
     PSORT=th.dataset.c; renderPool();
   }));
+  
   document.querySelectorAll('[data-gen]').forEach(b=>b.addEventListener('click',()=>runOptimizer(b.dataset.gen)));
+  
   document.getElementById('clrLocks').addEventListener('click',()=>{
     P.forEach(p=>p.locked=false); renderPool(); updateFloating();
   });
-  document.getElementById('expBtn').addEventListener('click', exportCustomCsv);
-  document.getElementById('fabBtn').addEventListener('click',()=>activateTab(document.querySelector('[data-panel="build"]')));
-  document.getElementById('fabBtn').addEventListener('keydown',e=>{
-    if(e.key==='Enter'||e.key===' '){e.preventDefault();activateTab(document.querySelector('[data-panel="build"]'));}
-  });
+  
+  document.getElementById('fabBtn').addEventListener('click',()=>document.querySelector('[data-panel="build"]').click());
+  
   document.getElementById('pool-tb').addEventListener('click',e=>{
     const b=e.target.closest('button[data-act]');
     if(b){
       const pl=P.find(x=>x.name===b.dataset.name);
       if(!pl) return;
       if(b.dataset.act==='lock'){
-        if(!pl.locked){
-          const partner=P.find(x=>x.team===pl.team&&x.name!==pl.name);
-          if(partner&&partner.locked){ toast('Partner already locked — 1 per pair.','err'); return; }
-          pl.locked=true; pl.excluded=false;
-        } else pl.locked=false;
-      } else if(b.dataset.act==='excl'){
-        pl.excluded=!pl.excluded;
-        if(pl.excluded) pl.locked=false;
+        const partner=P.find(x=>x.team===pl.team&&x.name!==pl.name);
+        if(partner&&partner.locked){ toast('Partner already locked.','err'); return; }
+        pl.locked=!pl.locked; pl.excluded=false;
+      } else {
+        pl.excluded=!pl.excluded; if(pl.excluded) pl.locked=false;
       }
-      renderPool(); updateFloating(); return;
-    }
-    const tf=e.target.closest('[data-tf]');
-    if(tf){ document.getElementById('srch').value=tf.dataset.tf; renderPool(); }
-  });
-  document.getElementById('luList').addEventListener('click',e=>{
-    const exp=e.target.closest('[data-lu-exp]');
-    if(exp){ exportLineCsv(+exp.dataset.luExp); return; }
-    const lk=e.target.closest('[data-lu-lock]');
-    if(lk){
-      const sorted=[...LINEUPS].sort((a,b)=>b[LRANK]-a[LRANK]);
-      const lu=sorted[+lk.dataset.luLock];
-      const names=lu.lineup.split(' | ');
-      P.forEach(p=>p.locked=names.includes(p.name));
       renderPool(); updateFloating();
-      activateTab(document.querySelector('[data-panel="build"]'));
-      toast(`Locked ${names.length} players.`); return;
-    }
-    const bt=e.target.closest('[data-lu-bt]');
-    if(bt){
-      const sorted=[...LINEUPS].sort((a,b)=>b[LRANK]-a[LRANK]);
-      const lu=sorted[+bt.dataset.luBt];
-      const lineup=lu.lineup.split(' | ').map(n=>P.find(x=>x.name===n)).filter(Boolean);
-      BT_LINEUP=lineup;
-      renderBtResults(lineup);
-      activateTab(document.querySelector('[data-panel="backtest"]'));
     }
   });
-  document.getElementById('bt-select').addEventListener('click',e=>{
-    const b=e.target.closest('[data-btsel]');
-    if(b){
-      const top10=[...LINEUPS].sort((a,b)=>b.gppScore-a.gppScore).slice(0,10);
-      const lu=top10[+b.dataset.btsel];
-      const lineup=lu.lineup.split(' | ').map(n=>P.find(x=>x.name===n)).filter(Boolean);
-      BT_LINEUP=lineup; renderBtResults(lineup);
-      document.querySelectorAll('#bt-select [data-btsel]').forEach(x=>x.classList.remove('on'));
-      b.classList.add('on');
-    }
-  });
-}
-
-function activateTab(tab){
-  document.querySelectorAll('[role="tab"]').forEach(t=>{t.classList.remove('on');t.setAttribute('aria-selected','false');});
-  document.querySelectorAll('.pnl').forEach(p=>p.classList.remove('on'));
-  tab.classList.add('on'); tab.setAttribute('aria-selected','true');
-  document.getElementById('pnl-'+tab.dataset.panel).classList.add('on');
-  window.scrollTo({top:0,behavior:'smooth'});
 }
 </script>
 </body>
