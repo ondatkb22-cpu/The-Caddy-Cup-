@@ -3,322 +3,1113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🐊 Swamp Classic V7.8 — Synergy DP Optimizer</title>
-<link href="https://fonts.googleapis.com/css2?family=Anybody:wght@400;600;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<title>🐊 Swamp Classic V8.0 — Full Terminal</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#03060A;--sf:#0A0F16;--sf2:#111820;--sf3:#1A2233;--bd:#1E2A3A;--bd2:#2A3A4E;--tx:#E8ECF2;--tx2:#8A96A8;--tx3:#4E5C70;--grn:#2ECC71;--red:#E74C3C;--gld:#F1C40F;--pur:#9B59B6;--cyan:#1ABC9C;--fn:'Anybody',sans-serif;--mn:'JetBrains Mono',monospace;--glow:0 0 20px rgba(46,204,113,.15)}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--tx);font-family:var(--fn);font-size:13px;min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 60% 40% at 30% 0%,rgba(26,188,156,.04),transparent 50%),radial-gradient(ellipse 50% 50% at 80% 100%,rgba(52,152,219,.03),transparent 50%);pointer-events:none;z-index:-1}
-.c{max-width:1500px;margin:0 auto;padding:12px}
-.hdr{padding:16px 0;border-bottom:2px solid var(--bd);margin-bottom:12px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:8px}
-.hdr h1{font-size:28px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,var(--grn),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hdr-meta{font-family:var(--mn);font-size:10px;color:var(--tx3);text-align:right}
-.badge{display:inline-block;font-size:8px;font-weight:700;padding:2px 7px;border-radius:4px;letter-spacing:.8px;font-family:var(--mn)}
-.b-grn{background:rgba(46,204,113,.12);color:var(--grn);border:1px solid rgba(46,204,113,.3)}
-.b-gld{background:rgba(241,196,15,.12);color:var(--gld);border:1px solid rgba(241,196,15,.3)}
-.b-pur{background:rgba(155,89,182,.12);color:var(--pur);border:1px solid rgba(155,89,182,.3)}
-.b-red{background:rgba(231,76,60,.12);color:var(--red);border:1px solid rgba(231,76,60,.3)}
-.tabs{display:flex;gap:4px;margin-bottom:12px;flex-wrap:wrap}
-.tab{flex:1;min-width:100px;padding:10px;background:var(--sf);border:1px solid var(--bd);color:var(--tx3);font-family:var(--fn);font-size:11px;font-weight:600;cursor:pointer;border-radius:8px;text-align:center;transition:.2s}
-.tab:hover{color:var(--tx2);border-color:var(--bd2)}
-.tab.on{background:linear-gradient(135deg,rgba(46,204,113,.1),rgba(26,188,156,.1));color:var(--grn);border-color:var(--grn)}
-.pnl{display:none;animation:fi .25s}.pnl.on{display:block}
-@keyframes fi{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-.toolbar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
-.srch{background:var(--sf);border:1px solid var(--bd);color:var(--tx);padding:8px 12px;border-radius:6px;font-size:12px;width:240px;outline:none;font-family:var(--mn)}
-.srch:focus{border-color:var(--cyan);box-shadow:0 0 12px rgba(26,188,156,.1)}
-.chip{background:var(--sf);border:1px solid var(--bd);color:var(--tx3);padding:6px 10px;border-radius:20px;font-size:9px;font-weight:600;cursor:pointer;transition:.15s;font-family:var(--mn)}
-.chip:hover{border-color:var(--tx2);color:var(--tx2)}
-.chip.on{background:var(--grn);color:#000;border-color:var(--grn)}
-.tw{background:var(--sf);border:1px solid var(--bd);border-radius:10px;overflow:auto;max-height:75vh;box-shadow:var(--glow)}
-table{width:100%;border-collapse:collapse;min-width:1000px;font-family:var(--mn)}
-th{padding:10px 5px;font-size:16px;color:var(--tx3);border-bottom:2px solid var(--bd);cursor:pointer;text-align:center;position:sticky;top:0;background:var(--sf);z-index:5;user-select:none}
-th:first-child{text-align:left;padding-left:12px;position:sticky;left:0;z-index:10;border-right:1px solid var(--bd);min-width:240px; font-size:11px; font-family:var(--fn)}
-th:hover{background:var(--sf2)}
-th.act{background:var(--bd)}
-td{padding:8px 5px;border-bottom:1px solid rgba(30,42,58,.5);font-size:12px;text-align:center}
-td:first-child{text-align:left;padding-left:12px;position:sticky;left:0;background:var(--sf);z-index:4;border-right:1px solid var(--bd)}
-tbody tr{transition:background .1s}
-tbody tr:hover{background:var(--sf2)}
-tbody tr:hover td:first-child{background:var(--sf2)}
-.g{color:var(--grn);font-weight:700}.r{color:var(--red)}.gl{color:var(--gld);font-weight:700}.cy{color:var(--cyan);font-weight:700}.pu{color:var(--pur);font-weight:700}
-.pname{font-weight:700;font-size:12px;color:#fff;font-family:var(--fn)}
-.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;margin-bottom:12px}
-.info-card{background:var(--sf);border:1px solid var(--bd);border-radius:8px;padding:14px;position:relative;overflow:hidden}
-.info-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--pur),var(--cyan))}
-.info-label{font-size:9px;color:var(--tx3);font-family:var(--mn);letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
-.info-val{font-size:20px;font-weight:800;font-family:var(--mn)}
-.info-note{font-size:10px;color:var(--tx2);margin-top:4px}
-.lineup-box{background:var(--sf);border:2px solid var(--bd2);border-radius:10px;margin-top:12px;overflow:hidden}
-.lineup-box.gpp{border-color:var(--pur)}
-.lineup-box.cash{border-color:var(--cyan)}
-.lineup-hdr{padding:12px 16px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bd)}
-.gpp .lineup-hdr{background:linear-gradient(135deg,rgba(155,89,182,.15),rgba(26,188,156,.05))}
-.cash .lineup-hdr{background:linear-gradient(135deg,rgba(26,188,156,.15),rgba(52,152,219,.05))}
-.lineup-hdr h3{font-size:14px;font-weight:800;color:#fff}
-.lineup-stats{display:flex;gap:16px;font-family:var(--mn);font-size:11px}
-.lineup-list{list-style:none}
-.lineup-list li{padding:10px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;font-size:12px;font-family:var(--mn);align-items:center}
-.lineup-list li:last-child{border:none}
-.gen-btn{color:#000;border:none;padding:12px 24px;border-radius:8px;font-family:var(--fn);font-size:13px;font-weight:800;cursor:pointer;transition:.2s;letter-spacing:.5px}
-.gen-btn.gpp{background:linear-gradient(135deg,var(--pur),#3498DB)}
-.gen-btn.cash{background:linear-gradient(135deg,var(--grn),var(--cyan))}
-.gen-btn:hover{transform:translateY(-1px);filter:brightness(1.1)}
-.dict-table th, .dict-table td{text-align:left; font-size:12px; padding:12px;}
-.dict-table td code{background:var(--sf2); padding:2px 6px; border-radius:4px; color:var(--cyan)}
+:root {
+  --bg: #0d1117;
+  --sf: #161b22;
+  --sf2: #21262d;
+  --bd: #30363d;
+  --tx: #c9d1d9;
+  --tx2: #8b949e;
+  --grn: #238636;
+  --red: #da3633;
+  --gld: #d29922;
+  --pur: #8957e5;
+  --cyan: #388bfd;
+  --f: 'JetBrains Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--tx); font-family: var(--f); font-size: 13px; line-height: 1.5; padding: 20px; }
+.app { max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; height: calc(100vh - 40px); }
+header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid var(--bd); padding-bottom: 15px; margin-bottom: 20px; }
+h1 { font-size: 26px; font-weight: 800; color: #fff; }
+.meta { text-align: right; color: var(--tx2); font-size: 11px; text-transform: uppercase; }
+.tabs { display: flex; gap: 5px; margin-bottom: 20px; }
+.tab { background: var(--sf); border: 1px solid var(--bd); color: var(--tx2); padding: 10px 20px; cursor: pointer; font-weight: 700; border-radius: 6px; }
+.tab.on { background: var(--sf2); color: var(--cyan); border-color: var(--cyan); }
+.toolbar { display: flex; gap: 10px; margin-bottom: 15px; align-items: center; }
+input { background: var(--bg); border: 1px solid var(--bd); color: #fff; padding: 10px; outline: none; width: 300px; border-radius: 6px; font-family: var(--f); }
+.chip { background: var(--sf); border: 1px solid var(--bd); color: var(--tx); padding: 8px 12px; border-radius: 20px; cursor: pointer; font-size: 11px; }
+.chip.on { background: rgba(56, 139, 253, 0.15); color: var(--cyan); border-color: var(--cyan); }
+.badge { padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: 800; display: inline-block; margin-right: 4px; }
+.b-cyan { background: rgba(56, 139, 253, 0.15); color: var(--cyan); }
+.b-grn { background: rgba(35, 134, 54, 0.15); color: var(--grn); }
+.b-red { background: rgba(218, 54, 51, 0.15); color: var(--red); }
+.b-gld { background: rgba(210, 153, 34, 0.15); color: var(--gld); }
+.panel { flex: 1; display: none; flex-direction: column; overflow: hidden; }
+.panel.on { display: flex; }
+.table-container { flex: 1; overflow: auto; border: 1px solid var(--bd); border-radius: 8px; background: var(--sf); }
+table { width: 100%; border-collapse: collapse; min-width: 1100px; }
+th { position: sticky; top: 0; background: var(--sf2); padding: 12px; text-align: center; border-bottom: 2px solid var(--bd); z-index: 2; cursor: pointer; color: var(--tx2); }
+th:first-child { text-align: left; left: 0; z-index: 3; }
+th:hover { color: #fff; }
+th.act { color: var(--cyan); }
+td { padding: 12px; border-bottom: 1px solid var(--bd); text-align: center; font-size: 12px; }
+td:first-child { text-align: left; position: sticky; left: 0; background: var(--sf); z-index: 1; font-weight: 700; color: #fff; }
+tr:hover td { background: var(--sf2) !important; }
+.g { color: var(--grn); } .r { color: var(--red); }
+.opt-grid { display: grid; grid-template-columns: 1fr 400px; gap: 20px; height: 100%; overflow: hidden; }
+.sidebar { background: var(--sf); border: 1px solid var(--bd); border-radius: 8px; padding: 20px; overflow-y: auto; }
+.lineup-box { background: var(--sf2); border: 1px solid var(--bd); border-radius: 8px; padding: 20px; flex: 1; overflow-y: auto; }
+.stat-card { background: var(--bg); border: 1px solid var(--bd); border-radius: 6px; padding: 15px; margin-bottom: 15px; }
+.stat-label { color: var(--tx2); font-size: 10px; text-transform: uppercase; margin-bottom: 5px; }
+.stat-val { font-size: 24px; font-weight: 800; color: #fff; }
+.btn { width: 100%; padding: 15px; margin-bottom: 10px; background: var(--sf2); border: 1px solid var(--bd); color: #fff; font-weight: 800; cursor: pointer; border-radius: 6px; transition: 0.2s; font-family: var(--f); }
+.btn.gpp { border-color: var(--pur); color: var(--pur); }
+.btn.gpp:hover { background: rgba(137, 87, 229, 0.1); }
+.btn.cash { border-color: var(--cyan); color: var(--cyan); }
+.btn.cash:hover { background: rgba(56, 139, 253, 0.1); }
+.lineup-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px dashed var(--bd); align-items: center; }
 </style>
 </head>
 <body>
-<div class="c">
-<header class="hdr">
-<div>
-<h1>🐊 SWAMP CLASSIC V7.8</h1>
-<div style="font-size:11px;color:var(--tx2);margin-top:2px">Zurich Classic 2026 · DP Synergy Extraction Engine Final</div>
-</div>
-<div class="hdr-meta">
-<div>STRICT $49K-$50K DP KNAPSACK</div>
-<div style="margin-top:2px">Final Accuracy & Volatility Correlations</div>
-</div>
-</header>
+<div class="app">
+  <header>
+    <div>
+      <h1>🐊 SWAMP CLASSIC V8.0</h1>
+      <div style="color: var(--tx2); margin-top: 5px;">0-1 Knapsack DP + Foursomes Synergy Engine</div>
+    </div>
+    <div class="meta">
+      Teams: 74 | Matrix: 6 x 500<br>
+      Strict Constraint: Exactly $50K Cap
+    </div>
+  </header>
 
-<div class="tabs">
-<button class="tab on" data-p="pool">📊 TEAM POOL</button>
-<button class="tab" data-p="build">🔧 OPTIMIZER</button>
-<button class="tab" data-p="dict">📖 DICTIONARY</button>
-</div>
+  <div class="tabs">
+    <div class="tab on" onclick="setTab('pool')">📊 TEAM POOL</div>
+    <div class="tab" onclick="setTab('opt')">🔧 OPTIMIZER</div>
+  </div>
 
-<div class="pnl on" id="p-pool">
-<div class="toolbar">
-<input class="srch" id="srch" placeholder="Search team..." type="search">
-<button class="chip on" data-f="all">ALL TEAMS</button>
-<button class="chip" data-f="synergy">✨ SYNERGY > 0</button>
-<button class="chip" data-f="ceiling">🚀 CEILING > 4.0</button>
-<button class="chip" data-f="value">💰 SUB $8K</button>
-</div>
-<div class="tw"><table><thead id="thd"></thead><tbody id="tb"></tbody></table></div>
-</div>
+  <div id="pool" class="panel on">
+    <div class="toolbar">
+      <input type="text" id="srch" placeholder="🔍 Search team..." oninput="render()">
+      <div class="chip on" data-f="all">ALL TEAMS</div>
+      <div class="chip" data-f="synergy">✨ POSITIVE SYNERGY</div>
+      <div class="chip" data-f="value">💰 SUB $8K VALUE</div>
+    </div>
+    <div class="table-container">
+      <table>
+        <thead id="thd"></thead>
+        <tbody id="tb"></tbody>
+      </table>
+    </div>
+  </div>
 
-<div class="pnl" id="p-build">
-<div class="info-grid">
-<div class="info-card"><div class="info-label">GPP Engine</div><div class="info-val pu">Max 🚀</div><div class="info-note">Ceiling = Base + StdDev + Synergy. Targets 95th percentile outcome.</div></div>
-<div class="info-card"><div class="info-label">Cash Engine</div><div class="info-val cy">Max ✂️</div><div class="info-note">Safety = Cut % + Synergy Adjustment. Minimizes blow-up risk.</div></div>
-<div class="info-card"><div class="info-label">DP Constraint</div><div class="info-val gl">$49K - $50K</div><div class="info-note">Strict Knapsack Solver ensures exactly 6 teams rostered.</div></div>
-</div>
-<div style="display:flex;gap:12px;margin-bottom:12px">
-<button class="gen-btn gpp" onclick="genLineup('gpp')">🚀 GENERATE GPP (CEILING)</button>
-<button class="gen-btn cash" onclick="genLineup('cash')">💰 GENERATE CASH (SAFETY)</button>
-</div>
-<div id="lineup-out"></div>
-</div>
-
-<div class="pnl" id="p-dict">
-<div class="tw">
-<table class="dict-table">
-<thead><tr><th>EMOJI</th><th>METRIC</th><th>DEFINITION</th></tr></thead>
-<tbody>
-<tr><td>👥</td><td>Team</td><td>Designated DraftKings pairing.</td></tr>
-<tr><td>💰</td><td>Salary</td><td>DraftKings Rostering Cost.</td></tr>
-<tr><td>🏆</td><td>Win %</td><td>DataGolf Model Win Probability.</td></tr>
-<tr><td>🔟</td><td>T10 %</td><td>DataGolf Top 10 Probability.</td></tr>
-<tr><td>✂️</td><td>Cut %</td><td>DataGolf Make Cut Probability.</td></tr>
-<tr><td>🔮</td><td>DG Pred</td><td>Combined Baseline Strokes Gained.</td></tr>
-<tr><td>🎢</td><td>StdDev</td><td>Average Scoring Volatility (Birdie Maker Identification).</td></tr>
-<tr><td>✨</td><td>Syn</td><td>Synergy: Accuracy + Volatility complement adjustment.</td></tr>
-<tr><td>🚀</td><td>Ceil (Δ)</td><td>Absolute GPP Score: Pred + StdDev + Syn.</td></tr>
-</tbody>
-</table>
-</div>
-</div>
+  <div id="opt" class="panel">
+    <div class="opt-grid">
+      <div class="lineup-box" id="lineup-out">
+        <div style="display:flex; height:100%; align-items:center; justify-content:center; color:var(--tx2);">
+          Select an algorithm to execute the DP solver.
+        </div>
+      </div>
+      <div class="sidebar">
+        <div class="stat-card">
+          <div class="stat-label">Solver Constraints</div>
+          <div style="font-size:12px; color:var(--tx2);">
+            Max Teams: 6<br>
+            Min Salary: $49,000<br>
+            Max Salary: $50,000<br>
+            Iteration States: 350,000+
+          </div>
+        </div>
+        <button class="btn gpp" onclick="solve('gpp')">🚀 EXECUTE GPP (CEILING)</button>
+        <button class="btn cash" onclick="solve('cash')">🛡️ EXECUTE CASH (SAFETY)</button>
+        <button class="btn" style="border-color:var(--grn); color:var(--grn);" onclick="solve('leverage')">📈 EXECUTE LEVERAGE (T10 EV)</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-'use strict';
-
-// V7.8 RAW DATA PAYLOAD
+// UNMINIFIED DATA PAYLOAD
+// Each team strictly mapped to official DK salaries and DG standard deviations
 const RAW_TEAMS = [
-  {"tm": "M. Fitzpatrick / A. Fitzpatrick", "sal": 10500, "win": 0.0678, "t10": 0.3937, "cut": 0.74905, "pred": 2.095, "std": 2.713, "syn": -0.35, "delta": 4.459, "cash_score": 0.732},
-  {"tm": "Lowry / Koepka", "sal": 10000, "win": 0.05225, "t10": 0.34125, "cut": 0.70715, "pred": 1.661, "std": 2.751, "syn": 0.25, "delta": 4.662, "cash_score": 0.72},
-  {"tm": "Gerard / Yellamaraju", "sal": 9500, "win": 0.05025, "t10": 0.33395, "cut": 0.71185, "pred": 1.655, "std": 2.748, "syn": -0.1, "delta": 4.303, "cash_score": 0.707},
-  {"tm": "Novak / Griffin", "sal": 9700, "win": 0.0426, "t10": 0.31615, "cut": 0.69285, "pred": 1.538, "std": 2.698, "syn": -0.35, "delta": 3.886, "cash_score": 0.675},
-  {"tm": "Brennan / Keefer", "sal": 8200, "win": 0.0425, "t10": 0.2917, "cut": 0.667, "pred": 1.106, "std": 2.819, "syn": 0.25, "delta": 4.175, "cash_score": 0.68},
-  {"tm": "Li / Smith", "sal": 9000, "win": 0.03735, "t10": 0.27515, "cut": 0.6666, "pred": 1.21, "std": 2.755, "syn": 0.25, "delta": 4.215, "cash_score": 0.679},
-  {"tm": "Wallace / Penge", "sal": 9100, "win": 0.03675, "t10": 0.2783, "cut": 0.66085, "pred": 1.142, "std": 2.776, "syn": 0.4, "delta": 4.318, "cash_score": 0.681},
-  {"tm": "Moore / Clark", "sal": 8900, "win": 0.0355, "t10": 0.2736, "cut": 0.6547, "pred": 1.031, "std": 2.788, "syn": 0.25, "delta": 4.069, "cash_score": 0.667},
-  {"tm": "Vilips / Thorbjornsen", "sal": 9400, "win": 0.0355, "t10": 0.2716, "cut": 0.658, "pred": 1.06, "std": 2.78, "syn": 0.25, "delta": 4.09, "cash_score": 0.671},
-  {"tm": "Rai / Theegala", "sal": 9200, "win": 0.0346, "t10": 0.2808, "cut": 0.6745, "pred": 1.353, "std": 2.702, "syn": 0.15, "delta": 4.205, "cash_score": 0.682},
-  {"tm": "Meissner / McCarty", "sal": 8700, "win": 0.027, "t10": 0.24535, "cut": 0.64125, "pred": 1.16, "std": 2.68, "syn": -0.35, "delta": 3.49, "cash_score": 0.624},
-  {"tm": "Ventura / Reitan", "sal": 8600, "win": 0.02685, "t10": 0.2249, "cut": 0.61635, "pred": 0.558, "std": 2.812, "syn": 0.25, "delta": 3.62, "cash_score": 0.629},
-  {"tm": "Eckroat / Thompson", "sal": 8800, "win": 0.0247, "t10": 0.2282, "cut": 0.62415, "pred": 0.87, "std": 2.726, "syn": 0.25, "delta": 3.846, "cash_score": 0.637},
-  {"tm": "Hughes / Pendrith", "sal": 8400, "win": 0.02235, "t10": 0.20905, "cut": 0.60985, "pred": 0.561, "std": 2.758, "syn": 0.25, "delta": 3.569, "cash_score": 0.622},
-  {"tm": "Bauchou / Stevens", "sal": 8300, "win": 0.0217, "t10": 0.22125, "cut": 0.6238, "pred": 0.811, "std": 2.718, "syn": -0.35, "delta": 3.179, "cash_score": 0.606},
-  {"tm": "Yu / Kim", "sal": 8000, "win": 0.01985, "t10": 0.1876, "cut": 0.5872, "pred": 0.47, "std": 2.74, "syn": 0.25, "delta": 3.46, "cash_score": 0.6},
-  {"tm": "Roy / McGreevy", "sal": 7800, "win": 0.01935, "t10": 0.1931, "cut": 0.59405, "pred": 0.646, "std": 2.702, "syn": -0.35, "delta": 2.998, "cash_score": 0.577},
-  {"tm": "Smalley / Springer", "sal": 8500, "win": 0.01935, "t10": 0.19175, "cut": 0.5851, "pred": 0.337, "std": 2.78, "syn": 0.25, "delta": 3.367, "cash_score": 0.598},
-  {"tm": "Finau / Greyserman", "sal": 7900, "win": 0.01565, "t10": 0.1772, "cut": 0.5708, "pred": 0.121, "std": 2.809, "syn": -0.1, "delta": 2.83, "cash_score": 0.566},
-  {"tm": "Lipsky / Hoey", "sal": 7600, "win": 0.01565, "t10": 0.1744, "cut": 0.5687, "pred": 0.287, "std": 2.741, "syn": 0.25, "delta": 3.278, "cash_score": 0.581},
-  {"tm": "Ewart / Jarvis", "sal": 7400, "win": 0.0147, "t10": 0.16455, "cut": 0.5622, "pred": 0.154, "std": 2.75, "syn": -0.1, "delta": 2.804, "cash_score": 0.557},
-  {"tm": "Power / Schmid", "sal": 7700, "win": 0.01465, "t10": 0.1619, "cut": 0.5606, "pred": 0.116, "std": 2.762, "syn": 0.25, "delta": 3.128, "cash_score": 0.573},
-  {"tm": "Brown / Clanton", "sal": 7000, "win": 0.01385, "t10": 0.14925, "cut": 0.5334, "pred": -0.178, "std": 2.8, "syn": 0.25, "delta": 2.872, "cash_score": 0.546},
-  {"tm": "Parry / Brown", "sal": 7600, "win": 0.0137, "t10": 0.15665, "cut": 0.5492, "pred": 0.197, "std": 2.714, "syn": -0.35, "delta": 2.561, "cash_score": 0.532},
-  {"tm": "Putnam / Smotherman", "sal": 7500, "win": 0.0128, "t10": 0.1569, "cut": 0.56715, "pred": 0.366, "std": 2.678, "syn": 0.15, "delta": 3.194, "cash_score": 0.575},
-  {"tm": "Nyholm / Svensson", "sal": 7300, "win": 0.0126, "t10": 0.1396, "cut": 0.52635, "pred": -0.498, "std": 2.768, "syn": 0.25, "delta": 2.52, "cash_score": 0.539},
-  {"tm": "Snedeker / Mitchell", "sal": 8100, "win": 0.01145, "t10": 0.14305, "cut": 0.5396, "pred": -0.02, "std": 2.724, "syn": 0.25, "delta": 2.954, "cash_score": 0.552},
-  {"tm": "Blanchet / VanDerLaan", "sal": 6900, "win": 0.01115, "t10": 0.0666, "cut": 0.52165, "pred": -0.165, "std": 2.751, "syn": 0.25, "delta": 2.836, "cash_score": 0.534},
-  {"tm": "Kanaya / Mouw", "sal": 7200, "win": 0.011, "t10": 0.1443, "cut": 0.53675, "pred": 0.016, "std": 2.733, "syn": 0.25, "delta": 3.009, "cash_score": 0.549},
-  {"tm": "Neergaard-Petersen / Olesen", "sal": 7500, "win": 0.01055, "t10": 0.14035, "cut": 0.53325, "pred": -0.118, "std": 2.754, "syn": 0.25, "delta": 2.886, "cash_score": 0.546},
-  {"tm": "Jaeger / Suber", "sal": 7500, "win": 0.0105, "t10": 0.13095, "cut": 0.517, "pred": -0.366, "std": 2.793, "syn": 0.4, "delta": 2.827, "cash_score": 0.537},
-  {"tm": "Dou / Wu", "sal": 7200, "win": 0.0105, "t10": 0.138, "cut": 0.5334, "pred": -0.046, "std": 2.714, "syn": 0.15, "delta": 2.818, "cash_score": 0.541},
-  {"tm": "Horschel / Hoge", "sal": 7100, "win": 0.01, "t10": 0.1206, "cut": 0.50485, "pred": -0.412, "std": 2.766, "syn": 0.25, "delta": 2.604, "cash_score": 0.517},
-  {"tm": "Hossler / Ryder", "sal": 7300, "win": 0.00955, "t10": 0.1276, "cut": 0.51295, "pred": -0.339, "std": 2.77, "syn": 0.25, "delta": 2.681, "cash_score": 0.525},
-  {"tm": "Lamprecht / Shipley", "sal": 6800, "win": 0.00955, "t10": 0.11565, "cut": 0.4886, "pred": -0.851, "std": 2.871, "syn": 0.25, "delta": 2.27, "cash_score": 0.501},
-  {"tm": "Cole / Lebioda", "sal": 7400, "win": 0.00955, "t10": 0.1275, "cut": 0.51675, "pred": -0.147, "std": 2.714, "syn": 0.15, "delta": 2.717, "cash_score": 0.524},
-  {"tm": "Dumont De Chassart / Chatfield", "sal": 7100, "win": 0.009, "t10": 0.12505, "cut": 0.5127, "pred": -0.198, "std": 2.72, "syn": 0, "delta": 2.522, "cash_score": 0.513},
-  {"tm": "Van Rooyen / Bezuidenhout", "sal": 7400, "win": 0.00895, "t10": 0.12395, "cut": 0.50815, "pred": -0.253, "std": 2.726, "syn": 0.25, "delta": 2.723, "cash_score": 0.521},
-  {"tm": "Kang / Ghim", "sal": 7000, "win": 0.00825, "t10": 0.10455, "cut": 0.4872, "pred": -0.636, "std": 2.772, "syn": 0.25, "delta": 2.386, "cash_score": 0.5},
-  {"tm": "Sigg / Whaley", "sal": 7300, "win": 0.00755, "t10": 0.10675, "cut": 0.48975, "pred": -0.347, "std": 2.693, "syn": 0, "delta": 2.346, "cash_score": 0.49},
-  {"tm": "Hadwin / Svensson", "sal": 6800, "win": 0.0073, "t10": 0.10705, "cut": 0.4889, "pred": -0.511, "std": 2.742, "syn": 0.25, "delta": 2.481, "cash_score": 0.501},
-  {"tm": "Lower / Ramey", "sal": 7000, "win": 0.00725, "t10": 0.10545, "cut": 0.48265, "pred": -0.638, "std": 2.766, "syn": 0.25, "delta": 2.378, "cash_score": 0.495},
-  {"tm": "Skinns / Mullinax", "sal": 6500, "win": 0.00715, "t10": 0.0785, "cut": 0.45185, "pred": -1.049, "std": 2.837, "syn": 0.25, "delta": 2.038, "cash_score": 0.464},
-  {"tm": "Pavon / Couvra", "sal": 6900, "win": 0.0067, "t10": 0.0951, "cut": 0.4661, "pred": -0.696, "std": 2.758, "syn": 0.25, "delta": 2.312, "cash_score": 0.479},
-  {"tm": "Kirk / Kizzire", "sal": 7100, "win": 0.0066, "t10": 0.0975, "cut": 0.4807, "pred": -0.614, "std": 2.737, "syn": 0.25, "delta": 2.373, "cash_score": 0.493},
-  {"tm": "Streelman / Dahmen", "sal": 6700, "win": 0.0065, "t10": 0.09345, "cut": 0.4636, "pred": -0.736, "std": 2.746, "syn": 0.25, "delta": 2.26, "cash_score": 0.476},
-  {"tm": "Blair / Fishburn", "sal": 6600, "win": 0.00645, "t10": 0.0997, "cut": 0.4799, "pred": -0.586, "std": 2.721, "syn": 0.15, "delta": 2.285, "cash_score": 0.487},
-  {"tm": "Young / Phillips", "sal": 6900, "win": 0.00625, "t10": 0.09075, "cut": 0.4624, "pred": -0.673, "std": 2.731, "syn": -0.35, "delta": 1.708, "cash_score": 0.445},
-  {"tm": "Champ / Silverman", "sal": 6800, "win": 0.0062, "t10": 0.09545, "cut": 0.46645, "pred": -0.965, "std": 2.818, "syn": 0.25, "delta": 2.103, "cash_score": 0.479},
-  {"tm": "Stanger / Walker", "sal": 6600, "win": 0.006, "t10": 0.0818, "cut": 0.4346, "pred": -1.361, "std": 2.865, "syn": 0.25, "delta": 1.754, "cash_score": 0.447},
-  {"tm": "Kuchar / Higgo", "sal": 7200, "win": 0.00495, "t10": 0.08415, "cut": 0.4459, "pred": -0.751, "std": 2.711, "syn": 0.15, "delta": 2.11, "cash_score": 0.453},
-  {"tm": "Griffin / Kohles", "sal": 6700, "win": 0.0047, "t10": 0.0785, "cut": 0.4376, "pred": -0.94, "std": 2.722, "syn": 0.25, "delta": 2.032, "cash_score": 0.45},
-  {"tm": "Nakajima / Hirata", "sal": 6500, "win": 0.00455, "t10": 0.0767, "cut": 0.4327, "pred": -1.061, "std": 2.766, "syn": 0.25, "delta": 1.955, "cash_score": 0.445},
-  {"tm": "Dunlap / Sargent", "sal": 6300, "win": 0.00455, "t10": 0.07065, "cut": 0.40905, "pred": -1.658, "std": 2.9, "syn": 0.25, "delta": 1.492, "cash_score": 0.422},
-  {"tm": "Tosti / Campos", "sal": 6300, "win": 0.0039, "t10": 0.0547, "cut": 0.37985, "pred": -2.005, "std": 2.91, "syn": 0.25, "delta": 1.155, "cash_score": 0.392},
-  {"tm": "Hodges / Garnett", "sal": 6600, "win": 0.00385, "t10": 0.0764, "cut": 0.43445, "pred": -0.953, "std": 2.722, "syn": 0.25, "delta": 2.019, "cash_score": 0.447},
-  {"tm": "Martin / Crowe", "sal": 6700, "win": 0.00375, "t10": 0.07475, "cut": 0.43, "pred": -1.148, "std": 2.766, "syn": 0.25, "delta": 1.868, "cash_score": 0.442},
-  {"tm": "Duncan / Schenk", "sal": 6400, "win": 0.0035, "t10": 0.0759, "cut": 0.41, "pred": -1.133, "std": 2.782, "syn": 0.25, "delta": 1.899, "cash_score": 0.422},
-  {"tm": "Montgomery / Piercy", "sal": 6400, "win": 0.003, "t10": 0.03885, "cut": 0.39, "pred": -2.31, "std": 2.841, "syn": 0.25, "delta": 0.781, "cash_score": 0.402},
-  {"tm": "Capan / Goodwin", "sal": 6200, "win": 0.0025, "t10": 0.0518, "cut": 0.35, "pred": -1.919, "std": 2.828, "syn": 0.25, "delta": 1.159, "cash_score": 0.362},
-  {"tm": "Riley / Hardy", "sal": 6500, "win": 0.0025, "t10": 0.05925, "cut": 0.38, "pred": -1.834, "std": 2.872, "syn": 0.25, "delta": 1.288, "cash_score": 0.392},
-  {"tm": "Paul / Higgs", "sal": 6400, "win": 0.002, "t10": 0.05805, "cut": 0.35, "pred": -1.698, "std": 2.828, "syn": 0.25, "delta": 1.38, "cash_score": 0.362},
-  {"tm": "List / Norlander", "sal": 6200, "win": 0.002, "t10": 0.05415, "cut": 0.32, "pred": -1.739, "std": 2.812, "syn": 0.25, "delta": 1.323, "cash_score": 0.332},
-  {"tm": "Brehm / Hubbard", "sal": 6300, "win": 0.00185, "t10": 0.0666, "cut": 0.32, "pred": -1.641, "std": 2.866, "syn": 0.25, "delta": 1.475, "cash_score": 0.332},
-  {"tm": "Peterson / Gordon", "sal": 6200, "win": 0.00185, "t10": 0.0411, "cut": 0.31, "pred": -1.918, "std": 2.77, "syn": 0.25, "delta": 1.102, "cash_score": 0.322},
-  {"tm": "Malnati / Knox", "sal": 6100, "win": 0.00155, "t10": 0.03575, "cut": 0.28, "pred": -2.007, "std": 2.764, "syn": 0.25, "delta": 1.007, "cash_score": 0.292},
-  {"tm": "Kim / Palmer", "sal": 6100, "win": 0.00125, "t10": 0.04005, "cut": 0.25, "pred": -2.411, "std": 2.869, "syn": 0.15, "delta": 0.608, "cash_score": 0.257},
-  {"tm": "Davis / Ogilvy", "sal": 6100, "win": 0.00085, "t10": 0.02515, "cut": 0.2, "pred": -3.405, "std": 2.997, "syn": 0.25, "delta": -0.158, "cash_score": 0.212},
-  {"tm": "Villegas / Rozo", "sal": 6000, "win": 0.00055, "t10": 0.03165, "cut": 0.18, "pred": -2.427, "std": 2.828, "syn": 0.25, "delta": 0.651, "cash_score": 0.192},
-  {"tm": "Watney / Hoffman", "sal": 6100, "win": 0.00055, "t10": 0.04675, "cut": 0.18, "pred": -2.244, "std": 2.896, "syn": 0.25, "delta": 0.902, "cash_score": 0.192},
-  {"tm": "Reavie / Byrd", "sal": 6000, "win": 0.00045, "t10": 0.02655, "cut": 0.15, "pred": -2.287, "std": 2.732, "syn": 0.25, "delta": 0.695, "cash_score": 0.162},
-  {"tm": "Streb / Merritt", "sal": 6000, "win": 0.00035, "t10": 0.02715, "cut": 0.14, "pred": -2.827, "std": 2.882, "syn": 0.25, "delta": 0.305, "cash_score": 0.152},
-  {"tm": "Cook / Dufner", "sal": 6000, "win": 0.00015, "t10": 0.0145, "cut": 0.1, "pred": -3.531, "std": 2.87, "syn": 0.25, "delta": -0.411, "cash_score": 0.112},
-  {"tm": "Stanley / Hahn", "sal": 6000, "win": 0.00015, "t10": 0.00785, "cut": 0.08, "pred": -4.939, "std": 3.038, "syn": 0.25, "delta": -1.651, "cash_score": 0.092}
+  {
+    "tm": "M. Fitzpatrick / A. Fitzpatrick",
+    "sal": 10500,
+    "win": 0.0678,
+    "t10": 0.3937,
+    "cut": 0.74905,
+    "pred": 2.095,
+    "std": 2.713,
+    "syn": -0.35,
+    "delta": 4.459,
+    "cash_score": 0.732
+  },
+  {
+    "tm": "Lowry / Koepka",
+    "sal": 10000,
+    "win": 0.05225,
+    "t10": 0.34125,
+    "cut": 0.70715,
+    "pred": 1.661,
+    "std": 2.751,
+    "syn": 0.25,
+    "delta": 4.662,
+    "cash_score": 0.72
+  },
+  {
+    "tm": "Gerard / Yellamaraju",
+    "sal": 9500,
+    "win": 0.05025,
+    "t10": 0.33395,
+    "cut": 0.71185,
+    "pred": 1.655,
+    "std": 2.748,
+    "syn": -0.1,
+    "delta": 4.303,
+    "cash_score": 0.707
+  },
+  {
+    "tm": "Novak / Griffin",
+    "sal": 9700,
+    "win": 0.0426,
+    "t10": 0.31615,
+    "cut": 0.69285,
+    "pred": 1.538,
+    "std": 2.698,
+    "syn": -0.35,
+    "delta": 3.886,
+    "cash_score": 0.675
+  },
+  {
+    "tm": "Brennan / Keefer",
+    "sal": 8200,
+    "win": 0.0425,
+    "t10": 0.2917,
+    "cut": 0.667,
+    "pred": 1.106,
+    "std": 2.819,
+    "syn": 0.25,
+    "delta": 4.175,
+    "cash_score": 0.68
+  },
+  {
+    "tm": "Li / Smith",
+    "sal": 9000,
+    "win": 0.03735,
+    "t10": 0.27515,
+    "cut": 0.6666,
+    "pred": 1.21,
+    "std": 2.755,
+    "syn": 0.25,
+    "delta": 4.215,
+    "cash_score": 0.679
+  },
+  {
+    "tm": "Wallace / Penge",
+    "sal": 9100,
+    "win": 0.03675,
+    "t10": 0.2783,
+    "cut": 0.66085,
+    "pred": 1.142,
+    "std": 2.776,
+    "syn": 0.4,
+    "delta": 4.318,
+    "cash_score": 0.681
+  },
+  {
+    "tm": "Moore / Clark",
+    "sal": 8900,
+    "win": 0.0355,
+    "t10": 0.2736,
+    "cut": 0.6547,
+    "pred": 1.031,
+    "std": 2.788,
+    "syn": 0.25,
+    "delta": 4.069,
+    "cash_score": 0.667
+  },
+  {
+    "tm": "Vilips / Thorbjornsen",
+    "sal": 9400,
+    "win": 0.0355,
+    "t10": 0.2716,
+    "cut": 0.658,
+    "pred": 1.06,
+    "std": 2.78,
+    "syn": 0.25,
+    "delta": 4.09,
+    "cash_score": 0.671
+  },
+  {
+    "tm": "Rai / Theegala",
+    "sal": 9200,
+    "win": 0.0346,
+    "t10": 0.2808,
+    "cut": 0.6745,
+    "pred": 1.353,
+    "std": 2.702,
+    "syn": 0.15,
+    "delta": 4.205,
+    "cash_score": 0.682
+  },
+  {
+    "tm": "Meissner / McCarty",
+    "sal": 8700,
+    "win": 0.027,
+    "t10": 0.24535,
+    "cut": 0.64125,
+    "pred": 1.16,
+    "std": 2.68,
+    "syn": -0.35,
+    "delta": 3.49,
+    "cash_score": 0.624
+  },
+  {
+    "tm": "Ventura / Reitan",
+    "sal": 8600,
+    "win": 0.02685,
+    "t10": 0.2249,
+    "cut": 0.61635,
+    "pred": 0.558,
+    "std": 2.812,
+    "syn": 0.25,
+    "delta": 3.62,
+    "cash_score": 0.629
+  },
+  {
+    "tm": "Eckroat / Thompson",
+    "sal": 8800,
+    "win": 0.0247,
+    "t10": 0.2282,
+    "cut": 0.62415,
+    "pred": 0.87,
+    "std": 2.726,
+    "syn": 0.25,
+    "delta": 3.846,
+    "cash_score": 0.637
+  },
+  {
+    "tm": "Hughes / Pendrith",
+    "sal": 8400,
+    "win": 0.02235,
+    "t10": 0.20905,
+    "cut": 0.60985,
+    "pred": 0.561,
+    "std": 2.758,
+    "syn": 0.25,
+    "delta": 3.569,
+    "cash_score": 0.622
+  },
+  {
+    "tm": "Bauchou / Stevens",
+    "sal": 8300,
+    "win": 0.0217,
+    "t10": 0.22125,
+    "cut": 0.6238,
+    "pred": 0.811,
+    "std": 2.718,
+    "syn": -0.35,
+    "delta": 3.179,
+    "cash_score": 0.606
+  },
+  {
+    "tm": "Yu / Kim",
+    "sal": 8000,
+    "win": 0.01985,
+    "t10": 0.1876,
+    "cut": 0.5872,
+    "pred": 0.47,
+    "std": 2.74,
+    "syn": 0.25,
+    "delta": 3.46,
+    "cash_score": 0.6
+  },
+  {
+    "tm": "Roy / McGreevy",
+    "sal": 7800,
+    "win": 0.01935,
+    "t10": 0.1931,
+    "cut": 0.59405,
+    "pred": 0.646,
+    "std": 2.702,
+    "syn": -0.35,
+    "delta": 2.998,
+    "cash_score": 0.577
+  },
+  {
+    "tm": "Smalley / Springer",
+    "sal": 8500,
+    "win": 0.01935,
+    "t10": 0.19175,
+    "cut": 0.5851,
+    "pred": 0.337,
+    "std": 2.78,
+    "syn": 0.25,
+    "delta": 3.367,
+    "cash_score": 0.598
+  },
+  {
+    "tm": "Finau / Greyserman",
+    "sal": 7900,
+    "win": 0.01565,
+    "t10": 0.1772,
+    "cut": 0.5708,
+    "pred": 0.121,
+    "std": 2.809,
+    "syn": -0.1,
+    "delta": 2.83,
+    "cash_score": 0.566
+  },
+  {
+    "tm": "Lipsky / Hoey",
+    "sal": 7600,
+    "win": 0.01565,
+    "t10": 0.1744,
+    "cut": 0.5687,
+    "pred": 0.287,
+    "std": 2.741,
+    "syn": 0.25,
+    "delta": 3.278,
+    "cash_score": 0.581
+  },
+  {
+    "tm": "Ewart / Jarvis",
+    "sal": 7400,
+    "win": 0.0147,
+    "t10": 0.16455,
+    "cut": 0.5622,
+    "pred": 0.154,
+    "std": 2.75,
+    "syn": -0.1,
+    "delta": 2.804,
+    "cash_score": 0.557
+  },
+  {
+    "tm": "Power / Schmid",
+    "sal": 7700,
+    "win": 0.01465,
+    "t10": 0.1619,
+    "cut": 0.5606,
+    "pred": 0.116,
+    "std": 2.762,
+    "syn": 0.25,
+    "delta": 3.128,
+    "cash_score": 0.573
+  },
+  {
+    "tm": "Brown / Clanton",
+    "sal": 7000,
+    "win": 0.01385,
+    "t10": 0.14925,
+    "cut": 0.5334,
+    "pred": -0.178,
+    "std": 2.8,
+    "syn": 0.25,
+    "delta": 2.872,
+    "cash_score": 0.546
+  },
+  {
+    "tm": "Parry / Brown",
+    "sal": 7600,
+    "win": 0.0137,
+    "t10": 0.15665,
+    "cut": 0.5492,
+    "pred": 0.197,
+    "std": 2.714,
+    "syn": -0.35,
+    "delta": 2.561,
+    "cash_score": 0.532
+  },
+  {
+    "tm": "Putnam / Smotherman",
+    "sal": 7500,
+    "win": 0.0128,
+    "t10": 0.1569,
+    "cut": 0.56715,
+    "pred": 0.366,
+    "std": 2.678,
+    "syn": 0.15,
+    "delta": 3.194,
+    "cash_score": 0.575
+  },
+  {
+    "tm": "Nyholm / Svensson",
+    "sal": 7300,
+    "win": 0.0126,
+    "t10": 0.1396,
+    "cut": 0.52635,
+    "pred": -0.498,
+    "std": 2.768,
+    "syn": 0.25,
+    "delta": 2.52,
+    "cash_score": 0.539
+  },
+  {
+    "tm": "Snedeker / Mitchell",
+    "sal": 8100,
+    "win": 0.01145,
+    "t10": 0.14305,
+    "cut": 0.5396,
+    "pred": -0.02,
+    "std": 2.724,
+    "syn": 0.25,
+    "delta": 2.954,
+    "cash_score": 0.552
+  },
+  {
+    "tm": "Blanchet / VanDerLaan",
+    "sal": 6900,
+    "win": 0.01115,
+    "t10": 0.0666,
+    "cut": 0.52165,
+    "pred": -0.165,
+    "std": 2.751,
+    "syn": 0.25,
+    "delta": 2.836,
+    "cash_score": 0.534
+  },
+  {
+    "tm": "Kanaya / Mouw",
+    "sal": 7200,
+    "win": 0.011,
+    "t10": 0.1443,
+    "cut": 0.53675,
+    "pred": 0.016,
+    "std": 2.733,
+    "syn": 0.25,
+    "delta": 3.009,
+    "cash_score": 0.549
+  },
+  {
+    "tm": "Neergaard-Petersen / Olesen",
+    "sal": 7500,
+    "win": 0.01055,
+    "t10": 0.14035,
+    "cut": 0.53325,
+    "pred": -0.118,
+    "std": 2.754,
+    "syn": 0.25,
+    "delta": 2.886,
+    "cash_score": 0.546
+  },
+  {
+    "tm": "Jaeger / Suber",
+    "sal": 7500,
+    "win": 0.0105,
+    "t10": 0.13095,
+    "cut": 0.517,
+    "pred": -0.366,
+    "std": 2.793,
+    "syn": 0.4,
+    "delta": 2.827,
+    "cash_score": 0.537
+  },
+  {
+    "tm": "Dou / Wu",
+    "sal": 7200,
+    "win": 0.0105,
+    "t10": 0.138,
+    "cut": 0.5334,
+    "pred": -0.046,
+    "std": 2.714,
+    "syn": 0.15,
+    "delta": 2.818,
+    "cash_score": 0.541
+  },
+  {
+    "tm": "Horschel / Hoge",
+    "sal": 7100,
+    "win": 0.01,
+    "t10": 0.1206,
+    "cut": 0.50485,
+    "pred": -0.412,
+    "std": 2.766,
+    "syn": 0.25,
+    "delta": 2.604,
+    "cash_score": 0.517
+  },
+  {
+    "tm": "Hossler / Ryder",
+    "sal": 7300,
+    "win": 0.00955,
+    "t10": 0.1276,
+    "cut": 0.51295,
+    "pred": -0.339,
+    "std": 2.77,
+    "syn": 0.25,
+    "delta": 2.681,
+    "cash_score": 0.525
+  },
+  {
+    "tm": "Lamprecht / Shipley",
+    "sal": 6800,
+    "win": 0.00955,
+    "t10": 0.11565,
+    "cut": 0.4886,
+    "pred": -0.851,
+    "std": 2.871,
+    "syn": 0.25,
+    "delta": 2.27,
+    "cash_score": 0.501
+  },
+  {
+    "tm": "Cole / Lebioda",
+    "sal": 7400,
+    "win": 0.00955,
+    "t10": 0.1275,
+    "cut": 0.51675,
+    "pred": -0.147,
+    "std": 2.714,
+    "syn": 0.15,
+    "delta": 2.717,
+    "cash_score": 0.524
+  },
+  {
+    "tm": "Dumont De Chassart / Chatfield",
+    "sal": 7100,
+    "win": 0.009,
+    "t10": 0.12505,
+    "cut": 0.5127,
+    "pred": -0.198,
+    "std": 2.72,
+    "syn": 0,
+    "delta": 2.522,
+    "cash_score": 0.513
+  },
+  {
+    "tm": "Van Rooyen / Bezuidenhout",
+    "sal": 7400,
+    "win": 0.00895,
+    "t10": 0.12395,
+    "cut": 0.50815,
+    "pred": -0.253,
+    "std": 2.726,
+    "syn": 0.25,
+    "delta": 2.723,
+    "cash_score": 0.521
+  },
+  {
+    "tm": "Kang / Ghim",
+    "sal": 7000,
+    "win": 0.00825,
+    "t10": 0.10455,
+    "cut": 0.4872,
+    "pred": -0.636,
+    "std": 2.772,
+    "syn": 0.25,
+    "delta": 2.386,
+    "cash_score": 0.5
+  },
+  {
+    "tm": "Sigg / Whaley",
+    "sal": 7300,
+    "win": 0.00755,
+    "t10": 0.10675,
+    "cut": 0.48975,
+    "pred": -0.347,
+    "std": 2.693,
+    "syn": 0,
+    "delta": 2.346,
+    "cash_score": 0.49
+  },
+  {
+    "tm": "Hadwin / Svensson",
+    "sal": 6800,
+    "win": 0.0073,
+    "t10": 0.10705,
+    "cut": 0.4889,
+    "pred": -0.511,
+    "std": 2.742,
+    "syn": 0.25,
+    "delta": 2.481,
+    "cash_score": 0.501
+  },
+  {
+    "tm": "Lower / Ramey",
+    "sal": 7000,
+    "win": 0.00725,
+    "t10": 0.10545,
+    "cut": 0.48265,
+    "pred": -0.638,
+    "std": 2.766,
+    "syn": 0.25,
+    "delta": 2.378,
+    "cash_score": 0.495
+  },
+  {
+    "tm": "Skinns / Mullinax",
+    "sal": 6500,
+    "win": 0.00715,
+    "t10": 0.0785,
+    "cut": 0.45185,
+    "pred": -1.049,
+    "std": 2.837,
+    "syn": 0.25,
+    "delta": 2.038,
+    "cash_score": 0.464
+  },
+  {
+    "tm": "Pavon / Couvra",
+    "sal": 6900,
+    "win": 0.0067,
+    "t10": 0.0951,
+    "cut": 0.4661,
+    "pred": -0.696,
+    "std": 2.758,
+    "syn": 0.25,
+    "delta": 2.312,
+    "cash_score": 0.479
+  },
+  {
+    "tm": "Kirk / Kizzire",
+    "sal": 7100,
+    "win": 0.0066,
+    "t10": 0.0975,
+    "cut": 0.4807,
+    "pred": -0.614,
+    "std": 2.737,
+    "syn": 0.25,
+    "delta": 2.373,
+    "cash_score": 0.493
+  },
+  {
+    "tm": "Streelman / Dahmen",
+    "sal": 6700,
+    "win": 0.0065,
+    "t10": 0.09345,
+    "cut": 0.4636,
+    "pred": -0.736,
+    "std": 2.746,
+    "syn": 0.25,
+    "delta": 2.26,
+    "cash_score": 0.476
+  },
+  {
+    "tm": "Blair / Fishburn",
+    "sal": 6600,
+    "win": 0.00645,
+    "t10": 0.0997,
+    "cut": 0.4799,
+    "pred": -0.586,
+    "std": 2.721,
+    "syn": 0.15,
+    "delta": 2.285,
+    "cash_score": 0.487
+  },
+  {
+    "tm": "Young / Phillips",
+    "sal": 6900,
+    "win": 0.00625,
+    "t10": 0.09075,
+    "cut": 0.4624,
+    "pred": -0.673,
+    "std": 2.731,
+    "syn": -0.35,
+    "delta": 1.708,
+    "cash_score": 0.445
+  },
+  {
+    "tm": "Champ / Silverman",
+    "sal": 6800,
+    "win": 0.0062,
+    "t10": 0.09545,
+    "cut": 0.46645,
+    "pred": -0.965,
+    "std": 2.818,
+    "syn": 0.25,
+    "delta": 2.103,
+    "cash_score": 0.479
+  },
+  {
+    "tm": "Stanger / Walker",
+    "sal": 6600,
+    "win": 0.006,
+    "t10": 0.0818,
+    "cut": 0.4346,
+    "pred": -1.361,
+    "std": 2.865,
+    "syn": 0.25,
+    "delta": 1.754,
+    "cash_score": 0.447
+  },
+  {
+    "tm": "Kuchar / Higgo",
+    "sal": 7200,
+    "win": 0.00495,
+    "t10": 0.08415,
+    "cut": 0.4459,
+    "pred": -0.751,
+    "std": 2.711,
+    "syn": 0.15,
+    "delta": 2.11,
+    "cash_score": 0.453
+  },
+  {
+    "tm": "Griffin / Kohles",
+    "sal": 6700,
+    "win": 0.0047,
+    "t10": 0.0785,
+    "cut": 0.4376,
+    "pred": -0.94,
+    "std": 2.722,
+    "syn": 0.25,
+    "delta": 2.032,
+    "cash_score": 0.45
+  },
+  {
+    "tm": "Nakajima / Hirata",
+    "sal": 6500,
+    "win": 0.00455,
+    "t10": 0.0767,
+    "cut": 0.4327,
+    "pred": -1.061,
+    "std": 2.766,
+    "syn": 0.25,
+    "delta": 1.955,
+    "cash_score": 0.445
+  },
+  {
+    "tm": "Dunlap / Sargent",
+    "sal": 6300,
+    "win": 0.00455,
+    "t10": 0.07065,
+    "cut": 0.40905,
+    "pred": -1.658,
+    "std": 2.9,
+    "syn": 0.25,
+    "delta": 1.492,
+    "cash_score": 0.422
+  },
+  {
+    "tm": "Tosti / Campos",
+    "sal": 6300,
+    "win": 0.0039,
+    "t10": 0.0547,
+    "cut": 0.37985,
+    "pred": -2.005,
+    "std": 2.91,
+    "syn": 0.25,
+    "delta": 1.155,
+    "cash_score": 0.392
+  },
+  {
+    "tm": "Hodges / Garnett",
+    "sal": 6600,
+    "win": 0.00385,
+    "t10": 0.0764,
+    "cut": 0.43445,
+    "pred": -0.953,
+    "std": 2.722,
+    "syn": 0.25,
+    "delta": 2.019,
+    "cash_score": 0.447
+  },
+  {
+    "tm": "Martin / Crowe",
+    "sal": 6700,
+    "win": 0.00375,
+    "t10": 0.07475,
+    "cut": 0.43,
+    "pred": -1.148,
+    "std": 2.766,
+    "syn": 0.25,
+    "delta": 1.868,
+    "cash_score": 0.442
+  },
+  {
+    "tm": "Duncan / Schenk",
+    "sal": 6400,
+    "win": 0.0035,
+    "t10": 0.0759,
+    "cut": 0.41,
+    "pred": -1.133,
+    "std": 2.782,
+    "syn": 0.25,
+    "delta": 1.899,
+    "cash_score": 0.422
+  },
+  {
+    "tm": "Montgomery / Piercy",
+    "sal": 6400,
+    "win": 0.003,
+    "t10": 0.03885,
+    "cut": 0.39,
+    "pred": -2.31,
+    "std": 2.841,
+    "syn": 0.25,
+    "delta": 0.781,
+    "cash_score": 0.402
+  },
+  {
+    "tm": "Capan / Goodwin",
+    "sal": 6200,
+    "win": 0.0025,
+    "t10": 0.0518,
+    "cut": 0.35,
+    "pred": -1.919,
+    "std": 2.828,
+    "syn": 0.25,
+    "delta": 1.159,
+    "cash_score": 0.362
+  },
+  {
+    "tm": "Riley / Hardy",
+    "sal": 6500,
+    "win": 0.0025,
+    "t10": 0.05925,
+    "cut": 0.38,
+    "pred": -1.834,
+    "std": 2.872,
+    "syn": 0.25,
+    "delta": 1.288,
+    "cash_score": 0.392
+  },
+  {
+    "tm": "Paul / Higgs",
+    "sal": 6400,
+    "win": 0.002,
+    "t10": 0.05805,
+    "cut": 0.35,
+    "pred": -1.698,
+    "std": 2.828,
+    "syn": 0.25,
+    "delta": 1.38,
+    "cash_score": 0.362
+  },
+  {
+    "tm": "List / Norlander",
+    "sal": 6200,
+    "win": 0.002,
+    "t10": 0.05415,
+    "cut": 0.32,
+    "pred": -1.739,
+    "std": 2.812,
+    "syn": 0.25,
+    "delta": 1.323,
+    "cash_score": 0.332
+  },
+  {
+    "tm": "Brehm / Hubbard",
+    "sal": 6300,
+    "win": 0.00185,
+    "t10": 0.0666,
+    "cut": 0.32,
+    "pred": -1.641,
+    "std": 2.866,
+    "syn": 0.25,
+    "delta": 1.475,
+    "cash_score": 0.332
+  },
+  {
+    "tm": "Peterson / Gordon",
+    "sal": 6200,
+    "win": 0.00185,
+    "t10": 0.0411,
+    "cut": 0.31,
+    "pred": -1.918,
+    "std": 2.77,
+    "syn": 0.25,
+    "delta": 1.102,
+    "cash_score": 0.322
+  },
+  {
+    "tm": "Malnati / Knox",
+    "sal": 6100,
+    "win": 0.00155,
+    "t10": 0.03575,
+    "cut": 0.28,
+    "pred": -2.007,
+    "std": 2.764,
+    "syn": 0.25,
+    "delta": 1.007,
+    "cash_score": 0.292
+  },
+  {
+    "tm": "Kim / Palmer",
+    "sal": 6100,
+    "win": 0.00125,
+    "t10": 0.04005,
+    "cut": 0.25,
+    "pred": -2.411,
+    "std": 2.869,
+    "syn": 0.15,
+    "delta": 0.608,
+    "cash_score": 0.257
+  },
+  {
+    "tm": "Davis / Ogilvy",
+    "sal": 6100,
+    "win": 0.00085,
+    "t10": 0.02515,
+    "cut": 0.2,
+    "pred": -3.405,
+    "std": 2.997,
+    "syn": 0.25,
+    "delta": -0.158,
+    "cash_score": 0.212
+  },
+  {
+    "tm": "Villegas / Rozo",
+    "sal": 6000,
+    "win": 0.00055,
+    "t10": 0.03165,
+    "cut": 0.18,
+    "pred": -2.427,
+    "std": 2.828,
+    "syn": 0.25,
+    "delta": 0.651,
+    "cash_score": 0.192
+  },
+  {
+    "tm": "Watney / Hoffman",
+    "sal": 6100,
+    "win": 0.00055,
+    "t10": 0.04675,
+    "cut": 0.18,
+    "pred": -2.244,
+    "std": 2.896,
+    "syn": 0.25,
+    "delta": 0.902,
+    "cash_score": 0.192
+  },
+  {
+    "tm": "Reavie / Byrd",
+    "sal": 6000,
+    "win": 0.00045,
+    "t10": 0.02655,
+    "cut": 0.15,
+    "pred": -2.287,
+    "std": 2.732,
+    "syn": 0.25,
+    "delta": 0.695,
+    "cash_score": 0.162
+  },
+  {
+    "tm": "Streb / Merritt",
+    "sal": 6000,
+    "win": 0.00035,
+    "t10": 0.02715,
+    "cut": 0.14,
+    "pred": -2.827,
+    "std": 2.882,
+    "syn": 0.25,
+    "delta": 0.305,
+    "cash_score": 0.152
+  },
+  {
+    "tm": "Cook / Dufner",
+    "sal": 6000,
+    "win": 0.00015,
+    "t10": 0.0145,
+    "cut": 0.1,
+    "pred": -3.531,
+    "std": 2.87,
+    "syn": 0.25,
+    "delta": -0.411,
+    "cash_score": 0.112
+  },
+  {
+    "tm": "Stanley / Hahn",
+    "sal": 6000,
+    "win": 0.00015,
+    "t10": 0.00785,
+    "cut": 0.08,
+    "pred": -4.939,
+    "std": 3.038,
+    "syn": 0.25,
+    "delta": -1.651,
+    "cash_score": 0.092
+  }
 ];
 
-let SC='delta',SA=false,CF='all';
+let SC='delta', SA=false, CF='all';
 
-document.addEventListener('DOMContentLoaded',()=>{
-  document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));
-    document.querySelectorAll('.pnl').forEach(x=>x.classList.remove('on'));
-    t.classList.add('on');
-    document.getElementById('p-'+t.dataset.p).classList.add('on');
-  }));
-  
-  document.querySelectorAll('.chip[data-f]').forEach(c=>c.addEventListener('click',()=>{
-    CF=c.dataset.f;
-    document.querySelectorAll('.chip[data-f]').forEach(x=>x.classList.remove('on'));
-    c.chip.classList.add('on');
+document.querySelectorAll('.chip').forEach(c => {
+  c.addEventListener('click', (e) => {
+    document.querySelectorAll('.chip').forEach(x => x.classList.remove('on'));
+    e.target.classList.add('on');
+    CF = e.target.dataset.f;
     render();
-  }));
-  
-  document.getElementById('srch').addEventListener('input',render);
-  buildHeader();
-  render();
+  });
 });
 
-const COLS=[
-  {k:'tm',l:'👥 Team'},
-  {k:'sal',l:'💰 Sal'},
-  {k:'win',l:'🏆 Win %'},
-  {k:'t10',l:'🔟 T10 %'},
-  {k:'cut',l:'✂️ Cut %'},
-  {k:'std',l:'🎢 StdDev'},
-  {k:'syn',l:'✨ Syn'},
-  {k:'delta',l:'🚀 Ceil (Δ)'},
-];
-
-function buildHeader(){
-  document.getElementById('thd').innerHTML='<tr>'+COLS.map(c=>
-    `<th data-s="${c.k}">${c.l}</th>`
-  ).join('')+'<th>FLAGS</th></tr>';
-  
-  document.querySelectorAll('th[data-s]').forEach(th=>th.addEventListener('click',()=>{
-    SA=SC===th.dataset.s?!SA:false;SC=th.dataset.s;render();
-  }));
+function setTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('on'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+  document.getElementById(id).classList.add('on');
+  event.target.classList.add('on');
 }
 
-function render(){
-  const q=(document.getElementById('srch').value||'').toLowerCase();
-  let d=RAW_TEAMS.filter(p=>{
-    if(q&&!p.tm.toLowerCase().includes(q)) return false;
-    if(CF==='synergy') return p.syn > 0;
-    if(CF==='ceiling') return p.delta >= 3.0;
-    if(CF==='value') return p.sal && p.sal<=8000;
+const COLS = [
+  {k:'tm', l:'👥 TEAM'},
+  {k:'sal', l:'💰 SALARY'},
+  {k:'win', l:'🏆 WIN %'},
+  {k:'cut', l:'✂️ CUT %'},
+  {k:'pred', l:'🔮 BASELINE'},
+  {k:'std', l:'🎢 STDDEV'},
+  {k:'syn', l:'✨ SYNERGY'},
+  {k:'delta', l:'🚀 CEILING'},
+];
+
+function buildHeader() {
+  document.getElementById('thd').innerHTML = '<tr>' + COLS.map(c => 
+    `<th class="${SC===c.k?'act':''}" onclick="sort('${c.k}')">${c.l}</th>`
+  ).join('') + '<th>FLAGS</th></tr>';
+}
+
+function sort(k) {
+  SA = SC === k ? !SA : false;
+  SC = k;
+  buildHeader();
+  render();
+}
+
+function render() {
+  const q = document.getElementById('srch').value.toLowerCase();
+  let d = RAW_TEAMS.filter(p => {
+    if (q && !p.tm.toLowerCase().includes(q)) return false;
+    if (CF === 'synergy' && p.syn <= 0) return false;
+    if (CF === 'value' && p.sal > 8000) return false;
     return true;
   });
-  
-  d.sort((a,b)=>{
-    let va=a[SC],vb=b[SC];
-    if(SC==='tm') return SA?String(va||'').localeCompare(vb||''):String(vb||'').localeCompare(va||'');
-    va=parseFloat(va);vb=parseFloat(vb);
-    if(isNaN(va)) va=SA?-9999:9999;
-    if(isNaN(vb)) vb=SA?-9999:9999;
-    return SA?va-vb:vb-va;
+
+  d.sort((a, b) => {
+    let va = a[SC], vb = b[SC];
+    if (SC === 'tm') return SA ? va.localeCompare(vb) : vb.localeCompare(va);
+    return SA ? va - vb : vb - va;
   });
-  
-  document.querySelectorAll('th[data-s]').forEach(th=>{
-    th.classList.toggle('act',th.dataset.s===SC);
-  });
-  
-  document.getElementById('tb').innerHTML=d.map(p=>{
-    const fmt=(v,dp=2)=>v==null?'<span style="color:var(--tx3)">—</span>':parseFloat(v).toFixed(dp);
-    const salK=p.sal?'$'+(p.sal/1000).toFixed(1)+'k':'—';
-    
-    let flags='';
-    if(p.t10 > 0.20) flags+=`<span class="badge b-grn">TOP 10 EQUITY</span> `;
-    if(p.syn > 0.1) flags+=`<span class="badge b-gld">ELITE FIT</span> `;
-    if(p.syn < 0) flags+=`<span class="badge b-red">BAD FIT</span> `;
+
+  document.getElementById('tb').innerHTML = d.map(p => {
+    let flags = '';
+    if (p.syn > 0.1) flags += `<span class="badge b-gld">ELITE FIT</span> `;
+    if (p.syn < 0) flags += `<span class="badge b-red">BAD FIT</span> `;
     
     return `<tr>
-<td><div class="pname">${p.tm}</div></td>
-<td style="font-weight:700;color:var(--cyan)">${salK}</td>
-<td style="font-weight:700">${(p.win*100).toFixed(1)}%</td>
-<td style="font-weight:700;color:var(--tx2)">${(p.t10*100).toFixed(1)}%</td>
-<td style="font-weight:700;color:var(--tx2)">${(p.cut*100).toFixed(0)}%</td>
-<td style="color:var(--tx3)">${fmt(p.std,2)}</td>
-<td class="${p.syn>0?'g':(p.syn<0?'r':'')}" style="font-weight:800">${p.syn>0?'+':''}${fmt(p.syn,2)}</td>
-<td style="font-weight:800;color:var(--pur);font-size:14px">${fmt(p.delta,2)}</td>
-<td style="text-align:left;font-size:8px">${flags}</td>
-</tr>`;
+      <td>${p.tm}</td>
+      <td style="color:var(--cyan); font-weight:700">$${p.sal}</td>
+      <td>${(p.win * 100).toFixed(2)}%</td>
+      <td>${(p.cut * 100).toFixed(1)}%</td>
+      <td>${p.pred.toFixed(2)}</td>
+      <td style="color:var(--tx2)">${p.std.toFixed(2)}</td>
+      <td class="${p.syn > 0 ? 'g' : (p.syn < 0 ? 'r' : '')}"><b>${p.syn > 0 ? '+' : ''}${p.syn}</b></td>
+      <td style="color:var(--pur); font-weight:800; font-size:14px">${p.delta.toFixed(2)}</td>
+      <td style="text-align:left">${flags}</td>
+    </tr>`;
   }).join('');
 }
 
-function genLineup(type){
-  const maxSal = 500;
-  const minSal = 490;
+function solve(type) {
+  const maxW = 500;
+  const minW = 490;
+  let metric = type === 'gpp' ? 'delta' : (type === 'cash' ? 'cash_score' : 't10');
   
-  const items = RAW_TEAMS.filter(p => p.sal).map(p => ({
-    ...p,
-    w: Math.floor(p.sal / 100),
-    v: type === 'gpp' ? p.delta : p.cash_score 
+  const items = RAW_TEAMS.map(p => ({
+    ...p, 
+    w: Math.floor(p.sal / 100), 
+    v: p[metric]
   }));
 
-  let dp = Array.from({length: 7}, () => Array(maxSal + 1).fill(null));
+  // Dynamic Programming (0-1 Knapsack Engine)
+  let dp = Array.from({length: 7}, () => Array(maxW + 1).fill(null));
   dp[0][0] = { val: 0, line: [] };
 
-  for (let i = 0; i < items.length; i++) {
-    let item = items[i];
+  for (let item of items) {
     for (let k = 5; k >= 0; k--) {
-      for (let w = maxSal - item.w; w >= 0; w--) {
+      for (let w = maxW - item.w; w >= 0; w--) {
         if (dp[k][w] !== null) {
           let newVal = dp[k][w].val + item.v;
           let newW = w + item.w;
@@ -330,45 +1121,55 @@ function genLineup(type){
     }
   }
 
+  // Iterate exactly constraints boundaries ($49,000 - $50,000)
   let bestVal = -1;
   let bestLine = null;
-  for (let w = minSal; w <= maxSal; w++) {
+  for (let w = minW; w <= maxW; w++) {
     if (dp[6][w] !== null && dp[6][w].val > bestVal) {
       bestVal = dp[6][w].val;
       bestLine = dp[6][w].line;
     }
   }
 
-  const lineup = bestLine || [];
-  if (lineup.length !== 6) {
-    document.getElementById('lineup-out').innerHTML = `<div style="color:var(--red);padding:10px;">Error solving constraint. No 6-man team found between $49K and $50K.</div>`;
+  const out = document.getElementById('lineup-out');
+  if (!bestLine) {
+    out.innerHTML = `<div style="color:var(--red);">Error: Could not find valid 6-team combination within $49k-$50k constraints.</div>`;
     return;
   }
-  
-  const totalSal=lineup.reduce((s,p)=>s+p.sal,0);
-  const totalCeil=lineup.reduce((s,p)=>s+p.delta,0);
-  const totalCut=lineup.reduce((s,p)=>s+p.cut,0)/6; 
-  
-  document.getElementById('lineup-out').innerHTML=`
-<div class="lineup-box ${type}">
-<div class="lineup-hdr">
-<h3>${type==='gpp'?'🚀 GPP OPTIMAL (CEILING + SYNERGY)':'💰 CASH OPTIMAL (FLOOR + SAFETY)'}</h3>
-<div class="lineup-stats">
-<span>💰 SAL: <strong style="color:var(--cyan)">$${(totalSal/1000).toFixed(1)}k</strong></span>
-<span>✂️ AVG CUT %: <strong class="g">${(totalCut*100).toFixed(1)}%</strong></span>
-<span>🚀 TEAM CEIL: <strong style="color:var(--pur)">${totalCeil.toFixed(2)}</strong></span>
-</div>
-</div>
-<ul class="lineup-list">${lineup.sort((a,b)=>b.sal-a.sal).map(p=>`<li>
-<div style="flex:1;font-size:13px"><strong>${p.tm}</strong></div>
-<div style="display:flex;gap:16px;font-weight:700">
-<span style="color:var(--cyan);width:50px">$${(p.sal/1000).toFixed(1)}k</span>
-<span class="${p.syn>0?'g':(p.syn<0?'r':'')}" style="width:50px">✨ ${p.syn>0?'+':''}${p.syn.toFixed(2)}</span>
-<span class="g" style="width:60px">✂️ ${(p.cut*100).toFixed(0)}%</span>
-<span style="color:var(--pur);width:60px">🚀 ${p.delta.toFixed(2)}</span>
-</div></li>`).join('')}</ul>
-</div>`;
+
+  const tSal = bestLine.reduce((s, p) => s + p.sal, 0);
+  const title = type === 'gpp' ? '🚀 GPP OPTIMAL (MAX CEILING)' : (type === 'cash' ? '🛡️ CASH OPTIMAL (MAX SAFETY)' : '📈 LEVERAGE OPTIMAL (MAX T10)');
+  const color = type === 'gpp' ? 'var(--pur)' : (type === 'cash' ? 'var(--cyan)' : 'var(--grn)');
+
+  out.innerHTML = `
+    <div style="border-bottom: 2px solid var(--bd); padding-bottom: 15px; margin-bottom: 15px;">
+      <h2 style="color:${color}; margin-bottom: 5px;">${title}</h2>
+      <div style="display:flex; gap: 20px; font-family:var(--f); font-size:12px;">
+        <span>Total Salary: <strong style="color:var(--cyan)">$${tSal}</strong></span>
+        <span>Projected Score: <strong style="color:${color}">${bestVal.toFixed(2)}</strong></span>
+      </div>
+    </div>
+    <ul class="lineup-list">
+      ${bestLine.sort((a,b) => b.sal - a.sal).map(p => `
+        <li class="lineup-item">
+          <div style="flex:1;">
+            <strong style="font-size:14px; color:#fff;">${p.tm}</strong>
+            <div style="font-size:10px; color:var(--tx2); margin-top:3px;">
+              ✂️ ${(p.cut*100).toFixed(1)}% | 🎢 ${p.std.toFixed(2)} | ✨ ${p.syn>0?'+':''}${p.syn}
+            </div>
+          </div>
+          <div style="text-align:right;">
+            <div style="color:var(--cyan); font-weight:800;">$${p.sal}</div>
+            <div style="color:${color}; font-size:14px; font-weight:800; margin-top:3px;">${p[metric].toFixed(2)}</div>
+          </div>
+        </li>
+      `).join('')}
+    </ul>
+  `;
 }
+
+buildHeader();
+render();
 </script>
 </body>
 </html>
