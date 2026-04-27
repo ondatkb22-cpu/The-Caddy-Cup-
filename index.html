@@ -4,6 +4,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0A0A0A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Cadillac Championship 2026 — DFS Dashboard</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -38,15 +42,25 @@
 ```
 
 }
+/* Force dark mode rendering on iOS Safari regardless of system setting */
+:root {
+color-scheme: dark;
+}
+html { background: #0A0A0A; }
 
-- { margin:0; padding:0; box-sizing: border-box; }
+- { margin:0; padding:0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  /* Override iOS Safari’s auto-text-color in light mode */
+  body, p, div, span, h1, h2, h3, h4, h5, h6, a, button {
+  -webkit-text-size-adjust: 100%;
+  }
   body {
-  background: var(–bg-0);
-  color: var(–txt-0);
-  font-family: ‘Inter’, -apple-system, sans-serif;
+  background: #0A0A0A !important;
+  color: #F5F5F5 !important;
+  font-family: ‘Inter’, -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 14px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
   }
 
 /* HEADER */
@@ -66,16 +80,17 @@ display: flex; justify-content: space-between; align-items: flex-end;
 gap: 24px; flex-wrap: wrap; position: relative;
 }
 h1 {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 56px;
-letter-spacing: 3px;
-color: var(–gold);
+font-family: ‘Bebas Neue’, ‘Impact’, sans-serif;
+font-size: clamp(32px, 6vw, 56px);
+letter-spacing: clamp(1.5px, 0.3vw, 3px);
+color: var(–gold) !important;
 line-height: 0.95;
+word-break: break-word;
 }
 .event-line {
 font-family: ‘DM Mono’, monospace;
 font-size: 11px;
-color: var(–txt-2);
+color: var(–txt-1);
 letter-spacing: 1.8px;
 text-transform: uppercase;
 margin-top: 10px;
@@ -85,7 +100,7 @@ margin-top: 10px;
 text-align: right;
 font-family: ‘DM Mono’, monospace;
 font-size: 10px;
-color: var(–txt-2);
+color: var(–txt-1);
 letter-spacing: 1.2px;
 }
 .header-meta div { margin-bottom: 3px; }
@@ -871,9 +886,158 @@ font-size: 11px;
 color: var(–txt-3);
 line-height: 1.6;
 }
-.footer-note strong { color: var(–txt-1); }
-</style>
+.footer-note strong { color: var(–txt-1); }  /* ════ MOBILE RESPONSIVE OVERRIDES ════ */
+@media (max-width: 640px) {
+/* Header — fix title overflow */
+header {
+padding: 20px 16px 16px;
+}
+.header-inner {
+flex-direction: column;
+align-items: flex-start;
+gap: 14px;
+}
+.event-line {
+font-size: 9.5px;
+letter-spacing: 1px;
+line-height: 1.5;
+}
+.header-meta {
+text-align: left;
+font-size: 9.5px;
+width: 100%;
+}
+.header-meta div { margin-bottom: 4px; }
 
+```
+/* Reading guide */
+.reading-guide { padding: 0 16px; margin-top: 20px; }
+.light-grid { grid-template-columns: 1fr; gap: 8px; }
+.light-cell { padding: 10px 12px; font-size: 12.5px; }
+
+/* Nav */
+nav { padding: 0 16px; margin-top: 20px; }
+.nav-link { padding: 12px 14px; font-size: 10px; letter-spacing: 1px; }
+
+/* Main */
+main { padding: 24px 16px; }
+section { margin-bottom: 36px; }
+.sect-title { font-size: 24px; letter-spacing: 1.8px; }
+.sect-desc { font-size: 13px; }
+
+/* Cards */
+.card { padding: 16px; }
+.c-name { font-size: 17px; }
+.c-top { padding-right: 8px; }
+.c-rank { font-size: 9.5px; }
+.pin { padding: 2px 5px; }
+.c-salary-val { font-size: 17px; }
+.c-salary-lbl { font-size: 8.5px; }
+
+/* Card actions buttons positioned better */
+.card-actions {
+  top: 12px;
+  right: 28px;
+}
+.ca-btn {
+  width: 28px; height: 28px;
+  font-size: 14px;
+}
+.tl-badge {
+  top: 14px; right: 14px;
+  width: 12px; height: 12px;
+}
+
+/* Verdict */
+.c-verdict { font-size: 12.5px; padding: 9px 11px; }
+
+/* Signal pills */
+.sig { padding: 7px 3px; font-size: 8.5px; letter-spacing: 0.8px; }
+.sig .check { font-size: 13px; }
+
+/* Key numbers */
+.keynums { gap: 6px; padding: 10px 0; }
+.kn-lbl { font-size: 8.5px; }
+.kn-val { font-size: 16px; }
+.kn-sub { font-size: 9px; }
+
+/* Form rows */
+.form-row { font-size: 10.5px; gap: 8px; flex-wrap: wrap; }
+.form-label { min-width: 50px; font-size: 8.5px; }
+.res { padding: 2px 5px; font-size: 9.5px; }
+.momentum { padding: 2px 6px; font-size: 10px; }
+.mayo { font-size: 8.5px; padding: 3px 7px; }
+
+/* News */
+.news { font-size: 12px; padding: 9px 11px; }
+
+/* ───── LINEUP BUILDER MOBILE ───── */
+.builder-panel { padding: 16px; }
+.builder-title { font-size: 22px; letter-spacing: 1.5px; }
+.builder-subtitle { font-size: 10px; line-height: 1.4; }
+.builder-header { gap: 12px; }
+.builder-stats {
+  gap: 10px;
+  width: 100%;
+  justify-content: space-between;
+}
+.builder-stat { text-align: left; flex: 1; min-width: 80px; }
+.builder-stat-val { font-size: 15px; }
+.builder-stat-lbl { font-size: 8.5px; }
+
+.selection-row {
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+.selection-box { padding: 10px 12px; }
+.selection-box-title { font-size: 9.5px; }
+.chip { font-size: 11px; padding: 3px 7px; }
+
+.builder-controls {
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+.ctrl-group label { font-size: 9.5px; }
+.build-btn {
+  padding: 14px 22px;
+  font-size: 13px;
+  width: 100%;
+}
+
+/* Lineup output */
+.lineup-card { padding: 12px 14px; }
+.lineup-meta { gap: 8px; }
+.lineup-id { font-size: 10.5px; }
+.lineup-totals { font-size: 10.5px; gap: 12px; flex-wrap: wrap; }
+.lineup-players {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 5px;
+}
+.lp-cell { padding: 7px 5px; }
+.lp-name { font-size: 11px; white-space: normal; line-height: 1.2; }
+.lp-sal { font-size: 9.5px; }
+
+/* Footer */
+footer { padding: 24px 16px; }
+.src-grid { grid-template-columns: 1fr; gap: 10px; font-size: 10.5px; }
+```
+
+}
+
+/* Tablet — 641-900 */
+@media (min-width: 641px) and (max-width: 900px) {
+.grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+.lineup-players { grid-template-columns: repeat(3, 1fr); }
+.builder-controls { grid-template-columns: 1fr 1fr; }
+.build-btn { grid-column: 1 / -1; }
+}
+
+/* Disable hover-only tooltips on touch devices — replace with title attr */
+@media (hover: none) {
+[data-tip]::after { display: none; }
+}
+
+</style>
 </head>
 <body>
 
