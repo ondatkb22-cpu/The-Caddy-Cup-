@@ -644,10 +644,285 @@
   /* HIDDEN BY DEFAULT */
   .hidden { display: none !important; }
   
+  /* BUILT LINEUPS TAB */
+  .lineup-section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 24px 0 12px;
+    padding: 0 4px;
+  }
+  .lineup-section-header:first-child { margin-top: 0; }
+  .lineup-section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-0);
+    letter-spacing: -0.01em;
+  }
+  .lineup-section-sub {
+    font-size: 12px;
+    color: var(--text-2);
+    margin-top: 2px;
+  }
+  .lineup-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+  .built-card {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+  .built-card:hover {
+    border-color: var(--border-light);
+    transform: translateY(-2px);
+  }
+  .built-card.cash { border-top: 3px solid var(--accent); }
+  .built-card.gpp { border-top: 3px solid var(--sharp); }
+  .built-card-header {
+    padding: 14px 18px;
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--border);
+  }
+  .built-card-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .built-card-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-0);
+  }
+  .built-card-rank {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .built-card.cash .built-card-rank {
+    background: rgba(94, 234, 212, 0.15);
+    color: var(--accent);
+  }
+  .built-card.gpp .built-card-rank {
+    background: rgba(139, 92, 246, 0.15);
+    color: var(--sharp);
+  }
+  .built-card-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .bc-stat { display: flex; flex-direction: column; gap: 2px; }
+  .bc-stat-label {
+    font-size: 9px;
+    color: var(--text-2);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+  .bc-stat-val {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-0);
+    font-variant-numeric: tabular-nums;
+  }
+  .bc-stat-val.accent { color: var(--accent); }
+  .bc-stat-val.sharp { color: var(--sharp); }
+  .built-card-players {
+    padding: 8px;
+  }
+  .bc-player {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+  }
+  .bc-player + .bc-player { margin-top: 2px; }
+  .bc-player:hover { background: var(--bg-2); }
+  .bc-player-info { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+  .bc-player-name {
+    color: var(--text-0);
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .bc-player-meta {
+    color: var(--text-2);
+    font-size: 10px;
+    margin-top: 1px;
+  }
+  .bc-player-sal {
+    font-size: 12px;
+    color: var(--text-1);
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    margin-left: 8px;
+    flex-shrink: 0;
+  }
+  .built-card-actions {
+    padding: 12px 14px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    gap: 8px;
+  }
+  .built-card-actions .btn {
+    flex: 1;
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  
+  /* TABLET (1200px and below) */
   @media (max-width: 1200px) {
     .builder-grid { grid-template-columns: 1fr; }
     .lineup-panel { position: relative; top: 0; }
     .insights { grid-template-columns: repeat(2, 1fr); }
+    .lineup-cards { grid-template-columns: repeat(2, 1fr); }
+  }
+  
+  /* MOBILE (768px and below) */
+  @media (max-width: 768px) {
+    body { font-size: 13px; }
+    
+    /* Header collapse */
+    .header { 
+      padding: 12px 16px; 
+      flex-direction: column; 
+      align-items: flex-start; 
+      gap: 12px;
+    }
+    .event-info { 
+      gap: 12px; 
+      flex-wrap: wrap; 
+      width: 100%;
+    }
+    .event-block { flex: 1; min-width: 0; }
+    .event-value { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .live-indicator { font-size: 10px; padding: 3px 8px; }
+    
+    /* Tabs scroll horizontally */
+    .tabs { 
+      padding: 0 16px; 
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      white-space: nowrap;
+    }
+    .tab { 
+      padding: 12px 14px; 
+      font-size: 12px; 
+      flex-shrink: 0;
+    }
+    
+    main { padding: 16px 12px 60px; }
+    
+    /* Insights stack */
+    .insights { 
+      grid-template-columns: 1fr; 
+      gap: 10px; 
+      margin-bottom: 16px;
+    }
+    .insight-card { padding: 14px; }
+    .insight-player { font-size: 16px; }
+    
+    /* Controls stack vertically */
+    .controls {
+      padding: 12px;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 12px;
+    }
+    .control-group { 
+      flex-wrap: wrap; 
+      gap: 6px; 
+    }
+    .input-search { width: 100%; }
+    .filter-chip { font-size: 11px; padding: 5px 10px; }
+    
+    /* Player table — convert to card-style rows */
+    .table-wrap { 
+      border-radius: 8px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    table { font-size: 12px; min-width: 600px; }
+    th { padding: 8px 6px; font-size: 9px; }
+    td { padding: 8px 6px; }
+    .player-cell { gap: 8px; }
+    .player-avatar { width: 28px; height: 28px; font-size: 10px; }
+    .player-name { font-size: 12px; }
+    .player-sub { font-size: 10px; }
+    .score-cell { min-width: 60px; gap: 4px; }
+    .score-bar { min-width: 30px; }
+    
+    /* Hide low-priority columns on mobile */
+    table th:nth-child(5),  /* Ceil */
+    table td:nth-child(5),
+    table th:nth-child(12), /* Equity */
+    table td:nth-child(12) { display: none; }
+    
+    /* Detail row reflow */
+    .detail-content { 
+      padding: 16px; 
+      grid-template-columns: 1fr; 
+      gap: 16px; 
+    }
+    
+    /* Lineup builder full width */
+    .builder-grid { gap: 12px; }
+    .lineup-panel { 
+      border-radius: 8px;
+      position: relative; 
+      top: 0;
+    }
+    .prob-grid { padding: 12px; gap: 6px; }
+    .prob-card { padding: 8px 10px; }
+    .prob-value { font-size: 16px; }
+    .prob-label { font-size: 9px; }
+    
+    /* Built lineups stack */
+    .lineup-cards { grid-template-columns: 1fr; gap: 12px; }
+    .lineup-section-header { 
+      flex-direction: column; 
+      align-items: flex-start; 
+      gap: 4px;
+      margin: 16px 0 10px; 
+    }
+    .lineup-section-title { font-size: 16px; }
+    
+    /* Built card content */
+    .built-card-header { padding: 12px 14px; }
+    .bc-stat-val { font-size: 13px; }
+    .bc-player { padding: 6px 8px; font-size: 11px; }
+    .bc-player-name { font-size: 12px; }
+    
+    /* Brand smaller */
+    .brand-name { font-size: 16px; }
+    .brand-tag { font-size: 9px; }
+    .logo { width: 28px; height: 28px; font-size: 14px; }
+  }
+  
+  /* SMALL MOBILE (480px and below) */
+  @media (max-width: 480px) {
+    .header { padding: 10px 12px; }
+    main { padding: 12px 8px 60px; }
+    
+    /* Hide more columns at very small */
+    table th:nth-child(6),  /* SG */
+    table td:nth-child(6),
+    table th:nth-child(8),  /* Form score bar */
+    table td:nth-child(8) { display: none; }
+    
+    .control-label { display: none; } /* hide labels, keep chips */
+    .event-block:nth-child(2) { display: none; } /* hide "course" line */
   }
 </style>
 </head>
@@ -686,7 +961,7 @@
 <div class="tabs">
   <div class="tab active" data-tab="pool">Player Pool</div>
   <div class="tab" data-tab="builder">Lineup Builder</div>
-  <div class="tab" data-tab="insights">Edge Map</div>
+  <div class="tab" data-tab="builds">Built Lineups</div>
 </div>
 
 <main>
@@ -810,11 +1085,28 @@
     </div>
   </div>
 
-  <!-- TAB: INSIGHTS -->
-  <div id="tab-insights" class="hidden">
-    <div class="table-wrap" style="padding:24px;">
-      <h3 style="margin-bottom:16px;">Edge Map — Coming Soon</h3>
-      <p style="color:var(--text-1);">Leverage scatter, ownership map, and slate-wide signal dashboard.</p>
+  <!-- TAB: BUILT LINEUPS -->
+  <div id="tab-builds" class="hidden">
+    <div class="lineup-section-header">
+      <div>
+        <div class="lineup-section-title">Cash Builds</div>
+        <div class="lineup-section-sub">Optimized for double-up · top 3 by P(field median+)</div>
+      </div>
+      <button class="btn btn-ghost" id="btn-rebuild-cash">Rebuild</button>
+    </div>
+    <div class="lineup-cards" id="cash-builds">
+      <div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">Computing optimal lineups...</div>
+    </div>
+
+    <div class="lineup-section-header">
+      <div>
+        <div class="lineup-section-title">GPP Builds</div>
+        <div class="lineup-section-sub">Optimized for tournaments · top 3 by P(top 20%) with low-own diversity</div>
+      </div>
+      <button class="btn btn-ghost" id="btn-rebuild-gpp">Rebuild</button>
+    </div>
+    <div class="lineup-cards" id="gpp-builds">
+      <div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">Computing optimal lineups...</div>
     </div>
   </div>
 </main>
@@ -1130,11 +1422,12 @@ function bindEvents() {
       document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
       t.classList.add('active');
       state.tab = t.dataset.tab;
-      ['tab-pool', 'tab-builder', 'tab-insights'].forEach(id =>
+      ['tab-pool', 'tab-builder', 'tab-builds'].forEach(id =>
         document.getElementById(id).classList.add('hidden'));
       document.getElementById('tab-' + state.tab).classList.remove('hidden');
       if (state.tab === 'pool') renderPool();
       if (state.tab === 'builder') renderBuilder();
+      if (state.tab === 'builds') renderBuilds();
     });
   });
   
@@ -1235,6 +1528,20 @@ function bindEvents() {
     state.lineup = optimizeLineup('gpp');
     renderBuilder();
   });
+  
+  // Rebuild buttons in Built Lineups tab
+  document.getElementById('btn-rebuild-cash').addEventListener('click', () => renderBuilds());
+  document.getElementById('btn-rebuild-gpp').addEventListener('click', () => renderBuilds());
+  
+  // Load-to-builder from a built card
+  document.body.addEventListener('click', e => {
+    const target = e.target.closest('[data-load-lineup]');
+    if (!target) return;
+    e.stopPropagation();
+    const names = target.dataset.loadLineup.split('|');
+    state.lineup = names;
+    document.querySelector('.tab[data-tab="builder"]').click();
+  });
 }
 
 // OPTIMIZER (DP knapsack-style with score maximization)
@@ -1304,6 +1611,143 @@ function optimizeLineup(mode = 'cash') {
     }
   }
   return bestLineup;
+}
+
+// MULTI-LINEUP GENERATOR — produces top N diverse lineups
+function buildTopLineups(mode, n = 3, minUnique = 2) {
+  const CAP = 50000;
+  const priced = PLAYERS.filter(p => p.salary && p.cash_proj != null);
+  
+  const scoreFn = mode === 'cash'
+    ? (p => (p.cash_proj ?? 0))
+    : (p => 0.4 * (p.cash_proj ?? 0) + 0.4 * (p.ceiling ?? 0) + 0.6 * (p.leverage ?? 0) - 0.2 * (p.own_pct ?? 10));
+  
+  const players = priced.slice().sort((a, b) => scoreFn(b) - scoreFn(a));
+  const TOP = players.slice(0, 30);
+  const candidates = [];
+  
+  function recurse(start, picked, sal, score) {
+    if (picked.length === 6) {
+      if (sal >= 47000 && sal <= CAP) {
+        candidates.push({lineup: picked.slice(), salary: sal, score: score});
+      }
+      return;
+    }
+    if (candidates.length > 50000) return;
+    const need = 6 - picked.length;
+    for (let i = start; i < TOP.length; i++) {
+      const p = TOP[i];
+      const newSal = sal + p.salary;
+      if (newSal > CAP) continue;
+      const remaining = need - 1;
+      const restSorted = TOP.slice(i + 1).map(x => x.salary).sort((a,b)=>a-b);
+      const cheapestRest = restSorted.slice(0, remaining).reduce((a,b)=>a+b, 0);
+      if (newSal + cheapestRest > CAP) continue;
+      const expensiveRest = restSorted.slice().reverse().slice(0, remaining).reduce((a,b)=>a+b, 0);
+      if (newSal + expensiveRest < 47000) continue;
+      picked.push(p.name);
+      recurse(i + 1, picked, newSal, score + scoreFn(p));
+      picked.pop();
+    }
+  }
+  recurse(0, [], 0, 0);
+  if (candidates.length === 0) return [];
+  
+  // Score top 80 candidates by simulation, then enforce diversity
+  candidates.sort((a, b) => b.score - a.score);
+  const evalPool = candidates.slice(0, 80);
+  const scored = evalPool.map(c => {
+    const lp = c.lineup.map(n => PLAYERS.find(x => x.name === n));
+    const probs = simulateLineup(lp, 1500);
+    return {
+      ...c,
+      cash: probs.cash,
+      top20: probs.top20,
+      mean: probs.mean,
+      ceiling: probs.ceiling,
+      target: mode === 'cash' ? probs.cash : probs.top20,
+    };
+  });
+  scored.sort((a, b) => b.target - a.target);
+  
+  // Diversity selection: each picked lineup must have >= minUnique players different from all prior picks
+  const picked = [];
+  for (const cand of scored) {
+    const ok = picked.every(prev => {
+      const overlap = cand.lineup.filter(x => prev.lineup.includes(x)).length;
+      return (6 - overlap) >= minUnique;
+    });
+    if (ok) {
+      picked.push(cand);
+      if (picked.length >= n) break;
+    }
+  }
+  return picked;
+}
+
+function renderBuilds() {
+  // Show loading state
+  document.getElementById('cash-builds').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">Computing optimal lineups...</div>';
+  document.getElementById('gpp-builds').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">Computing optimal lineups...</div>';
+  
+  // Defer to next tick so loading state renders
+  setTimeout(() => {
+    const cash = buildTopLineups('cash', 3, 2);
+    const gpp = buildTopLineups('gpp', 3, 2);
+    document.getElementById('cash-builds').innerHTML = cash.length 
+      ? cash.map((c, i) => renderBuiltCard(c, 'cash', i)).join('')
+      : '<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">No valid lineups found</div>';
+    document.getElementById('gpp-builds').innerHTML = gpp.length
+      ? gpp.map((c, i) => renderBuiltCard(c, 'gpp', i)).join('')
+      : '<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">No valid lineups found</div>';
+  }, 50);
+}
+
+function renderBuiltCard(lineup, mode, idx) {
+  const lp = lineup.lineup.map(n => PLAYERS.find(x => x.name === n)).sort((a,b) => b.salary - a.salary);
+  const cumOwn = lp.reduce((s, p) => s + (p.own_pct ?? 0), 0);
+  const labelMap = ['#1 Optimal', '#2 Pivot', '#3 Diversifier'];
+  const isCash = mode === 'cash';
+  const targetLabel = isCash ? 'Cash%' : 'Top 20%';
+  const targetValue = ((isCash ? lineup.cash : lineup.top20) * 100).toFixed(1) + '%';
+  const targetClass = isCash ? 'accent' : 'sharp';
+  
+  return `<div class="built-card ${mode}">
+    <div class="built-card-header">
+      <div class="built-card-title">
+        <div class="built-card-name">${labelMap[idx] || ('#' + (idx+1))}</div>
+        <div class="built-card-rank">${mode.toUpperCase()}</div>
+      </div>
+      <div class="built-card-stats">
+        <div class="bc-stat">
+          <div class="bc-stat-label">${targetLabel}</div>
+          <div class="bc-stat-val ${targetClass}">${targetValue}</div>
+        </div>
+        <div class="bc-stat">
+          <div class="bc-stat-label">Mean</div>
+          <div class="bc-stat-val">${lineup.mean.toFixed(0)}</div>
+        </div>
+        <div class="bc-stat">
+          <div class="bc-stat-label">Cum Own</div>
+          <div class="bc-stat-val">${cumOwn.toFixed(0)}%</div>
+        </div>
+      </div>
+    </div>
+    <div class="built-card-players">
+      ${lp.map(p => `
+        <div class="bc-player">
+          <div class="bc-player-info">
+            <div class="bc-player-name">${p.name}</div>
+            <div class="bc-player-meta">${p.cash_proj?.toFixed(1) ?? '—'} proj · ${p.own_pct?.toFixed(1) ?? '—'}% own · CF#${p.doral_rank ?? '—'}</div>
+          </div>
+          <div class="bc-player-sal">$${p.salary.toLocaleString()}</div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="built-card-actions">
+      <button class="btn btn-secondary" data-load-lineup="${lineup.lineup.join('|')}">Load to Builder</button>
+    </div>
+  </div>`;
 }
 
 // INIT
