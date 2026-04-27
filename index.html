@@ -3,1247 +3,727 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
 <meta name="theme-color" content="#0A0A0A">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Cadillac Championship 2026 — DFS Dashboard</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Cadillac Championship · DFS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg-0: #0A0A0A;
+    color-scheme: dark;
+    --bg: #0A0A0A;
     --bg-1: #131418;
     --bg-2: #1A1B1F;
     --bg-3: #22232A;
     --line: #2A2B30;
     --line-2: #3A3B42;
-    --txt-0: #F5F5F5;
-    --txt-1: #C0C0C0;
+    --txt: #F5F5F5;
+    --txt-1: #C8C8C8;
     --txt-2: #888;
     --txt-3: #555;
     --gold: #C9A84C;
-    --gold-l: #E8CC80;
-
-```
-/* TRAFFIC LIGHT — primary semantic colors */
---green: #4ADE80;
---green-bg: rgba(74,222,128,0.12);
---green-border: rgba(74,222,128,0.4);
---yellow: #FBBF24;
---yellow-bg: rgba(251,191,36,0.12);
---yellow-border: rgba(251,191,36,0.4);
---red: #F87171;
---red-bg: rgba(248,113,113,0.10);
---red-border: rgba(248,113,113,0.4);
---blue: #60A5FA;
---blue-bg: rgba(96,165,250,0.10);
---orange: #FB923C;
-```
-
-}
-/* Force dark mode rendering on iOS Safari regardless of system setting */
-:root {
-color-scheme: dark;
-}
-html { background: #0A0A0A; }
-
-- { margin:0; padding:0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  /* Override iOS Safari’s auto-text-color in light mode */
-  body, p, div, span, h1, h2, h3, h4, h5, h6, a, button {
-  -webkit-text-size-adjust: 100%;
+    --green: #4ADE80;
+    --green-bg: rgba(74,222,128,0.10);
+    --yellow: #FBBF24;
+    --yellow-bg: rgba(251,191,36,0.08);
+    --red: #F87171;
+    --red-bg: rgba(248,113,113,0.08);
+    --blue: #60A5FA;
+  }
+  html, body {
+    background: #0A0A0A !important;
+    color: #F5F5F5 !important;
+    margin: 0; padding: 0;
+  }
+  * {
+    margin: 0; padding: 0; box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
   }
   body {
-  background: #0A0A0A !important;
-  color: #F5F5F5 !important;
-  font-family: ‘Inter’, -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 14px;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 13px;
+    line-height: 1.4;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: env(safe-area-inset-bottom, 0);
   }
 
-/* HEADER */
-header {
-background: linear-gradient(180deg, #0F0F12, #0A0A0A);
+/* ═══════════════════ COMPACT HEADER ═══════════════════ */
+.topbar {
+background: linear-gradient(180deg, #1A1509, #0A0A0A);
 border-bottom: 1px solid var(–gold);
-padding: 28px 24px 20px;
-position: relative; overflow: hidden;
-}
-header::before {
-content: ‘’; position: absolute; inset: 0;
-background: radial-gradient(circle at 85% 30%, rgba(201,168,76,0.08), transparent 50%);
-}
-.header-inner {
-max-width: 1300px; margin: 0 auto;
-display: flex; justify-content: space-between; align-items: flex-end;
-gap: 24px; flex-wrap: wrap; position: relative;
-}
-h1 {
-font-family: ‘Bebas Neue’, ‘Impact’, sans-serif;
-font-size: clamp(32px, 6vw, 56px);
-letter-spacing: clamp(1.5px, 0.3vw, 3px);
-color: var(–gold) !important;
-line-height: 0.95;
-word-break: break-word;
-}
-.event-line {
-font-family: ‘DM Mono’, monospace;
-font-size: 11px;
-color: var(–txt-1);
-letter-spacing: 1.8px;
-text-transform: uppercase;
-margin-top: 10px;
-}
-.event-line strong { color: var(–gold-l); font-weight: 500; }
-.header-meta {
-text-align: right;
-font-family: ‘DM Mono’, monospace;
-font-size: 10px;
-color: var(–txt-1);
-letter-spacing: 1.2px;
-}
-.header-meta div { margin-bottom: 3px; }
-.header-meta .v { color: var(–gold-l); }
-.pulse-dot {
-display: inline-block;
-width: 7px; height: 7px;
-background: var(–green);
-border-radius: 50%;
-margin-right: 6px;
-animation: pulse 2s infinite;
-}
-@keyframes pulse { 0%,100% {opacity:1;} 50% {opacity:0.4;} }
-
-/* TRAFFIC LIGHT GUIDE */
-.reading-guide {
-max-width: 1300px;
-margin: 32px auto 0;
-padding: 0 24px;
-}
-.guide-card {
-background: var(–bg-1);
-border: 1px solid var(–line);
-border-radius: 6px;
-padding: 18px 20px;
-}
-.guide-title {
-font-family: ‘DM Mono’, monospace;
-font-size: 11px;
-letter-spacing: 1.5px;
-text-transform: uppercase;
-color: var(–txt-2);
-margin-bottom: 14px;
-}
-.light-grid {
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-gap: 12px;
-}
-.light-cell {
 padding: 12px 14px;
-border-radius: 4px;
-border: 1px solid;
-font-size: 13px;
-line-height: 1.5;
+position: sticky;
+top: 0;
+z-index: 100;
+backdrop-filter: blur(12px);
 }
-.light-cell .lbl {
-font-family: ‘DM Mono’, monospace;
-font-size: 10px;
-letter-spacing: 1.2px;
-text-transform: uppercase;
-margin-bottom: 4px;
-display: flex; align-items: center; gap: 8px;
-}
-.light-dot {
-width: 12px; height: 12px;
-border-radius: 50%;
-display: inline-block;
-}
-.light-cell.green {
-background: var(–green-bg);
-border-color: var(–green-border);
-}
-.light-cell.green .lbl { color: var(–green); }
-.light-cell.green .light-dot { background: var(–green); box-shadow: 0 0 12px var(–green); }
-.light-cell.yellow {
-background: var(–yellow-bg);
-border-color: var(–yellow-border);
-}
-.light-cell.yellow .lbl { color: var(–yellow); }
-.light-cell.yellow .light-dot { background: var(–yellow); box-shadow: 0 0 12px var(–yellow); }
-.light-cell.red {
-background: var(–red-bg);
-border-color: var(–red-border);
-}
-.light-cell.red .lbl { color: var(–red); }
-.light-cell.red .light-dot { background: var(–red); box-shadow: 0 0 12px var(–red); }
-.light-cell .desc { color: var(–txt-1); }
-
-@media (max-width: 700px) {
-.light-grid { grid-template-columns: 1fr; }
-}
-
-/* NAV */
-nav {
-background: var(–bg-1);
-border-bottom: 1px solid var(–line);
-padding: 0 24px;
-position: sticky; top: 0; z-index: 50;
-margin-top: 24px;
-backdrop-filter: blur(8px);
-}
-.nav-inner {
-max-width: 1300px; margin: 0 auto;
-display: flex; gap: 0; overflow-x: auto;
-}
-.nav-link {
-padding: 14px 18px;
-font-family: ‘DM Mono’, monospace;
-font-size: 11px;
-letter-spacing: 1.3px;
-text-transform: uppercase;
-color: var(–txt-2);
-text-decoration: none;
-border-bottom: 2px solid transparent;
-white-space: nowrap;
-cursor: pointer;
-transition: all 0.15s;
-}
-.nav-link:hover { color: var(–txt-0); }
-.nav-link.active { color: var(–gold); border-bottom-color: var(–gold); }
-.nav-link .count {
-margin-left: 6px; padding: 1px 6px;
-background: var(–bg-2);
-border-radius: 8px; font-size: 10px;
-}
-.nav-link.active .count { background: var(–green-bg); color: var(–green); }
-
-/* MAIN */
-main {
-max-width: 1300px;
-margin: 0 auto;
-padding: 40px 24px;
-}
-section {
-margin-bottom: 56px;
-scroll-margin-top: 70px;
-}
-.sect-head { margin-bottom: 24px; }
-.sect-title {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 30px;
-letter-spacing: 2.5px;
-line-height: 1;
-margin-bottom: 6px;
-}
-.sect-desc {
-color: var(–txt-1);
-font-size: 14px;
-max-width: 700px;
-line-height: 1.55;
-}
-.sect-desc em {
-font-style: normal;
-color: var(–gold-l);
-font-family: ‘DM Mono’, monospace;
-font-size: 12px;
-}
-.tier-locks    .sect-title { color: var(–green); }
-.tier-strong   .sect-title { color: var(–green); opacity: 0.85; }
-.tier-leverage .sect-title { color: var(–yellow); }
-.tier-mid      .sect-title { color: var(–blue); }
-.tier-fades    .sect-title { color: var(–red); }
-
-/* CARD GRID */
-.grid { display: grid; gap: 16px; }
-.grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
-.grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
-@media (max-width: 1100px) {
-.grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 720px) {
-.grid { grid-template-columns: 1fr !important; }
-}
-
-/* CARD with TRAFFIC LIGHT */
-.card {
-background: var(–bg-2);
-border: 1px solid var(–line);
-border-radius: 6px;
-padding: 20px;
-transition: all 0.15s;
-position: relative;
-}
-.card.green {
-border-color: var(–green-border);
-background: linear-gradient(135deg, rgba(74,222,128,0.05), var(–bg-2) 35%);
-}
-.card.green::before {
-content: ‘’; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-background: linear-gradient(90deg, transparent, var(–green), transparent);
-}
-.card.yellow {
-border-color: var(–yellow-border);
-background: linear-gradient(135deg, rgba(251,191,36,0.04), var(–bg-2) 35%);
-}
-.card.yellow::before {
-content: ‘’; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-background: linear-gradient(90deg, transparent, var(–yellow), transparent);
-}
-.card.red {
-border-color: var(–red-border);
-opacity: 0.92;
-}
-.card.red::before {
-content: ‘’; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-background: linear-gradient(90deg, transparent, var(–red), transparent);
-}
-.card:hover { border-color: var(–line-2); }
-.card.green:hover { border-color: var(–green); }
-.card.yellow:hover { border-color: var(–yellow); }
-.card.red:hover { border-color: var(–red); }
-
-/* TRAFFIC LIGHT BADGE — top-right of card */
-.tl-badge {
-position: absolute;
-top: 16px; right: 16px;
-width: 14px; height: 14px;
-border-radius: 50%;
-}
-.card.green .tl-badge { background: var(–green); box-shadow: 0 0 10px rgba(74,222,128,0.6); }
-.card.yellow .tl-badge { background: var(–yellow); box-shadow: 0 0 10px rgba(251,191,36,0.6); }
-.card.red .tl-badge { background: var(–red); box-shadow: 0 0 10px rgba(248,113,113,0.6); }
-
-/* Top of card: Name + Salary */
-.c-top {
+.topbar-row {
 display: flex;
 justify-content: space-between;
-align-items: flex-start;
-gap: 14px;
-margin-bottom: 12px;
-padding-right: 24px; /* room for badge */
+align-items: center;
+gap: 12px;
 }
-.c-name-block { min-width: 0; flex: 1; }
-.c-name {
-font-size: 19px;
-font-weight: 700;
-line-height: 1.15;
+.topbar-title {
+font-family: ‘Inter’, sans-serif;
+font-weight: 800;
+font-size: 17px;
 letter-spacing: -0.3px;
-margin-bottom: 4px;
+color: var(–gold);
+line-height: 1.1;
 }
-.c-rank {
+.topbar-meta {
 font-family: ‘DM Mono’, monospace;
-font-size: 10px;
+font-size: 9.5px;
 color: var(–txt-2);
 letter-spacing: 0.5px;
-display: flex; gap: 6px; flex-wrap: wrap;
-}
-.pin {
-background: var(–bg-1);
-color: var(–txt-1);
-padding: 2px 7px;
-border-radius: 3px;
-}
-.pin.doral { background: var(–green-bg); color: var(–green); }
-.pin.market { background: var(–blue-bg); color: var(–blue); }
-
-/* SALARY block — top right */
-.c-salary {
 text-align: right;
-flex-shrink: 0;
+line-height: 1.4;
 }
-.c-salary-val {
-font-family: ‘DM Mono’, monospace;
-font-size: 20px;
-font-weight: 600;
-color: var(–txt-0);
-line-height: 1;
-}
-.c-salary-lbl {
-font-family: ‘DM Mono’, monospace;
-font-size: 9px;
-color: var(–txt-2);
-letter-spacing: 1px;
-text-transform: uppercase;
-margin-top: 4px;
-}
-.c-odds-mini {
-font-family: ‘DM Mono’, monospace;
-font-size: 11px;
-color: var(–gold-l);
-margin-top: 2px;
-}
+.topbar-meta strong { color: var(–txt-1); font-weight: 500; }
 
-/* Verdict */
-.c-verdict {
+/* ═══════════════════ SUMMARY BAR ═══════════════════ */
+.summary {
 background: var(–bg-1);
-border-left: 3px solid var(–txt-3);
-padding: 10px 12px;
-border-radius: 0 4px 4px 0;
-margin-bottom: 14px;
-font-size: 13px;
-color: var(–txt-1);
-line-height: 1.45;
-}
-.card.green .c-verdict { border-left-color: var(–green); background: rgba(74,222,128,0.06); }
-.card.yellow .c-verdict { border-left-color: var(–yellow); background: rgba(251,191,36,0.05); }
-.card.red .c-verdict { border-left-color: var(–red); background: var(–red-bg); }
-.c-verdict strong { color: var(–txt-0); font-weight: 600; }
-
-/* Signal pills */
-.signals {
-display: flex; gap: 6px; margin-bottom: 14px;
-}
-.sig {
-flex: 1; text-align: center; padding: 8px 4px;
-background: var(–bg-1);
-border-radius: 4px;
-border: 1px solid var(–line);
-font-family: ‘DM Mono’, monospace;
-font-size: 9px;
-letter-spacing: 1.2px;
-text-transform: uppercase;
-color: var(–txt-3);
-cursor: help;
-}
-.sig.on {
-background: var(–green-bg);
-border-color: var(–green-border);
-color: var(–green);
-font-weight: 500;
-}
-.sig .check {
-display: block; font-size: 14px; margin-bottom: 2px; line-height: 1;
-}
-.sig.on .check { color: var(–green); }
-.sig.off .check { color: var(–txt-3); }
-
-/* Key numbers grid — Projection / Value / Ownership */
-.keynums {
-display: grid;
-grid-template-columns: repeat(3, 1fr);
-gap: 8px;
-margin-bottom: 14px;
-padding: 12px 0;
-border-top: 1px solid var(–line);
 border-bottom: 1px solid var(–line);
+padding: 8px 14px;
+display: flex;
+gap: 14px;
+overflow-x: auto;
+-webkit-overflow-scrolling: touch;
+scrollbar-width: none;
 }
-.kn { text-align: center; }
-.kn-lbl {
-font-family: ‘DM Mono’, monospace;
-font-size: 9px;
-color: var(–txt-2);
-letter-spacing: 0.8px;
-text-transform: uppercase;
-margin-bottom: 4px;
-cursor: help;
-}
-.kn-val {
-font-family: ‘DM Mono’, monospace;
-font-size: 18px;
-font-weight: 500;
-}
-.kn-val.green { color: var(–green); }
-.kn-val.yellow { color: var(–yellow); }
-.kn-val.red { color: var(–red); }
-.kn-val.muted { color: var(–txt-1); }
-.kn-sub {
-font-family: ‘DM Mono’, monospace;
-font-size: 10px;
-color: var(–txt-3);
-margin-top: 1px;
-}
-
-/* Form/Mayo rows */
-.form-row {
-display: flex; align-items: center; gap: 10px; margin-bottom: 10px;
-font-family: ‘DM Mono’, monospace;
-font-size: 11px;
-}
-.form-label {
-color: var(–txt-2);
-text-transform: uppercase;
-letter-spacing: 0.6px;
-font-size: 9px;
+.summary::-webkit-scrollbar { display: none; }
+.stat {
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+flex-shrink: 0;
 min-width: 60px;
 }
-.form-results { display: flex; gap: 3px; flex-wrap: wrap; }
-.res {
-padding: 2px 6px; border-radius: 3px;
-background: var(–bg-1); color: var(–txt-1); font-size: 10px;
-}
-.res.win { background: var(–green-bg); color: var(–green); font-weight: 500; }
-.res.t5 { background: var(–green-bg); color: var(–green); opacity: 0.85; }
-.res.t10 { background: var(–blue-bg); color: var(–blue); }
-.res.cut { background: var(–red-bg); color: var(–red); opacity: 0.7; }
-
-.momentum {
-display: inline-flex; align-items: center; gap: 5px;
-padding: 3px 8px; border-radius: 3px;
-background: var(–bg-1); color: var(–txt-1); font-size: 11px;
-}
-.momentum.hot { background: var(–green-bg); color: var(–green); }
-.momentum.warm { background: var(–yellow-bg); color: var(–yellow); }
-.momentum.cold { background: var(–red-bg); color: var(–red); }
-
-/* Mayo badge */
-.mayo {
-display: inline-block;
+.stat-num {
 font-family: ‘DM Mono’, monospace;
-font-size: 9px;
-letter-spacing: 1.1px;
-padding: 4px 9px;
-border-radius: 3px;
-text-transform: uppercase;
-font-weight: 500;
+font-size: 17px;
+font-weight: 600;
+line-height: 1;
+color: var(–txt);
 }
-.mayo.lock { background: var(–green); color: var(–bg-0); }
-.mayo.strong { background: var(–green-bg); color: var(–green); border: 1px solid var(–green-border); }
-.mayo.like { background: var(–blue-bg); color: var(–blue); border: 1px solid rgba(96,165,250,0.3); }
-.mayo.fade { background: var(–red-bg); color: var(–red); border: 1px solid var(–red-border); }
-.mayo.neutral { background: var(–bg-1); color: var(–txt-2); }
-
-/* News */
-.news {
-margin-top: 14px; padding: 10px 12px;
-background: var(–blue-bg);
-border-left: 2px solid var(–blue);
-font-size: 12.5px; color: var(–txt-1);
-line-height: 1.5; border-radius: 0 3px 3px 0;
-}
-.news.warn {
-background: rgba(251,146,60,0.06);
-border-left-color: var(–orange);
-color: #FFD0A8;
-}
-
-/* Tooltip */
-[data-tip] { position: relative; }
-[data-tip]::after {
-content: attr(data-tip);
-position: absolute;
-bottom: calc(100% + 8px); left: 50%;
-transform: translateX(-50%);
-background: var(–bg-3); color: var(–txt-0);
-padding: 6px 10px; border-radius: 4px;
-font: 11px ‘Inter’, sans-serif;
-letter-spacing: 0; text-transform: none;
-white-space: nowrap;
-opacity: 0; pointer-events: none;
-transition: opacity 0.15s; z-index: 100;
-border: 1px solid var(–line-2); font-weight: 400;
-}
-[data-tip]:hover::after { opacity: 1; }
-
-/* Full table */
-.table-toggle {
-background: transparent;
-border: 1px solid var(–line-2);
-color: var(–txt-1);
+.stat-num.green { color: var(–green); }
+.stat-num.gold { color: var(–gold); }
+.stat-num.red { color: var(–red); }
+.stat-lbl {
 font-family: ‘DM Mono’, monospace;
-font-size: 11px;
-letter-spacing: 1.3px;
+font-size: 8.5px;
+color: var(–txt-2);
+letter-spacing: 0.6px;
 text-transform: uppercase;
-padding: 9px 18px; cursor: pointer;
-border-radius: 4px;
+margin-top: 3px;
 }
-.table-toggle:hover { border-color: var(–gold); color: var(–gold-l); }
-.table-wrap {
-background: var(–bg-2);
-border: 1px solid var(–line);
-border-radius: 4px;
+
+/* ═══════════════════ TABS ═══════════════════ */
+.tabs {
+display: flex;
+background: var(–bg-1);
+border-bottom: 1px solid var(–line);
 overflow-x: auto;
-margin-top: 16px; display: none;
+-webkit-overflow-scrolling: touch;
+scrollbar-width: none;
+position: sticky;
+top: 49px; /* topbar height */
+z-index: 90;
 }
-.table-wrap.show { display: block; }
-table { width: 100%; border-collapse: collapse; font-size: 12px; }
-thead th {
-background: var(–bg-1);
-font-family: ‘DM Mono’, monospace;
-font-size: 10px; letter-spacing: 1px;
-text-transform: uppercase; color: var(–txt-2);
-padding: 11px 10px; text-align: left;
-border-bottom: 1px solid var(–line-2);
-white-space: nowrap; position: sticky; top: 0;
-}
-tbody tr { border-bottom: 1px solid var(–line); }
-tbody tr:hover { background: rgba(201,168,76,0.04); }
-tbody tr.row-green { background: rgba(74,222,128,0.04); }
-tbody tr.row-yellow { background: rgba(251,191,36,0.03); }
-tbody tr.row-red { background: rgba(248,113,113,0.04); }
-td { padding: 9px 10px; white-space: nowrap; }
-td.note { white-space: normal; max-width: 280px; font-size: 11px; color: var(–txt-2); font-style: italic; }
-td .traffic-dot {
-display: inline-block; width: 8px; height: 8px;
-border-radius: 50%; margin-right: 6px;
-vertical-align: middle;
-}
-
-/* ════ LINEUP BUILDER ════ */
-.builder-panel {
-background: linear-gradient(135deg, var(–bg-2), var(–bg-1));
-border: 1px solid var(–gold);
-border-radius: 8px;
-padding: 24px;
-margin-bottom: 32px;
-position: relative;
-overflow: hidden;
-}
-.builder-panel::before {
-content: ‘’;
-position: absolute; top: 0; left: 0; right: 0; height: 2px;
-background: linear-gradient(90deg, transparent, var(–gold), transparent);
-}
-.builder-header {
-display: flex; justify-content: space-between; align-items: flex-start;
-gap: 16px; margin-bottom: 20px; flex-wrap: wrap;
-}
-.builder-title {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 28px;
-letter-spacing: 2.5px;
-color: var(–gold);
-line-height: 1;
-}
-.builder-subtitle {
+.tabs::-webkit-scrollbar { display: none; }
+.tab {
+flex-shrink: 0;
+padding: 12px 14px;
 font-family: ‘DM Mono’, monospace;
 font-size: 11px;
-color: var(–txt-2);
-letter-spacing: 1.2px;
-text-transform: uppercase;
-margin-top: 6px;
-}
-.builder-stats {
-display: flex; gap: 18px; flex-wrap: wrap;
-}
-.builder-stat {
-text-align: right;
-}
-.builder-stat-val {
-font-family: ‘DM Mono’, monospace;
-font-size: 18px;
 font-weight: 500;
-color: var(–gold-l);
+letter-spacing: 0.8px;
+text-transform: uppercase;
+color: var(–txt-2);
+background: transparent;
+border: none;
+border-bottom: 2px solid transparent;
+cursor: pointer;
+white-space: nowrap;
+position: relative;
 }
-.builder-stat-lbl {
-font-family: ‘DM Mono’, monospace;
+.tab.active {
+color: var(–gold);
+border-bottom-color: var(–gold);
+}
+.tab .badge {
+margin-left: 4px;
+padding: 1px 6px;
+background: var(–bg-3);
+border-radius: 8px;
 font-size: 9px;
-color: var(–txt-2);
-letter-spacing: 1.2px;
-text-transform: uppercase;
-margin-top: 2px;
-}
-.builder-stat.warn .builder-stat-val { color: var(–red); }
-.builder-stat.ok .builder-stat-val { color: var(–green); }
-
-/* Locks/Excludes display */
-.selection-row {
-display: grid;
-grid-template-columns: 1fr 1fr;
-gap: 16px;
-margin-bottom: 18px;
-}
-.selection-box {
-background: var(–bg-1);
-border: 1px solid var(–line);
-border-radius: 4px;
-padding: 12px 14px;
-min-height: 60px;
-}
-.selection-box.locks { border-left: 3px solid var(–green); }
-.selection-box.excludes { border-left: 3px solid var(–red); }
-.selection-box-title {
-font-family: ‘DM Mono’, monospace;
-font-size: 10px;
-letter-spacing: 1.2px;
-text-transform: uppercase;
-color: var(–txt-2);
-margin-bottom: 8px;
-display: flex; justify-content: space-between;
-}
-.selection-box-title .clear-btn {
-background: transparent; border: none; color: var(–txt-3);
-font-family: ‘DM Mono’, monospace; font-size: 10px;
-cursor: pointer; letter-spacing: 0.5px;
-}
-.selection-box-title .clear-btn:hover { color: var(–red); }
-.selection-chips {
-display: flex; flex-wrap: wrap; gap: 6px;
-}
-.chip {
-display: inline-flex; align-items: center; gap: 6px;
-padding: 4px 8px;
-background: var(–bg-2);
-border: 1px solid var(–line-2);
-border-radius: 3px;
-font-size: 12px;
 color: var(–txt-1);
 }
-.chip.lock { border-color: var(–green-border); background: var(–green-bg); color: var(–green); }
-.chip.exclude { border-color: var(–red-border); background: var(–red-bg); color: var(–red); }
-.chip .chip-x {
-cursor: pointer;
-font-size: 14px;
-line-height: 1;
-color: currentColor;
-opacity: 0.7;
-}
-.chip .chip-x:hover { opacity: 1; }
-.selection-empty {
-color: var(–txt-3);
-font-size: 11px;
-font-style: italic;
-}
+.tab.active .badge { background: var(–gold); color: var(–bg); }
 
-/* Builder controls */
-.builder-controls {
-display: grid;
-grid-template-columns: 1fr 1fr auto;
-gap: 14px;
-align-items: end;
-margin-bottom: 18px;
+/* ═══════════════════ CONTROLS BAR ═══════════════════ */
+.controls {
+display: flex;
+gap: 8px;
+padding: 10px 14px;
+background: var(–bg);
+border-bottom: 1px solid var(–line);
+align-items: center;
+overflow-x: auto;
+scrollbar-width: none;
 }
-@media (max-width: 760px) {
-.builder-controls { grid-template-columns: 1fr; }
-}
-.ctrl-group label {
-font-family: ‘DM Mono’, monospace;
-font-size: 10px;
-color: var(–txt-2);
-letter-spacing: 1.1px;
-text-transform: uppercase;
-margin-bottom: 6px;
-display: block;
-}
-.ctrl-group input[type=“range”] {
-width: 100%;
-accent-color: var(–gold);
-}
-.ctrl-group .range-val {
-font-family: ‘DM Mono’, monospace;
-font-size: 13px;
-color: var(–gold-l);
-margin-left: 8px;
-}
-.ctrl-group select {
-width: 100%;
-background: var(–bg-1);
+.controls::-webkit-scrollbar { display: none; }
+.ctrl-btn {
+flex-shrink: 0;
+padding: 7px 11px;
+background: var(–bg-2);
 border: 1px solid var(–line);
-color: var(–txt-0);
-padding: 8px 10px;
+color: var(–txt-1);
+border-radius: 4px;
+font-family: ‘DM Mono’, monospace;
+font-size: 10.5px;
+letter-spacing: 0.6px;
+text-transform: uppercase;
+cursor: pointer;
+}
+.ctrl-btn:hover { border-color: var(–gold); color: var(–gold); }
+.ctrl-btn.active { background: var(–gold); color: var(–bg); border-color: var(–gold); }
+.search {
+flex: 1;
+min-width: 120px;
+padding: 7px 11px;
+background: var(–bg-2);
+border: 1px solid var(–line);
+color: var(–txt);
 border-radius: 4px;
 font-family: ‘Inter’, sans-serif;
 font-size: 13px;
+outline: none;
+}
+.search:focus { border-color: var(–gold); }
+
+/* ═══════════════════ DATA TABLE ═══════════════════ */
+.table-container {
+overflow-x: auto;
+-webkit-overflow-scrolling: touch;
+background: var(–bg);
+}
+table.players {
+width: 100%;
+min-width: 720px;
+border-collapse: collapse;
+font-size: 12.5px;
+}
+thead {
+background: var(–bg-1);
+position: sticky;
+top: 0;
+z-index: 10;
+}
+thead th {
+padding: 9px 8px;
+font-family: ‘DM Mono’, monospace;
+font-size: 9.5px;
+font-weight: 600;
+letter-spacing: 0.7px;
+text-transform: uppercase;
+color: var(–txt-2);
+text-align: right;
+white-space: nowrap;
+border-bottom: 1px solid var(–line-2);
+cursor: pointer;
+user-select: none;
+}
+thead th:first-child { padding-left: 14px; }
+thead th:last-child { padding-right: 14px; }
+thead th.left { text-align: left; }
+thead th:hover { color: var(–gold); }
+thead th .arrow { margin-left: 3px; opacity: 0.4; font-size: 8px; }
+thead th.sort-asc .arrow,
+thead th.sort-desc .arrow { opacity: 1; color: var(–gold); }
+thead th.sort-asc .arrow::after { content: ’ ▲’; }
+thead th.sort-desc .arrow::after { content: ’ ▼’; }
+
+tbody tr {
+border-bottom: 1px solid var(–line);
+transition: background-color 0.1s;
+}
+tbody tr:hover { background: rgba(201,168,76,0.04); }
+tbody tr.locked-row { background: var(–green-bg); }
+tbody tr.locked-row:hover { background: rgba(74,222,128,0.16); }
+tbody tr.excluded-row { opacity: 0.45; background: var(–red-bg); }
+
+tbody td {
+padding: 9px 8px;
+text-align: right;
+white-space: nowrap;
+color: var(–txt-1);
+font-variant-numeric: tabular-nums;
+}
+tbody td:first-child { padding-left: 14px; }
+tbody td:last-child { padding-right: 14px; }
+
+/* Status indicator column */
+.status-cell {
+width: 6px;
+padding: 0 !important;
+}
+.status-bar {
+display: block;
+width: 4px;
+height: 28px;
+border-radius: 2px;
+margin: 0 auto;
+}
+.status-bar.green { background: var(–green); }
+.status-bar.yellow { background: var(–yellow); }
+.status-bar.red { background: var(–red); }
+.status-bar.gray { background: var(–txt-3); }
+
+/* Player name column */
+.player-cell {
+text-align: left !important;
+min-width: 140px;
+}
+.player-name {
+font-weight: 600;
+color: var(–txt);
+font-size: 13px;
+line-height: 1.2;
+}
+.player-sub {
+font-family: ‘DM Mono’, monospace;
+font-size: 9.5px;
+color: var(–txt-2);
+margin-top: 2px;
+letter-spacing: 0.3px;
+}
+.player-sub .pin {
+display: inline-block;
+padding: 0 4px;
+background: var(–bg-2);
+border-radius: 2px;
+margin-right: 3px;
+}
+.player-sub .pin.lock-mark {
+background: var(–green);
+color: var(–bg);
+}
+
+/* Action buttons (lock/exclude) */
+.actions-cell {
+width: 60px;
+padding-right: 14px !important;
+}
+.action-btns {
+display: inline-flex;
+gap: 4px;
+justify-content: flex-end;
+}
+.act {
+width: 26px;
+height: 26px;
+background: var(–bg-2);
+border: 1px solid var(–line);
+color: var(–txt-2);
+border-radius: 4px;
+font-size: 13px;
+line-height: 1;
+cursor: pointer;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+padding: 0;
+transition: all 0.12s;
+}
+.act:hover { border-color: var(–line-2); color: var(–txt); }
+.act.lock-btn.on {
+background: var(–green);
+border-color: var(–green);
+color: var(–bg);
+}
+.act.exclude-btn.on {
+background: var(–red);
+border-color: var(–red);
+color: var(–bg);
+}
+
+/* Salary cell */
+.salary-cell {
+font-family: ‘DM Mono’, monospace;
+font-weight: 500;
+color: var(–txt);
+}
+
+/* Numeric cells with traffic light coloring */
+.num { font-family: ‘DM Mono’, monospace; }
+.num.green { color: var(–green); font-weight: 500; }
+.num.yellow { color: var(–yellow); font-weight: 500; }
+.num.red { color: var(–red); font-weight: 500; }
+.num.muted { color: var(–txt-2); }
+
+/* Mayo badge inline */
+.mayo-tag {
+display: inline-block;
+padding: 2px 6px;
+border-radius: 3px;
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+font-weight: 600;
+letter-spacing: 0.6px;
+text-transform: uppercase;
+}
+.mayo-tag.strong { background: var(–green-bg); color: var(–green); }
+.mayo-tag.like { background: rgba(96,165,250,0.12); color: var(–blue); }
+.mayo-tag.fade { background: var(–red-bg); color: var(–red); }
+.mayo-tag.neutral { background: var(–bg-2); color: var(–txt-2); }
+
+/* Signal dots */
+.signals-cell { white-space: nowrap; }
+.sig-dot {
+display: inline-block;
+width: 6px;
+height: 6px;
+border-radius: 50%;
+margin: 0 1px;
+background: var(–line);
+}
+.sig-dot.on { background: var(–green); box-shadow: 0 0 4px rgba(74,222,128,0.5); }
+
+/* ═══════════════════ LINEUP BUILDER PANEL ═══════════════════ */
+.builder {
+background: var(–bg-1);
+border-bottom: 1px solid var(–line);
+}
+.builder-toolbar {
+display: flex;
+align-items: center;
+gap: 10px;
+padding: 12px 14px;
+flex-wrap: wrap;
+}
+.builder-stats {
+display: flex;
+gap: 12px;
+flex: 1;
+}
+.b-stat {
+display: flex;
+flex-direction: column;
+line-height: 1;
+}
+.b-stat-val {
+font-family: ‘DM Mono’, monospace;
+font-size: 14px;
+font-weight: 600;
+color: var(–gold);
+}
+.b-stat-val.warn { color: var(–red); }
+.b-stat-val.muted { color: var(–txt-2); }
+.b-stat-lbl {
+font-family: ‘DM Mono’, monospace;
+font-size: 8.5px;
+color: var(–txt-2);
+letter-spacing: 0.6px;
+text-transform: uppercase;
+margin-top: 3px;
 }
 .build-btn {
 background: var(–gold);
-color: var(–bg-0);
+color: var(–bg);
 border: none;
-font-family: ‘DM Mono’, monospace;
-font-size: 12px;
-font-weight: 700;
-letter-spacing: 1.5px;
-text-transform: uppercase;
-padding: 12px 22px;
+padding: 9px 14px;
 border-radius: 4px;
+font-family: ‘Inter’, sans-serif;
+font-weight: 700;
+font-size: 12px;
+letter-spacing: 0.5px;
+text-transform: uppercase;
 cursor: pointer;
-transition: all 0.15s;
-white-space: nowrap;
+flex-shrink: 0;
 }
-.build-btn:hover { background: var(–gold-l); transform: translateY(-1px); }
-.build-btn:disabled { background: var(–txt-3); color: var(–bg-1); cursor: not-allowed; }
+.build-btn:hover { background: #E8CC80; }
+.build-btn:disabled { background: var(–txt-3); cursor: not-allowed; color: var(–txt-2); }
 
-/* Generated lineups */
-.lineups-output {
-margin-top: 20px;
-border-top: 1px solid var(–line);
-padding-top: 18px;
+.builder-controls {
+display: flex;
+gap: 12px;
+padding: 0 14px 12px;
+align-items: center;
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+}
+.builder-controls label {
+color: var(–txt-2);
+text-transform: uppercase;
+letter-spacing: 0.6px;
+font-size: 9.5px;
+}
+.builder-controls input[type=“range”] {
+flex: 1;
+accent-color: var(–gold);
+height: 4px;
+}
+.builder-controls .v {
+color: var(–gold);
+font-weight: 600;
+min-width: 30px;
+text-align: right;
+}
+
+/* Lineups output */
+.lineups {
+padding: 0 14px 14px;
 display: none;
 }
-.lineups-output.show { display: block; }
-.lineups-header {
-font-family: ‘DM Mono’, monospace;
-font-size: 11px;
-color: var(–txt-2);
-letter-spacing: 1.3px;
-text-transform: uppercase;
-margin-bottom: 14px;
-}
-.lineup-card {
-background: var(–bg-1);
+.lineups.show { display: block; }
+.lineup-item {
+background: var(–bg-2);
 border: 1px solid var(–line);
 border-radius: 4px;
-padding: 14px 16px;
-margin-bottom: 10px;
+margin-bottom: 8px;
+overflow: hidden;
 }
-.lineup-meta {
-display: flex; justify-content: space-between; align-items: center;
-margin-bottom: 10px; gap: 12px; flex-wrap: wrap;
-}
-.lineup-id {
+.lineup-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 10px 12px;
+background: var(–bg-3);
+border-bottom: 1px solid var(–line);
 font-family: ‘DM Mono’, monospace;
 font-size: 11px;
-color: var(–gold-l);
-letter-spacing: 1.2px;
+flex-wrap: wrap;
+gap: 8px;
+}
+.lineup-num {
+color: var(–gold);
+font-weight: 600;
+letter-spacing: 0.5px;
 }
 .lineup-totals {
-display: flex; gap: 16px;
-font-family: ‘DM Mono’, monospace;
-font-size: 11px;
-}
-.lineup-totals .label { color: var(–txt-2); margin-right: 4px; }
-.lineup-totals .val { color: var(–txt-0); font-weight: 500; }
-.lineup-totals .val.proj { color: var(–gold-l); }
-.lineup-totals .val.salary { color: var(–green); }
-.lineup-totals .val.salary.warn { color: var(–yellow); }
-.lineup-players {
-display: grid;
-grid-template-columns: repeat(6, 1fr);
-gap: 6px;
-}
-@media (max-width: 760px) {
-.lineup-players { grid-template-columns: repeat(3, 1fr); }
-}
-.lp-cell {
-background: var(–bg-2);
-padding: 8px 6px;
-border-radius: 3px;
-text-align: center;
-border: 1px solid var(–line);
-}
-.lp-name {
-font-size: 11px;
-font-weight: 500;
-color: var(–txt-0);
-line-height: 1.2;
-overflow: hidden;
-text-overflow: ellipsis;
-white-space: nowrap;
-}
-.lp-sal {
-font-family: ‘DM Mono’, monospace;
-font-size: 10px;
-color: var(–txt-2);
-margin-top: 2px;
-}
-.lp-cell.locked { border-color: var(–green-border); background: var(–green-bg); }
-
-/* Lock/Exclude buttons on cards */
-.card-actions {
-position: absolute;
-top: 14px;
-right: 36px; /* leave room for traffic light */
 display: flex;
-gap: 4px;
+gap: 14px;
+font-size: 10.5px;
 }
-.ca-btn {
-width: 24px; height: 24px;
-background: var(–bg-1);
-border: 1px solid var(–line);
-color: var(–txt-2);
-border-radius: 3px;
-cursor: pointer;
+.lineup-totals .lbl { color: var(–txt-2); margin-right: 4px; }
+.lineup-totals .val { color: var(–txt); font-weight: 500; }
+.lineup-totals .val.proj { color: var(–gold); }
+.lineup-totals .val.salary { color: var(–green); }
+.lineup-totals .val.salary.over { color: var(–red); }
+
+.lineup-players {
+padding: 8px 12px;
+}
+.lineup-player {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 6px 0;
+border-bottom: 1px dashed var(–line);
 font-size: 12px;
-line-height: 1;
-transition: all 0.12s;
-display: flex; align-items: center; justify-content: center;
 }
-.ca-btn:hover { color: var(–txt-0); border-color: var(–line-2); }
-.ca-btn.lock-btn.active { background: var(–green); color: var(–bg-0); border-color: var(–green); }
-.ca-btn.exclude-btn.active { background: var(–red); color: var(–bg-0); border-color: var(–red); }
+.lineup-player:last-child { border-bottom: none; }
+.lp-name { color: var(–txt); font-weight: 500; }
+.lp-name.locked-marker::before {
+content: ’🔒 ’;
+margin-right: 2px;
+}
+.lp-stats {
+display: flex;
+gap: 12px;
+font-family: ‘DM Mono’, monospace;
+font-size: 10.5px;
+color: var(–txt-2);
+}
+.lp-stats .salary { color: var(–green); }
+
+/* Empty state */
+.empty-state {
+padding: 40px 20px;
+text-align: center;
+color: var(–txt-2);
+font-size: 13px;
+}
 
 /* Footer */
 footer {
+padding: 20px 14px;
+border-top: 1px solid var(–line);
+margin-top: 32px;
 background: var(–bg-1);
-border-top: 1px solid var(–line);
-padding: 32px 24px;
-margin-top: 56px;
 }
-.footer-inner { max-width: 1300px; margin: 0 auto; }
-footer h3 {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 18px;
-letter-spacing: 2px;
-color: var(–gold);
-margin-bottom: 14px;
-}
-.src-grid {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-gap: 14px;
+footer .meta {
 font-family: ‘DM Mono’, monospace;
-font-size: 11px;
-color: var(–txt-2);
-line-height: 1.6;
-}
-.src-grid strong { color: var(–txt-1); display: block; margin-bottom: 3px; }
-.footer-note {
-margin-top: 24px;
-padding-top: 18px;
-border-top: 1px solid var(–line);
-font-size: 11px;
+font-size: 10px;
 color: var(–txt-3);
-line-height: 1.6;
+line-height: 1.7;
 }
-.footer-note strong { color: var(–txt-1); }  /* ════ MOBILE RESPONSIVE OVERRIDES ════ */
-@media (max-width: 640px) {
-/* Header — fix title overflow */
-header {
-padding: 20px 16px 16px;
+footer .meta strong { color: var(–txt-1); }
+
+/* Tooltip-style hint */
+.hint {
+font-family: ‘DM Mono’, monospace;
+font-size: 10px;
+color: var(–txt-2);
+padding: 8px 14px;
+background: var(–bg-1);
+border-bottom: 1px solid var(–line);
 }
-.header-inner {
-flex-direction: column;
-align-items: flex-start;
-gap: 14px;
+.hint b { color: var(–gold); }
+
+/* Tablet+ */
+@media (min-width: 768px) {
+table.players { font-size: 13px; }
+thead th { padding: 11px 10px; }
+tbody td { padding: 11px 10px; }
+.player-cell { min-width: 180px; }
+.topbar-title { font-size: 22px; }
+.stat-num { font-size: 20px; }
 }
-.event-line {
-font-size: 9.5px;
-letter-spacing: 1px;
-line-height: 1.5;
-}
-.header-meta {
-text-align: left;
-font-size: 9.5px;
-width: 100%;
-}
-.header-meta div { margin-bottom: 4px; }
-
-```
-/* Reading guide */
-.reading-guide { padding: 0 16px; margin-top: 20px; }
-.light-grid { grid-template-columns: 1fr; gap: 8px; }
-.light-cell { padding: 10px 12px; font-size: 12.5px; }
-
-/* Nav */
-nav { padding: 0 16px; margin-top: 20px; }
-.nav-link { padding: 12px 14px; font-size: 10px; letter-spacing: 1px; }
-
-/* Main */
-main { padding: 24px 16px; }
-section { margin-bottom: 36px; }
-.sect-title { font-size: 24px; letter-spacing: 1.8px; }
-.sect-desc { font-size: 13px; }
-
-/* Cards */
-.card { padding: 16px; }
-.c-name { font-size: 17px; }
-.c-top { padding-right: 8px; }
-.c-rank { font-size: 9.5px; }
-.pin { padding: 2px 5px; }
-.c-salary-val { font-size: 17px; }
-.c-salary-lbl { font-size: 8.5px; }
-
-/* Card actions buttons positioned better */
-.card-actions {
-  top: 12px;
-  right: 28px;
-}
-.ca-btn {
-  width: 28px; height: 28px;
-  font-size: 14px;
-}
-.tl-badge {
-  top: 14px; right: 14px;
-  width: 12px; height: 12px;
-}
-
-/* Verdict */
-.c-verdict { font-size: 12.5px; padding: 9px 11px; }
-
-/* Signal pills */
-.sig { padding: 7px 3px; font-size: 8.5px; letter-spacing: 0.8px; }
-.sig .check { font-size: 13px; }
-
-/* Key numbers */
-.keynums { gap: 6px; padding: 10px 0; }
-.kn-lbl { font-size: 8.5px; }
-.kn-val { font-size: 16px; }
-.kn-sub { font-size: 9px; }
-
-/* Form rows */
-.form-row { font-size: 10.5px; gap: 8px; flex-wrap: wrap; }
-.form-label { min-width: 50px; font-size: 8.5px; }
-.res { padding: 2px 5px; font-size: 9.5px; }
-.momentum { padding: 2px 6px; font-size: 10px; }
-.mayo { font-size: 8.5px; padding: 3px 7px; }
-
-/* News */
-.news { font-size: 12px; padding: 9px 11px; }
-
-/* ───── LINEUP BUILDER MOBILE ───── */
-.builder-panel { padding: 16px; }
-.builder-title { font-size: 22px; letter-spacing: 1.5px; }
-.builder-subtitle { font-size: 10px; line-height: 1.4; }
-.builder-header { gap: 12px; }
-.builder-stats {
-  gap: 10px;
-  width: 100%;
-  justify-content: space-between;
-}
-.builder-stat { text-align: left; flex: 1; min-width: 80px; }
-.builder-stat-val { font-size: 15px; }
-.builder-stat-lbl { font-size: 8.5px; }
-
-.selection-row {
-  grid-template-columns: 1fr;
-  gap: 10px;
-}
-.selection-box { padding: 10px 12px; }
-.selection-box-title { font-size: 9.5px; }
-.chip { font-size: 11px; padding: 3px 7px; }
-
-.builder-controls {
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-.ctrl-group label { font-size: 9.5px; }
-.build-btn {
-  padding: 14px 22px;
-  font-size: 13px;
-  width: 100%;
-}
-
-/* Lineup output */
-.lineup-card { padding: 12px 14px; }
-.lineup-meta { gap: 8px; }
-.lineup-id { font-size: 10.5px; }
-.lineup-totals { font-size: 10.5px; gap: 12px; flex-wrap: wrap; }
-.lineup-players {
-  grid-template-columns: repeat(2, 1fr);
-  gap: 5px;
-}
-.lp-cell { padding: 7px 5px; }
-.lp-name { font-size: 11px; white-space: normal; line-height: 1.2; }
-.lp-sal { font-size: 9.5px; }
-
-/* Footer */
-footer { padding: 24px 16px; }
-.src-grid { grid-template-columns: 1fr; gap: 10px; font-size: 10.5px; }
-```
-
-}
-
-/* Tablet — 641-900 */
-@media (min-width: 641px) and (max-width: 900px) {
-.grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
-.lineup-players { grid-template-columns: repeat(3, 1fr); }
-.builder-controls { grid-template-columns: 1fr 1fr; }
-.build-btn { grid-column: 1 / -1; }
-}
-
-/* Disable hover-only tooltips on touch devices — replace with title attr */
-@media (hover: none) {
-[data-tip]::after { display: none; }
-}
-
 </style>
+
 </head>
 <body>
 
-<header>
-  <div class="header-inner">
+<!-- ═══════════════════ TOPBAR ═══════════════════ -->
+
+<div class="topbar">
+  <div class="topbar-row">
     <div>
-      <h1>Cadillac Championship</h1>
-      <div class="event-line">Trump National Doral · <strong>Blue Monster</strong> · Miami, FL · April 30 – May 3, 2026</div>
-      <div class="event-line">72-Player Signature Event · No Cut · $20M Purse · <strong>$3.6M Winner's Share</strong></div>
+      <div class="topbar-title">Cadillac Championship</div>
+      <div style="font-family:'DM Mono',monospace;font-size:9px;color:var(--txt-3);letter-spacing:0.6px;margin-top:2px">DORAL · BLUE MONSTER · APR 30 – MAY 3</div>
     </div>
-    <div class="header-meta">
-      <div><span class="pulse-dot"></span>Apr 27 · Mode FULL · Salaries Live</div>
-      <div><span class="v">Par 72 / 7,739 yds</span></div>
-      <div><span class="v">TifEagle Bermuda · Hanse 2014</span></div>
-      <div><span class="v">65 priced · $50K cap · 6-player lineup</span></div>
-    </div>
-  </div>
-</header>
-
-<!-- TRAFFIC LIGHT GUIDE -->
-
-<div class="reading-guide">
-  <div class="guide-card">
-    <div class="guide-title">The Traffic Light System</div>
-    <div class="light-grid">
-      <div class="light-cell green">
-        <div class="lbl"><span class="light-dot"></span>GREEN — Play Hard</div>
-        <div class="desc">Multiple signals aligned. Strong projection vs. salary. Mayo backs them. <strong>Start your lineups here.</strong></div>
-      </div>
-      <div class="light-cell yellow">
-        <div class="lbl"><span class="light-dot"></span>YELLOW — Use With Care</div>
-        <div class="desc">One or two signals firing. Reasonable plays but needs context. Good for differentiation in GPPs.</div>
-      </div>
-      <div class="light-cell red">
-        <div class="lbl"><span class="light-dot"></span>RED — Avoid or Fade</div>
-        <div class="desc">Mayo says fade, market overpaying, or salary-to-projection mismatch. <strong>Skip these in cash games.</strong></div>
-      </div>
+    <div class="topbar-meta">
+      <div><strong>Mode FULL</strong> · Apr 27</div>
+      <div>$50K cap · 6 players</div>
     </div>
   </div>
 </div>
 
-<!-- NAV -->
+<!-- ═══════════════════ SUMMARY ═══════════════════ -->
 
-<nav>
-  <div class="nav-inner">
-    <a class="nav-link active" data-tier="builder">Lineup Builder</a>
-    <a class="nav-link" data-tier="locks">Top Plays <span class="count" id="cnt-locks">0</span></a>
-    <a class="nav-link" data-tier="strong">Strong <span class="count" id="cnt-strong">0</span></a>
-    <a class="nav-link" data-tier="leverage">Leverage <span class="count" id="cnt-leverage">0</span></a>
-    <a class="nav-link" data-tier="mid">Mid-Tier <span class="count" id="cnt-mid">0</span></a>
-    <a class="nav-link" data-tier="fades">Fades <span class="count" id="cnt-fades">0</span></a>
-    <a class="nav-link" data-tier="table">Full Table</a>
+<div class="summary">
+  <div class="stat">
+    <div class="stat-num gold" id="s-priced">65</div>
+    <div class="stat-lbl">Priced</div>
   </div>
-</nav>
+  <div class="stat">
+    <div class="stat-num green" id="s-locks">0</div>
+    <div class="stat-lbl">Top Plays</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" id="s-strong">0</div>
+    <div class="stat-lbl">Strong</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num" id="s-leverage">0</div>
+    <div class="stat-lbl">Leverage</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num red" id="s-fades">0</div>
+    <div class="stat-lbl">Fades</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num gold" id="s-locked">0</div>
+    <div class="stat-lbl">Locked</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num red" id="s-excluded">0</div>
+    <div class="stat-lbl">Excluded</div>
+  </div>
+</div>
 
-<main>
+<!-- ═══════════════════ LINEUP BUILDER (collapsible) ═══════════════════ -->
 
-  <!-- ════ LINEUP BUILDER ════ -->
-
-  <section id="tier-builder">
-    <div class="builder-panel">
-      <div class="builder-header">
-        <div>
-          <h2 class="builder-title">Lineup Builder</h2>
-          <div class="builder-subtitle">Lock players, exclude fades, set exposure — generate optimal lineups under the $50K cap</div>
-        </div>
-        <div class="builder-stats">
-          <div class="builder-stat">
-            <div class="builder-stat-val" id="locked-count">0</div>
-            <div class="builder-stat-lbl">Locked</div>
-          </div>
-          <div class="builder-stat">
-            <div class="builder-stat-val" id="excluded-count">0</div>
-            <div class="builder-stat-lbl">Excluded</div>
-          </div>
-          <div class="builder-stat">
-            <div class="builder-stat-val" id="locked-salary">$0</div>
-            <div class="builder-stat-lbl">Locked Salary</div>
-          </div>
-          <div class="builder-stat" id="rem-stat">
-            <div class="builder-stat-val" id="rem-salary">$50,000</div>
-            <div class="builder-stat-lbl">Remaining</div>
-          </div>
-        </div>
+<div class="builder" id="builder">
+  <div class="builder-toolbar">
+    <div class="builder-stats">
+      <div class="b-stat">
+        <div class="b-stat-val" id="b-locked-sal">$0</div>
+        <div class="b-stat-lbl">Locked $</div>
       </div>
-
-```
-  <div class="selection-row">
-    <div class="selection-box locks">
-      <div class="selection-box-title">
-        <span>🟢 Locked Players</span>
-        <button class="clear-btn" onclick="clearAll('lock')">CLEAR</button>
+      <div class="b-stat">
+        <div class="b-stat-val" id="b-rem-sal">$50,000</div>
+        <div class="b-stat-lbl">Remaining</div>
       </div>
-      <div class="selection-chips" id="locks-display">
-        <span class="selection-empty">Click 🔒 on any player card to lock them</span>
+      <div class="b-stat">
+        <div class="b-stat-val muted" id="b-slots">6</div>
+        <div class="b-stat-lbl">Open Slots</div>
       </div>
     </div>
-    <div class="selection-box excludes">
-      <div class="selection-box-title">
-        <span>🔴 Excluded Players</span>
-        <button class="clear-btn" onclick="clearAll('exclude')">CLEAR</button>
-      </div>
-      <div class="selection-chips" id="excludes-display">
-        <span class="selection-empty">Click 🚫 on any player card to exclude them</span>
-      </div>
-    </div>
+    <button class="build-btn" id="build-btn" onclick="buildLineups()">Build Lineups</button>
   </div>
-
   <div class="builder-controls">
-    <div class="ctrl-group">
-      <label>Number of lineups <span class="range-val" id="n-lineups-val">5</span></label>
-      <input type="range" id="n-lineups" min="1" max="20" value="5">
-    </div>
-    <div class="ctrl-group">
-      <label>Min cap usage <span class="range-val" id="min-cap-val">97%</span></label>
-      <input type="range" id="min-cap" min="90" max="100" value="97">
-    </div>
-    <div class="ctrl-group">
-      <button class="build-btn" id="build-btn" onclick="buildLineups()">Build Optimal Lineups</button>
-    </div>
+    <label>N:</label>
+    <input type="range" id="n-lineups" min="1" max="20" value="5">
+    <span class="v" id="n-lineups-v">5</span>
+    <label style="margin-left:8px">Cap:</label>
+    <input type="range" id="min-cap" min="90" max="100" value="97">
+    <span class="v" id="min-cap-v">97%</span>
   </div>
-
-  <div class="lineups-output" id="lineups-output">
-    <div class="lineups-header" id="lineups-header"></div>
-    <div id="lineups-list"></div>
-  </div>
-
+  <div class="lineups" id="lineups-list"></div>
 </div>
-```
 
-  </section>
+<!-- ═══════════════════ TABS ═══════════════════ -->
 
-  <section id="tier-locks" class="tier-locks">
-    <div class="sect-head">
-      <h2 class="sect-title">Top Plays</h2>
-      <div class="sect-desc">All three signals agreeing — Course Fit + Market + Mayo. <em>The cleanest reads in the field.</em></div>
-    </div>
-    <div class="grid cols-3" id="grid-locks"></div>
-  </section>
+<div class="tabs">
+  <button class="tab active" data-filter="all">All <span class="badge" id="t-all">65</span></button>
+  <button class="tab" data-filter="locks">Top Plays <span class="badge" id="t-locks">0</span></button>
+  <button class="tab" data-filter="strong">Strong <span class="badge" id="t-strong">0</span></button>
+  <button class="tab" data-filter="leverage">Leverage <span class="badge" id="t-leverage">0</span></button>
+  <button class="tab" data-filter="mid">Mid <span class="badge" id="t-mid">0</span></button>
+  <button class="tab" data-filter="fades">Fades <span class="badge" id="t-fades">0</span></button>
+  <button class="tab" data-filter="locked">Locked <span class="badge" id="t-locked">0</span></button>
+</div>
 
-  <section id="tier-strong" class="tier-strong">
-    <div class="sect-head">
-      <h2 class="sect-title">Strong Picks</h2>
-      <div class="sect-desc">Mayo Strong with course fit OR market backing. <em>Solid roster additions, second after the locks.</em></div>
-    </div>
-    <div class="grid cols-3" id="grid-strong"></div>
-  </section>
+<!-- ═══════════════════ CONTROLS ═══════════════════ -->
 
-  <section id="tier-leverage" class="tier-leverage">
-    <div class="sect-head">
-      <h2 class="sect-title">Leverage</h2>
-      <div class="sect-desc">Hot recent form, low projected ownership. <em>GPP differentiators — almost no one else will have them.</em></div>
-    </div>
-    <div class="grid cols-3" id="grid-leverage"></div>
-  </section>
+<div class="controls">
+  <input type="text" class="search" id="search" placeholder="Search player...">
+  <button class="ctrl-btn" onclick="clearAll('lock')">Clear Locks</button>
+  <button class="ctrl-btn" onclick="clearAll('exclude')">Clear Excludes</button>
+</div>
 
-  <section id="tier-mid" class="tier-mid">
-    <div class="sect-head">
-      <h2 class="sect-title">Mid-Tier</h2>
-      <div class="sect-desc">Reasonable plays with limited signal alignment. Use as supporting pieces or pivots.</div>
-    </div>
-    <div class="grid cols-2" id="grid-mid"></div>
-  </section>
+<div class="hint">
+  <b>Tap 🔒</b> to lock player into all lineups · <b>Tap 🚫</b> to exclude · <b>Tap column header</b> to sort
+</div>
 
-  <section id="tier-fades" class="tier-fades">
-    <div class="sect-head">
-      <h2 class="sect-title">Fades & Traps</h2>
-      <div class="sect-desc">Mayo fade or market overpriced vs. our model. <em>Avoid these — your edge comes from skipping them.</em></div>
-    </div>
-    <div class="grid cols-3" id="grid-fades"></div>
-  </section>
+<!-- ═══════════════════ TABLE ═══════════════════ -->
 
-  <section id="tier-table">
-    <div class="sect-head">
-      <h2 class="sect-title">Full Field Table</h2>
-      <div class="sect-desc">All players sortable. Use this when comparing specific players or building from constraints.</div>
-    </div>
-    <button class="table-toggle" id="toggle-table">Show Full Table ▾</button>
-    <div class="table-wrap" id="table-wrap">
-      <table>
-        <thead><tr>
-          <th>Player</th><th>Salary</th><th>Proj</th><th>Value</th><th>Own%</th>
-          <th>Win Odds</th><th>Doral#</th><th>Mkt#</th><th>Form</th><th>Mayo</th>
-        </tr></thead>
-        <tbody id="tbody"></tbody>
-      </table>
-    </div>
-  </section>
-
-</main>
+<div class="table-container">
+  <table class="players">
+    <thead>
+      <tr>
+        <th class="status-cell"></th>
+        <th class="left" data-col="name">Player <span class="arrow"></span></th>
+        <th data-col="dk_salary">$ <span class="arrow"></span></th>
+        <th data-col="proj_final">Proj <span class="arrow"></span></th>
+        <th data-col="value">Val <span class="arrow"></span></th>
+        <th data-col="own_pct_est">Own% <span class="arrow"></span></th>
+        <th data-col="dk_win_odds">Odds <span class="arrow"></span></th>
+        <th data-col="doral_rank">CF# <span class="arrow"></span></th>
+        <th data-col="market_rank">Mkt# <span class="arrow"></span></th>
+        <th data-col="momentum">Mom <span class="arrow"></span></th>
+        <th data-col="signal_agreement">Sig <span class="arrow"></span></th>
+        <th data-col="mayo_call">Mayo <span class="arrow"></span></th>
+        <th class="actions-cell"></th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
 
 <footer>
-  <div class="footer-inner">
-    <h3>Data Sources & Methodology</h3>
-    <div class="src-grid">
-      <div><strong>DataGolf 2026</strong>SG breakdowns plus rolling 20-event trending. 70/70 prior field matched, 3 new entrants without DG data.</div>
-      <div><strong>DraftKings Salaries</strong>65-player snapshot Apr 27 with Salary, FPPG, AvgScore, Top-10s, Cuts Made/Played. Saved as snapshot in pipeline skill.</div>
-      <div><strong>DraftKings Sportsbook</strong>Full 70-player Apr 27 snapshot — Outright Winner + Top 5 + Top 10. Vig removed via per-market normalization.</div>
-      <div><strong>PGA Tour Official</strong>Field, course yardage 7,739, format. Two sponsor exemptions still pending Monday.</div>
-      <div><strong>Pat Mayo Cadillac Preview</strong>30 mentions extracted via ownership skill, validated against field. Source weight 1.10x.</div>
-      <div><strong>Course Fit Composite</strong>35% App SG + 25% OTT + 20% T2G + 15% L20 form + 5% momentum, Z-scored against field.</div>
-    </div>
-    <div class="footer-note">
-      <strong>Pipeline status:</strong> Mode FULL (DG + DK markets + DK salaries integrated). Value = projection ÷ salary × 1000 — anything 10.5+ is a strong play. Ownership estimates use salary tiering + buzz score + value. Three new entrants (Alex Fitzpatrick, Alex Smalley, Keith Mitchell) have salaries but no DG history — they appear in tables but not full projections.
-      <strong> Audit verdict:</strong> ✓ CLEARED — no high-severity issues, 7 consensus locks confirmed.
-    </div>
+  <div class="meta">
+    <strong>Data:</strong> DataGolf 2026 SG breakdowns · DraftKings sportsbook (Apr 27 vig-removed) · DK salaries (Apr 27, 65 priced) · Pat Mayo Cadillac preview (30/30 mentions validated)<br>
+    <strong>Course Fit:</strong> 35% App + 25% OTT + 20% T2G + 15% L20 form + 5% momentum, z-scored<br>
+    <strong>Value:</strong> Projection ÷ Salary × 1000 — 11+ excellent, 10-11 solid, &lt;9 weak<br>
+    <strong>Status:</strong> 🟢 multiple signals + value · 🟡 partial signals · 🔴 fade or salary trap · ⚪ no salary data
   </div>
 </footer>
 
@@ -1252,21 +732,31 @@ footer { padding: 24px 16px; }
 </script>
 
 <script>
-const PLAYERS = JSON.parse(document.getElementById('player-data').textContent);
+const PLAYERS_RAW = JSON.parse(document.getElementById('player-data').textContent);
+const PLAYERS = PLAYERS_RAW.filter(p => p.dk_salary);
 
-// HELPERS
+// ═══════ STATE ═══════
+const state = {
+  locked: new Set(),
+  excluded: new Set(),
+  filter: 'all',
+  search: '',
+  sortCol: 'value',
+  sortDesc: true
+};
+
+// ═══════ HELPERS ═══════
 const fmt = (v, d=2) => (v===null||v===undefined||isNaN(v)) ? '—' : Number(v).toFixed(d);
-const cleanStr = s => (!s || s==='nan' || s==='NaN' || s==='None') ? '' : String(s);
-const sign = v => v > 0 ? '+' : '';
 const fmtSal = s => s ? '$' + Math.round(s).toLocaleString() : '—';
+const fmtSalShort = s => s ? '$' + (Math.round(s)/1000).toFixed(1) + 'K' : '—';
+const cleanStr = s => (!s || s==='nan' || s==='NaN' || s==='None') ? '' : String(s);
 
-// Traffic-light classification — overall status
 function trafficLight(p) {
-  if (!p.dk_salary) return 'gray'; // unpriced
+  if (!p.dk_salary) return 'gray';
   if (p.signal_agreement === 3) return 'green';
   if ((p.mayo_call||'').includes('FADE')) return 'red';
   if (p.market_rank && (p.doral_rank - p.market_rank) >= 25) return 'red';
-  if (p.value < 8.5 && p.dk_salary >= 7500) return 'red';
+  if (p.dk_salary >= 7500 && p.value < 8.8) return 'red';
   if ((p.mayo_call||'').includes('STRONG') && (p.doral_rank <= 25 || p.market_rank <= 20)) return 'green';
   if (p.momentum >= 0.5 && p.value >= 10.5) return 'yellow';
   if (p.value >= 11) return 'yellow';
@@ -1274,193 +764,8 @@ function trafficLight(p) {
   return 'red';
 }
 
-// Value class for the value number
-function valueClass(v) {
-  if (v >= 11) return 'green';
-  if (v >= 9.5) return 'yellow';
-  return 'red';
-}
-
-// Ownership class
-function ownClass(o) {
-  if (o === null) return 'muted';
-  if (o >= 25) return 'red';      // chalk = expensive in GPP
-  if (o >= 12) return 'yellow';
-  return 'green';                  // low-owned = leverage
-}
-
-function momClass(m) {
-  if (m === null || m === undefined) return 'neutral';
-  if (m > 1.0) return 'hot';
-  if (m > 0.3) return 'warm';
-  if (m < -0.5) return 'cold';
-  return 'neutral';
-}
-
-function recentHtml(r5) {
-  const cleaned = cleanStr(r5);
-  if (!cleaned) return '';
-  return cleaned.split('/').map(r => {
-    let cls = '';
-    if (r === '1' || r === '2' || r === '3' || r === 'T2' || r === 'T3') cls = 'win';
-    else if (['4','5','T4','T5'].includes(r)) cls = 't5';
-    else if (['6','7','8','9','10','T6','T7','T8','T9','T10'].includes(r)) cls = 't10';
-    else if (r === 'CUT' || r === 'WD' || r === 'MDF') cls = 'cut';
-    return `<span class="res ${cls}">${r}</span>`;
-  }).join('');
-}
-
-function mayoBadge(call, detail) {
-  const c = cleanStr(call);
-  if (!c) return '';
-  const isLock = (detail || '').includes('LOCK');
-  if (isLock) return '<span class="mayo lock">🔒 Mayo Lock</span>';
-  if (c.includes('STRONG')) return '<span class="mayo strong">Mayo Strong</span>';
-  if (c.includes('LIKE'))   return '<span class="mayo like">Mayo Like</span>';
-  if (c.includes('FADE'))   return '<span class="mayo fade">Mayo Fade</span>';
-  if (c.includes('NEUTRAL'))return '<span class="mayo neutral">Mayo Neutral</span>';
-  return '';
-}
-
-// VERDICT — plain English
-function verdict(p) {
-  const dg = p.doral_rank <= 18;
-  const market = p.market_rank <= 18;
-  const mayo = p.buzz_score >= 2.0;
-  const isFade = (p.mayo_call||'').includes('FADE');
-  const val = p.value || 0;
-  const own = p.own_pct_est || 0;
-
-  if (p.signal_agreement === 3) {
-    if (own >= 35) return `<strong>Chalk anchor.</strong> All signals scream play. Likely ${own.toFixed(0)}%+ owned but can't fade — you need exposure.`;
-    if (val >= 11) return `<strong>Premium core + value.</strong> All three signals plus elite points-per-dollar. Lock him in.`;
-    return `<strong>Top consensus play.</strong> Course fits, market respects, Mayo strong. Build around him.`;
-  }
-
-  if ((p.mayo_call||'').includes('STRONG') && dg && val >= 10.5) {
-    return `<strong>Mayo + course fit + value.</strong> Market hasn't fully caught up. ${val.toFixed(1)} pts per $1k is excellent.`;
-  }
-
-  if (val >= 12 && own < 8) {
-    return `<strong>Leverage gold.</strong> ${val.toFixed(1)} value at only ${own.toFixed(0)}% owned. Differentiation play.`;
-  }
-
-  if (p.momentum > 1.0 && val >= 10) {
-    return `<strong>Hot form, fair price.</strong> Trending well above baseline. Recent results back it up.`;
-  }
-
-  if (isFade) {
-    if (own >= 12) return `<strong>Mayo says fade and he's chalk.</strong> Skip him entirely — let everyone else burn ownership here.`;
-    return `<strong>Mayo fade.</strong> Either bad form, bad fit, or both. Avoid in cash.`;
-  }
-
-  if (p.market_rank && (p.doral_rank - p.market_rank) >= 25) {
-    return `<strong>Market trap.</strong> Sportsbook prices him as a contender; our model has him outside top 50. Pivot away.`;
-  }
-
-  if (p.dk_salary >= 7500 && val < 9) {
-    return `<strong>Salary doesn't match.</strong> Projection too low for $${(p.dk_salary/1000).toFixed(1)}K. Better options at this price.`;
-  }
-
-  if (mayo) return `<strong>Mayo on board.</strong> Reasonable supporting play in deeper builds.`;
-  if (dg) return `<strong>Course fits him well.</strong> Lower ownership makes him sneaky.`;
-  if (val >= 10.5) return `<strong>Solid value.</strong> ${val.toFixed(1)} per $1k means projection per dollar is healthy.`;
-  if (p.momentum < -0.7) return `<strong>Form is sliding.</strong> Trending below baseline — pass unless you see a reason.`;
-  return `<strong>Limited signal.</strong> No strong reason for or against. Supporting play only.`;
-}
-
-// CARD RENDERER
-function renderCard(p, idx) {
-  const tl = trafficLight(p);
-  const note = cleanStr(p.news_note);
-  const isWarn = note.includes('⚠');
-
-  const dg = p.doral_rank <= 18;
-  const market = p.market_rank <= 18;
-  const mayo = p.buzz_score >= 2.0;
-
-  return `
-    <div class="card ${tl}" id="card-${p.name.replace(/[^a-z0-9]/gi,'_')}">
-      <div class="tl-badge"></div>
-      <div class="card-actions">
-        <button class="ca-btn lock-btn" data-player="${p.name}" onclick="toggleLock('${p.name.replace(/'/g,"\\'")}')" title="Lock in lineup">🔒</button>
-        <button class="ca-btn exclude-btn" data-player="${p.name}" onclick="toggleExclude('${p.name.replace(/'/g,"\\'")}')" title="Exclude from lineups">🚫</button>
-      </div>
-
-      <div class="c-top">
-        <div class="c-name-block">
-          <div class="c-name">${p.name}</div>
-          <div class="c-rank">
-            <span class="pin doral">Course Fit #${p.doral_rank}</span>
-            ${p.market_rank <= 30 ? `<span class="pin market">Mkt #${p.market_rank}</span>` : ''}
-            <span class="pin">DG #${p.dg_rank}</span>
-          </div>
-        </div>
-        <div class="c-salary">
-          <div class="c-salary-val">${fmtSal(p.dk_salary)}</div>
-          <div class="c-salary-lbl">DK Salary</div>
-          ${p.dk_win_odds ? `<div class="c-odds-mini">+${p.dk_win_odds.toLocaleString()}</div>` : ''}
-        </div>
-      </div>
-
-      <div class="c-verdict">${verdict(p)}</div>
-
-      <div class="signals">
-        <div class="sig ${dg?'on':'off'}" data-tip="Top 25% in our Doral course-fit model">
-          <span class="check">${dg?'✓':'·'}</span>Course Fit
-        </div>
-        <div class="sig ${market?'on':'off'}" data-tip="Top 25% in DraftKings win odds">
-          <span class="check">${market?'✓':'·'}</span>Market
-        </div>
-        <div class="sig ${mayo?'on':'off'}" data-tip="Pat Mayo strong call">
-          <span class="check">${mayo?'✓':'·'}</span>Mayo Buzz
-        </div>
-      </div>
-
-      <div class="keynums">
-        <div class="kn">
-          <div class="kn-lbl" data-tip="Projected DraftKings score">Projected</div>
-          <div class="kn-val muted">${fmt(p.proj_final,1)}</div>
-          <div class="kn-sub">ceil ${fmt(p.mc_ceil,0)}</div>
-        </div>
-        <div class="kn">
-          <div class="kn-lbl" data-tip="Points per $1,000 of salary. 11+ is excellent.">Value</div>
-          <div class="kn-val ${valueClass(p.value)}">${fmt(p.value,1)}</div>
-          <div class="kn-sub">pts/$1k</div>
-        </div>
-        <div class="kn">
-          <div class="kn-lbl" data-tip="Estimated DFS ownership %. High = chalky, Low = leverage">Est. Own</div>
-          <div class="kn-val ${ownClass(p.own_pct_est)}">${fmt(p.own_pct_est,1)}%</div>
-        </div>
-      </div>
-
-      <div class="form-row">
-        <span class="form-label">Form L20</span>
-        <span class="momentum ${momClass(p.momentum)}">
-          SG ${fmt(p.sg_l20,2)} · ${sign(p.momentum)}${fmt(p.momentum,2)}${p.momentum > 1 ? ' 🔥' : p.momentum < -0.7 ? ' ❄' : ''}
-        </span>
-      </div>
-
-      ${cleanStr(p.recent_5) ? `
-      <div class="form-row">
-        <span class="form-label">Last 5</span>
-        <div class="form-results">${recentHtml(p.recent_5)}</div>
-      </div>
-      ` : ''}
-
-      <div class="form-row">
-        <span class="form-label">Mayo</span>
-        ${mayoBadge(p.mayo_call, p.buzz_detail) || '<span style="color:var(--txt-3);font-size:11px">No mention</span>'}
-      </div>
-
-      ${note ? `<div class="news ${isWarn?'warn':''}">${note}</div>` : ''}
-    </div>
-  `;
-}
-
-// CLASSIFY into tiers
 function classify(p) {
-  if (!p.dk_salary) return null; // skip unpriced
+  if (!p.dk_salary) return null;
   if (p.signal_agreement === 3) return 'locks';
   if ((p.mayo_call||'').includes('STRONG') && (p.doral_rank <= 25 || p.market_rank <= 20)) return 'strong';
   if (p.momentum >= 0.5 && p.value >= 10.5 && p.own_pct_est < 10 && p.buzz_score < 2.0) return 'leverage';
@@ -1471,209 +776,266 @@ function classify(p) {
   return null;
 }
 
-const tiers = { locks:[], strong:[], leverage:[], mid:[], fades:[] };
-PLAYERS.forEach(p => {
-  const t = classify(p);
-  if (t) tiers[t].push(p);
-});
-
-// Sort
-tiers.locks.sort((a,b)    => b.value - a.value);
-tiers.strong.sort((a,b)   => b.value - a.value);
-tiers.leverage.sort((a,b) => b.value - a.value);
-tiers.mid.sort((a,b)      => a.doral_rank - b.doral_rank);
-tiers.fades.sort((a,b)    => b.dk_salary - a.dk_salary);
-
-['locks','strong','leverage','mid','fades'].forEach(t => {
-  const grid = document.getElementById('grid-'+t);
-  grid.innerHTML = tiers[t].map((p,i) => renderCard(p, t+i)).join('');
-  document.getElementById('cnt-'+t).textContent = tiers[t].length;
-});
-
-// FULL TABLE
-function renderTable() {
-  const sorted = [...PLAYERS].filter(p => p.dk_salary).sort((a,b) => b.value - a.value);
-  document.getElementById('tbody').innerHTML = sorted.map(p => {
-    const tl = trafficLight(p);
-    const dotColor = tl === 'green' ? 'var(--green)' :
-                     tl === 'yellow' ? 'var(--yellow)' :
-                     tl === 'red' ? 'var(--red)' : 'var(--txt-3)';
-    return `<tr class="row-${tl}">
-      <td>
-        <span class="traffic-dot" style="background:${dotColor}"></span>
-        <strong>${p.name}</strong>
-      </td>
-      <td>${fmtSal(p.dk_salary)}</td>
-      <td style="color:var(--txt-1)">${fmt(p.proj_final,1)}</td>
-      <td style="color:${valueClass(p.value)==='green'?'var(--green)':valueClass(p.value)==='red'?'var(--red)':'var(--yellow)'}">${fmt(p.value,2)}</td>
-      <td style="color:${ownClass(p.own_pct_est)==='red'?'var(--red)':ownClass(p.own_pct_est)==='green'?'var(--green)':'var(--yellow)'}">${fmt(p.own_pct_est,1)}%</td>
-      <td>${p.dk_win_odds ? '+'+p.dk_win_odds.toLocaleString() : '—'}</td>
-      <td>#${p.doral_rank}</td>
-      <td>${p.market_rank <= 30 ? '#'+p.market_rank : '—'}</td>
-      <td style="color:${momClass(p.momentum)==='hot'?'var(--green)':momClass(p.momentum)==='cold'?'var(--red)':''}">${sign(p.momentum)}${fmt(p.momentum,2)}</td>
-      <td>${mayoBadge(p.mayo_call, p.buzz_detail) || '<span style="color:var(--txt-3)">—</span>'}</td>
-    </tr>`;
-  }).join('');
+function valueClass(v) {
+  if (!v) return 'muted';
+  if (v >= 11) return 'green';
+  if (v >= 9.5) return 'yellow';
+  return 'red';
 }
-renderTable();
-
-document.getElementById('toggle-table').addEventListener('click', e => {
-  const w = document.getElementById('table-wrap');
-  w.classList.toggle('show');
-  e.target.textContent = w.classList.contains('show') ? 'Hide Full Table ▴' : 'Show Full Table ▾';
-});
-
-document.querySelectorAll('.nav-link').forEach(a => {
-  a.addEventListener('click', e => {
-    e.preventDefault();
-    const target = document.getElementById('tier-'+a.dataset.tier);
-    if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
-  });
-});
-
-const sections = ['locks','strong','leverage','mid','fades','table'].map(t => document.getElementById('tier-'+t));
-window.addEventListener('scroll', () => {
-  let active = sections[0];
-  sections.forEach(s => {
-    if (s && s.getBoundingClientRect().top < 100) active = s;
-  });
-  if (active) {
-    const tier = active.id.replace('tier-','');
-    document.querySelectorAll('.nav-link').forEach(a => {
-      a.classList.toggle('active', a.dataset.tier === tier);
-    });
-  }
-}, {passive: true});
-
-// ════════════════════════════════════════════════════════════════════
-// LINEUP BUILDER — JavaScript port of pga-dfs-pipeline knapsack
-// ════════════════════════════════════════════════════════════════════
-
-const ROSTER_SIZE = 6;
-const SALARY_CAP = 50000;
-const SALARY_STEP = 100;
-
-// State
-const state = {
-  locked: new Set(),
-  excluded: new Set()
-};
-
-// Build pool of priced players
-function getPricedPool() {
-  return PLAYERS.filter(p => p.dk_salary && p.proj_final);
+function ownClass(o) {
+  if (o == null) return 'muted';
+  if (o >= 25) return 'red';
+  if (o >= 12) return 'yellow';
+  return 'green';
+}
+function momClass(m) {
+  if (m == null) return 'muted';
+  if (m >= 1.0) return 'green';
+  if (m >= 0.3) return 'yellow';
+  if (m <= -0.5) return 'red';
+  return 'muted';
+}
+function mayoTag(call) {
+  const c = cleanStr(call);
+  if (!c) return '<span class="num muted">—</span>';
+  if (c.includes('STRONG')) return '<span class="mayo-tag strong">Str</span>';
+  if (c.includes('LIKE'))   return '<span class="mayo-tag like">Like</span>';
+  if (c.includes('FADE'))   return '<span class="mayo-tag fade">Fade</span>';
+  return '<span class="mayo-tag neutral">Neut</span>';
 }
 
-// ── Lock/Exclude UI ───────────────────────────────────────────────
+// Compute tier counts
+function recomputeCounts() {
+  const counts = { all: PLAYERS.length, locks:0, strong:0, leverage:0, mid:0, fades:0, locked: state.locked.size };
+  PLAYERS.forEach(p => {
+    const t = classify(p);
+    if (t) counts[t]++;
+  });
+  // Update tab badges
+  Object.keys(counts).forEach(k => {
+    const el = document.getElementById('t-' + k);
+    if (el) el.textContent = counts[k];
+  });
+  // Top stats
+  document.getElementById('s-priced').textContent = PLAYERS.length;
+  document.getElementById('s-locks').textContent = counts.locks;
+  document.getElementById('s-strong').textContent = counts.strong;
+  document.getElementById('s-leverage').textContent = counts.leverage;
+  document.getElementById('s-fades').textContent = counts.fades;
+  document.getElementById('s-locked').textContent = state.locked.size;
+  document.getElementById('s-excluded').textContent = state.excluded.size;
+}
+
+// ═══════ LOCK/EXCLUDE ═══════
 function toggleLock(name) {
   if (state.locked.has(name)) {
     state.locked.delete(name);
   } else {
-    if (state.locked.size >= ROSTER_SIZE) {
-      alert('Cannot lock more than ' + ROSTER_SIZE + ' players');
+    if (state.locked.size >= 6) {
+      alert('Cannot lock more than 6 players');
       return;
     }
     state.locked.add(name);
-    state.excluded.delete(name); // can't be both
+    state.excluded.delete(name);
   }
-  refreshSelectionUI();
+  refreshAll();
 }
-
 function toggleExclude(name) {
   if (state.excluded.has(name)) {
     state.excluded.delete(name);
   } else {
     state.excluded.add(name);
-    state.locked.delete(name); // can't be both
+    state.locked.delete(name);
   }
-  refreshSelectionUI();
+  refreshAll();
 }
-
 function clearAll(kind) {
   if (kind === 'lock') state.locked.clear();
   if (kind === 'exclude') state.excluded.clear();
-  refreshSelectionUI();
+  refreshAll();
 }
 
-function refreshSelectionUI() {
-  // Update card button states
-  document.querySelectorAll('.lock-btn').forEach(btn => {
-    btn.classList.toggle('active', state.locked.has(btn.dataset.player));
-  });
-  document.querySelectorAll('.exclude-btn').forEach(btn => {
-    btn.classList.toggle('active', state.excluded.has(btn.dataset.player));
-  });
-
-  // Stats counters
-  document.getElementById('locked-count').textContent = state.locked.size;
-  document.getElementById('excluded-count').textContent = state.excluded.size;
-
-  let lockedSalary = 0;
+// ═══════ BUILDER STATS ═══════
+function refreshBuilder() {
+  let lockedSal = 0;
   state.locked.forEach(n => {
     const p = PLAYERS.find(x => x.name === n);
-    if (p) lockedSalary += p.dk_salary;
+    if (p) lockedSal += p.dk_salary;
   });
-  document.getElementById('locked-salary').textContent = '$' + lockedSalary.toLocaleString();
-  const remaining = SALARY_CAP - lockedSalary;
-  const remEl = document.getElementById('rem-salary');
+  const remaining = 50000 - lockedSal;
+  const slots = 6 - state.locked.size;
+
+  document.getElementById('b-locked-sal').textContent = '$' + lockedSal.toLocaleString();
+  const remEl = document.getElementById('b-rem-sal');
   remEl.textContent = '$' + remaining.toLocaleString();
-  const remStat = document.getElementById('rem-stat');
-  remStat.classList.toggle('warn', remaining < 0);
-  remStat.classList.toggle('ok', remaining >= 0 && state.locked.size > 0);
-
-  // Update locks chips
-  const locksDisp = document.getElementById('locks-display');
-  if (state.locked.size === 0) {
-    locksDisp.innerHTML = '<span class="selection-empty">Click 🔒 on any player card to lock them</span>';
-  } else {
-    locksDisp.innerHTML = [...state.locked].map(n => {
-      const p = PLAYERS.find(x => x.name === n);
-      return `<span class="chip lock">🔒 ${n} <span style="opacity:0.7;font-size:10px">$${(p?.dk_salary||0).toLocaleString()}</span><span class="chip-x" onclick="toggleLock('${n.replace(/'/g,"\\'")}')">×</span></span>`;
-    }).join('');
-  }
-
-  // Update excludes chips
-  const excDisp = document.getElementById('excludes-display');
-  if (state.excluded.size === 0) {
-    excDisp.innerHTML = '<span class="selection-empty">Click 🚫 on any player card to exclude them</span>';
-  } else {
-    excDisp.innerHTML = [...state.excluded].map(n => {
-      return `<span class="chip exclude">🚫 ${n}<span class="chip-x" onclick="toggleExclude('${n.replace(/'/g,"\\'")}')">×</span></span>`;
-    }).join('');
-  }
+  remEl.className = 'b-stat-val' + (remaining < 0 ? ' warn' : '');
+  document.getElementById('b-slots').textContent = slots;
 }
 
-// ── Slider listeners ──────────────────────────────────────────────
-document.getElementById('n-lineups').addEventListener('input', e => {
-  document.getElementById('n-lineups-val').textContent = e.target.value;
-});
-document.getElementById('min-cap').addEventListener('input', e => {
-  document.getElementById('min-cap-val').textContent = e.target.value + '%';
+// ═══════ TABLE RENDER ═══════
+function getFiltered() {
+  let rows = [...PLAYERS];
+
+  // Filter
+  if (state.filter === 'locked') {
+    rows = rows.filter(p => state.locked.has(p.name));
+  } else if (state.filter !== 'all') {
+    rows = rows.filter(p => classify(p) === state.filter);
+  }
+
+  // Search
+  if (state.search) {
+    const q = state.search.toLowerCase();
+    rows = rows.filter(p => p.name.toLowerCase().includes(q));
+  }
+
+  // Sort
+  const col = state.sortCol;
+  rows.sort((a, b) => {
+    let va = a[col], vb = b[col];
+    // Mayo call sort: STRONG > LIKE > NEUTRAL > FADE > none
+    if (col === 'mayo_call') {
+      const order = { 'MAYO STRONG': 4, 'MAYO LIKE': 3, 'MAYO NEUTRAL': 2, 'MAYO FADE': 1 };
+      va = order[va] || 0;
+      vb = order[vb] || 0;
+    }
+    if (col === 'name') {
+      va = (va || '').toLowerCase();
+      vb = (vb || '').toLowerCase();
+    }
+    if (va == null) va = state.sortDesc ? -Infinity : Infinity;
+    if (vb == null) vb = state.sortDesc ? -Infinity : Infinity;
+    if (va < vb) return state.sortDesc ? 1 : -1;
+    if (va > vb) return state.sortDesc ? -1 : 1;
+    return 0;
+  });
+
+  return rows;
+}
+
+function renderTable() {
+  const rows = getFiltered();
+  const tbody = document.getElementById('tbody');
+
+  if (rows.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="13" class="empty-state">No players match your filters</td></tr>';
+    return;
+  }
+
+  tbody.innerHTML = rows.map(p => {
+    const tl = trafficLight(p);
+    const isLocked = state.locked.has(p.name);
+    const isExcluded = state.excluded.has(p.name);
+    const rowClass = isLocked ? 'locked-row' : (isExcluded ? 'excluded-row' : '');
+
+    const sigDots = [
+      p.doral_rank <= 18,
+      p.market_rank <= 18,
+      p.buzz_score >= 2.0
+    ];
+
+    return `<tr class="${rowClass}" data-player="${p.name}">
+      <td class="status-cell"><span class="status-bar ${tl}"></span></td>
+      <td class="player-cell">
+        <div class="player-name">${p.name}</div>
+        <div class="player-sub">
+          ${isLocked ? '<span class="pin lock-mark">🔒 LOCKED</span>' : ''}
+          <span class="pin">CF #${p.doral_rank}</span>
+          ${p.dk_win_odds ? '<span class="pin">+' + p.dk_win_odds.toLocaleString() + '</span>' : ''}
+        </div>
+      </td>
+      <td class="num salary-cell">${fmtSalShort(p.dk_salary)}</td>
+      <td class="num">${fmt(p.proj_final, 1)}</td>
+      <td class="num ${valueClass(p.value)}">${fmt(p.value, 2)}</td>
+      <td class="num ${ownClass(p.own_pct_est)}">${fmt(p.own_pct_est, 1)}%</td>
+      <td class="num muted">${p.dk_win_odds ? '+' + (p.dk_win_odds >= 10000 ? Math.round(p.dk_win_odds/1000) + 'K' : p.dk_win_odds) : '—'}</td>
+      <td class="num">#${p.doral_rank}</td>
+      <td class="num muted">${p.market_rank <= 30 ? '#' + p.market_rank : '—'}</td>
+      <td class="num ${momClass(p.momentum)}">${p.momentum > 0 ? '+' : ''}${fmt(p.momentum, 2)}</td>
+      <td class="signals-cell">
+        ${sigDots.map(on => `<span class="sig-dot${on?' on':''}"></span>`).join('')}
+      </td>
+      <td>${mayoTag(p.mayo_call)}</td>
+      <td class="actions-cell">
+        <div class="action-btns">
+          <button class="act lock-btn ${isLocked?'on':''}" onclick="toggleLock('${p.name.replace(/'/g,"\\'")}')">🔒</button>
+          <button class="act exclude-btn ${isExcluded?'on':''}" onclick="toggleExclude('${p.name.replace(/'/g,"\\'")}')">🚫</button>
+        </div>
+      </td>
+    </tr>`;
+  }).join('');
+
+  // Update sort header indicators
+  document.querySelectorAll('thead th[data-col]').forEach(th => {
+    th.classList.remove('sort-asc', 'sort-desc');
+    if (th.dataset.col === state.sortCol) {
+      th.classList.add(state.sortDesc ? 'sort-desc' : 'sort-asc');
+    }
+  });
+}
+
+function refreshAll() {
+  recomputeCounts();
+  refreshBuilder();
+  renderTable();
+}
+
+// ═══════ EVENT WIRING ═══════
+document.querySelectorAll('.tab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+    t.classList.add('active');
+    state.filter = t.dataset.filter;
+    renderTable();
+  });
 });
 
-// ── Knapsack DP optimizer ─────────────────────────────────────────
-// Top-K lineups under salary cap with locks/excludes.
-// Port of pga-dfs-pipeline/scripts/optimizer.py
-function optimize(values, salaries, names, options) {
-  const opts = options || {};
-  const K = opts.K || 20;
+document.querySelectorAll('thead th[data-col]').forEach(th => {
+  th.addEventListener('click', () => {
+    const col = th.dataset.col;
+    if (state.sortCol === col) {
+      state.sortDesc = !state.sortDesc;
+    } else {
+      state.sortCol = col;
+      state.sortDesc = true;
+    }
+    renderTable();
+  });
+});
+
+document.getElementById('search').addEventListener('input', e => {
+  state.search = e.target.value.trim();
+  renderTable();
+});
+
+document.getElementById('n-lineups').addEventListener('input', e => {
+  document.getElementById('n-lineups-v').textContent = e.target.value;
+});
+document.getElementById('min-cap').addEventListener('input', e => {
+  document.getElementById('min-cap-v').textContent = e.target.value + '%';
+});
+
+// ═══════ OPTIMIZER (Knapsack DP) ═══════
+const ROSTER_SIZE = 6;
+const SALARY_CAP = 50000;
+const SALARY_STEP = 100;
+
+function optimize(values, salaries, names, opts) {
+  opts = opts || {};
+  const K = opts.K || 5;
   const cap = opts.cap || SALARY_CAP;
   const minCapPct = opts.minCapPct !== undefined ? opts.minCapPct : 0.97;
   const lockedSet = opts.locked || new Set();
   const excludedSet = opts.excluded || new Set();
-
   const n = values.length;
 
-  // Resolve locked/excluded indices
   const lockedIdx = [];
   const excludedIdx = new Set();
   for (let i = 0; i < n; i++) {
     if (lockedSet.has(names[i])) lockedIdx.push(i);
     if (excludedSet.has(names[i])) excludedIdx.add(i);
   }
-
   if (lockedIdx.length > ROSTER_SIZE) return [];
-
   let lockedSalary = 0, lockedValue = 0;
   for (const i of lockedIdx) {
     lockedSalary += salaries[i];
@@ -1681,26 +1043,22 @@ function optimize(values, salaries, names, options) {
   }
   if (lockedSalary > cap) return [];
 
-  const remainingCap = cap - lockedSalary;
-  const remainingSlots = ROSTER_SIZE - lockedIdx.length;
-
-  if (remainingSlots === 0) {
+  const remCap = cap - lockedSalary;
+  const remSlots = ROSTER_SIZE - lockedIdx.length;
+  if (remSlots === 0) {
     return [{ value: lockedValue, picks: [...lockedIdx].sort((a,b)=>a-b), salary: lockedSalary }];
   }
 
-  // Candidate pool: not locked, not excluded
-  const lockedIdxSet = new Set(lockedIdx);
+  const lockedSetIdx = new Set(lockedIdx);
   const candidates = [];
   for (let i = 0; i < n; i++) {
-    if (!lockedIdxSet.has(i) && !excludedIdx.has(i)) candidates.push(i);
+    if (!lockedSetIdx.has(i) && !excludedIdx.has(i)) candidates.push(i);
   }
   candidates.sort((a, b) => values[b] - values[a]);
 
-  // DP table: dp[k][cap_bucket] = list of {value, picks (sorted tuple)} top-K
-  const nBuckets = Math.floor(remainingCap / SALARY_STEP) + 1;
-  // 3D: [slots+1][buckets][list]
+  const nBuckets = Math.floor(remCap / SALARY_STEP) + 1;
   const dp = [];
-  for (let k = 0; k <= remainingSlots; k++) {
+  for (let k = 0; k <= remSlots; k++) {
     const row = [];
     for (let b = 0; b < nBuckets; b++) row.push([]);
     dp.push(row);
@@ -1711,19 +1069,16 @@ function optimize(values, salaries, names, options) {
     const sb = Math.floor(salaries[c] / SALARY_STEP);
     if (sb >= nBuckets) continue;
     const vc = values[c];
-
-    for (let k = remainingSlots; k >= 1; k--) {
+    for (let k = remSlots; k >= 1; k--) {
       for (let cb = nBuckets - 1; cb >= sb; cb--) {
         const prev = dp[k-1][cb - sb];
         if (prev.length === 0) continue;
         for (const ent of prev) {
           const newPicks = [...ent.p, c].sort((a,b)=>a-b);
-          const newKey = newPicks.join(',');
+          const key = newPicks.join(',');
           const bucket = dp[k][cb];
-          // Skip duplicates (rare with sort, but safe)
-          if (bucket.some(e => e.p.length === newPicks.length && e.p.join(',') === newKey)) continue;
-          const nv = ent.v + vc;
-          bucket.push({ v: nv, p: newPicks });
+          if (bucket.some(e => e.p.length === newPicks.length && e.p.join(',') === key)) continue;
+          bucket.push({ v: ent.v + vc, p: newPicks });
           bucket.sort((a, b) => b.v - a.v);
           if (bucket.length > K) bucket.length = K;
         }
@@ -1731,89 +1086,74 @@ function optimize(values, salaries, names, options) {
     }
   }
 
-  // Collect results from cap_bucket >= min_remaining
-  const minRemaining = Math.max(0, Math.floor((cap * minCapPct - lockedSalary) / SALARY_STEP));
+  const minRem = Math.max(0, Math.floor((cap * minCapPct - lockedSalary) / SALARY_STEP));
   const results = [];
   const seen = new Set();
-  for (let cb = minRemaining; cb < nBuckets; cb++) {
-    for (const ent of dp[remainingSlots][cb]) {
-      const fullPicks = [...ent.p, ...lockedIdx].sort((a, b) => a - b);
+  for (let cb = minRem; cb < nBuckets; cb++) {
+    for (const ent of dp[remSlots][cb]) {
+      const fullPicks = [...ent.p, ...lockedIdx].sort((a,b)=>a-b);
       const key = fullPicks.join(',');
       if (seen.has(key)) continue;
       seen.add(key);
       let salSum = 0;
       for (const i of fullPicks) salSum += salaries[i];
-      results.push({
-        value: ent.v + lockedValue,
-        picks: fullPicks,
-        salary: salSum
-      });
+      results.push({ value: ent.v + lockedValue, picks: fullPicks, salary: salSum });
     }
   }
-
   results.sort((a, b) => b.value - a.value);
   return results.slice(0, K);
 }
 
-// ── Build action ──────────────────────────────────────────────────
 function buildLineups() {
   const btn = document.getElementById('build-btn');
   btn.disabled = true;
   btn.textContent = 'Building...';
 
-  const pool = getPricedPool();
-  const values = pool.map(p => p.proj_final);
-  const salaries = pool.map(p => p.dk_salary);
-  const names = pool.map(p => p.name);
-
-  const nLineups = parseInt(document.getElementById('n-lineups').value);
-  const minCap = parseFloat(document.getElementById('min-cap').value) / 100;
-
-  // Yield to UI before heavy compute
   setTimeout(() => {
     try {
+      const pool = PLAYERS.filter(p => p.proj_final);
+      const values = pool.map(p => p.proj_final);
+      const salaries = pool.map(p => p.dk_salary);
+      const names = pool.map(p => p.name);
+      const N = parseInt(document.getElementById('n-lineups').value);
+      const minCap = parseFloat(document.getElementById('min-cap').value) / 100;
+
       const results = optimize(values, salaries, names, {
-        K: nLineups,
+        K: N,
         minCapPct: minCap,
         locked: state.locked,
         excluded: state.excluded
       });
 
-      const out = document.getElementById('lineups-output');
-      const list = document.getElementById('lineups-list');
-      const header = document.getElementById('lineups-header');
-
+      const out = document.getElementById('lineups-list');
       if (results.length === 0) {
-        list.innerHTML = '<div style="color:var(--red);padding:20px;text-align:center">No valid lineups under these constraints. Try unlocking a player or lowering minimum cap usage.</div>';
-        header.textContent = '';
+        out.innerHTML = '<div class="empty-state" style="padding:20px">No valid lineups under these constraints. Try unlocking a player or lowering minimum cap usage.</div>';
       } else {
-        header.textContent = `Top ${results.length} lineups · Sorted by projected total`;
-        list.innerHTML = results.map((r, idx) => {
+        out.innerHTML = results.map((r, idx) => {
           const playerObjs = r.picks.map(i => pool[i]);
           const ownSum = playerObjs.reduce((a, p) => a + (p.own_pct_est || 0), 0);
-          const salClass = r.salary > SALARY_CAP ? 'warn' : '';
-          const salRem = SALARY_CAP - r.salary;
-          return `
-            <div class="lineup-card">
-              <div class="lineup-meta">
-                <div class="lineup-id">Lineup #${idx + 1}</div>
-                <div class="lineup-totals">
-                  <span><span class="label">Proj:</span><span class="val proj">${r.value.toFixed(1)}</span></span>
-                  <span><span class="label">Salary:</span><span class="val salary ${salClass}">$${r.salary.toLocaleString()}</span></span>
-                  <span><span class="label">Left:</span><span class="val">$${salRem.toLocaleString()}</span></span>
-                  <span><span class="label">Cum Own%:</span><span class="val">${ownSum.toFixed(0)}%</span></span>
-                </div>
-              </div>
-              <div class="lineup-players">
-                ${playerObjs.map(p => `
-                  <div class="lp-cell ${state.locked.has(p.name)?'locked':''}">
-                    <div class="lp-name">${p.name}</div>
-                    <div class="lp-sal">$${p.dk_salary.toLocaleString()}</div>
-                  </div>
-                `).join('')}
+          const overCap = r.salary > SALARY_CAP;
+          return `<div class="lineup-item">
+            <div class="lineup-header">
+              <span class="lineup-num">Lineup #${idx + 1}</span>
+              <div class="lineup-totals">
+                <span><span class="lbl">Proj:</span><span class="val proj">${r.value.toFixed(1)}</span></span>
+                <span><span class="lbl">Sal:</span><span class="val salary${overCap?' over':''}">$${r.salary.toLocaleString()}</span></span>
+                <span><span class="lbl">Own:</span><span class="val">${ownSum.toFixed(0)}%</span></span>
               </div>
             </div>
-          `;
+            <div class="lineup-players">
+              ${playerObjs.map(p => `
+                <div class="lineup-player">
+                  <span class="lp-name${state.locked.has(p.name)?' locked-marker':''}">${p.name}</span>
+                  <div class="lp-stats">
+                    <span class="salary">$${p.dk_salary.toLocaleString()}</span>
+                    <span>${p.proj_final.toFixed(1)} pts</span>
+                  </div>
+                </div>
+              `).join('')}
+            </div>
+          </div>`;
         }).join('');
       }
       out.classList.add('show');
@@ -1823,13 +1163,13 @@ function buildLineups() {
       alert('Build failed: ' + err.message);
     } finally {
       btn.disabled = false;
-      btn.textContent = 'Build Optimal Lineups';
+      btn.textContent = 'Build Lineups';
     }
   }, 50);
 }
 
-// Initial render of selection UI
-refreshSelectionUI();
+// ═══════ INIT ═══════
+refreshAll();
 </script>
 
 </body>
