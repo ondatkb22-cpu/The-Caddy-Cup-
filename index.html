@@ -1,559 +1,1029 @@
-
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cadillac Championship 2026 — First Look</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<title>Cadillac Championship 2026 — DFS First Look</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --gold:    #C9A84C;
-    --gold-lt: #E8CC80;
-    --black:   #0A0A0A;
-    --dark:    #111214;
-    --panel:   #18191D;
-    --border:  #2A2B30;
-    --text:    #D4D4D4;
-    --muted:   #666;
-    --green:   #3DB87A;
-    --red:     #E05050;
-    --blue:    #5B9BD5;
-    --orange:  #E08050;
+    --bg-primary: #0A0A0A;
+    --bg-secondary: #131418;
+    --bg-card: #1A1B1F;
+    --bg-card-hover: #1F2025;
+    --border-subtle: #25262B;
+    --border-strong: #34353A;
+    --text-primary: #F0F0F0;
+    --text-secondary: #B0B0B0;
+    --text-muted: #707070;
+    --gold: #C9A84C;
+    --gold-light: #E8CC80;
+    --gold-dim: rgba(201,168,76,0.15);
+    --green: #4ADE80;
+    --green-dim: rgba(74,222,128,0.15);
+    --red: #F87171;
+    --red-dim: rgba(248,113,113,0.15);
+    --blue: #60A5FA;
+    --blue-dim: rgba(96,165,250,0.15);
+    --orange: #FB923C;
+    --purple: #A78BFA;
   }
 
-  * { margin:0; padding:0; box-sizing:border-box; }
+- { margin: 0; padding: 0; box-sizing: border-box; }
 
-  body {
-    background: var(--black);
-    color: var(--text);
-    font-family: 'Lato', sans-serif;
-    font-size: 13px;
-    line-height: 1.4;
-  }
+body {
+background: var(–bg-primary);
+color: var(–text-primary);
+font-family: ‘Inter’, -apple-system, system-ui, sans-serif;
+font-size: 14px;
+line-height: 1.5;
+-webkit-font-smoothing: antialiased;
+}
 
-  /* ── HEADER ── */
-  header {
-    background: linear-gradient(135deg, #0A0A0A 0%, #1A1509 50%, #0A0A0A 100%);
-    border-bottom: 1px solid var(--gold);
-    padding: 28px 32px 20px;
-    position: relative;
-    overflow: hidden;
-  }
-  header::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: repeating-linear-gradient(
-      -45deg, transparent, transparent 30px,
-      rgba(201,168,76,0.03) 30px, rgba(201,168,76,0.03) 31px
-    );
-    pointer-events: none;
-  }
-  .header-top {
-    display: flex; align-items: flex-start; justify-content: space-between;
-    gap: 16px;
-  }
-  .event-name {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 52px;
-    letter-spacing: 3px;
-    color: var(--gold);
-    line-height: 1;
-    text-shadow: 0 0 40px rgba(201,168,76,0.3);
-  }
-  .event-sub {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    margin-top: 6px;
-  }
-  .event-meta {
-    text-align: right;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--muted);
-    letter-spacing: 1px;
-    line-height: 1.8;
-  }
-  .event-meta span { color: var(--gold-lt); }
+/* ════ HEADER ════ */
+header {
+background: linear-gradient(180deg, #0F0F12 0%, #0A0A0A 100%);
+border-bottom: 1px solid var(–gold);
+padding: 32px 32px 24px;
+position: relative;
+overflow: hidden;
+}
+header::before {
+content: ‘’;
+position: absolute; inset: 0;
+background:
+radial-gradient(circle at 80% 20%, rgba(201,168,76,0.08) 0%, transparent 50%),
+repeating-linear-gradient(-45deg, transparent 0, transparent 40px,
+rgba(201,168,76,0.02) 40px, rgba(201,168,76,0.02) 41px);
+pointer-events: none;
+}
+.header-inner {
+max-width: 1400px;
+margin: 0 auto;
+display: grid;
+grid-template-columns: 1fr auto;
+gap: 32px;
+align-items: end;
+position: relative;
+}
+h1.event-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 64px;
+letter-spacing: 4px;
+color: var(–gold);
+line-height: 0.9;
+text-shadow: 0 0 60px rgba(201,168,76,0.3);
+}
+.event-subtitle {
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+color: var(–text-muted);
+letter-spacing: 2.5px;
+text-transform: uppercase;
+margin-top: 12px;
+}
+.event-subtitle strong { color: var(–gold-light); font-weight: 500; }
+.event-meta {
+text-align: right;
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+color: var(–text-muted);
+letter-spacing: 1.5px;
+line-height: 1.9;
+}
+.event-meta .meta-row { display: flex; gap: 8px; justify-content: flex-end; }
+.event-meta .label { color: var(–text-muted); }
+.event-meta .val { color: var(–gold-light); }
+.event-meta .timestamp {
+margin-top: 8px;
+padding-top: 8px;
+border-top: 1px solid var(–border-subtle);
+color: #555;
+font-size: 10px;
+}
 
-  /* ── CONTROLS ── */
-  .controls {
-    padding: 14px 32px;
-    background: var(--dark);
-    border-bottom: 1px solid var(--border);
-    display: flex; gap: 12px; align-items: center; flex-wrap: wrap;
-  }
-  .ctrl-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px; color: var(--muted);
-    text-transform: uppercase; letter-spacing: 1.5px;
-  }
-  .filter-btn {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px; letter-spacing: 1px;
-    padding: 5px 14px;
-    background: transparent;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.15s;
-    text-transform: uppercase;
-  }
-  .filter-btn:hover { border-color: var(--gold); color: var(--gold-lt); }
-  .filter-btn.active { background: var(--gold); color: var(--black); border-color: var(--gold); font-weight: 700; }
+/* ════ NAVIGATION ════ */
+nav.tier-nav {
+background: var(–bg-secondary);
+border-bottom: 1px solid var(–border-subtle);
+padding: 0 32px;
+position: sticky; top: 0; z-index: 50;
+backdrop-filter: blur(8px);
+}
+.nav-inner {
+max-width: 1400px;
+margin: 0 auto;
+display: flex;
+gap: 4px;
+overflow-x: auto;
+-webkit-overflow-scrolling: touch;
+}
+.nav-link {
+padding: 16px 20px;
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+color: var(–text-muted);
+text-decoration: none;
+border-bottom: 2px solid transparent;
+white-space: nowrap;
+transition: all 0.15s;
+cursor: pointer;
+}
+.nav-link:hover { color: var(–text-primary); }
+.nav-link.active { color: var(–gold); border-bottom-color: var(–gold); }
+.nav-link .count {
+display: inline-block;
+margin-left: 6px;
+padding: 1px 6px;
+background: var(–bg-card);
+border-radius: 8px;
+font-size: 10px;
+color: var(–text-muted);
+}
+.nav-link.active .count { background: var(–gold-dim); color: var(–gold-light); }
 
-  input[type="text"] {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 5px 12px;
-    outline: none;
-    width: 180px;
-  }
-  input[type="text"]::placeholder { color: var(--muted); }
-  input[type="text"]:focus { border-color: var(--gold); }
+main {
+max-width: 1400px;
+margin: 0 auto;
+padding: 32px;
+}
 
-  select {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    background: var(--panel);
-    border: 1px solid var(--border);
-    color: var(--text);
-    padding: 5px 10px;
-    outline: none;
-    cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
+/* ════ SECTIONS ════ */
+section { margin-bottom: 56px; scroll-margin-top: 80px; }
+.section-header {
+margin-bottom: 20px;
+display: flex;
+align-items: baseline;
+gap: 16px;
+}
+.section-title {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 32px;
+letter-spacing: 3px;
+color: var(–text-primary);
+line-height: 1;
+}
+.section-subtitle {
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+color: var(–text-muted);
+letter-spacing: 1.5px;
+text-transform: uppercase;
+}
+.section-divider {
+flex: 1;
+height: 1px;
+background: linear-gradient(to right, var(–border-subtle), transparent);
+}
 
-  .count-badge {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--gold);
-    margin-left: auto;
-  }
+/* Tier color accents */
+.tier-locks .section-title { color: var(–gold); }
+.tier-locks .section-divider { background: linear-gradient(to right, var(–gold-dim), transparent); }
+.tier-strong .section-title { color: var(–gold-light); }
+.tier-leverage .section-title { color: var(–green); }
+.tier-mid .section-title { color: var(–blue); }
+.tier-fades .section-title { color: var(–red); }
 
-  /* ── TABLE ── */
-  .table-wrap {
-    overflow-x: auto;
-    padding: 0 32px 32px;
-  }
+/* ════ PLAYER CARD ════ */
+.card-grid {
+display: grid;
+gap: 16px;
+}
+.card-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.card-grid.cols-2 { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 1100px) {
+.card-grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 720px) {
+.card-grid { grid-template-columns: 1fr !important; }
+}
 
-  table {
-    width: 100%; border-collapse: collapse;
-    margin-top: 16px;
-  }
+.player-card {
+background: var(–bg-card);
+border: 1px solid var(–border-subtle);
+padding: 20px;
+transition: all 0.18s;
+position: relative;
+overflow: hidden;
+}
+.player-card:hover {
+background: var(–bg-card-hover);
+border-color: var(–border-strong);
+}
+.player-card.is-lock {
+border-color: rgba(201,168,76,0.4);
+background: linear-gradient(135deg, rgba(201,168,76,0.06) 0%, var(–bg-card) 30%);
+}
+.player-card.is-fade {
+border-color: rgba(248,113,113,0.25);
+opacity: 0.92;
+}
 
-  thead th {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px; letter-spacing: 1.5px;
-    text-transform: uppercase; color: var(--muted);
-    border-bottom: 1px solid var(--border);
-    padding: 10px 8px;
-    text-align: left;
-    white-space: nowrap;
-    cursor: pointer;
-    user-select: none;
-    position: sticky; top: 0;
-    background: var(--black);
-  }
-  thead th:hover { color: var(--gold-lt); }
-  thead th .sort-arrow { opacity: 0.3; margin-left: 4px; }
-  thead th.sort-asc .sort-arrow::after { content: '▲'; opacity: 1; color: var(--gold); }
-  thead th.sort-desc .sort-arrow::after { content: '▼'; opacity: 1; color: var(--gold); }
-  thead th:not(.sort-asc):not(.sort-desc) .sort-arrow::after { content: '⇅'; }
+.card-row1 {
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+gap: 12px;
+margin-bottom: 12px;
+}
+.player-name {
+font-family: ‘Inter’, sans-serif;
+font-weight: 700;
+font-size: 19px;
+color: var(–text-primary);
+line-height: 1.2;
+letter-spacing: -0.3px;
+}
+.player-rank-row {
+display: flex;
+gap: 8px;
+margin-top: 4px;
+font-family: ‘DM Mono’, monospace;
+font-size: 10px;
+color: var(–text-muted);
+letter-spacing: 0.5px;
+}
+.rank-chip {
+background: var(–bg-secondary);
+padding: 2px 7px;
+border-radius: 3px;
+color: var(–text-secondary);
+}
+.rank-chip.doral { background: var(–gold-dim); color: var(–gold-light); }
 
-  tbody tr {
-    border-bottom: 1px solid rgba(42,43,48,0.6);
-    transition: background 0.1s;
-  }
-  tbody tr:hover { background: rgba(201,168,76,0.04); }
-  tbody tr.highlight-row { background: rgba(201,168,76,0.06); }
+.odds-display {
+text-align: right;
+flex-shrink: 0;
+}
+.odds-value {
+font-family: ‘DM Mono’, monospace;
+font-size: 18px;
+font-weight: 500;
+color: var(–gold);
+}
+.odds-value.no-odds {
+font-size: 11px;
+color: var(–text-muted);
+font-weight: 400;
+}
+.odds-label {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+color: var(–text-muted);
+letter-spacing: 1px;
+text-transform: uppercase;
+margin-top: 2px;
+}
 
-  td {
-    padding: 9px 8px;
-    white-space: nowrap;
-    vertical-align: middle;
-  }
+/* Signal alignment indicator */
+.signal-bar {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 4px;
+margin-bottom: 14px;
+padding: 8px 10px;
+background: var(–bg-secondary);
+border-radius: 4px;
+}
+.signal-cell {
+text-align: center;
+padding: 6px 0;
+border-radius: 3px;
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+letter-spacing: 1px;
+text-transform: uppercase;
+transition: all 0.2s;
+}
+.signal-cell.on { color: var(–gold-light); background: rgba(201,168,76,0.1); font-weight: 500; }
+.signal-cell.off { color: var(–text-muted); opacity: 0.5; }
+.signal-cell .icon { font-size: 12px; display: block; margin-bottom: 2px; line-height: 1; }
+.signal-cell.on .icon { color: var(–gold); }
+.signal-cell.off .icon { color: #444; }
 
-  .player-cell { display: flex; flex-direction: column; gap: 2px; }
-  .player-name {
-    font-family: 'Lato', sans-serif;
-    font-weight: 700; font-size: 13px;
-    color: #E8E8E8;
-  }
-  .player-note {
-    font-family: 'DM Mono', monospace;
-    font-size: 9.5px; color: var(--muted);
-    max-width: 220px; overflow: hidden;
-    text-overflow: ellipsis;
-  }
+/* Stats grid */
+.stats-grid {
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 8px;
+margin-bottom: 14px;
+padding: 12px 0;
+border-top: 1px solid var(–border-subtle);
+border-bottom: 1px solid var(–border-subtle);
+}
+.stat-cell { text-align: center; }
+.stat-label {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+color: var(–text-muted);
+letter-spacing: 0.8px;
+text-transform: uppercase;
+margin-bottom: 3px;
+}
+.stat-value {
+font-family: ‘DM Mono’, monospace;
+font-size: 16px;
+font-weight: 500;
+color: var(–text-primary);
+}
+.stat-value.gold { color: var(–gold-light); }
+.stat-value.green { color: var(–green); }
+.stat-value.red { color: var(–red); }
+.stat-value.muted { color: var(–text-muted); }
 
-  .rank-pill {
-    display: inline-block;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px; font-weight: 500;
-    padding: 2px 7px;
-    border-radius: 2px;
-    text-align: center;
-    min-width: 32px;
-  }
+/* Detail rows */
+.detail-row {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-bottom: 10px;
+font-size: 12px;
+}
+.detail-label {
+font-family: ‘DM Mono’, monospace;
+font-size: 10px;
+color: var(–text-muted);
+letter-spacing: 0.5px;
+text-transform: uppercase;
+min-width: 76px;
+}
 
-  .mono { font-family: 'DM Mono', monospace; }
+/* Course fit bars */
+.fit-bars {
+flex: 1;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 10px;
+}
+.fit-bar {
+display: flex;
+align-items: center;
+gap: 6px;
+}
+.fit-bar-label {
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+color: var(–text-muted);
+min-width: 32px;
+}
+.fit-bar-track {
+flex: 1;
+height: 4px;
+background: var(–border-subtle);
+border-radius: 2px;
+overflow: hidden;
+}
+.fit-bar-fill { height: 100%; transition: width 0.4s ease; }
+.fit-bar-value {
+font-family: ‘DM Mono’, monospace;
+font-size: 10px;
+color: var(–text-secondary);
+min-width: 32px;
+text-align: right;
+}
 
-  .bar-cell { display: flex; align-items: center; gap: 6px; }
-  .bar-bg {
-    width: 60px; height: 5px;
-    background: var(--border);
-    border-radius: 2px;
-    overflow: hidden;
-    flex-shrink: 0;
-  }
-  .bar-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
+/* Recent results */
+.recent-results {
+display: flex;
+gap: 4px;
+flex-wrap: wrap;
+}
+.result-pill {
+font-family: ‘DM Mono’, monospace;
+font-size: 10px;
+padding: 3px 7px;
+border-radius: 3px;
+background: var(–bg-secondary);
+color: var(–text-secondary);
+letter-spacing: 0.3px;
+}
+.result-pill.win   { background: var(–gold-dim); color: var(–gold-light); font-weight: 500; }
+.result-pill.top5  { background: var(–green-dim); color: var(–green); }
+.result-pill.top10 { background: rgba(96,165,250,0.12); color: var(–blue); }
+.result-pill.cut   { background: var(–red-dim); color: var(–red); opacity: 0.7; }
 
-  .recent-results { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.5px; }
-  .r-win   { color: var(--gold); font-weight: 700; }
-  .r-top5  { color: var(--green); }
-  .r-top10 { color: #8DC; }
-  .r-cut   { color: var(--red); opacity: 0.7; }
-  .r-norm  { color: var(--muted); }
+/* Momentum indicator */
+.momentum-tag {
+display: inline-flex;
+align-items: center;
+gap: 4px;
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+padding: 3px 8px;
+border-radius: 3px;
+background: var(–bg-secondary);
+}
+.momentum-tag.hot { background: var(–green-dim); color: var(–green); }
+.momentum-tag.warm { background: var(–gold-dim); color: var(–gold-light); }
+.momentum-tag.cold { background: var(–red-dim); color: var(–red); }
+.momentum-tag.neutral { color: var(–text-muted); }
 
-  .mayo-badge {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px; letter-spacing: 1px;
-    padding: 3px 7px;
-    text-transform: uppercase;
-    border-radius: 2px;
-    white-space: nowrap;
-  }
-  .mayo-lock   { background: rgba(201,168,76,0.2); color: var(--gold); border: 1px solid rgba(201,168,76,0.4); }
-  .mayo-strong { background: rgba(201,168,76,0.12); color: #C9A84C; border: 1px solid rgba(201,168,76,0.2); }
-  .mayo-like   { background: rgba(91,155,213,0.12); color: var(--blue); border: 1px solid rgba(91,155,213,0.2); }
-  .mayo-fade   { background: rgba(224,80,80,0.12); color: var(--red); border: 1px solid rgba(224,80,80,0.2); }
-  .mayo-neutral{ background: rgba(102,102,102,0.12); color: var(--muted); border: 1px solid rgba(102,102,102,0.2); }
+/* Mayo badge */
+.mayo-badge {
+display: inline-block;
+font-family: ‘DM Mono’, monospace;
+font-size: 9px;
+letter-spacing: 1.2px;
+padding: 4px 8px;
+border-radius: 3px;
+text-transform: uppercase;
+font-weight: 500;
+}
+.mayo-badge.lock    { background: var(–gold); color: var(–bg-primary); }
+.mayo-badge.strong  { background: var(–gold-dim); color: var(–gold-light); border: 1px solid rgba(201,168,76,0.3); }
+.mayo-badge.like    { background: var(–blue-dim); color: var(–blue); border: 1px solid rgba(96,165,250,0.3); }
+.mayo-badge.fade    { background: var(–red-dim); color: var(–red); border: 1px solid rgba(248,113,113,0.3); }
+.mayo-badge.neutral { background: var(–bg-secondary); color: var(–text-muted); }
 
-  .momentum-val { font-family: 'DM Mono', monospace; font-size: 12px; }
-  .pos { color: var(--green); }
-  .neg { color: var(--red); }
-  .neu { color: var(--muted); }
+/* News note — FULL TEXT, no truncation */
+.news-note {
+margin-top: 12px;
+padding: 10px 12px;
+background: rgba(96,165,250,0.05);
+border-left: 2px solid var(–blue);
+font-size: 12px;
+color: var(–text-secondary);
+line-height: 1.5;
+font-style: italic;
+}
+.news-note.warning {
+background: rgba(251,146,60,0.06);
+border-left-color: var(–orange);
+color: #FFD0A8;
+}
+.news-note.warning::before { content: ’⚠ ’; color: var(–orange); }
 
-  .prox-val { font-family: 'DM Mono', monospace; font-size: 12px; }
+/* Card footer with mayo + ownership */
+.card-footer {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-top: 12px;
+gap: 12px;
+flex-wrap: wrap;
+}
+.own-est {
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+color: var(–text-muted);
+}
+.own-est .value { color: var(–text-primary); font-weight: 500; }
 
-  /* ── STAT CARDS ── */
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 1px;
-    background: var(--border);
-    margin: 0 32px;
-    border: 1px solid var(--border);
-  }
-  .card {
-    background: var(--panel);
-    padding: 18px 20px;
-  }
-  .card-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px; letter-spacing: 2px;
-    text-transform: uppercase; color: var(--muted);
-    margin-bottom: 10px;
-  }
-  .card-players { display: flex; flex-direction: column; gap: 6px; }
-  .card-row {
-    display: flex; align-items: center; justify-content: space-between;
-    gap: 8px;
-  }
-  .card-name { font-weight: 700; font-size: 13px; }
-  .card-val { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--muted); }
+/* ════ LEGEND ════ */
+.legend-bar {
+display: flex;
+flex-wrap: wrap;
+gap: 24px;
+padding: 16px 20px;
+background: var(–bg-secondary);
+border: 1px solid var(–border-subtle);
+border-radius: 4px;
+margin-bottom: 32px;
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+color: var(–text-secondary);
+}
+.legend-item {
+display: flex;
+align-items: center;
+gap: 8px;
+letter-spacing: 0.5px;
+}
+.legend-swatch {
+width: 10px;
+height: 10px;
+border-radius: 2px;
+}
 
-  /* ── SECTION HEADER ── */
-  .section-hdr {
-    padding: 20px 32px 4px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .section-hdr h2 {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 20px; letter-spacing: 2px;
-    color: var(--gold-lt);
-  }
-  .section-hdr .line {
-    flex: 1; height: 1px;
-    background: linear-gradient(to right, var(--border), transparent);
-  }
+/* ════ FULL TABLE ════ */
+.table-toggle {
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+background: transparent;
+border: 1px solid var(–border-strong);
+color: var(–text-secondary);
+padding: 8px 16px;
+cursor: pointer;
+margin-bottom: 16px;
+transition: all 0.15s;
+}
+.table-toggle:hover { border-color: var(–gold); color: var(–gold-light); }
+.table-wrap {
+background: var(–bg-card);
+border: 1px solid var(–border-subtle);
+overflow-x: auto;
+-webkit-overflow-scrolling: touch;
+display: none;
+}
+.table-wrap.visible { display: block; }
+table {
+width: 100%;
+border-collapse: collapse;
+font-size: 12px;
+}
+thead th {
+background: var(–bg-secondary);
+font-family: ‘DM Mono’, monospace;
+font-size: 10px;
+letter-spacing: 1px;
+text-transform: uppercase;
+color: var(–text-muted);
+padding: 12px 10px;
+text-align: left;
+border-bottom: 1px solid var(–border-strong);
+white-space: nowrap;
+cursor: pointer;
+user-select: none;
+position: sticky; top: 0;
+}
+thead th:hover { color: var(–gold-light); }
+tbody tr { border-bottom: 1px solid var(–border-subtle); transition: background 0.1s; }
+tbody tr:hover { background: rgba(201,168,76,0.04); }
+td { padding: 10px; white-space: nowrap; vertical-align: middle; }
+td.player-cell { white-space: normal; max-width: 200px; }
+td.note-cell {
+white-space: normal;
+max-width: 280px;
+font-size: 11px;
+color: var(–text-muted);
+font-style: italic;
+}
 
-  /* ── TOOLTIP ── */
-  td[title] { cursor: default; }
-
-  @media (max-width: 768px) {
-    .event-name { font-size: 32px; }
-    .table-wrap { padding: 0 12px 24px; }
-    .controls, .cards, .section-hdr { padding-left: 12px; padding-right: 12px; }
-  }
+/* ════ DATA SOURCES FOOTER ════ */
+footer.sources {
+border-top: 1px solid var(–border-subtle);
+padding: 32px;
+margin-top: 48px;
+background: var(–bg-secondary);
+}
+footer .sources-inner { max-width: 1400px; margin: 0 auto; }
+footer h3 {
+font-family: ‘Bebas Neue’, sans-serif;
+font-size: 18px;
+letter-spacing: 2px;
+color: var(–gold);
+margin-bottom: 12px;
+}
+footer .sources-list {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+gap: 16px;
+font-family: ‘DM Mono’, monospace;
+font-size: 11px;
+color: var(–text-muted);
+line-height: 1.7;
+}
+footer .sources-list strong { color: var(–text-secondary); display: block; margin-bottom: 4px; }
+footer .disclaimer {
+margin-top: 24px;
+padding-top: 16px;
+border-top: 1px solid var(–border-subtle);
+font-size: 10px;
+color: #555;
+line-height: 1.6;
+}
 </style>
+
 </head>
 <body>
 
 <header>
-  <div class="header-top">
+  <div class="header-inner">
     <div>
-      <div class="event-name">Cadillac Championship</div>
-      <div class="event-sub">Trump National Doral &nbsp;·&nbsp; Blue Monster Course &nbsp;·&nbsp; Miami, FL</div>
-      <div class="event-sub" style="margin-top:4px">Apr 30 – May 3, 2026 &nbsp;·&nbsp; 72-Player Signature Event &nbsp;·&nbsp; No Cut &nbsp;·&nbsp; $20M Purse</div>
+      <h1 class="event-title">Cadillac Championship</h1>
+      <div class="event-subtitle">
+        Trump National Doral &nbsp;·&nbsp; <strong>Blue Monster</strong> &nbsp;·&nbsp; Miami, FL &nbsp;·&nbsp; April 30 – May 3, 2026
+      </div>
+      <div class="event-subtitle">
+        72-Player Signature Event &nbsp;·&nbsp; No Cut &nbsp;·&nbsp; $20M Purse &nbsp;·&nbsp; <strong>$3.6M Winner's Share</strong>
+      </div>
     </div>
     <div class="event-meta">
-      <div>Par <span>72</span> &nbsp;/&nbsp; <span>7,739</span> yds</div>
-      <div>Bermuda TifEagle greens</div>
-      <div>Signals: <span>DG · Proximity · Mayo</span></div>
-      <div style="margin-top:6px;color:#555">First Look · Pre-Salary</div>
+      <div class="meta-row"><span class="label">Course:</span> <span class="val">Par 72 / 7,739 yds</span></div>
+      <div class="meta-row"><span class="label">Greens:</span> <span class="val">TifEagle Bermuda</span></div>
+      <div class="meta-row"><span class="label">Designer:</span> <span class="val">Hanse 2014</span></div>
+      <div class="meta-row"><span class="label">Field:</span> <span class="val">70 confirmed / 2 pending</span></div>
+      <div class="timestamp">DFS First Look · Pre-Salary · 4 skills aggregated</div>
     </div>
   </div>
 </header>
 
-<div class="section-hdr">
-  <h2>Consensus Leaders</h2>
-  <div class="line"></div>
-</div>
+<nav class="tier-nav">
+  <div class="nav-inner">
+    <a class="nav-link active" data-tier="locks">Consensus Locks <span class="count" id="cnt-locks">3</span></a>
+    <a class="nav-link" data-tier="strong">Strong Plays <span class="count" id="cnt-strong">7</span></a>
+    <a class="nav-link" data-tier="leverage">Leverage Edges <span class="count" id="cnt-leverage">4</span></a>
+    <a class="nav-link" data-tier="mid">Mid Tier <span class="count" id="cnt-mid">28</span></a>
+    <a class="nav-link" data-tier="fades">Fades & Traps <span class="count" id="cnt-fades">8</span></a>
+    <a class="nav-link" data-tier="table">Full Table</a>
+  </div>
+</nav>
 
-<div class="cards" id="cards"></div>
+<main>
 
-<div class="section-hdr" style="margin-top:20px">
-  <h2>Full Field</h2>
-  <div class="line"></div>
-</div>
+  <!-- Signal Legend -->
 
-<div class="controls">
-  <span class="ctrl-label">Filter</span>
-  <button class="filter-btn active" data-filter="all">All</button>
-  <button class="filter-btn" data-filter="strong">Mayo Strong</button>
-  <button class="filter-btn" data-filter="hot">Hot Form</button>
-  <button class="filter-btn" data-filter="fade">Fades</button>
-  <button class="filter-btn" data-filter="top20">Top 20 Doral</button>
-  &nbsp;
-  <span class="ctrl-label">Sort</span>
-  <select id="sort-select">
-    <option value="doral_rank">Doral Rank</option>
-    <option value="dg_rank">DG Rank</option>
-    <option value="momentum">Momentum</option>
-    <option value="buzz_score">Buzz Score</option>
-    <option value="fw_150_200">FW 150-200</option>
-    <option value="fw_over_200">FW 200+</option>
-    <option value="total_true">SG Total</option>
-    <option value="sg_l20">SG L20</option>
-  </select>
-  &nbsp;
-  <input type="text" id="search" placeholder="Search player…">
-  <span class="count-badge" id="count-badge">70 players</span>
-</div>
+  <div class="legend-bar">
+    <div class="legend-item"><span class="legend-swatch" style="background:var(--gold)"></span> Doral Composite (DG model)</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:var(--blue)"></span> Market Odds (DraftKings Sportsbook)</div>
+    <div class="legend-item"><span class="legend-swatch" style="background:var(--green)"></span> Mayo Buzz (DFS content)</div>
+    <div class="legend-item">All 3 = consensus lock</div>
+  </div>
 
-<div class="table-wrap">
-<table id="main-table">
-  <thead>
-    <tr>
-      <th data-col="doral_rank">Doral# <span class="sort-arrow"></span></th>
-      <th data-col="name">Player <span class="sort-arrow"></span></th>
-      <th data-col="dg_rank">DG# <span class="sort-arrow"></span></th>
-      <th data-col="owgr_rank">OWGR <span class="sort-arrow"></span></th>
-      <th data-col="doral_composite">Doral Score <span class="sort-arrow"></span></th>
-      <th data-col="total_true">SG Total <span class="sort-arrow"></span></th>
-      <th data-col="app_true">App SG <span class="sort-arrow"></span></th>
-      <th data-col="ott_true">OTT SG <span class="sort-arrow"></span></th>
-      <th data-col="fw_150_200">FW 150-200 <span class="sort-arrow"></span></th>
-      <th data-col="fw_over_200">FW 200+ <span class="sort-arrow"></span></th>
-      <th data-col="sg_l20">SG L20 <span class="sort-arrow"></span></th>
-      <th data-col="momentum">Momentum <span class="sort-arrow"></span></th>
-      <th data-col="recent_5">Last 5 <span class="sort-arrow"></span></th>
-      <th data-col="buzz_score">Mayo <span class="sort-arrow"></span></th>
-    </tr>
-  </thead>
-  <tbody id="tbody"></tbody>
-</table>
-</div>
+  <!-- ════ TIER 1: CONSENSUS LOCKS ════ -->
+
+  <section id="tier-locks" class="tier-locks">
+    <div class="section-header">
+      <h2 class="section-title">Consensus Locks</h2>
+      <span class="section-subtitle">All 3 signals aligned — DG + Market + Mayo</span>
+      <span class="section-divider"></span>
+    </div>
+    <div class="card-grid cols-3" id="grid-locks"></div>
+  </section>
+
+  <!-- ════ TIER 2: STRONG PLAYS ════ -->
+
+  <section id="tier-strong" class="tier-strong">
+    <div class="section-header">
+      <h2 class="section-title">Strong Plays</h2>
+      <span class="section-subtitle">Mayo Strong + course fit OR market</span>
+      <span class="section-divider"></span>
+    </div>
+    <div class="card-grid cols-3" id="grid-strong"></div>
+  </section>
+
+  <!-- ════ TIER 3: LEVERAGE EDGES ════ -->
+
+  <section id="tier-leverage" class="tier-leverage">
+    <div class="section-header">
+      <h2 class="section-title">Leverage Edges</h2>
+      <span class="section-subtitle">Hot momentum + low ownership — GPP differentiators</span>
+      <span class="section-divider"></span>
+    </div>
+    <div class="card-grid cols-3" id="grid-leverage"></div>
+  </section>
+
+  <!-- ════ TIER 4: MID TIER ════ -->
+
+  <section id="tier-mid" class="tier-mid">
+    <div class="section-header">
+      <h2 class="section-title">Mid Tier</h2>
+      <span class="section-subtitle">Doral rank ≤ 40, in market or with buzz</span>
+      <span class="section-divider"></span>
+    </div>
+    <div class="card-grid cols-2" id="grid-mid"></div>
+  </section>
+
+  <!-- ════ TIER 5: FADES & TRAPS ════ -->
+
+  <section id="tier-fades" class="tier-fades">
+    <div class="section-header">
+      <h2 class="section-title">Fades & Traps</h2>
+      <span class="section-subtitle">Mayo fade OR market overvalues vs Doral fit</span>
+      <span class="section-divider"></span>
+    </div>
+    <div class="card-grid cols-3" id="grid-fades"></div>
+  </section>
+
+  <!-- ════ FULL TABLE ════ -->
+
+  <section id="tier-table">
+    <div class="section-header">
+      <h2 class="section-title">Full Field Table</h2>
+      <span class="section-subtitle">All 70 players, sortable by any column</span>
+      <span class="section-divider"></span>
+    </div>
+    <button class="table-toggle" id="toggle-table">Show Full Table ▾</button>
+    <div class="table-wrap" id="table-wrap">
+      <table id="full-table">
+        <thead><tr>
+          <th data-col="doral_rank">Doral#</th>
+          <th data-col="name">Player</th>
+          <th data-col="dk_win_odds">Odds</th>
+          <th data-col="market_rank">Mkt#</th>
+          <th data-col="dg_rank">DG#</th>
+          <th data-col="proj_final">Proj</th>
+          <th data-col="mc_ceil">Ceil</th>
+          <th data-col="own_pct_est">Own%</th>
+          <th data-col="momentum">Mom</th>
+          <th data-col="fw_150_200">FW150</th>
+          <th data-col="fw_over_200">FW200</th>
+          <th data-col="buzz_score">Mayo</th>
+          <th data-col="news_note">Notes</th>
+        </tr></thead>
+        <tbody id="tbody"></tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer class="sources">
+  <div class="sources-inner">
+    <h3>Data Sources & Methodology</h3>
+    <div class="sources-list">
+      <div>
+        <strong>DataGolf Performance (2026 season)</strong>
+        SG breakdowns (App, OTT, T2G, Putt, ARG), trending data with vs_baseline_l20 momentum. 70/70 field matched.
+      </div>
+      <div>
+        <strong>DraftKings Sportsbook</strong>
+        Live win odds for top 30 players. Vig removed via summed-probability normalization for fair odds.
+      </div>
+      <div>
+        <strong>PGA Tour Official</strong>
+        Field list, course yardage (7,739), event format, Brooks Koepka first-alternate confirmation.
+      </div>
+      <div>
+        <strong>Pat Mayo Experience Cadillac Preview</strong>
+        DFS content processed via pga-dfs-ownership skill. 30 mentions extracted, 30/30 validated against field.
+      </div>
+      <div>
+        <strong>Course Proximity Stats</strong>
+        FW 150-200 and FW 200+ are the two most predictive Doral approach distances per WGC-Cadillac historical SG analysis.
+      </div>
+      <div>
+        <strong>Doral Composite Z-Score</strong>
+        35% App + 25% OTT + 20% T2G + 15% recent form + 5% momentum, weighted toward Blue Monster's known profile.
+      </div>
+    </div>
+    <div class="disclaimer">
+      <strong>Pipeline status:</strong> Mode REDUCED_C (DataGolf + market odds). DraftKings DFS salaries and CH model not yet uploaded — projections will sharpen significantly once those land. All ownership values shown are <em>estimates anchored to market odds</em>, not actual DK projections from RotoGrinders/FantasyLabs (those drop Wednesday).
+      &nbsp;·&nbsp; <strong>Audit verdict:</strong> ✓ CLEARED (7/7 unit tests, 0 bugs, 1 INFO flag — Kim last-name verification).
+    </div>
+  </div>
+</footer>
+
+<script type="application/json" id="player-data">
+[{"name": "Collin Morikawa", "dg_rank": 9, "owgr_rank": 6, "market_rank": 3, "doral_rank": 1, "doral_composite": 2.08, "proj_final": 112.4, "mc_mean": 112.3, "mc_p90": 136.3, "mc_ceil": 155.3, "sigma": 18.6, "app_true": 1.37, "ott_true": 0.56, "t2g_true": 2.16, "putt_true": 0.29, "total_true": 2.45, "sg_l20": 3.18, "momentum": 1.87, "fw_150_200": 0.706, "fw_over_200": 0.461, "dk_win_odds": 2100, "market_win_prob": 0.0429, "own_pct_est": 10.2, "signal_agreement": 3, "buzz_score": 2.2, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:STRONG", "recent_5": "1/T7/5/T7/T4", "news_wd": false, "news_note": "Elite approach, Open Champ \u2014 \u26a0\ufe0f recent back issue flagged (monitor)"}, {"name": "Cameron Young", "dg_rank": 6, "owgr_rank": 4, "market_rank": 2, "doral_rank": 2, "doral_composite": 1.75, "proj_final": 112.8, "mc_mean": 112.8, "mc_p90": 135.4, "mc_ceil": 154.0, "sigma": 17.5, "app_true": 0.82, "ott_true": 0.91, "t2g_true": 2.0, "putt_true": 0.31, "total_true": 2.29, "sg_l20": 3.1, "momentum": 1.14, "fw_150_200": 0.722, "fw_over_200": 0.411, "dk_win_odds": 1475, "market_win_prob": 0.0599, "own_pct_est": 14.5, "signal_agreement": 3, "buzz_score": 3.3, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:LOCK", "recent_5": "T7/T3/1/T3/T25", "news_wd": false, "news_note": "Won The Players, T3 Masters \u2014 emotional proof"}, {"name": "Scottie Scheffler", "dg_rank": 1, "owgr_rank": 1, "market_rank": 1, "doral_rank": 3, "doral_composite": 1.37, "proj_final": 111.3, "mc_mean": 111.2, "mc_p90": 130.9, "mc_ceil": 146.6, "sigma": 15.4, "app_true": 0.61, "ott_true": 0.87, "t2g_true": 2.22, "putt_true": 0.69, "total_true": 2.99, "sg_l20": 2.7, "momentum": -0.69, "fw_150_200": 0.754, "fw_over_200": 0.414, "dk_win_odds": 295, "market_win_prob": 0.2389, "own_pct_est": 41.5, "signal_agreement": 3, "buzz_score": 2.2, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:STRONG", "recent_5": "T12/T24/T22/2/2", "news_wd": false, "news_note": "World #1 favorite, control + steady mistakes"}, {"name": "Si Woo Kim", "dg_rank": 12, "owgr_rank": 26, "market_rank": 8, "doral_rank": 4, "doral_composite": 1.27, "proj_final": 88.4, "mc_mean": 88.4, "mc_p90": 109.1, "mc_ceil": 126.1, "sigma": 16.2, "app_true": 0.91, "ott_true": 0.71, "t2g_true": 1.85, "putt_true": -0.11, "total_true": 1.89, "sg_l20": 1.61, "momentum": 0.23, "fw_150_200": 0.748, "fw_over_200": 0.531, "dk_win_odds": 3100, "market_win_prob": 0.0295, "own_pct_est": 8.0, "signal_agreement": 2, "buzz_score": 2.2, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:STRONG", "recent_5": "T13/T50/T10/47/3", "news_wd": false, "news_note": "nan"}, {"name": "Adam Scott", "dg_rank": 26, "owgr_rank": 53, "market_rank": 13, "doral_rank": 5, "doral_composite": 1.24, "proj_final": 91.1, "mc_mean": 91.2, "mc_p90": 113.6, "mc_ceil": 132.1, "sigma": 17.5, "app_true": 1.04, "ott_true": 0.49, "t2g_true": 1.58, "putt_true": 0.02, "total_true": 1.53, "sg_l20": 1.87, "momentum": 0.82, "fw_150_200": 0.734, "fw_over_200": 0.567, "dk_win_odds": 3400, "market_win_prob": 0.027, "own_pct_est": 6.0, "signal_agreement": 1, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "recent_5": "4/T11/T56/T21/T24", "news_wd": false, "news_note": "nan"}, {"name": "Justin Rose", "dg_rank": 22, "owgr_rank": 5, "market_rank": 11, "doral_rank": 6, "doral_composite": 1.11, "proj_final": 93.9, "mc_mean": 94.0, "mc_p90": 116.5, "mc_ceil": 135.0, "sigma": 17.5, "app_true": 1.16, "ott_true": 0.16, "t2g_true": 1.42, "putt_true": 0.28, "total_true": 1.8, "sg_l20": 2.13, "momentum": 1.03, "fw_150_200": 0.699, "fw_over_200": 0.549, "dk_win_odds": 3300, "market_win_prob": 0.0278, "own_pct_est": 7.7, "signal_agreement": 2, "buzz_score": 2.2, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:STRONG", "recent_5": "T37/CUT/CUT/T13/T3", "news_wd": false, "news_note": "Veteran ball-striker, 200-225 yard prox elite"}, {"name": "Chris Gotterup", "dg_rank": 23, "owgr_rank": 11, "market_rank": 14, "doral_rank": 7, "doral_composite": 0.95, "proj_final": 85.6, "mc_mean": 85.6, "mc_p90": 106.3, "mc_ceil": 123.0, "sigma": 16.2, "app_true": 0.6, "ott_true": 0.76, "t2g_true": 1.62, "putt_true": 0.14, "total_true": 1.74, "sg_l20": 1.52, "momentum": 0.11, "fw_150_200": 0.734, "fw_over_200": 0.473, "dk_win_odds": 3500, "market_win_prob": 0.0262, "own_pct_est": 7.5, "signal_agreement": 2, "buzz_score": 2.2, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:STRONG", "recent_5": "T18/T56/T6/T24/T25", "news_wd": false, "news_note": "nan"}, {"name": "Ryo Hisatsune", "dg_rank": 54, "owgr_rank": 57, "market_rank": 50, "doral_rank": 8, "doral_composite": 0.92, "proj_final": 80.1, "mc_mean": 80.0, "mc_p90": 102.5, "mc_ceil": 120.5, "sigma": 17.5, "app_true": 0.68, "ott_true": 0.63, "t2g_true": 1.51, "putt_true": 0.01, "total_true": 1.27, "sg_l20": 1.34, "momentum": 1.05, "fw_150_200": 0.723, "fw_over_200": 0.546, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 4.7, "signal_agreement": 1, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "recent_5": "T33/T13/T30/T8/T60", "news_wd": false, "news_note": "nan"}, {"name": "Patrick Cantlay", "dg_rank": 15, "owgr_rank": 31, "market_rank": 7, "doral_rank": 9, "doral_composite": 0.82, "proj_final": 87.8, "mc_mean": 87.8, "mc_p90": 108.4, "mc_ceil": 125.4, "sigma": 16.2, "app_true": 0.6, "ott_true": 0.53, "t2g_true": 1.72, "putt_true": -0.11, "total_true": 1.58, "sg_l20": 1.66, "momentum": 0.15, "fw_150_200": 0.712, "fw_over_200": 0.506, "dk_win_odds": 2700, "market_win_prob": 0.0337, "own_pct_est": 7.0, "signal_agreement": 2, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "recent_5": "CUT/T32/T7/T12/T8", "news_wd": false, "news_note": "nan"}, {"name": "Jake Knapp", "dg_rank": 18, "owgr_rank": 37, "market_rank": 15, "doral_rank": 10, "doral_composite": 0.71, "proj_final": 85.9, "mc_mean": 85.8, "mc_p90": 106.6, "mc_ceil": 123.6, "sigma": 16.2, "app_true": 0.61, "ott_true": 0.56, "t2g_true": 1.25, "putt_true": 0.82, "total_true": 2.1, "sg_l20": 1.64, "momentum": 0.15, "fw_150_200": 0.657, "fw_over_200": 0.478, "dk_win_odds": 3700, "market_win_prob": 0.0248, "own_pct_est": 7.3, "signal_agreement": 2, "buzz_score": 2.2, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:STRONG", "recent_5": "6/CUT/T6/11/T74", "news_wd": false, "news_note": "nan"}, {"name": "Russell Henley", "dg_rank": 7, "owgr_rank": 8, "market_rank": 4, "doral_rank": 11, "doral_composite": 0.7, "proj_final": 92.3, "mc_mean": 92.4, "mc_p90": 113.2, "mc_ceil": 130.2, "sigma": 16.2, "app_true": 0.67, "ott_true": 0.35, "t2g_true": 1.36, "putt_true": 0.59, "total_true": 1.96, "sg_l20": 1.99, "momentum": 0.06, "fw_150_200": 0.691, "fw_over_200": 0.447, "dk_win_odds": 2250, "market_win_prob": 0.0402, "own_pct_est": 6.4, "signal_agreement": 2, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T6/T13/CUT/T3/T25", "news_wd": false, "news_note": "Augusta-strong, fits Doral discipline profile"}, {"name": "Austin Smotherman", "dg_rank": 133, "owgr_rank": 87, "market_rank": 50, "doral_rank": 12, "doral_composite": 0.65, "proj_final": 71.2, "mc_mean": 71.3, "mc_p90": 93.8, "mc_ceil": 111.6, "sigma": 17.5, "app_true": 0.86, "ott_true": 0.48, "t2g_true": 0.99, "putt_true": -0.47, "total_true": 0.57, "sg_l20": 0.7, "momentum": 0.52, "fw_150_200": 0.691, "fw_over_200": 0.494, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 1, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "WD/T13/CUT/T36/T74", "news_wd": false, "news_note": "nan"}, {"name": "Akshay Bhatia", "dg_rank": 24, "owgr_rank": 24, "market_rank": 21, "doral_rank": 13, "doral_composite": 0.65, "proj_final": 88.1, "mc_mean": 88.0, "mc_p90": 110.6, "mc_ceil": 128.5, "sigma": 17.5, "app_true": 0.96, "ott_true": 0.03, "t2g_true": 1.01, "putt_true": 0.96, "total_true": 1.57, "sg_l20": 1.89, "momentum": 0.81, "fw_150_200": 0.722, "fw_over_200": 0.429, "dk_win_odds": 4500, "market_win_prob": 0.0205, "own_pct_est": 3.3, "signal_agreement": 1, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "1/T13/CUT/CUT/T16", "news_wd": false, "news_note": "Won Bay Hill 2026 from 5 back, Florida resilience"}, {"name": "Jacob Bridgeman", "dg_rank": 19, "owgr_rank": 19, "market_rank": 19, "doral_rank": 14, "doral_composite": 0.61, "proj_final": 84.9, "mc_mean": 84.9, "mc_p90": 107.5, "mc_ceil": 125.1, "sigma": 17.5, "app_true": 0.69, "ott_true": 0.38, "t2g_true": 1.01, "putt_true": 1.13, "total_true": 2.09, "sg_l20": 1.62, "momentum": 0.72, "fw_150_200": 0.761, "fw_over_200": 0.381, "dk_win_odds": 4200, "market_win_prob": 0.0219, "own_pct_est": 3.5, "signal_agreement": 1, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T18/T5/T14/T41/T33", "news_wd": false, "news_note": "nan"}, {"name": "Shane Lowry", "dg_rank": 29, "owgr_rank": 35, "market_rank": 28, "doral_rank": 15, "doral_composite": 0.6, "proj_final": 77.8, "mc_mean": 77.8, "mc_p90": 98.6, "mc_ceil": 115.7, "sigma": 16.2, "app_true": 1.0, "ott_true": 0.16, "t2g_true": 1.1, "putt_true": 0.26, "total_true": 1.36, "sg_l20": 1.1, "momentum": 0.06, "fw_150_200": 0.686, "fw_over_200": 0.604, "dk_win_odds": 5500, "market_win_prob": 0.0169, "own_pct_est": 2.7, "signal_agreement": 1, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "CUT/CUT/T28/T30/T42", "news_wd": false, "news_note": "nan"}, {"name": "Sudarshan Yellamaraju", "dg_rank": 76, "owgr_rank": 118, "market_rank": 50, "doral_rank": 16, "doral_composite": 0.59, "proj_final": 81.9, "mc_mean": 81.9, "mc_p90": 105.9, "mc_ceil": 125.0, "sigma": 18.6, "app_true": 0.55, "ott_true": 0.48, "t2g_true": 0.88, "putt_true": 0.54, "total_true": 1.04, "sg_l20": 1.6, "momentum": 1.52, "fw_150_200": 0.642, "fw_over_200": 0.459, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 4.7, "signal_agreement": 1, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "recent_5": "T37/T5/T6/T14/T52", "news_wd": false, "news_note": "nan"}, {"name": "Min Woo Lee", "dg_rank": 31, "owgr_rank": 32, "market_rank": 17, "doral_rank": 17, "doral_composite": 0.57, "proj_final": 80.7, "mc_mean": 80.8, "mc_p90": 101.6, "mc_ceil": 118.4, "sigma": 16.2, "app_true": 0.29, "ott_true": 0.74, "t2g_true": 1.37, "putt_true": 0.29, "total_true": 1.56, "sg_l20": 1.29, "momentum": 0.45, "fw_150_200": 0.632, "fw_over_200": 0.519, "dk_win_odds": 4100, "market_win_prob": 0.0225, "own_pct_est": 5.2, "signal_agreement": 1, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "recent_5": "T6/T32/T3/CUT/T60", "news_wd": false, "news_note": "nan"}, {"name": "Hideki Matsuyama", "dg_rank": 11, "owgr_rank": 15, "market_rank": 8, "doral_rank": 18, "doral_composite": 0.56, "proj_final": 83.3, "mc_mean": 83.3, "mc_p90": 103.9, "mc_ceil": 120.9, "sigma": 16.2, "app_true": 0.91, "ott_true": 0.04, "t2g_true": 1.4, "putt_true": 0.41, "total_true": 1.89, "sg_l20": 1.42, "momentum": -0.02, "fw_150_200": 0.728, "fw_over_200": 0.512, "dk_win_odds": 3100, "market_win_prob": 0.0295, "own_pct_est": 6.4, "signal_agreement": 1, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "recent_5": "T28/T41/T27/T21/T12", "news_wd": false, "news_note": "Veteran calm, pattern fit"}, {"name": "J.J. Spaun", "dg_rank": 25, "owgr_rank": 10, "market_rank": 27, "doral_rank": 19, "doral_composite": 0.55, "proj_final": 74.4, "mc_mean": 74.3, "mc_p90": 93.9, "mc_ceil": 110.0, "sigma": 15.4, "app_true": 0.82, "ott_true": 0.4, "t2g_true": 1.22, "putt_true": -0.56, "total_true": 0.67, "sg_l20": 0.83, "momentum": -0.59, "fw_150_200": 0.72, "fw_over_200": 0.516, "dk_win_odds": 5200, "market_win_prob": 0.0178, "own_pct_est": 2.8, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "MAYO NEUTRAL", "buzz_detail": "PatMayo:NEUTRAL", "recent_5": "T24/CUT/1/CUT/T25", "news_wd": false, "news_note": "Recent breakout form, 17-under at The Players, fits Doral long-iron profile"}, {"name": "Sam Stevens", "dg_rank": 47, "owgr_rank": 46, "market_rank": 50, "doral_rank": 20, "doral_composite": 0.53, "proj_final": 76.2, "mc_mean": 76.2, "mc_p90": 97.0, "mc_ceil": 113.7, "sigma": 16.2, "app_true": 0.55, "ott_true": 0.53, "t2g_true": 1.1, "putt_true": -0.04, "total_true": 1.11, "sg_l20": 1.15, "momentum": 0.41, "fw_150_200": 0.692, "fw_over_200": 0.408, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 6.3, "signal_agreement": 1, "buzz_score": 2.2, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:STRONG", "recent_5": "CUT/58/5/T24/T65", "news_wd": false, "news_note": "nan"}, {"name": "Ryan Gerard", "dg_rank": 37, "owgr_rank": 33, "market_rank": 50, "doral_rank": 21, "doral_composite": 0.51, "proj_final": 72.2, "mc_mean": 72.3, "mc_p90": 93.0, "mc_ceil": 110.1, "sigma": 16.2, "app_true": 0.86, "ott_true": 0.31, "t2g_true": 0.98, "putt_true": 0.32, "total_true": 1.67, "sg_l20": 0.83, "momentum": 0.06, "fw_150_200": 0.737, "fw_over_200": 0.513, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 4.7, "signal_agreement": 0, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "recent_5": "CUT/T27/CUT/T38/T33", "news_wd": false, "news_note": "nan"}, {"name": "Daniel Berger", "dg_rank": 64, "owgr_rank": 40, "market_rank": 50, "doral_rank": 22, "doral_composite": 0.47, "proj_final": 71.7, "mc_mean": 71.8, "mc_p90": 92.7, "mc_ceil": 109.6, "sigma": 16.2, "app_true": 0.93, "ott_true": 0.23, "t2g_true": 0.86, "putt_true": -0.1, "total_true": 0.76, "sg_l20": 0.8, "momentum": 0.2, "fw_150_200": 0.731, "fw_over_200": 0.488, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T32/2/T66/CUT/T42", "news_wd": false, "news_note": "nan"}, {"name": "Kurt Kitayama", "dg_rank": 42, "owgr_rank": 34, "market_rank": 25, "doral_rank": 23, "doral_composite": 0.45, "proj_final": 73.5, "mc_mean": 73.5, "mc_p90": 94.3, "mc_ceil": 111.3, "sigma": 16.2, "app_true": 0.8, "ott_true": 0.38, "t2g_true": 0.92, "putt_true": 0.02, "total_true": 0.93, "sg_l20": 0.79, "momentum": -0.26, "fw_150_200": 0.718, "fw_over_200": 0.48, "dk_win_odds": 5100, "market_win_prob": 0.0181, "own_pct_est": 2.9, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T18/CUT/T60/51/T8", "news_wd": false, "news_note": "nan"}, {"name": "Sepp Straka", "dg_rank": 35, "owgr_rank": 13, "market_rank": 28, "doral_rank": 24, "doral_composite": 0.42, "proj_final": 71.5, "mc_mean": 71.6, "mc_p90": 91.2, "mc_ceil": 107.1, "sigma": 15.4, "app_true": 0.85, "ott_true": 0.23, "t2g_true": 1.21, "putt_true": 0.13, "total_true": 0.93, "sg_l20": 0.65, "momentum": -0.52, "fw_150_200": 0.709, "fw_over_200": 0.556, "dk_win_odds": 5500, "market_win_prob": 0.0169, "own_pct_est": 4.4, "signal_agreement": 0, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "recent_5": "T13/T8/CUT/T41/T42", "news_wd": false, "news_note": "nan"}, {"name": "Viktor Hovland", "dg_rank": 20, "owgr_rank": 25, "market_rank": 11, "doral_rank": 25, "doral_composite": 0.42, "proj_final": 83.1, "mc_mean": 83.1, "mc_p90": 103.8, "mc_ceil": 121.0, "sigma": 16.2, "app_true": 0.71, "ott_true": 0.14, "t2g_true": 1.18, "putt_true": -0.01, "total_true": 1.17, "sg_l20": 1.47, "momentum": 0.03, "fw_150_200": 0.77, "fw_over_200": 0.416, "dk_win_odds": 3300, "market_win_prob": 0.0278, "own_pct_est": 4.4, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T13/T13/CUT/T18/T42", "news_wd": false, "news_note": "nan"}, {"name": "Gary Woodland", "dg_rank": 56, "owgr_rank": 45, "market_rank": 50, "doral_rank": 26, "doral_composite": 0.41, "proj_final": 83.0, "mc_mean": 83.1, "mc_p90": 105.6, "mc_ceil": 124.3, "sigma": 17.5, "app_true": 0.25, "ott_true": 0.69, "t2g_true": 0.58, "putt_true": 0.49, "total_true": 0.85, "sg_l20": 1.75, "momentum": 1.24, "fw_150_200": 0.729, "fw_over_200": 0.462, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 4.7, "signal_agreement": 0, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "recent_5": "CUT/T14/1/T33/T8", "news_wd": false, "news_note": "nan"}, {"name": "Tommy Fleetwood", "dg_rank": 10, "owgr_rank": 7, "market_rank": 4, "doral_rank": 27, "doral_composite": 0.38, "proj_final": 80.9, "mc_mean": 80.9, "mc_p90": 100.7, "mc_ceil": 116.2, "sigma": 15.4, "app_true": 0.41, "ott_true": 0.55, "t2g_true": 1.32, "putt_true": 0.02, "total_true": 1.35, "sg_l20": 1.16, "momentum": -0.84, "fw_150_200": 0.657, "fw_over_200": 0.498, "dk_win_odds": 2250, "market_win_prob": 0.0402, "own_pct_est": 4.8, "signal_agreement": 1, "buzz_score": -1.1, "mayo_call": "MAYO FADE", "buzz_detail": "PatMayo:LEAN_AWAY", "recent_5": "49/T8/T10/T33/T52", "news_wd": false, "news_note": "Reigning FedExCup champ, no longer carrying the no-PGA-win question"}, {"name": "Nicolai Hojgaard", "dg_rank": 34, "owgr_rank": 36, "market_rank": 25, "doral_rank": 28, "doral_composite": 0.37, "proj_final": 78.3, "mc_mean": 78.4, "mc_p90": 99.0, "mc_ceil": 115.8, "sigma": 16.2, "app_true": 0.59, "ott_true": 0.34, "t2g_true": 0.98, "putt_true": 0.18, "total_true": 1.2, "sg_l20": 1.21, "momentum": 0.14, "fw_150_200": 0.72, "fw_over_200": 0.574, "dk_win_odds": 5100, "market_win_prob": 0.0181, "own_pct_est": 6.2, "signal_agreement": 1, "buzz_score": 2.2, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:STRONG", "recent_5": "T27/T55/2/CUT/T55", "news_wd": false, "news_note": "nan"}, {"name": "Corey Conners", "dg_rank": 49, "owgr_rank": 44, "market_rank": 50, "doral_rank": 29, "doral_composite": 0.26, "proj_final": 73.5, "mc_mean": 73.6, "mc_p90": 94.2, "mc_ceil": 111.2, "sigma": 16.2, "app_true": 0.67, "ott_true": 0.21, "t2g_true": 0.82, "putt_true": -0.24, "total_true": 0.58, "sg_l20": 1.02, "momentum": 0.19, "fw_150_200": 0.721, "fw_over_200": 0.463, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 4.7, "signal_agreement": 0, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "recent_5": "T33/T13/T14/T49/T55", "news_wd": false, "news_note": "nan"}, {"name": "Pierceson Coody", "dg_rank": 62, "owgr_rank": 55, "market_rank": 50, "doral_rank": 30, "doral_composite": 0.24, "proj_final": 62.1, "mc_mean": 62.2, "mc_p90": 81.7, "mc_ceil": 98.2, "sigma": 15.4, "app_true": 0.64, "ott_true": 0.54, "t2g_true": 0.8, "putt_true": 0.08, "total_true": 1.01, "sg_l20": 0.09, "momentum": -0.55, "fw_150_200": 0.646, "fw_over_200": 0.612, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 4.7, "signal_agreement": 0, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "recent_5": "CUT/CUT/T55/WD/T16", "news_wd": false, "news_note": "nan"}, {"name": "Jordan Smith", "dg_rank": 61, "owgr_rank": 68, "market_rank": 50, "doral_rank": 31, "doral_composite": 0.21, "proj_final": 70.4, "mc_mean": 70.3, "mc_p90": 91.1, "mc_ceil": 107.7, "sigma": 16.2, "app_true": 0.39, "ott_true": 0.55, "t2g_true": 0.75, "putt_true": -0.03, "total_true": 0.69, "sg_l20": 0.78, "momentum": 0.21, "fw_150_200": 0.708, "fw_over_200": 0.595, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "CUT/3/T44/CUT/T16", "news_wd": false, "news_note": "nan"}, {"name": "Sahith Theegala", "dg_rank": 41, "owgr_rank": 74, "market_rank": 50, "doral_rank": 32, "doral_composite": 0.2, "proj_final": 80.9, "mc_mean": 80.8, "mc_p90": 103.3, "mc_ceil": 121.5, "sigma": 17.5, "app_true": 0.54, "ott_true": -0.02, "t2g_true": 0.96, "putt_true": 0.42, "total_true": 1.49, "sg_l20": 1.64, "momentum": 1.09, "fw_150_200": 0.676, "fw_over_200": 0.563, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T6/T32/CUT/T10/T25", "news_wd": false, "news_note": "nan"}, {"name": "Rickie Fowler", "dg_rank": 27, "owgr_rank": 56, "market_rank": 19, "doral_rank": 33, "doral_composite": 0.19, "proj_final": 77.7, "mc_mean": 77.6, "mc_p90": 98.4, "mc_ceil": 115.3, "sigma": 16.2, "app_true": 0.44, "ott_true": 0.43, "t2g_true": 0.72, "putt_true": 0.64, "total_true": 1.43, "sg_l20": 1.17, "momentum": -0.14, "fw_150_200": 0.702, "fw_over_200": 0.514, "dk_win_odds": 4200, "market_win_prob": 0.0219, "own_pct_est": 3.5, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T9/T42/CUT/CUT/T8", "news_wd": false, "news_note": "nan"}, {"name": "Maverick McNealy", "dg_rank": 16, "owgr_rank": 30, "market_rank": 11, "doral_rank": 34, "doral_composite": 0.19, "proj_final": 85.1, "mc_mean": 85.0, "mc_p90": 105.6, "mc_ceil": 122.9, "sigma": 16.2, "app_true": 0.13, "ott_true": 0.49, "t2g_true": 0.99, "putt_true": 0.58, "total_true": 1.63, "sg_l20": 1.71, "momentum": 0.28, "fw_150_200": 0.678, "fw_over_200": 0.421, "dk_win_odds": 3300, "market_win_prob": 0.0278, "own_pct_est": 4.4, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "MAYO NEUTRAL", "buzz_detail": "PatMayo:NEUTRAL", "recent_5": "T13/T32/T21/T18/T16", "news_wd": false, "news_note": "nan"}, {"name": "Joel Dahmen", "dg_rank": 169, "owgr_rank": 182, "market_rank": 50, "doral_rank": 35, "doral_composite": 0.16, "proj_final": 64.7, "mc_mean": 64.8, "mc_p90": 85.5, "mc_ceil": 102.4, "sigma": 16.2, "app_true": 0.48, "ott_true": 0.52, "t2g_true": 0.61, "putt_true": -0.54, "total_true": 0.49, "sg_l20": 0.33, "momentum": 0.46, "fw_150_200": 0.676, "fw_over_200": 0.486, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T9/CUT/CUT/T64/CUT", "news_wd": false, "news_note": "nan"}, {"name": "Sam Burns", "dg_rank": 14, "owgr_rank": 29, "market_rank": 6, "doral_rank": 36, "doral_composite": 0.16, "proj_final": 85.3, "mc_mean": 85.2, "mc_p90": 106.0, "mc_ceil": 122.6, "sigma": 16.2, "app_true": 0.44, "ott_true": 0.33, "t2g_true": 0.51, "putt_true": 0.97, "total_true": 1.49, "sg_l20": 1.64, "momentum": 0.0, "fw_150_200": 0.695, "fw_over_200": 0.456, "dk_win_odds": 2500, "market_win_prob": 0.0363, "own_pct_est": 5.8, "signal_agreement": 1, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "CUT/T13/T21/T7/T16", "news_wd": false, "news_note": "nan"}, {"name": "Jordan Spieth", "dg_rank": 32, "owgr_rank": 51, "market_rank": 16, "doral_rank": 37, "doral_composite": 0.14, "proj_final": 78.2, "mc_mean": 78.3, "mc_p90": 99.0, "mc_ceil": 115.6, "sigma": 16.2, "app_true": 0.63, "ott_true": 0.04, "t2g_true": 0.89, "putt_true": 0.44, "total_true": 1.32, "sg_l20": 1.22, "momentum": 0.05, "fw_150_200": 0.71, "fw_over_200": 0.449, "dk_win_odds": 4000, "market_win_prob": 0.023, "own_pct_est": 3.7, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T32/T11/T63/T12/T33", "news_wd": false, "news_note": "Returning to Doral form profile"}, {"name": "Bud Cauley", "dg_rank": 72, "owgr_rank": 65, "market_rank": 50, "doral_rank": 38, "doral_composite": 0.0, "proj_final": 72.7, "mc_mean": 72.7, "mc_p90": 95.1, "mc_ceil": 112.8, "sigma": 17.5, "app_true": 0.44, "ott_true": 0.1, "t2g_true": 0.81, "putt_true": -0.21, "total_true": 0.63, "sg_l20": 1.04, "momentum": 0.63, "fw_150_200": 0.723, "fw_over_200": 0.389, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T18/T32/74/T21/7", "news_wd": false, "news_note": "nan"}, {"name": "Michael Thorbjornsen", "dg_rank": 55, "owgr_rank": 60, "market_rank": 24, "doral_rank": 39, "doral_composite": -0.05, "proj_final": 75.0, "mc_mean": 75.1, "mc_p90": 95.7, "mc_ceil": 112.6, "sigma": 16.2, "app_true": 0.18, "ott_true": 0.34, "t2g_true": 0.86, "putt_true": -0.28, "total_true": 0.72, "sg_l20": 1.06, "momentum": 0.18, "fw_150_200": 0.668, "fw_over_200": 0.431, "dk_win_odds": 4800, "market_win_prob": 0.0193, "own_pct_est": 3.1, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T33/T22/T14/CUT/T33", "news_wd": false, "news_note": "nan"}, {"name": "Nick Taylor", "dg_rank": 46, "owgr_rank": 67, "market_rank": 50, "doral_rank": 40, "doral_composite": -0.11, "proj_final": 66.1, "mc_mean": 66.2, "mc_p90": 86.9, "mc_ceil": 104.3, "sigma": 16.2, "app_true": 0.55, "ott_true": -0.01, "t2g_true": 0.98, "putt_true": -0.07, "total_true": 0.99, "sg_l20": 0.54, "momentum": -0.42, "fw_150_200": 0.731, "fw_over_200": 0.49, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T42/CUT/T28/T41/T60", "news_wd": false, "news_note": "nan"}, {"name": "Matt Wallace", "dg_rank": 86, "owgr_rank": 69, "market_rank": 50, "doral_rank": 41, "doral_composite": -0.14, "proj_final": 66.9, "mc_mean": 67.0, "mc_p90": 87.7, "mc_ceil": 104.6, "sigma": 16.2, "app_true": 0.47, "ott_true": 0.06, "t2g_true": 0.74, "putt_true": -0.03, "total_true": 0.41, "sg_l20": 0.61, "momentum": 0.12, "fw_150_200": 0.7, "fw_over_200": 0.456, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "CUT/T40/T51/T2/T55", "news_wd": false, "news_note": "nan"}, {"name": "Harris English", "dg_rank": 17, "owgr_rank": 18, "market_rank": 17, "doral_rank": 42, "doral_composite": -0.15, "proj_final": 79.1, "mc_mean": 79.2, "mc_p90": 99.9, "mc_ceil": 116.9, "sigma": 16.2, "app_true": 0.0, "ott_true": 0.51, "t2g_true": 0.5, "putt_true": 0.92, "total_true": 1.44, "sg_l20": 1.39, "momentum": -0.03, "fw_150_200": 0.699, "fw_over_200": 0.5, "dk_win_odds": 4100, "market_win_prob": 0.0225, "own_pct_est": 1.9, "signal_agreement": 0, "buzz_score": -1.1, "mayo_call": "MAYO FADE", "buzz_detail": "PatMayo:LEAN_AWAY", "recent_5": "T24/CUT/T21/T30/T4", "news_wd": false, "news_note": "nan"}, {"name": "Andrew Putnam", "dg_rank": 71, "owgr_rank": 88, "market_rank": 50, "doral_rank": 43, "doral_composite": -0.17, "proj_final": 75.7, "mc_mean": 75.6, "mc_p90": 98.3, "mc_ceil": 116.4, "sigma": 17.5, "app_true": 0.51, "ott_true": -0.29, "t2g_true": 0.7, "putt_true": 0.07, "total_true": 0.99, "sg_l20": 1.34, "momentum": 0.98, "fw_150_200": 0.714, "fw_over_200": 0.405, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 4.7, "signal_agreement": 0, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "recent_5": "T32/T30/T44/T5/T42", "news_wd": false, "news_note": "nan"}, {"name": "Alex Noren", "dg_rank": 30, "owgr_rank": 21, "market_rank": 50, "doral_rank": 44, "doral_composite": -0.2, "proj_final": 70.9, "mc_mean": 71.0, "mc_p90": 91.9, "mc_ceil": 108.6, "sigma": 16.2, "app_true": 0.41, "ott_true": 0.02, "t2g_true": 0.7, "putt_true": 0.48, "total_true": 0.97, "sg_l20": 0.96, "momentum": -0.25, "fw_150_200": 0.686, "fw_over_200": 0.416, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T24/T32/T30/T30/T65", "news_wd": false, "news_note": "nan"}, {"name": "Ryan Fox", "dg_rank": 60, "owgr_rank": 54, "market_rank": 50, "doral_rank": 45, "doral_composite": -0.22, "proj_final": 73.4, "mc_mean": 73.5, "mc_p90": 96.0, "mc_ceil": 114.0, "sigma": 17.5, "app_true": 0.05, "ott_true": 0.3, "t2g_true": 0.62, "putt_true": 0.25, "total_true": 0.7, "sg_l20": 1.17, "momentum": 0.51, "fw_150_200": 0.645, "fw_over_200": 0.516, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 4.7, "signal_agreement": 0, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "recent_5": "T7/T24/CUT/CUT/T16", "news_wd": false, "news_note": "nan"}, {"name": "Max Homa", "dg_rank": 91, "owgr_rank": 117, "market_rank": 50, "doral_rank": 46, "doral_composite": -0.31, "proj_final": 67.1, "mc_mean": 67.2, "mc_p90": 88.1, "mc_ceil": 104.6, "sigma": 16.2, "app_true": 0.34, "ott_true": 0.11, "t2g_true": 0.29, "putt_true": 0.29, "total_true": 0.51, "sg_l20": 0.68, "momentum": 0.32, "fw_150_200": 0.673, "fw_over_200": 0.499, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T32/CUT/CUT/T9/T69", "news_wd": false, "news_note": "nan"}, {"name": "Andrew Novak", "dg_rank": 97, "owgr_rank": 52, "market_rank": 50, "doral_rank": 47, "doral_composite": -0.37, "proj_final": 64.2, "mc_mean": 64.2, "mc_p90": 85.0, "mc_ceil": 102.0, "sigma": 16.2, "app_true": 0.3, "ott_true": 0.1, "t2g_true": 0.47, "putt_true": -0.17, "total_true": 0.38, "sg_l20": 0.47, "momentum": -0.05, "fw_150_200": 0.651, "fw_over_200": 0.44, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "CUT/T55/T14/CUT/T16", "news_wd": false, "news_note": "nan"}, {"name": "Patrick Rodgers", "dg_rank": 89, "owgr_rank": 73, "market_rank": 50, "doral_rank": 48, "doral_composite": -0.45, "proj_final": 63.0, "mc_mean": 62.9, "mc_p90": 83.8, "mc_ceil": 100.0, "sigma": 16.2, "app_true": 0.28, "ott_true": 0.03, "t2g_true": 0.52, "putt_true": 0.26, "total_true": 0.75, "sg_l20": 0.39, "momentum": 0.08, "fw_150_200": 0.662, "fw_over_200": 0.485, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T11/T40/CUT/CUT/T16", "news_wd": false, "news_note": "nan"}, {"name": "Jason Day", "dg_rank": 33, "owgr_rank": 38, "market_rank": 23, "doral_rank": 49, "doral_composite": -0.46, "proj_final": 70.7, "mc_mean": 70.7, "mc_p90": 91.4, "mc_ceil": 108.6, "sigma": 16.2, "app_true": 0.01, "ott_true": 0.18, "t2g_true": 0.67, "putt_true": 0.68, "total_true": 1.25, "sg_l20": 0.84, "momentum": -0.2, "fw_150_200": 0.725, "fw_over_200": 0.382, "dk_win_odds": 4700, "market_win_prob": 0.0197, "own_pct_est": 4.8, "signal_agreement": 0, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "recent_5": "CUT/T59/T6/T12/T42", "news_wd": false, "news_note": "nan"}, {"name": "Aldrich Potgieter", "dg_rank": 226, "owgr_rank": 77, "market_rank": 50, "doral_rank": 50, "doral_composite": -0.52, "proj_final": 59.1, "mc_mean": 59.1, "mc_p90": 79.9, "mc_ceil": 96.9, "sigma": 16.2, "app_true": -0.15, "ott_true": 0.62, "t2g_true": 0.1, "putt_true": -0.48, "total_true": -0.39, "sg_l20": 0.1, "momentum": 0.41, "fw_150_200": 0.679, "fw_over_200": 0.561, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "CUT/CUT/T21/CUT/T25", "news_wd": false, "news_note": "nan"}, {"name": "Taylor Pendrith", "dg_rank": 99, "owgr_rank": 81, "market_rank": 50, "doral_rank": 51, "doral_composite": -0.55, "proj_final": 51.0, "mc_mean": 51.1, "mc_p90": 70.1, "mc_ceil": 85.8, "sigma": 14.9, "app_true": 0.04, "ott_true": 0.48, "t2g_true": 0.65, "putt_true": -0.44, "total_true": 0.14, "sg_l20": -0.55, "momentum": -1.2, "fw_150_200": 0.691, "fw_over_200": 0.446, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T38/T46/CUT/CUT/T71", "news_wd": false, "news_note": "nan"}, {"name": "Keegan Bradley", "dg_rank": 36, "owgr_rank": 27, "market_rank": 50, "doral_rank": 52, "doral_composite": -0.56, "proj_final": 65.7, "mc_mean": 65.6, "mc_p90": 85.5, "mc_ceil": 101.9, "sigma": 15.4, "app_true": -0.16, "ott_true": 0.38, "t2g_true": 0.57, "putt_true": 0.16, "total_true": 0.7, "sg_l20": 0.65, "momentum": -0.58, "fw_150_200": 0.633, "fw_over_200": 0.433, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 1.3, "signal_agreement": 0, "buzz_score": -1.1, "mayo_call": "MAYO FADE", "buzz_detail": "PatMayo:LEAN_AWAY", "recent_5": "CUT/T50/T55/T21/T12", "news_wd": false, "news_note": "nan"}, {"name": "Matt McCarty", "dg_rank": 52, "owgr_rank": 47, "market_rank": 50, "doral_rank": 53, "doral_composite": -0.61, "proj_final": 63.0, "mc_mean": 62.9, "mc_p90": 83.7, "mc_ceil": 100.4, "sigma": 16.2, "app_true": 0.07, "ott_true": 0.21, "t2g_true": 0.15, "putt_true": 0.4, "total_true": 0.75, "sg_l20": 0.45, "momentum": -0.3, "fw_150_200": 0.68, "fw_over_200": 0.413, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "CUT/CUT/T39/T24/T12", "news_wd": false, "news_note": "nan"}, {"name": "Brian Harman", "dg_rank": 70, "owgr_rank": 50, "market_rank": 50, "doral_rank": 54, "doral_composite": -0.63, "proj_final": 66.8, "mc_mean": 66.8, "mc_p90": 87.6, "mc_ceil": 104.4, "sigma": 16.2, "app_true": 0.21, "ott_true": -0.16, "t2g_true": 0.32, "putt_true": -0.09, "total_true": 0.23, "sg_l20": 0.76, "momentum": 0.18, "fw_150_200": 0.704, "fw_over_200": 0.454, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "50/T11/T39/T33/T25", "news_wd": false, "news_note": "nan"}, {"name": "J.T. Poston", "dg_rank": 75, "owgr_rank": 79, "market_rank": 30, "doral_rank": 55, "doral_composite": -0.7, "proj_final": 57.1, "mc_mean": 57.1, "mc_p90": 76.8, "mc_ceil": 92.9, "sigma": 15.4, "app_true": 0.16, "ott_true": 0.15, "t2g_true": 0.21, "putt_true": -0.06, "total_true": 0.3, "sg_l20": -0.07, "momentum": -0.73, "fw_150_200": 0.781, "fw_over_200": 0.42, "dk_win_odds": 11000, "market_win_prob": 0.0085, "own_pct_est": 2.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "CUT/T50/CUT/T21/T60", "news_wd": false, "news_note": "nan"}, {"name": "Sungjae Im", "dg_rank": 104, "owgr_rank": 76, "market_rank": 50, "doral_rank": 56, "doral_composite": -0.7, "proj_final": 63.8, "mc_mean": 63.8, "mc_p90": 84.5, "mc_ceil": 101.2, "sigma": 16.2, "app_true": -0.23, "ott_true": 0.22, "t2g_true": 0.47, "putt_true": 0.07, "total_true": 0.54, "sg_l20": 0.54, "momentum": 0.34, "fw_150_200": 0.649, "fw_over_200": 0.428, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "CUT/T4/T60/46/T42", "news_wd": false, "news_note": "nan"}, {"name": "Ricky Castillo", "dg_rank": 84, "owgr_rank": 86, "market_rank": 50, "doral_rank": 57, "doral_composite": -0.74, "proj_final": 63.3, "mc_mean": 63.3, "mc_p90": 84.2, "mc_ceil": 101.0, "sigma": 16.2, "app_true": -0.21, "ott_true": 0.3, "t2g_true": 0.2, "putt_true": 0.29, "total_true": 0.79, "sg_l20": 0.51, "momentum": 0.14, "fw_150_200": 0.641, "fw_over_200": 0.511, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "1/T70/T46/T44/T60", "news_wd": false, "news_note": "nan"}, {"name": "Harry Hall", "dg_rank": 40, "owgr_rank": 63, "market_rank": 50, "doral_rank": 58, "doral_composite": -0.8, "proj_final": 66.7, "mc_mean": 66.7, "mc_p90": 87.5, "mc_ceil": 104.7, "sigma": 16.2, "app_true": 0.07, "ott_true": -0.18, "t2g_true": 0.32, "putt_true": 0.5, "total_true": 0.88, "sg_l20": 0.81, "momentum": -0.4, "fw_150_200": 0.702, "fw_over_200": 0.345, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 4.7, "signal_agreement": 0, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "recent_5": "T9/CUT/T28/CUT/T65", "news_wd": false, "news_note": "nan"}, {"name": "Chandler Blanchet", "dg_rank": 124, "owgr_rank": 108, "market_rank": 50, "doral_rank": 59, "doral_composite": -0.88, "proj_final": 59.3, "mc_mean": 59.1, "mc_p90": 79.8, "mc_ceil": 96.8, "sigma": 16.2, "app_true": 0.05, "ott_true": 0.08, "t2g_true": -0.29, "putt_true": -0.46, "total_true": -0.31, "sg_l20": 0.23, "momentum": -0.03, "fw_150_200": 0.647, "fw_over_200": 0.548, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "2/T18/CUT/CUT/T33", "news_wd": false, "news_note": "nan"}, {"name": "Justin Thomas", "dg_rank": 53, "owgr_rank": 17, "market_rank": 50, "doral_rank": 60, "doral_composite": -0.9, "proj_final": 57.0, "mc_mean": 57.0, "mc_p90": 77.7, "mc_ceil": 94.2, "sigma": 16.2, "app_true": 0.03, "ott_true": -0.09, "t2g_true": 0.27, "putt_true": -0.22, "total_true": 0.05, "sg_l20": 0.05, "momentum": 0.0, "fw_150_200": 0.68, "fw_over_200": 0.396, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 4.7, "signal_agreement": 0, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "recent_5": "nan", "news_wd": false, "news_note": "nan"}, {"name": "Ben Griffin", "dg_rank": 28, "owgr_rank": 16, "market_rank": 22, "doral_rank": 61, "doral_composite": -0.9, "proj_final": 65.3, "mc_mean": 65.3, "mc_p90": 84.3, "mc_ceil": 100.0, "sigma": 14.9, "app_true": -0.08, "ott_true": -0.05, "t2g_true": 0.45, "putt_true": 0.34, "total_true": 0.83, "sg_l20": 0.54, "momentum": -1.03, "fw_150_200": 0.656, "fw_over_200": 0.506, "dk_win_odds": 4600, "market_win_prob": 0.0201, "own_pct_est": 3.2, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "CUT/CUT/T28/T33/T33", "news_wd": false, "news_note": "nan"}, {"name": "David Lipsky", "dg_rank": 160, "owgr_rank": 89, "market_rank": 50, "doral_rank": 62, "doral_composite": -0.91, "proj_final": 61.9, "mc_mean": 62.0, "mc_p90": 82.8, "mc_ceil": 100.0, "sigma": 16.2, "app_true": 0.07, "ott_true": -0.27, "t2g_true": 0.22, "putt_true": 0.36, "total_true": 0.48, "sg_l20": 0.45, "momentum": 0.4, "fw_150_200": 0.676, "fw_over_200": 0.411, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "CUT/T37/2/CUT/T71", "news_wd": false, "news_note": "nan"}, {"name": "Michael Kim", "dg_rank": 73, "owgr_rank": 43, "market_rank": 50, "doral_rank": 63, "doral_composite": -0.99, "proj_final": 64.2, "mc_mean": 64.2, "mc_p90": 84.9, "mc_ceil": 101.6, "sigma": 16.2, "app_true": 0.13, "ott_true": -0.35, "t2g_true": -0.1, "putt_true": 0.46, "total_true": 0.36, "sg_l20": 0.67, "momentum": 0.24, "fw_150_200": 0.605, "fw_over_200": 0.404, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "CUT/T30/T2/CUT/T25", "news_wd": false, "news_note": "nan"}, {"name": "Denny McCarthy", "dg_rank": 77, "owgr_rank": 93, "market_rank": 50, "doral_rank": 64, "doral_composite": -1.01, "proj_final": 57.0, "mc_mean": 57.1, "mc_p90": 77.9, "mc_ceil": 94.8, "sigma": 16.2, "app_true": 0.1, "ott_true": -0.15, "t2g_true": -0.05, "putt_true": 0.33, "total_true": 0.24, "sg_l20": 0.09, "momentum": -0.44, "fw_150_200": 0.665, "fw_over_200": 0.415, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "CUT/T26/T12/CUT/T65", "news_wd": false, "news_note": "nan"}, {"name": "Lucas Glover", "dg_rank": 143, "owgr_rank": 92, "market_rank": 50, "doral_rank": 65, "doral_composite": -1.18, "proj_final": 47.9, "mc_mean": 47.9, "mc_p90": 67.8, "mc_ceil": 83.6, "sigma": 15.4, "app_true": 0.04, "ott_true": -0.05, "t2g_true": -0.21, "putt_true": -0.47, "total_true": -0.68, "sg_l20": -0.6, "momentum": -0.69, "fw_150_200": 0.568, "fw_over_200": 0.319, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "CUT/CUT/CUT/WD/T42", "news_wd": false, "news_note": "nan"}, {"name": "Jhonattan Vegas", "dg_rank": 215, "owgr_rank": 111, "market_rank": 50, "doral_rank": 66, "doral_composite": -1.18, "proj_final": 57.6, "mc_mean": 57.6, "mc_p90": 78.3, "mc_ceil": 95.0, "sigma": 16.2, "app_true": -0.23, "ott_true": 0.09, "t2g_true": -0.52, "putt_true": -0.07, "total_true": -0.91, "sg_l20": 0.19, "momentum": 0.27, "fw_150_200": 0.696, "fw_over_200": 0.399, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T18/CUT/T14/CUT/T74", "news_wd": false, "news_note": "nan"}, {"name": "Tom Hoge", "dg_rank": 235, "owgr_rank": 115, "market_rank": 50, "doral_rank": 67, "doral_composite": -1.2, "proj_final": 48.3, "mc_mean": 48.4, "mc_p90": 69.2, "mc_ceil": 86.2, "sigma": 16.2, "app_true": 0.3, "ott_true": -0.36, "t2g_true": -0.42, "putt_true": -0.08, "total_true": -0.22, "sg_l20": -0.56, "momentum": -0.12, "fw_150_200": 0.611, "fw_over_200": 0.521, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "CUT/CUT/T71/CUT/T71", "news_wd": false, "news_note": "nan"}, {"name": "Nico Echavarria", "dg_rank": 157, "owgr_rank": 42, "market_rank": 50, "doral_rank": 68, "doral_composite": -1.49, "proj_final": 49.4, "mc_mean": 49.4, "mc_p90": 69.0, "mc_ceil": 85.0, "sigma": 15.4, "app_true": -0.2, "ott_true": -0.11, "t2g_true": -0.56, "putt_true": -0.04, "total_true": -0.4, "sg_l20": -0.38, "momentum": -0.65, "fw_150_200": 0.666, "fw_over_200": 0.455, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T44/T66/CUT/CUT/81", "news_wd": false, "news_note": "nan"}, {"name": "Max Greyserman", "dg_rank": 123, "owgr_rank": 66, "market_rank": 50, "doral_rank": 69, "doral_composite": -1.72, "proj_final": 49.7, "mc_mean": 49.7, "mc_p90": 69.3, "mc_ceil": 85.5, "sigma": 15.4, "app_true": -0.1, "ott_true": -0.47, "t2g_true": -0.68, "putt_true": 0.16, "total_true": -0.13, "sg_l20": -0.28, "momentum": -0.77, "fw_150_200": 0.68, "fw_over_200": 0.458, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "T24/T18/CUT/CUT/CUT", "news_wd": false, "news_note": "nan"}, {"name": "Brian Campbell", "dg_rank": 318, "owgr_rank": 100, "market_rank": 50, "doral_rank": 70, "doral_composite": -2.61, "proj_final": 41.1, "mc_mean": 41.3, "mc_p90": 62.1, "mc_ceil": 79.1, "sigma": 16.2, "app_true": -0.68, "ott_true": -0.64, "t2g_true": -1.35, "putt_true": 0.3, "total_true": -1.13, "sg_l20": -0.89, "momentum": -0.08, "fw_150_200": 0.592, "fw_over_200": 0.448, "dk_win_odds": null, "market_win_prob": null, "own_pct_est": 3.0, "signal_agreement": 0, "buzz_score": 0.0, "mayo_call": "nan", "buzz_detail": "nan", "recent_5": "CUT/WD/CUT/T24/T77", "news_wd": false, "news_note": "nan"}]
+</script>
 
 <script>
-const PLAYERS = [{"name": "Collin Morikawa", "dg_rank": 9, "owgr_rank": 6, "doral_rank": 1, "doral_composite": 2.0818, "approach_z": 1.2303, "app_true": 1.3681, "ott_true": 0.556, "t2g_true": 2.1564, "putt_true": 0.2924, "total_true": 2.4488, "sg_l20": 3.18, "momentum": 1.87, "recent_5": "1/T7/5/T7/T4", "fw_150_200": 0.706, "fw_over_200": 0.461, "news_wd": false, "buzz_score": 2.2, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:STRONG", "news_note": "Elite approach numbers, 2021 Open Championship winner", "n_lock": 1}, {"name": "Cameron Young", "dg_rank": 6, "owgr_rank": 4, "doral_rank": 2, "doral_composite": 1.7455, "approach_z": 0.2335, "app_true": 0.8173, "ott_true": 0.91, "t2g_true": 1.9993, "putt_true": 0.3082, "total_true": 2.2876, "sg_l20": 3.1, "momentum": 1.14, "recent_5": "T7/T3/1/T3/T25", "fw_150_200": 0.722, "fw_over_200": 0.411, "news_wd": false, "buzz_score": 3.3, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:LOCK", "news_note": "Won The Players, T3 Masters \u2014 emotional proof", "n_lock": 1}, {"name": "Scottie Scheffler", "dg_rank": 1, "owgr_rank": 1, "doral_rank": 3, "doral_composite": 1.3701, "approach_z": 0.0813, "app_true": 0.6098, "ott_true": 0.8712, "t2g_true": 2.2209, "putt_true": 0.6877, "total_true": 2.986, "sg_l20": 2.7, "momentum": -0.69, "recent_5": "T12/T24/T22/2/2", "fw_150_200": 0.754, "fw_over_200": 0.414, "news_wd": false, "buzz_score": 2.2, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:STRONG", "news_note": "World #1 favorite, control + steady mistakes", "n_lock": 1}, {"name": "Si Woo Kim", "dg_rank": 12, "owgr_rank": 26, "doral_rank": 4, "doral_composite": 1.2727, "approach_z": 0.9017, "app_true": 0.9097, "ott_true": 0.7088, "t2g_true": 1.8486, "putt_true": -0.1059, "total_true": 1.8875, "sg_l20": 1.61, "momentum": 0.23, "recent_5": "T13/T50/T10/47/3", "fw_150_200": 0.748, "fw_over_200": 0.531, "news_wd": false, "buzz_score": 2.2, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:STRONG", "news_note": "", "n_lock": 1}, {"name": "Adam Scott", "dg_rank": 26, "owgr_rank": 53, "doral_rank": 5, "doral_composite": 1.2399, "approach_z": 1.0019, "app_true": 1.0404, "ott_true": 0.4915, "t2g_true": 1.5831, "putt_true": 0.018, "total_true": 1.5326, "sg_l20": 1.87, "momentum": 0.82, "recent_5": "4/T11/T56/T21/T24", "fw_150_200": 0.734, "fw_over_200": 0.567, "news_wd": false, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "news_note": "", "n_lock": 0}, {"name": "Justin Rose", "dg_rank": 22, "owgr_rank": 5, "doral_rank": 6, "doral_composite": 1.1114, "approach_z": 2.4795, "app_true": 1.1646, "ott_true": 0.1574, "t2g_true": 1.4241, "putt_true": 0.2769, "total_true": 1.8014, "sg_l20": 2.13, "momentum": 1.03, "recent_5": "T37/CUT/CUT/T13/T3", "fw_150_200": 0.699, "fw_over_200": 0.549, "news_wd": false, "buzz_score": 2.2, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:STRONG", "news_note": "Veteran ball-striker, 200-225 yard prox elite", "n_lock": 1}, {"name": "Chris Gotterup", "dg_rank": 23, "owgr_rank": 11, "doral_rank": 7, "doral_composite": 0.9471, "approach_z": 0.33, "app_true": 0.6037, "ott_true": 0.7607, "t2g_true": 1.6168, "putt_true": 0.1401, "total_true": 1.7401, "sg_l20": 1.52, "momentum": 0.11, "recent_5": "T18/T56/T6/T24/T25", "fw_150_200": 0.734, "fw_over_200": 0.473, "news_wd": false, "buzz_score": 2.2, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:STRONG", "news_note": "", "n_lock": 1}, {"name": "Ryo Hisatsune", "dg_rank": 54, "owgr_rank": 57, "doral_rank": 8, "doral_composite": 0.9213, "approach_z": 2.1379, "app_true": 0.6758, "ott_true": 0.6264, "t2g_true": 1.5101, "putt_true": 0.0137, "total_true": 1.2677, "sg_l20": 1.34, "momentum": 1.05, "recent_5": "T33/T13/T30/T8/T60", "fw_150_200": 0.723, "fw_over_200": 0.546, "news_wd": false, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "news_note": "", "n_lock": 0}, {"name": "Patrick Cantlay", "dg_rank": 15, "owgr_rank": 31, "doral_rank": 9, "doral_composite": 0.8227, "approach_z": 1.0112, "app_true": 0.5964, "ott_true": 0.53, "t2g_true": 1.7167, "putt_true": -0.1122, "total_true": 1.5797, "sg_l20": 1.66, "momentum": 0.15, "recent_5": "CUT/T32/T7/T12/T8", "fw_150_200": 0.712, "fw_over_200": 0.506, "news_wd": false, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "news_note": "", "n_lock": 0}, {"name": "Jake Knapp", "dg_rank": 18, "owgr_rank": 37, "doral_rank": 10, "doral_composite": 0.7115, "approach_z": -0.1656, "app_true": 0.607, "ott_true": 0.5588, "t2g_true": 1.2506, "putt_true": 0.8188, "total_true": 2.1004, "sg_l20": 1.64, "momentum": 0.15, "recent_5": "6/CUT/T6/11/T74", "fw_150_200": 0.657, "fw_over_200": 0.478, "news_wd": false, "buzz_score": 2.2, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:STRONG", "news_note": "", "n_lock": 1}, {"name": "Russell Henley", "dg_rank": 7, "owgr_rank": 8, "doral_rank": 11, "doral_composite": 0.701, "approach_z": 0.2279, "app_true": 0.6721, "ott_true": 0.3537, "t2g_true": 1.3587, "putt_true": 0.5901, "total_true": 1.9611, "sg_l20": 1.99, "momentum": 0.06, "recent_5": "T6/T13/CUT/T3/T25", "fw_150_200": 0.691, "fw_over_200": 0.447, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "Augusta-strong, fits Doral discipline profile", "n_lock": 0}, {"name": "Austin Smotherman", "dg_rank": 133, "owgr_rank": 87, "doral_rank": 12, "doral_composite": 0.6548, "approach_z": 0.8535, "app_true": 0.8598, "ott_true": 0.4821, "t2g_true": 0.995, "putt_true": -0.466, "total_true": 0.5683, "sg_l20": 0.7, "momentum": 0.52, "recent_5": "WD/T13/CUT/T36/T74", "fw_150_200": 0.691, "fw_over_200": 0.494, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Akshay Bhatia", "dg_rank": 24, "owgr_rank": 24, "doral_rank": 13, "doral_composite": 0.6515, "approach_z": 0.7365, "app_true": 0.9647, "ott_true": 0.0298, "t2g_true": 1.0135, "putt_true": 0.961, "total_true": 1.5664, "sg_l20": 1.89, "momentum": 0.81, "recent_5": "1/T13/CUT/CUT/T16", "fw_150_200": 0.722, "fw_over_200": 0.429, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "Won Bay Hill 2026 from 5 back, Florida resilience", "n_lock": 0}, {"name": "Jacob Bridgeman", "dg_rank": 19, "owgr_rank": 19, "doral_rank": 14, "doral_composite": 0.6148, "approach_z": 0.5119, "app_true": 0.6866, "ott_true": 0.3774, "t2g_true": 1.0104, "putt_true": 1.1257, "total_true": 2.088, "sg_l20": 1.62, "momentum": 0.72, "recent_5": "T18/T5/T14/T41/T33", "fw_150_200": 0.761, "fw_over_200": 0.381, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Shane Lowry", "dg_rank": 29, "owgr_rank": 35, "doral_rank": 15, "doral_composite": 0.5996, "approach_z": 1.401, "app_true": 1.0018, "ott_true": 0.1609, "t2g_true": 1.0979, "putt_true": 0.2614, "total_true": 1.3593, "sg_l20": 1.1, "momentum": 0.06, "recent_5": "CUT/CUT/T28/T30/T42", "fw_150_200": 0.686, "fw_over_200": 0.604, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Sudarshan Yellamaraju", "dg_rank": 76, "owgr_rank": 118, "doral_rank": 16, "doral_composite": 0.5945, "approach_z": -0.6296, "app_true": 0.5475, "ott_true": 0.4785, "t2g_true": 0.8787, "putt_true": 0.5447, "total_true": 1.0352, "sg_l20": 1.6, "momentum": 1.52, "recent_5": "T37/T5/T6/T14/T52", "fw_150_200": 0.642, "fw_over_200": 0.459, "news_wd": false, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "news_note": "", "n_lock": 0}, {"name": "Min Woo Lee", "dg_rank": 31, "owgr_rank": 32, "doral_rank": 17, "doral_composite": 0.567, "approach_z": -0.689, "app_true": 0.2928, "ott_true": 0.738, "t2g_true": 1.3665, "putt_true": 0.2857, "total_true": 1.5625, "sg_l20": 1.29, "momentum": 0.45, "recent_5": "T6/T32/T3/CUT/T60", "fw_150_200": 0.632, "fw_over_200": 0.519, "news_wd": false, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "news_note": "", "n_lock": 0}, {"name": "Hideki Matsuyama", "dg_rank": 11, "owgr_rank": 15, "doral_rank": 18, "doral_composite": 0.5638, "approach_z": 0.5899, "app_true": 0.9055, "ott_true": 0.0401, "t2g_true": 1.3964, "putt_true": 0.4057, "total_true": 1.8942, "sg_l20": 1.42, "momentum": -0.02, "recent_5": "T28/T41/T27/T21/T12", "fw_150_200": 0.728, "fw_over_200": 0.512, "news_wd": false, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "news_note": "Veteran calm, pattern fit", "n_lock": 0}, {"name": "J.J. Spaun", "dg_rank": 25, "owgr_rank": 10, "doral_rank": 19, "doral_composite": 0.5476, "approach_z": 0.8293, "app_true": 0.8159, "ott_true": 0.395, "t2g_true": 1.2221, "putt_true": -0.5551, "total_true": 0.6672, "sg_l20": 0.83, "momentum": -0.59, "recent_5": "T24/CUT/1/CUT/T25", "fw_150_200": 0.72, "fw_over_200": 0.516, "news_wd": false, "buzz_score": 0.0, "mayo_call": "MAYO NEUTRAL", "buzz_detail": "PatMayo:NEUTRAL", "news_note": "Recent breakout form, 17-under at The Players, fits Doral long-iron profile", "n_lock": 0}, {"name": "Sam Stevens", "dg_rank": 47, "owgr_rank": 46, "doral_rank": 20, "doral_composite": 0.5279, "approach_z": -0.3401, "app_true": 0.5498, "ott_true": 0.5335, "t2g_true": 1.1019, "putt_true": -0.0442, "total_true": 1.111, "sg_l20": 1.15, "momentum": 0.41, "recent_5": "CUT/58/5/T24/T65", "fw_150_200": 0.692, "fw_over_200": 0.408, "news_wd": false, "buzz_score": 2.2, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:STRONG", "news_note": "", "n_lock": 1}, {"name": "Ryan Gerard", "dg_rank": 37, "owgr_rank": 33, "doral_rank": 21, "doral_composite": 0.5077, "approach_z": 1.1616, "app_true": 0.8616, "ott_true": 0.3138, "t2g_true": 0.9784, "putt_true": 0.3236, "total_true": 1.67, "sg_l20": 0.83, "momentum": 0.06, "recent_5": "CUT/T27/CUT/T38/T33", "fw_150_200": 0.737, "fw_over_200": 0.513, "news_wd": false, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "news_note": "", "n_lock": 0}, {"name": "Daniel Berger", "dg_rank": 64, "owgr_rank": 40, "doral_rank": 22, "doral_composite": 0.474, "approach_z": 1.8372, "app_true": 0.9298, "ott_true": 0.2285, "t2g_true": 0.8631, "putt_true": -0.1013, "total_true": 0.7554, "sg_l20": 0.8, "momentum": 0.2, "recent_5": "T32/2/T66/CUT/T42", "fw_150_200": 0.731, "fw_over_200": 0.488, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Kurt Kitayama", "dg_rank": 42, "owgr_rank": 34, "doral_rank": 23, "doral_composite": 0.4521, "approach_z": 0.7402, "app_true": 0.7958, "ott_true": 0.3844, "t2g_true": 0.9201, "putt_true": 0.0193, "total_true": 0.933, "sg_l20": 0.79, "momentum": -0.26, "recent_5": "T18/CUT/T60/51/T8", "fw_150_200": 0.718, "fw_over_200": 0.48, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Sepp Straka", "dg_rank": 35, "owgr_rank": 13, "doral_rank": 24, "doral_composite": 0.4193, "approach_z": 1.1467, "app_true": 0.8508, "ott_true": 0.2299, "t2g_true": 1.207, "putt_true": 0.1286, "total_true": 0.9302, "sg_l20": 0.65, "momentum": -0.52, "recent_5": "T13/T8/CUT/T41/T42", "fw_150_200": 0.709, "fw_over_200": 0.556, "news_wd": false, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "news_note": "", "n_lock": 0}, {"name": "Viktor Hovland", "dg_rank": 20, "owgr_rank": 25, "doral_rank": 25, "doral_composite": 0.4185, "approach_z": -0.3122, "app_true": 0.7108, "ott_true": 0.1409, "t2g_true": 1.1788, "putt_true": -0.0124, "total_true": 1.1664, "sg_l20": 1.47, "momentum": 0.03, "recent_5": "T13/T13/CUT/T18/T42", "fw_150_200": 0.77, "fw_over_200": 0.416, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Gary Woodland", "dg_rank": 56, "owgr_rank": 45, "doral_rank": 26, "doral_composite": 0.4105, "approach_z": 0.1592, "app_true": 0.2486, "ott_true": 0.6917, "t2g_true": 0.5801, "putt_true": 0.4887, "total_true": 0.8535, "sg_l20": 1.75, "momentum": 1.24, "recent_5": "CUT/T14/1/T33/T8", "fw_150_200": 0.729, "fw_over_200": 0.462, "news_wd": false, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "news_note": "", "n_lock": 0}, {"name": "Tommy Fleetwood", "dg_rank": 10, "owgr_rank": 7, "doral_rank": 27, "doral_composite": 0.3795, "approach_z": 0.1815, "app_true": 0.413, "ott_true": 0.5454, "t2g_true": 1.325, "putt_true": 0.0207, "total_true": 1.3457, "sg_l20": 1.16, "momentum": -0.84, "recent_5": "49/T8/T10/T33/T52", "fw_150_200": 0.657, "fw_over_200": 0.498, "news_wd": false, "buzz_score": -1.1, "mayo_call": "MAYO FADE", "buzz_detail": "PatMayo:LEAN_AWAY", "news_note": "Reigning FedExCup champ, no longer carrying the no-PGA-win question", "n_lock": 0}, {"name": "Nicolai Hojgaard", "dg_rank": 34, "owgr_rank": 36, "doral_rank": 28, "doral_composite": 0.3668, "approach_z": 1.3955, "app_true": 0.5922, "ott_true": 0.3378, "t2g_true": 0.9797, "putt_true": 0.1836, "total_true": 1.1992, "sg_l20": 1.21, "momentum": 0.14, "recent_5": "T27/T55/2/CUT/T55", "fw_150_200": 0.72, "fw_over_200": 0.574, "news_wd": false, "buzz_score": 2.2, "mayo_call": "MAYO STRONG", "buzz_detail": "PatMayo:STRONG", "news_note": "", "n_lock": 1}, {"name": "Corey Conners", "dg_rank": 49, "owgr_rank": 44, "doral_rank": 29, "doral_composite": 0.2561, "approach_z": -0.4162, "app_true": 0.6702, "ott_true": 0.208, "t2g_true": 0.8174, "putt_true": -0.2418, "total_true": 0.5757, "sg_l20": 1.02, "momentum": 0.19, "recent_5": "T33/T13/T14/T49/T55", "fw_150_200": 0.721, "fw_over_200": 0.463, "news_wd": false, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "news_note": "", "n_lock": 0}, {"name": "Pierceson Coody", "dg_rank": 62, "owgr_rank": 55, "doral_rank": 30, "doral_composite": 0.2434, "approach_z": 1.1337, "app_true": 0.6382, "ott_true": 0.5409, "t2g_true": 0.802, "putt_true": 0.0754, "total_true": 1.0081, "sg_l20": 0.09, "momentum": -0.55, "recent_5": "CUT/CUT/T55/WD/T16", "fw_150_200": 0.646, "fw_over_200": 0.612, "news_wd": false, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "news_note": "", "n_lock": 0}, {"name": "Jordan Smith", "dg_rank": 61, "owgr_rank": 68, "doral_rank": 31, "doral_composite": 0.2104, "approach_z": 1.26, "app_true": 0.3928, "ott_true": 0.5482, "t2g_true": 0.751, "putt_true": -0.0284, "total_true": 0.6924, "sg_l20": 0.78, "momentum": 0.21, "recent_5": "CUT/3/T44/CUT/T16", "fw_150_200": 0.708, "fw_over_200": 0.595, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Sahith Theegala", "dg_rank": 41, "owgr_rank": 74, "doral_rank": 32, "doral_composite": 0.202, "approach_z": 0.1871, "app_true": 0.5422, "ott_true": -0.0209, "t2g_true": 0.9615, "putt_true": 0.4226, "total_true": 1.4939, "sg_l20": 1.64, "momentum": 1.09, "recent_5": "T6/T32/CUT/T10/T25", "fw_150_200": 0.676, "fw_over_200": 0.563, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Rickie Fowler", "dg_rank": 27, "owgr_rank": 56, "doral_rank": 33, "doral_composite": 0.1904, "approach_z": 0.4933, "app_true": 0.4392, "ott_true": 0.4261, "t2g_true": 0.7164, "putt_true": 0.637, "total_true": 1.4342, "sg_l20": 1.17, "momentum": -0.14, "recent_5": "T9/T42/CUT/CUT/T8", "fw_150_200": 0.702, "fw_over_200": 0.514, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Maverick McNealy", "dg_rank": 16, "owgr_rank": 30, "doral_rank": 34, "doral_composite": 0.1867, "approach_z": -0.8839, "app_true": 0.1277, "ott_true": 0.4947, "t2g_true": 0.9909, "putt_true": 0.5758, "total_true": 1.6339, "sg_l20": 1.71, "momentum": 0.28, "recent_5": "T13/T32/T21/T18/T16", "fw_150_200": 0.678, "fw_over_200": 0.421, "news_wd": false, "buzz_score": 0.0, "mayo_call": "MAYO NEUTRAL", "buzz_detail": "PatMayo:NEUTRAL", "news_note": "", "n_lock": 0}, {"name": "Joel Dahmen", "dg_rank": 169, "owgr_rank": 182, "doral_rank": 35, "doral_composite": 0.1599, "approach_z": 0.3597, "app_true": 0.4779, "ott_true": 0.5224, "t2g_true": 0.6074, "putt_true": -0.5387, "total_true": 0.4899, "sg_l20": 0.33, "momentum": 0.46, "recent_5": "T9/CUT/CUT/T64/CUT", "fw_150_200": 0.676, "fw_over_200": 0.486, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Sam Burns", "dg_rank": 14, "owgr_rank": 29, "doral_rank": 36, "doral_composite": 0.1569, "approach_z": 0.6103, "app_true": 0.4386, "ott_true": 0.3322, "t2g_true": 0.5145, "putt_true": 0.9695, "total_true": 1.4948, "sg_l20": 1.64, "momentum": 0.0, "recent_5": "CUT/T13/T21/T7/T16", "fw_150_200": 0.695, "fw_over_200": 0.456, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Jordan Spieth", "dg_rank": 32, "owgr_rank": 51, "doral_rank": 37, "doral_composite": 0.1375, "approach_z": 0.3578, "app_true": 0.6276, "ott_true": 0.0429, "t2g_true": 0.8854, "putt_true": 0.4355, "total_true": 1.3209, "sg_l20": 1.22, "momentum": 0.05, "recent_5": "T32/T11/T63/T12/T33", "fw_150_200": 0.71, "fw_over_200": 0.449, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "Returning to Doral form profile", "n_lock": 0}, {"name": "Bud Cauley", "dg_rank": 72, "owgr_rank": 65, "doral_rank": 38, "doral_composite": 0.0035, "approach_z": -0.6668, "app_true": 0.4373, "ott_true": 0.0964, "t2g_true": 0.8087, "putt_true": -0.2134, "total_true": 0.6251, "sg_l20": 1.04, "momentum": 0.63, "recent_5": "T18/T32/74/T21/7", "fw_150_200": 0.723, "fw_over_200": 0.389, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Michael Thorbjornsen", "dg_rank": 55, "owgr_rank": 60, "doral_rank": 39, "doral_composite": -0.0507, "approach_z": 0.0312, "app_true": 0.1841, "ott_true": 0.3425, "t2g_true": 0.8552, "putt_true": -0.2837, "total_true": 0.7216, "sg_l20": 1.06, "momentum": 0.18, "recent_5": "T33/T22/T14/CUT/T33", "fw_150_200": 0.668, "fw_over_200": 0.431, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Nick Taylor", "dg_rank": 46, "owgr_rank": 67, "doral_rank": 40, "doral_composite": -0.1117, "approach_z": 0.8832, "app_true": 0.5497, "ott_true": -0.0127, "t2g_true": 0.981, "putt_true": -0.0656, "total_true": 0.9906, "sg_l20": 0.54, "momentum": -0.42, "recent_5": "T42/CUT/T28/T41/T60", "fw_150_200": 0.731, "fw_over_200": 0.49, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Matt Wallace", "dg_rank": 86, "owgr_rank": 69, "doral_rank": 41, "doral_composite": -0.1417, "approach_z": -0.6055, "app_true": 0.4699, "ott_true": 0.0555, "t2g_true": 0.7439, "putt_true": -0.0276, "total_true": 0.4117, "sg_l20": 0.61, "momentum": 0.12, "recent_5": "CUT/T40/T51/T2/T55", "fw_150_200": 0.7, "fw_over_200": 0.456, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Harris English", "dg_rank": 17, "owgr_rank": 18, "doral_rank": 42, "doral_composite": -0.1451, "approach_z": -0.587, "app_true": 0.0002, "ott_true": 0.51, "t2g_true": 0.5033, "putt_true": 0.9173, "total_true": 1.4391, "sg_l20": 1.39, "momentum": -0.03, "recent_5": "T24/CUT/T21/T30/T4", "fw_150_200": 0.699, "fw_over_200": 0.5, "news_wd": false, "buzz_score": -1.1, "mayo_call": "MAYO FADE", "buzz_detail": "PatMayo:LEAN_AWAY", "news_note": "", "n_lock": 0}, {"name": "Andrew Putnam", "dg_rank": 71, "owgr_rank": 88, "doral_rank": 43, "doral_composite": -0.1728, "approach_z": 0.2205, "app_true": 0.5134, "ott_true": -0.2902, "t2g_true": 0.7024, "putt_true": 0.0695, "total_true": 0.9907, "sg_l20": 1.34, "momentum": 0.98, "recent_5": "T32/T30/T44/T5/T42", "fw_150_200": 0.714, "fw_over_200": 0.405, "news_wd": false, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "news_note": "", "n_lock": 0}, {"name": "Alex Noren", "dg_rank": 30, "owgr_rank": 21, "doral_rank": 44, "doral_composite": -0.2034, "approach_z": -0.4422, "app_true": 0.4063, "ott_true": 0.0189, "t2g_true": 0.7048, "putt_true": 0.4805, "total_true": 0.9658, "sg_l20": 0.96, "momentum": -0.25, "recent_5": "T24/T32/T30/T30/T65", "fw_150_200": 0.686, "fw_over_200": 0.416, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Ryan Fox", "dg_rank": 60, "owgr_rank": 54, "doral_rank": 45, "doral_composite": -0.2239, "approach_z": -0.1582, "app_true": 0.0545, "ott_true": 0.2953, "t2g_true": 0.6166, "putt_true": 0.246, "total_true": 0.7002, "sg_l20": 1.17, "momentum": 0.51, "recent_5": "T7/T24/CUT/CUT/T16", "fw_150_200": 0.645, "fw_over_200": 0.516, "news_wd": false, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "news_note": "", "n_lock": 0}, {"name": "Max Homa", "dg_rank": 91, "owgr_rank": 117, "doral_rank": 46, "doral_composite": -0.3135, "approach_z": -0.2324, "app_true": 0.3438, "ott_true": 0.112, "t2g_true": 0.2942, "putt_true": 0.2881, "total_true": 0.5108, "sg_l20": 0.68, "momentum": 0.32, "recent_5": "T32/CUT/CUT/T9/T69", "fw_150_200": 0.673, "fw_over_200": 0.499, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Andrew Novak", "dg_rank": 97, "owgr_rank": 52, "doral_rank": 47, "doral_composite": -0.3741, "approach_z": -0.8598, "app_true": 0.3047, "ott_true": 0.1031, "t2g_true": 0.4654, "putt_true": -0.1692, "total_true": 0.3794, "sg_l20": 0.47, "momentum": -0.05, "recent_5": "CUT/T55/T14/CUT/T16", "fw_150_200": 0.651, "fw_over_200": 0.44, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Patrick Rodgers", "dg_rank": 89, "owgr_rank": 73, "doral_rank": 48, "doral_composite": -0.4452, "approach_z": -0.6946, "app_true": 0.2762, "ott_true": 0.026, "t2g_true": 0.5232, "putt_true": 0.2644, "total_true": 0.7513, "sg_l20": 0.39, "momentum": 0.08, "recent_5": "T11/T40/CUT/CUT/T16", "fw_150_200": 0.662, "fw_over_200": 0.485, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Jason Day", "dg_rank": 33, "owgr_rank": 38, "doral_rank": 49, "doral_composite": -0.4606, "approach_z": 0.3634, "app_true": 0.0056, "ott_true": 0.1792, "t2g_true": 0.6739, "putt_true": 0.6846, "total_true": 1.255, "sg_l20": 0.84, "momentum": -0.2, "recent_5": "CUT/T59/T6/T12/T42", "fw_150_200": 0.725, "fw_over_200": 0.382, "news_wd": false, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "news_note": "", "n_lock": 0}, {"name": "Aldrich Potgieter", "dg_rank": 226, "owgr_rank": 77, "doral_rank": 50, "doral_composite": -0.5211, "approach_z": -0.1545, "app_true": -0.1525, "ott_true": 0.6176, "t2g_true": 0.0982, "putt_true": -0.4817, "total_true": -0.3936, "sg_l20": 0.1, "momentum": 0.41, "recent_5": "CUT/CUT/T21/CUT/T25", "fw_150_200": 0.679, "fw_over_200": 0.561, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Taylor Pendrith", "dg_rank": 99, "owgr_rank": 81, "doral_rank": 51, "doral_composite": -0.5512, "approach_z": -0.0208, "app_true": 0.0352, "ott_true": 0.4821, "t2g_true": 0.6537, "putt_true": -0.4366, "total_true": 0.1357, "sg_l20": -0.55, "momentum": -1.2, "recent_5": "T38/T46/CUT/CUT/T71", "fw_150_200": 0.691, "fw_over_200": 0.446, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Keegan Bradley", "dg_rank": 36, "owgr_rank": 27, "doral_rank": 52, "doral_composite": -0.5562, "approach_z": -1.1512, "app_true": -0.1612, "ott_true": 0.3756, "t2g_true": 0.5656, "putt_true": 0.159, "total_true": 0.7045, "sg_l20": 0.65, "momentum": -0.58, "recent_5": "CUT/T50/T55/T21/T12", "fw_150_200": 0.633, "fw_over_200": 0.433, "news_wd": false, "buzz_score": -1.1, "mayo_call": "MAYO FADE", "buzz_detail": "PatMayo:LEAN_AWAY", "news_note": "", "n_lock": 0}, {"name": "Matt McCarty", "dg_rank": 52, "owgr_rank": 47, "doral_rank": 53, "doral_composite": -0.6144, "approach_z": -1.1271, "app_true": 0.0731, "ott_true": 0.211, "t2g_true": 0.1487, "putt_true": 0.3955, "total_true": 0.7459, "sg_l20": 0.45, "momentum": -0.3, "recent_5": "CUT/CUT/T39/T24/T12", "fw_150_200": 0.68, "fw_over_200": 0.413, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Brian Harman", "dg_rank": 70, "owgr_rank": 50, "doral_rank": 54, "doral_composite": -0.629, "approach_z": -0.1526, "app_true": 0.2091, "ott_true": -0.1565, "t2g_true": 0.3157, "putt_true": -0.0868, "total_true": 0.2339, "sg_l20": 0.76, "momentum": 0.18, "recent_5": "50/T11/T39/T33/T25", "fw_150_200": 0.704, "fw_over_200": 0.454, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "J.T. Poston", "dg_rank": 75, "owgr_rank": 79, "doral_rank": 55, "doral_composite": -0.6959, "approach_z": 0.0553, "app_true": 0.1618, "ott_true": 0.151, "t2g_true": 0.2149, "putt_true": -0.0558, "total_true": 0.3033, "sg_l20": -0.07, "momentum": -0.73, "recent_5": "CUT/T50/CUT/T21/T60", "fw_150_200": 0.781, "fw_over_200": 0.42, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Sungjae Im", "dg_rank": 104, "owgr_rank": 76, "doral_rank": 56, "doral_composite": -0.7023, "approach_z": -1.5058, "app_true": -0.2259, "ott_true": 0.2213, "t2g_true": 0.4728, "putt_true": 0.0652, "total_true": 0.538, "sg_l20": 0.54, "momentum": 0.34, "recent_5": "CUT/T4/T60/46/T42", "fw_150_200": 0.649, "fw_over_200": 0.428, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Ricky Castillo", "dg_rank": 84, "owgr_rank": 86, "doral_rank": 57, "doral_composite": -0.7368, "approach_z": -1.5949, "app_true": -0.2116, "ott_true": 0.2954, "t2g_true": 0.1996, "putt_true": 0.2896, "total_true": 0.7867, "sg_l20": 0.51, "momentum": 0.14, "recent_5": "1/T70/T46/T44/T60", "fw_150_200": 0.641, "fw_over_200": 0.511, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Harry Hall", "dg_rank": 40, "owgr_rank": 63, "doral_rank": 58, "doral_composite": -0.8018, "approach_z": -0.7262, "app_true": 0.0749, "ott_true": -0.1762, "t2g_true": 0.3159, "putt_true": 0.4988, "total_true": 0.8776, "sg_l20": 0.81, "momentum": -0.4, "recent_5": "T9/CUT/T28/CUT/T65", "fw_150_200": 0.702, "fw_over_200": 0.345, "news_wd": false, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "news_note": "", "n_lock": 0}, {"name": "Chandler Blanchet", "dg_rank": 124, "owgr_rank": 108, "doral_rank": 59, "doral_composite": -0.8787, "approach_z": -0.3549, "app_true": 0.0536, "ott_true": 0.0845, "t2g_true": -0.2929, "putt_true": -0.4611, "total_true": -0.313, "sg_l20": 0.23, "momentum": -0.03, "recent_5": "2/T18/CUT/CUT/T33", "fw_150_200": 0.647, "fw_over_200": 0.548, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Justin Thomas", "dg_rank": 53, "owgr_rank": 17, "doral_rank": 60, "doral_composite": -0.8975, "approach_z": -0.47, "app_true": 0.0312, "ott_true": -0.0948, "t2g_true": 0.2743, "putt_true": -0.221, "total_true": 0.0532, "sg_l20": 0.05, "momentum": 0.0, "recent_5": "", "fw_150_200": 0.68, "fw_over_200": 0.396, "news_wd": false, "buzz_score": 1.1, "mayo_call": "MAYO LIKE", "buzz_detail": "PatMayo:LIKE", "news_note": "", "n_lock": 0}, {"name": "Ben Griffin", "dg_rank": 28, "owgr_rank": 16, "doral_rank": 61, "doral_composite": -0.9014, "approach_z": -0.4515, "app_true": -0.0784, "ott_true": -0.048, "t2g_true": 0.4511, "putt_true": 0.3351, "total_true": 0.833, "sg_l20": 0.54, "momentum": -1.03, "recent_5": "CUT/CUT/T28/T33/T33", "fw_150_200": 0.656, "fw_over_200": 0.506, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "David Lipsky", "dg_rank": 160, "owgr_rank": 89, "doral_rank": 62, "doral_composite": -0.9089, "approach_z": -0.9174, "app_true": 0.067, "ott_true": -0.2694, "t2g_true": 0.2188, "putt_true": 0.3602, "total_true": 0.4805, "sg_l20": 0.45, "momentum": 0.4, "recent_5": "CUT/T37/2/CUT/T71", "fw_150_200": 0.676, "fw_over_200": 0.411, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Michael Kim", "dg_rank": 73, "owgr_rank": 43, "doral_rank": 63, "doral_composite": -0.9881, "approach_z": -1.426, "app_true": 0.1295, "ott_true": -0.3548, "t2g_true": -0.1032, "putt_true": 0.4615, "total_true": 0.3563, "sg_l20": 0.67, "momentum": 0.24, "recent_5": "CUT/T30/T2/CUT/T25", "fw_150_200": 0.605, "fw_over_200": 0.404, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Denny McCarthy", "dg_rank": 77, "owgr_rank": 93, "doral_rank": 64, "doral_composite": -1.0103, "approach_z": -0.7893, "app_true": 0.0952, "ott_true": -0.1515, "t2g_true": -0.0456, "putt_true": 0.3311, "total_true": 0.245, "sg_l20": 0.09, "momentum": -0.44, "recent_5": "CUT/T26/T12/CUT/T65", "fw_150_200": 0.665, "fw_over_200": 0.415, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Lucas Glover", "dg_rank": 143, "owgr_rank": 92, "doral_rank": 65, "doral_composite": -1.1776, "approach_z": -2.9777, "app_true": 0.0405, "ott_true": -0.0462, "t2g_true": -0.2144, "putt_true": -0.4696, "total_true": -0.684, "sg_l20": -0.6, "momentum": -0.69, "recent_5": "CUT/CUT/CUT/WD/T42", "fw_150_200": 0.568, "fw_over_200": 0.319, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Jhonattan Vegas", "dg_rank": 215, "owgr_rank": 111, "doral_rank": 66, "doral_composite": -1.1787, "approach_z": -1.7062, "app_true": -0.2336, "ott_true": 0.0898, "t2g_true": -0.5241, "putt_true": -0.0735, "total_true": -0.9143, "sg_l20": 0.19, "momentum": 0.27, "recent_5": "T18/CUT/T14/CUT/T74", "fw_150_200": 0.696, "fw_over_200": 0.399, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Tom Hoge", "dg_rank": 235, "owgr_rank": 115, "doral_rank": 67, "doral_composite": -1.2026, "approach_z": -0.1118, "app_true": 0.2954, "ott_true": -0.3627, "t2g_true": -0.4212, "putt_true": -0.0784, "total_true": -0.2196, "sg_l20": -0.56, "momentum": -0.12, "recent_5": "CUT/CUT/T71/CUT/T71", "fw_150_200": 0.611, "fw_over_200": 0.521, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Nico Echavarria", "dg_rank": 157, "owgr_rank": 42, "doral_rank": 68, "doral_composite": -1.4946, "approach_z": -0.1934, "app_true": -0.2016, "ott_true": -0.1052, "t2g_true": -0.5592, "putt_true": -0.0409, "total_true": -0.4033, "sg_l20": -0.38, "momentum": -0.65, "recent_5": "T44/T66/CUT/CUT/81", "fw_150_200": 0.666, "fw_over_200": 0.455, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Max Greyserman", "dg_rank": 123, "owgr_rank": 66, "doral_rank": 69, "doral_composite": -1.7192, "approach_z": -1.2162, "app_true": -0.1045, "ott_true": -0.473, "t2g_true": -0.6799, "putt_true": 0.1634, "total_true": -0.1333, "sg_l20": -0.28, "momentum": -0.77, "recent_5": "T24/T18/CUT/CUT/CUT", "fw_150_200": 0.68, "fw_over_200": 0.458, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}, {"name": "Brian Campbell", "dg_rank": 318, "owgr_rank": 100, "doral_rank": 70, "doral_composite": -2.6127, "approach_z": -2.4042, "app_true": -0.6803, "ott_true": -0.6418, "t2g_true": -1.3545, "putt_true": 0.3001, "total_true": -1.1294, "sg_l20": -0.89, "momentum": -0.08, "recent_5": "CUT/WD/CUT/T24/T77", "fw_150_200": 0.592, "fw_over_200": 0.448, "news_wd": false, "buzz_score": 0.0, "mayo_call": "", "buzz_detail": "", "news_note": "", "n_lock": 0}];
+// ── Load data ──
+const PLAYERS = JSON.parse(document.getElementById('player-data').textContent);
 
-// ── helpers ──
+// Helpers
 const fmt = (v, d=2) => (v===null||v===undefined||isNaN(v)) ? '—' : Number(v).toFixed(d);
-const sgColor = v => v > 0.3 ? 'var(--green)' : v < -0.3 ? 'var(--red)' : 'var(--muted)';
-const proxColor = v => v > 0.72 ? 'var(--green)' : v > 0.68 ? 'var(--gold)' : v < 0.63 ? 'var(--red)' : 'var(--text)';
+const cleanStr = s => (!s || s==='nan' || s==='NaN') ? '' : String(s);
 
-function renderRecent(r5) {
-  if (!r5) return '<span class="r-norm">—</span>';
-  return r5.split('/').map(r => {
-    if (r === '1' || r === '2' || r === '3') return `<span class="r-win">${r}</span>`;
-    if (['T2','T3'].includes(r)) return `<span class="r-win">${r}</span>`;
-    if (['4','5','T4','T5'].includes(r)) return `<span class="r-top5">${r}</span>`;
-    if (['T6','T7','T8','T9','T10','6','7','8','9','10'].includes(r)) return `<span class="r-top10">${r}</span>`;
-    if (r === 'CUT' || r === 'WD' || r === 'MDF') return `<span class="r-cut">${r}</span>`;
-    return `<span class="r-norm">${r}</span>`;
-  }).join('<span style="color:#333"> · </span>');
+function fitColor(v) {
+  if (v >= 0.72) return 'var(--green)';
+  if (v >= 0.68) return 'var(--gold)';
+  if (v < 0.62)  return 'var(--red)';
+  return 'var(--text-secondary)';
 }
 
-function mayoBadge(call, detail) {
-  if (!call) return '';
-  const isLock = detail && detail.includes('LOCK');
-  if (call.includes('STRONG')) return `<span class="mayo-badge ${isLock?'mayo-lock':'mayo-strong'}">${isLock?'🔒 LOCK':'STRONG'}</span>`;
-  if (call.includes('LIKE'))   return `<span class="mayo-badge mayo-like">LIKE</span>`;
-  if (call.includes('FADE'))   return `<span class="mayo-badge mayo-fade">FADE</span>`;
-  if (call.includes('NEUTRAL'))return `<span class="mayo-badge mayo-neutral">NEUTRAL</span>`;
-  return '';
+function momentumClass(m) {
+  if (m === null || m === undefined) return 'neutral';
+  if (m > 1.0) return 'hot';
+  if (m > 0.3) return 'warm';
+  if (m < -0.5) return 'cold';
+  return 'neutral';
+}
+function momentumLabel(m) {
+  if (m === null || m === undefined) return '—';
+  return (m > 0 ? '+' : '') + m.toFixed(2);
 }
 
-function doralBar(composite) {
-  const min = -2.7, max = 2.2, range = max - min;
-  const pct = Math.max(0, Math.min(100, ((composite - min) / range) * 100));
-  const color = composite > 0.5 ? 'var(--gold)' : composite > 0 ? 'var(--blue)' : 'var(--red)';
-  return `<div class="bar-cell">
-    <span class="mono" style="color:${color};min-width:44px;font-size:12px">${composite > 0 ? '+' : ''}${fmt(composite)}</span>
-    <div class="bar-bg"><div class="bar-fill" style="width:${pct}%;background:${color}"></div></div>
-  </div>`;
-}
-
-function proxBar(v) {
-  const pct = Math.max(0, Math.min(100, ((v - 0.28) / (0.80 - 0.28)) * 100));
-  const color = proxColor(v);
-  return `<div class="bar-cell">
-    <span class="prox-val" style="color:${color};min-width:38px">${fmt(v,3)}</span>
-    <div class="bar-bg"><div class="bar-fill" style="width:${pct}%;background:${color}"></div></div>
-  </div>`;
-}
-
-// ── state ──
-let sortCol = 'doral_rank', sortAsc = true;
-let activeFilter = 'all';
-let searchTerm = '';
-
-function getFiltered() {
-  let data = [...PLAYERS];
-  if (searchTerm) {
-    data = data.filter(p => p.name.toLowerCase().includes(searchTerm));
-  }
-  if (activeFilter === 'strong') data = data.filter(p => p.mayo_call && p.mayo_call.includes('STRONG'));
-  else if (activeFilter === 'hot') data = data.filter(p => p.momentum > 0.5);
-  else if (activeFilter === 'fade') data = data.filter(p => p.mayo_call && p.mayo_call.includes('FADE'));
-  else if (activeFilter === 'top20') data = data.filter(p => p.doral_rank <= 20);
-
-  data.sort((a, b) => {
-    let av = a[sortCol], bv = b[sortCol];
-    if (typeof av === 'string') av = av.toLowerCase();
-    if (typeof bv === 'string') bv = bv.toLowerCase();
-    if (av == null) return 1; if (bv == null) return -1;
-    return sortAsc ? (av > bv ? 1 : -1) : (av < bv ? 1 : -1);
-  });
-  return data;
-}
-
-function renderTable() {
-  const data = getFiltered();
-  document.getElementById('count-badge').textContent = `${data.length} players`;
-
-  const tbody = document.getElementById('tbody');
-  tbody.innerHTML = data.map((p, i) => {
-    const rankColor = p.doral_rank <= 5 ? 'var(--gold)' : p.doral_rank <= 15 ? 'var(--text)' : 'var(--muted)';
-    const momClass = p.momentum > 0.5 ? 'pos' : p.momentum < -0.5 ? 'neg' : 'neu';
-    const momSign = p.momentum > 0 ? '+' : '';
-    const isHot = p.momentum > 0.5;
-    const isFade = p.mayo_call && p.mayo_call.includes('FADE');
-
-    return `<tr class="${i % 2 === 0 ? '' : ''}">
-      <td><span class="rank-pill" style="color:${rankColor};border:1px solid ${rankColor}33">${p.doral_rank}</span></td>
-      <td>
-        <div class="player-cell">
-          <span class="player-name">${p.name}${isHot ? ' <span style="font-size:11px">🔥</span>' : ''}${isFade ? ' <span style="font-size:11px;opacity:0.6">📉</span>' : ''}</span>
-          ${p.news_note && p.news_note !== 'nan' ? `<span class="player-note">${p.news_note}</span>` : ''}
-        </div>
-      </td>
-      <td><span class="mono" style="color:var(--muted)">#${p.dg_rank}</span></td>
-      <td><span class="mono" style="color:var(--muted)">#${p.owgr_rank}</span></td>
-      <td>${doralBar(p.doral_composite)}</td>
-      <td><span class="mono" style="color:${sgColor(p.total_true)}">${p.total_true > 0 ? '+' : ''}${fmt(p.total_true)}</span></td>
-      <td><span class="mono" style="color:${sgColor(p.app_true)}">${p.app_true > 0 ? '+' : ''}${fmt(p.app_true)}</span></td>
-      <td><span class="mono" style="color:${sgColor(p.ott_true)}">${p.ott_true > 0 ? '+' : ''}${fmt(p.ott_true)}</span></td>
-      <td>${proxBar(p.fw_150_200)}</td>
-      <td>${proxBar(p.fw_over_200)}</td>
-      <td><span class="mono" style="color:${sgColor(p.sg_l20)}">${p.sg_l20 > 0 ? '+' : ''}${fmt(p.sg_l20)}</span></td>
-      <td><span class="momentum-val ${momClass}">${momSign}${fmt(p.momentum)}</span></td>
-      <td><span class="recent-results">${renderRecent(p.recent_5)}</span></td>
-      <td>${mayoBadge(p.mayo_call, p.buzz_detail)}</td>
-    </tr>`;
+function recentResultsHtml(r5) {
+  const cleaned = cleanStr(r5);
+  if (!cleaned) return '<span class="result-pill">No data</span>';
+  return cleaned.split('/').map(r => {
+    let cls = '';
+    if (r === '1' || r === '2' || r === '3' || r === 'T2' || r === 'T3') cls = 'win';
+    else if (['4','5','T4','T5'].includes(r)) cls = 'top5';
+    else if (['6','7','8','9','10','T6','T7','T8','T9','T10'].includes(r)) cls = 'top10';
+    else if (r === 'CUT' || r === 'WD' || r === 'MDF') cls = 'cut';
+    return `<span class="result-pill ${cls}">${r}</span>`;
   }).join('');
 }
 
-// ── summary cards ──
-function renderCards() {
-  const consensus = PLAYERS.filter(p => p.buzz_score >= 2.0 && p.momentum > 0.3 && p.doral_rank <= 20);
-  const leverage  = PLAYERS.filter(p => p.momentum > 1.0 && p.doral_rank <= 25 && p.buzz_score < 2.0).sort((a,b) => b.momentum - a.momentum).slice(0, 5);
-  const fades     = PLAYERS.filter(p => p.mayo_call && p.mayo_call.includes('FADE')).sort((a,b) => a.doral_rank - b.doral_rank);
-
-  const cardData = [
-    { label: '🔒 Consensus Locks — Mayo Strong + Course Fit + Hot Form', players: consensus, valKey: 'doral_composite', valLabel: 'Doral Score', color: 'var(--gold)' },
-    { label: '⚡ Leverage Plays — Hot Form, Low Buzz', players: leverage, valKey: 'momentum', valLabel: 'Momentum', color: 'var(--green)' },
-    { label: '📉 Active Fades — Mayo Lean Away + Data Concern', players: fades, valKey: 'momentum', valLabel: 'Momentum', color: 'var(--red)' },
-  ];
-
-  document.getElementById('cards').innerHTML = cardData.map(c => `
-    <div class="card">
-      <div class="card-label">${c.label}</div>
-      <div class="card-players">
-        ${c.players.map(p => `
-          <div class="card-row">
-            <span class="card-name">${p.name}</span>
-            <span class="card-val" style="color:${c.color}">
-              ${c.valKey === 'momentum' ? (p[c.valKey]>0?'+':'') : (p[c.valKey]>0?'+':'')}${fmt(p[c.valKey])}
-            </span>
-          </div>`).join('')}
-        ${c.players.length === 0 ? '<div style="color:var(--muted);font-size:12px">None matching</div>' : ''}
-      </div>
+function fitBars(fw150, fw200) {
+  const pct1 = Math.max(5, Math.min(100, ((fw150 - 0.55) / 0.30) * 100));
+  const pct2 = Math.max(5, Math.min(100, ((fw200 - 0.30) / 0.35) * 100));
+  return `
+    <div class="fit-bar">
+      <span class="fit-bar-label">150-200</span>
+      <div class="fit-bar-track"><div class="fit-bar-fill" style="width:${pct1}%;background:${fitColor(fw150)}"></div></div>
+      <span class="fit-bar-value" style="color:${fitColor(fw150)}">${fmt(fw150,3)}</span>
     </div>
-  `).join('');
+    <div class="fit-bar">
+      <span class="fit-bar-label">200+</span>
+      <div class="fit-bar-track"><div class="fit-bar-fill" style="width:${pct2}%;background:${fitColor(fw200)}"></div></div>
+      <span class="fit-bar-value" style="color:${fitColor(fw200)}">${fmt(fw200,3)}</span>
+    </div>
+  `;
 }
 
-// ── sort headers ──
-document.querySelectorAll('thead th[data-col]').forEach(th => {
-  th.addEventListener('click', () => {
-    const col = th.dataset.col;
-    if (sortCol === col) sortAsc = !sortAsc;
-    else { sortCol = col; sortAsc = col === 'doral_rank' || col === 'dg_rank' || col === 'owgr_rank'; }
-    document.querySelectorAll('thead th').forEach(h => h.classList.remove('sort-asc','sort-desc'));
-    th.classList.add(sortAsc ? 'sort-asc' : 'sort-desc');
-    renderTable();
-  });
+function mayoBadge(call, detail) {
+  const c = cleanStr(call);
+  if (!c) return '';
+  const isLock = (detail || '').includes('LOCK');
+  if (isLock) return '<span class="mayo-badge lock">🔒 Mayo Lock</span>';
+  if (c.includes('STRONG')) return '<span class="mayo-badge strong">Mayo Strong</span>';
+  if (c.includes('LIKE'))   return '<span class="mayo-badge like">Mayo Like</span>';
+  if (c.includes('FADE'))   return '<span class="mayo-badge fade">Mayo Fade</span>';
+  if (c.includes('NEUTRAL'))return '<span class="mayo-badge neutral">Mayo Neutral</span>';
+  return '';
+}
+
+function signalIndicator(p) {
+  // Three signals: DG (top 25%), Market (top 25%), Mayo (≥2)
+  const dg     = p.doral_rank <= 18;
+  const market = p.market_rank && p.market_rank <= 18;
+  const mayo   = p.buzz_score >= 2.0;
+  return `
+    <div class="signal-bar">
+      <div class="signal-cell ${dg?'on':'off'}">
+        <span class="icon">${dg?'✓':'·'}</span>DG Model
+      </div>
+      <div class="signal-cell ${market?'on':'off'}">
+        <span class="icon">${market?'✓':'·'}</span>Market
+      </div>
+      <div class="signal-cell ${mayo?'on':'off'}">
+        <span class="icon">${mayo?'✓':'·'}</span>Mayo
+      </div>
+    </div>
+  `;
+}
+
+function renderCard(p) {
+  const isLock  = p.signal_agreement === 3;
+  const isFade  = (p.mayo_call||'').includes('FADE');
+  const note    = cleanStr(p.news_note);
+  const isWarn  = note.includes('⚠');
+  const oddsStr = p.dk_win_odds ? `+${p.dk_win_odds}` : 'No DK odds';
+  const oddsCls = p.dk_win_odds ? '' : 'no-odds';
+  const sigmaSig = p.sigma >= 17 ? '↑' : p.sigma <= 15.5 ? '↓' : '';
+
+  return `
+    <div class="player-card ${isLock?'is-lock':''} ${isFade?'is-fade':''}">
+
+      <div class="card-row1">
+        <div>
+          <div class="player-name">${p.name}</div>
+          <div class="player-rank-row">
+            <span class="rank-chip doral">Doral #${p.doral_rank}</span>
+            <span class="rank-chip">DG #${p.dg_rank}</span>
+            ${p.market_rank && p.market_rank <= 30 ? `<span class="rank-chip">Mkt #${p.market_rank}</span>` : ''}
+          </div>
+        </div>
+        <div class="odds-display">
+          <div class="odds-value ${oddsCls}">${oddsStr}</div>
+          <div class="odds-label">DK Win Odds</div>
+        </div>
+      </div>
+
+      ${signalIndicator(p)}
+
+      <div class="stats-grid">
+        <div class="stat-cell">
+          <div class="stat-label">Proj</div>
+          <div class="stat-value gold">${fmt(p.proj_final,1)}</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-label">Ceiling</div>
+          <div class="stat-value">${fmt(p.mc_ceil,1)}</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-label">SG Total</div>
+          <div class="stat-value ${p.total_true>0.5?'green':p.total_true<-0.3?'red':'muted'}">${p.total_true>0?'+':''}${fmt(p.total_true,2)}</div>
+        </div>
+        <div class="stat-cell">
+          <div class="stat-label">Own% Est</div>
+          <div class="stat-value muted">${fmt(p.own_pct_est,1)}%</div>
+        </div>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Course Fit</span>
+        <div class="fit-bars">${fitBars(p.fw_150_200, p.fw_over_200)}</div>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Form L20</span>
+        <span class="momentum-tag ${momentumClass(p.momentum)}">
+          SG ${fmt(p.sg_l20,2)} · Mom ${momentumLabel(p.momentum)} ${p.momentum > 1 ? '🔥' : p.momentum < -0.7 ? '📉' : ''}
+        </span>
+      </div>
+
+      <div class="detail-row">
+        <span class="detail-label">Last 5</span>
+        <div class="recent-results">${recentResultsHtml(p.recent_5)}</div>
+      </div>
+
+      <div class="card-footer">
+        ${mayoBadge(p.mayo_call, p.buzz_detail)}
+        <span class="own-est">Buzz: <span class="value">${p.buzz_score>0?'+':''}${fmt(p.buzz_score,1)}</span></span>
+      </div>
+
+      ${note ? `<div class="news-note ${isWarn?'warning':''}">${note}</div>` : ''}
+
+    </div>
+  `;
+}
+
+// ── Tier classification ──
+function classify(p) {
+  // 1. Consensus locks
+  if (p.signal_agreement === 3) return 'locks';
+  // 2. Mayo strong with course fit or market presence
+  if ((p.mayo_call||'').includes('STRONG') && (p.doral_rank <= 25 || (p.market_rank && p.market_rank <= 20))) return 'strong';
+  // 3. Leverage: hot momentum + low buzz/market
+  if (p.momentum >= 0.5 && p.doral_rank <= 25 && p.buzz_score < 2.0 && (!p.market_rank || p.market_rank > 15)) return 'leverage';
+  // 4. Fades & traps
+  if ((p.mayo_call||'').includes('FADE')) return 'fades';
+  if (p.market_rank && p.doral_rank - p.market_rank >= 25) return 'fades'; // market overvalues
+  // 5. Mid tier — anyone with Doral rank ≤ 40 OR mayo like
+  if (p.doral_rank <= 40 || (p.mayo_call||'').includes('LIKE')) return 'mid';
+  return null; // skip
+}
+
+// ── Render all tiers ──
+const tiers = { locks: [], strong: [], leverage: [], mid: [], fades: [] };
+PLAYERS.forEach(p => {
+  const t = classify(p);
+  if (t) tiers[t].push(p);
 });
 
-// ── filter buttons ──
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeFilter = btn.dataset.filter;
-    renderTable();
-  });
+// Sort each tier
+tiers.locks.sort((a,b)    => a.doral_rank - b.doral_rank);
+tiers.strong.sort((a,b)   => b.buzz_score - a.buzz_score || a.doral_rank - b.doral_rank);
+tiers.leverage.sort((a,b) => b.momentum - a.momentum);
+tiers.mid.sort((a,b)      => a.doral_rank - b.doral_rank);
+tiers.fades.sort((a,b)    => b.buzz_score - a.buzz_score); // worst fades first (most negative)
+
+// Render
+['locks','strong','leverage','mid','fades'].forEach(t => {
+  document.getElementById(`grid-${t}`).innerHTML = tiers[t].map(renderCard).join('');
+  document.getElementById(`cnt-${t}`).textContent = tiers[t].length;
 });
 
-// ── search ──
-document.getElementById('search').addEventListener('input', e => {
-  searchTerm = e.target.value.toLowerCase().trim();
-  renderTable();
-});
-
-// ── sort select ──
-document.getElementById('sort-select').addEventListener('change', e => {
-  sortCol = e.target.value;
-  sortAsc = ['doral_rank','dg_rank','owgr_rank'].includes(sortCol);
-  document.querySelectorAll('thead th').forEach(h => h.classList.remove('sort-asc','sort-desc'));
-  renderTable();
-});
-
-// ── init ──
-renderCards();
+// ── Full table ──
+function renderTable() {
+  const tbody = document.getElementById('tbody');
+  const sorted = [...PLAYERS].sort((a,b) => a.doral_rank - b.doral_rank);
+  tbody.innerHTML = sorted.map(p => {
+    const note = cleanStr(p.news_note);
+    return `<tr>
+      <td><strong style="color:var(--gold-light)">#${p.doral_rank}</strong></td>
+      <td class="player-cell"><strong>${p.name}</strong></td>
+      <td>${p.dk_win_odds ? '+'+p.dk_win_odds : '—'}</td>
+      <td>${p.market_rank && p.market_rank <= 30 ? '#'+p.market_rank : '—'}</td>
+      <td>#${p.dg_rank}</td>
+      <td style="color:var(--gold-light)">${fmt(p.proj_final,1)}</td>
+      <td>${fmt(p.mc_ceil,1)}</td>
+      <td>${fmt(p.own_pct_est,1)}%</td>
+      <td class="${momentumClass(p.momentum)==='hot'?'green':momentumClass(p.momentum)==='cold'?'red':''}"
+          style="color:${momentumClass(p.momentum)==='hot'?'var(--green)':momentumClass(p.momentum)==='cold'?'var(--red)':''}">
+        ${momentumLabel(p.momentum)}
+      </td>
+      <td>${fmt(p.fw_150_200,3)}</td>
+      <td>${fmt(p.fw_over_200,3)}</td>
+      <td>${mayoBadge(p.mayo_call, p.buzz_detail) || '<span style="color:var(--text-muted)">—</span>'}</td>
+      <td class="note-cell">${note}</td>
+    </tr>`;
+  }).join('');
+}
 renderTable();
-// Set initial sort header state
-document.querySelector('th[data-col="doral_rank"]').classList.add('sort-asc');
+
+// ── Table toggle ──
+document.getElementById('toggle-table').addEventListener('click', e => {
+  const wrap = document.getElementById('table-wrap');
+  wrap.classList.toggle('visible');
+  e.target.textContent = wrap.classList.contains('visible') ? 'Hide Full Table ▴' : 'Show Full Table ▾';
+});
+
+// ── Nav scroll + active tracking ──
+document.querySelectorAll('.nav-link').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const tier = a.dataset.tier;
+    const target = document.getElementById('tier-'+tier);
+    if (target) target.scrollIntoView({behavior:'smooth', block:'start'});
+  });
+});
+
+// Active section on scroll
+const sections = ['locks','strong','leverage','mid','fades','table'].map(t => document.getElementById('tier-'+t));
+window.addEventListener('scroll', () => {
+  let active = sections[0];
+  sections.forEach(s => {
+    if (s && s.getBoundingClientRect().top < 120) active = s;
+  });
+  if (active) {
+    const tier = active.id.replace('tier-','');
+    document.querySelectorAll('.nav-link').forEach(a => {
+      a.classList.toggle('active', a.dataset.tier === tier);
+    });
+  }
+}, {passive: true});
 </script>
+
 </body>
 </html>
