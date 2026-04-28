@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Escalade Escalation · PGA Insights by KB</title>
+<title>Caddy Cup 26 · PGA Insights by KB</title>
 <style>
   :root {
     --bg-0: #0a0e14;
@@ -115,6 +115,13 @@ animation: pulse 2s infinite;
 @keyframes pulse {
 0%, 100% { opacity: 1; }
 50% { opacity: 0.5; }
+}
+.updated-stamp {
+font-size: 10px;
+color: var(–text-2);
+letter-spacing: 0.02em;
+white-space: nowrap;
+margin-left: 8px;
 }
 
 /* TABS */
@@ -1266,22 +1273,54 @@ padding-bottom: env(safe-area-inset-bottom);
 }
 
 ```
-/* Header collapse */
+/* Header — compact horizontal */
 .header { 
-  padding: 12px 16px; 
-  flex-direction: column; 
-  align-items: flex-start; 
+  padding: 10px 14px; 
+  flex-direction: row; 
+  align-items: center; 
+  justify-content: space-between;
   gap: 10px;
-  padding-top: max(12px, env(safe-area-inset-top));
+  padding-top: max(10px, env(safe-area-inset-top));
+}
+.brand { gap: 8px; flex-shrink: 0; min-width: 0; }
+.brand > div:last-child { min-width: 0; overflow: hidden; }
+.brand-name { 
+  font-size: 14px; 
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+.brand-tag { font-size: 8px; }
+.logo { width: 32px; height: 28px; font-size: 11px; }
+
+/* Hide event details on mobile (they're in the Guide tab) */
+.event-info { 
+  gap: 0;
+  flex-wrap: nowrap; 
+  width: auto;
+  flex-shrink: 0;
+}
+.event-block { display: none; }
+.live-indicator { 
+  font-size: 10px; 
+  padding: 4px 9px;
+  flex-shrink: 0;
+}
+.updated-stamp { 
+  display: block;
+  font-size: 9px;
+  margin-left: 0;
+  margin-top: 2px;
+  width: 100%;
+  text-align: right;
 }
 .event-info { 
-  gap: 12px; 
-  flex-wrap: wrap; 
-  width: 100%;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px !important;
 }
-.event-block { flex: 1; min-width: 0; }
-.event-value { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.live-indicator { font-size: 10px; padding: 3px 8px; }
 
 /* Tabs scroll horizontally */
 .tabs { 
@@ -1311,39 +1350,73 @@ padding-bottom: env(safe-area-inset-bottom);
 
 main { padding: 14px 12px 100px; }
 
-/* Legend stack */
+/* Legend — explicit card with bg */
 .legend { 
   grid-template-columns: 1fr 1fr; 
-  gap: 8px 12px; 
-  padding: 12px 14px;
+  gap: 10px 14px; 
+  padding: 14px;
+  background: var(--bg-1) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 10px;
 }
-.legend-desc { font-size: 10px; }
+.legend-key { font-size: 10px; }
+.legend-desc { font-size: 11px; line-height: 1.3; }
 
 /* Status bar more compact */
 .status-bar { padding: 10px 12px; gap: 10px; }
 .status-section { width: 100%; }
 .status-clear { width: 100%; }
 
-/* Controls stack vertically */
+/* Controls bar — explicit card with chip group hierarchy */
 .controls {
   padding: 12px;
   flex-direction: column;
   align-items: stretch;
-  gap: 12px;
+  gap: 14px;
+  background: var(--bg-1) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: 10px;
 }
 .control-group { 
   flex-wrap: wrap; 
-  gap: 6px; 
+  gap: 6px;
+  align-items: center;
+}
+.control-label {
+  display: inline-block !important;
+  font-size: 10px;
+  color: var(--text-2);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+  width: 100%;
+  margin-bottom: 4px;
 }
 .input-search { 
   width: 100%; 
   min-height: 40px;
-  font-size: 16px; /* iOS won't zoom on focus if 16+ */
+  font-size: 16px; /* iOS won't zoom */
+  background: var(--bg-2) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-0) !important;
+  padding: 10px 12px;
+  border-radius: 8px;
 }
 .filter-chip { 
   font-size: 12px; 
-  padding: 8px 12px;
-  min-height: 36px;
+  padding: 7px 12px;
+  min-height: 32px;
+  background: var(--bg-2) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--text-1) !important;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+}
+.filter-chip.active {
+  background: var(--accent-dim) !important;
+  border-color: var(--accent) !important;
+  color: var(--accent) !important;
 }
 
 /* Player table — horizontal scroll with momentum */
@@ -1445,10 +1518,6 @@ table td:nth-child(13) { display: none; }
 .bc-player { padding: 8px 10px; font-size: 12px; min-height: 44px; }
 .bc-player-name { font-size: 12px; }
 
-/* Brand smaller */
-.brand-name { font-size: 16px; }
-.brand-tag { font-size: 9px; }
-
 /* Guide tab */
 .guide-hero { padding: 20px 16px; }
 .guide-hero h1 { font-size: 20px; }
@@ -1466,20 +1535,19 @@ table td:nth-child(13) { display: none; }
 
 /* SMALL MOBILE (480px and below) */
 @media (max-width: 480px) {
-.header { padding: 10px 12px; }
-main { padding: 12px 8px 100px; }
+.header { padding: 8px 12px; padding-top: max(8px, env(safe-area-inset-top)); }
+.brand-name { max-width: 110px; font-size: 13px; }
+.live-indicator { font-size: 9px; padding: 3px 7px; }
+main { padding: 12px 10px 100px; }
 
 ```
-.legend { grid-template-columns: 1fr; gap: 6px; padding: 10px 12px; }
+.legend { grid-template-columns: 1fr; gap: 8px; padding: 12px; }
 
 /* Hide more columns at very small */
 table th:nth-child(7),  /* SG */
 table td:nth-child(7),
 table th:nth-child(9),  /* Form */
 table td:nth-child(9) { display: none; }
-
-.control-label { display: none; }
-.event-block:nth-child(2) { display: none; }
 ```
 
 }
@@ -1494,7 +1562,7 @@ table td:nth-child(9) { display: none; }
   <div class="brand">
     <div class="logo">KB</div>
     <div>
-      <div class="brand-name">The Escalade Escalation</div>
+      <div class="brand-name">Caddy Cup 26</div>
       <div class="brand-tag">PGA Insights by KB</div>
     </div>
   </div>
@@ -1515,6 +1583,7 @@ table td:nth-child(9) { display: none; }
       <div class="live-dot"></div>
       <span id="priced-count">Live</span>
     </div>
+    <div class="updated-stamp">Updated Tue Apr 28 · 10:48 AM CDT</div>
   </div>
 </div>
 
