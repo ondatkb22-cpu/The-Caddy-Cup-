@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -33,1369 +34,1445 @@
     line-height: 1.5;
     overflow-x: hidden;
   }
-  
-  /* HEADER */
-  .header {
-    background: var(--bg-1);
-    border-bottom: 1px solid var(--border);
-    padding: 16px 32px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
-  .brand {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .logo {
-    width: 38px;
-    height: 32px;
-    background: linear-gradient(135deg, var(--accent), var(--sharp));
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    color: var(--bg-0);
-    font-size: 13px;
-    letter-spacing: -0.02em;
-  }
-  .brand-name {
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-  .brand-tag {
-    font-size: 10px;
-    color: var(--text-2);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-top: -2px;
-  }
-  .event-info {
-    display: flex;
-    gap: 24px;
-    align-items: center;
-  }
-  .event-block { display: flex; flex-direction: column; }
-  .event-label {
-    font-size: 10px;
-    color: var(--text-2);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-  .event-value {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--text-0);
-  }
-  .live-indicator {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.3);
-    padding: 4px 10px;
-    border-radius: 999px;
-    font-size: 11px;
-    color: var(--good);
-  }
-  .live-dot {
-    width: 6px;
-    height: 6px;
-    background: var(--good);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-  }
-  
-  /* TABS */
-  .tabs {
-    background: var(--bg-1);
-    border-bottom: 1px solid var(--border);
-    padding: 0 32px;
-    display: flex;
-    gap: 4px;
-  }
-  .tab {
-    padding: 14px 20px;
-    color: var(--text-1);
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    border-bottom: 2px solid transparent;
-    transition: all 0.15s;
-  }
-  .tab:hover { color: var(--text-0); }
-  .tab.active {
-    color: var(--accent);
-    border-bottom-color: var(--accent);
-  }
-  
-  /* MAIN */
-  main {
-    padding: 24px 32px 80px;
-    max-width: 1800px;
-    margin: 0 auto;
-  }
-  
-  /* CONTROLS BAR */
-  .controls {
-    background: var(--bg-1);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px 20px;
-    display: flex;
-    gap: 24px;
-    align-items: center;
-    margin-bottom: 16px;
-    flex-wrap: wrap;
-  }
-  .control-group {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .control-label {
-    font-size: 11px;
-    color: var(--text-2);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 600;
-  }
-  .input-search {
-    background: var(--bg-2);
-    border: 1px solid var(--border);
-    color: var(--text-0);
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-size: 13px;
-    width: 200px;
-    font-family: inherit;
-  }
-  .input-search:focus {
-    outline: none;
-    border-color: var(--accent);
-  }
-  .filter-chip {
-    background: var(--bg-2);
-    border: 1px solid var(--border);
-    color: var(--text-1);
-    padding: 6px 12px;
-    border-radius: 999px;
-    font-size: 12px;
-    cursor: pointer;
-    transition: all 0.15s;
-    font-weight: 500;
-  }
-  .filter-chip:hover {
-    border-color: var(--border-light);
-    color: var(--text-0);
-  }
-  .filter-chip.active {
-    background: var(--accent-dim);
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-  .filter-chip.active.tier-chalk { background: rgba(236, 72, 153, 0.15); border-color: var(--chalk); color: var(--chalk); }
-  .filter-chip.active.tier-sharp { background: rgba(139, 92, 246, 0.15); border-color: var(--sharp); color: var(--sharp); }
-  .filter-chip.active.tier-contrarian { background: rgba(245, 158, 11, 0.15); border-color: var(--warn); color: var(--warn); }
-  
-  /* TABLE */
-  .table-wrap {
-    background: var(--bg-1);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-  }
-  thead tr {
-    background: var(--bg-2);
-    border-bottom: 1px solid var(--border);
-  }
-  th {
-    padding: 10px 12px;
-    text-align: left;
-    font-size: 11px;
-    color: var(--text-2);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 600;
-    cursor: pointer;
-    user-select: none;
-    white-space: nowrap;
-    position: sticky;
-    top: 0;
-    background: var(--bg-2);
-  }
-  th:hover { color: var(--text-0); }
-  th.sortable::after {
-    content: ' ↕';
-    color: var(--text-2);
-    opacity: 0.4;
-  }
-  th.sort-asc::after { content: ' ↑'; opacity: 1; color: var(--accent); }
-  th.sort-desc::after { content: ' ↓'; opacity: 1; color: var(--accent); }
-  td {
-    padding: 12px;
-    border-bottom: 1px solid var(--border);
-    vertical-align: middle;
-  }
-  tbody tr {
-    transition: background 0.15s;
-    cursor: pointer;
-  }
-  tbody tr:hover { background: var(--bg-2); }
-  tbody tr.expanded { background: var(--bg-2); }
-  tbody tr.selected { background: rgba(94, 234, 212, 0.06); }
-  
-  /* PLAYER CELL */
-  .player-cell {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .player-avatar {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--bg-3), var(--bg-2));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--text-1);
-    flex-shrink: 0;
-  }
-  .player-info { display: flex; flex-direction: column; }
-  .player-name {
-    font-weight: 600;
-    color: var(--text-0);
-    font-size: 13px;
-  }
-  .player-sub {
-    font-size: 11px;
-    color: var(--text-2);
-  }
-  
-  /* COMPOSITE BARS */
-  .score-cell {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    min-width: 80px;
-  }
-  .score-bar {
-    flex: 1;
-    height: 6px;
-    background: var(--bg-3);
-    border-radius: 3px;
-    overflow: hidden;
-    min-width: 40px;
-  }
-  .score-bar-fill {
-    height: 100%;
-    border-radius: 3px;
-    transition: width 0.3s;
-  }
-  .bar-good { background: var(--good); }
-  .bar-mid { background: var(--accent); }
-  .bar-warn { background: var(--warn); }
-  .bar-low { background: var(--text-2); }
-  .score-value {
-    font-size: 11px;
-    color: var(--text-1);
-    min-width: 22px;
-    text-align: right;
-    font-variant-numeric: tabular-nums;
-  }
-  
-  /* TIER BADGE */
-  .tier-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 3px 8px;
-    border-radius: 4px;
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .tier-CHALK { background: rgba(236, 72, 153, 0.15); color: var(--chalk); }
-  .tier-SHARP { background: rgba(139, 92, 246, 0.15); color: var(--sharp); }
-  .tier-CONTRARIAN { background: rgba(245, 158, 11, 0.15); color: var(--warn); }
-  .tier-FADE { background: rgba(239, 68, 68, 0.15); color: var(--danger); }
-  .tier-NEUTRAL { background: var(--bg-3); color: var(--text-2); }
-  
-  /* STARS */
-  .stars { color: var(--warn); letter-spacing: -2px; }
-  .stars .empty { color: var(--bg-3); }
-  
-  /* SALARY */
-  .salary-cell {
-    font-variant-numeric: tabular-nums;
-    font-weight: 600;
-    color: var(--text-0);
-  }
-  .leverage-pos { color: var(--good); font-weight: 600; }
-  .leverage-neg { color: var(--text-2); }
-  
-  /* OWN BADGE */
-  .own-cell {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-variant-numeric: tabular-nums;
-  }
-  .own-low { color: var(--good); }
-  .own-mid { color: var(--text-1); }
-  .own-high { color: var(--chalk); }
-  
-  /* CHECKBOX */
-  .check-col {
-    width: 36px;
-    text-align: center;
-  }
-  .lineup-check {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--accent);
-    cursor: pointer;
-  }
-  
-  /* EXPANDED ROW */
-  .detail-row { background: var(--bg-2); }
-  .detail-row td {
-    padding: 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .detail-content {
-    padding: 24px 28px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 32px;
-  }
-  .detail-section h4 {
-    font-size: 11px;
-    color: var(--text-2);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 600;
-    margin-bottom: 12px;
-  }
-  .detail-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px 16px;
-  }
-  .detail-item {
-    display: flex;
-    justify-content: space-between;
-    font-size: 12px;
-    padding: 4px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .detail-key { color: var(--text-2); }
-  .detail-val { color: var(--text-0); font-weight: 500; font-variant-numeric: tabular-nums; }
-  .detail-val.pos { color: var(--good); }
-  .detail-val.neg { color: var(--danger); }
-  .detail-note {
-    background: rgba(245, 158, 11, 0.08);
-    border-left: 2px solid var(--warn);
-    padding: 8px 12px;
-    border-radius: 4px;
-    font-size: 12px;
-    color: var(--text-1);
-    margin-top: 12px;
-  }
-  
-  /* LINEUP BUILDER */
-  .builder-grid {
-    display: grid;
-    grid-template-columns: 1fr 380px;
-    gap: 16px;
-  }
-  .lineup-panel {
-    background: var(--bg-1);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    position: sticky;
-    top: 110px;
-    align-self: start;
-  }
-  .lineup-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--border);
-    background: var(--bg-2);
-  }
-  .lineup-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-0);
-    margin-bottom: 4px;
-  }
-  .lineup-stats {
-    display: flex;
-    gap: 12px;
-    font-size: 12px;
-    color: var(--text-1);
-  }
-  .lineup-stat-val {
-    color: var(--text-0);
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-  }
-  .salary-bar {
-    height: 4px;
-    background: var(--bg-3);
-    border-radius: 2px;
-    margin: 12px 0 4px;
-    overflow: hidden;
-  }
-  .salary-bar-fill {
-    height: 100%;
-    background: var(--accent);
-    transition: width 0.3s;
-  }
-  .salary-bar-fill.over { background: var(--danger); }
-  .lineup-slots {
-    padding: 8px;
-  }
-  .lineup-slot {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 12px;
-    border-radius: 8px;
-    margin-bottom: 4px;
-    font-size: 13px;
-    transition: background 0.15s;
-  }
-  .lineup-slot.empty {
-    background: var(--bg-2);
-    color: var(--text-2);
-    border: 1px dashed var(--border);
-  }
-  .lineup-slot.filled {
-    background: var(--bg-2);
-  }
-  .slot-info { display: flex; flex-direction: column; }
-  .slot-name { color: var(--text-0); font-weight: 500; }
-  .slot-meta { color: var(--text-2); font-size: 11px; }
-  .slot-remove {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: var(--bg-3);
-    border: none;
-    color: var(--text-2);
-    cursor: pointer;
-    transition: all 0.15s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-  }
-  .slot-remove:hover {
-    background: var(--danger);
-    color: white;
-  }
-  .lineup-actions {
-    padding: 16px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .btn {
-    padding: 10px 16px;
-    border-radius: 8px;
-    border: none;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.15s;
-    font-family: inherit;
-  }
-  .btn-primary {
-    background: var(--accent);
-    color: var(--bg-0);
-  }
-  .btn-primary:hover { background: #4dd6c0; }
-  .btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
-  .btn-secondary {
-    background: var(--bg-3);
-    color: var(--text-0);
-  }
-  .btn-secondary:hover { background: var(--bg-hover); }
-  .btn-ghost {
-    background: transparent;
-    color: var(--text-1);
-    border: 1px solid var(--border);
-  }
-  .btn-ghost:hover { color: var(--text-0); border-color: var(--border-light); }
-  
-  /* PROBABILITY DISPLAY */
-  .prob-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    padding: 16px;
-    background: var(--bg-2);
-    border-top: 1px solid var(--border);
-  }
-  .prob-card {
-    background: var(--bg-1);
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid var(--border);
-  }
-  .prob-label {
-    font-size: 10px;
-    color: var(--text-2);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 600;
-  }
-  .prob-value {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--accent);
-    font-variant-numeric: tabular-nums;
-    margin-top: 2px;
-  }
-  
-  /* HIDDEN BY DEFAULT */
-  .hidden { display: none !important; }
-  
-  /* COLUMN LEGEND */
-  .legend {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 12px;
-    background: var(--bg-1);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px 18px;
-    margin-bottom: 20px;
-  }
-  .legend-item {
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    min-width: 0;
-  }
-  .legend-key {
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--accent);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-  }
-  .legend-desc {
-    font-size: 11px;
-    color: var(--text-2);
-    line-height: 1.35;
-  }
-  
-  /* LOCK / EXCLUDE BUTTONS */
-  .row-actions {
-    display: flex;
-    gap: 4px;
-    align-items: center;
-  }
-  .row-action-btn {
-    width: 26px;
-    height: 26px;
-    border-radius: 6px;
-    border: 1px solid var(--border);
-    background: var(--bg-2);
-    color: var(--text-2);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 13px;
-    transition: all 0.15s;
-    padding: 0;
-    flex-shrink: 0;
-  }
-  .row-action-btn:hover {
-    border-color: var(--border-light);
-    color: var(--text-0);
-    background: var(--bg-3);
-  }
-  .row-action-btn.active.lock {
-    background: rgba(94, 234, 212, 0.15);
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-  .row-action-btn.active.exclude {
-    background: rgba(239, 68, 68, 0.15);
-    border-color: var(--danger);
-    color: var(--danger);
-  }
-  tr.locked-row {
-    background: rgba(94, 234, 212, 0.04) !important;
-  }
-  tr.locked-row td:first-child {
-    border-left: 2px solid var(--accent);
-  }
-  tr.excluded-row {
-    opacity: 0.4;
-  }
-  tr.excluded-row td {
-    text-decoration: line-through;
-    text-decoration-color: var(--danger);
-  }
-  
-  /* FLOATING BUILDER PANEL */
-  .floating-builder {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 360px;
-    max-height: calc(100vh - 48px);
-    background: var(--bg-1);
-    border: 1px solid var(--border-light);
-    border-radius: 14px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(94, 234, 212, 0.05);
-    z-index: 200;
-    display: flex;
-    flex-direction: column;
-    transition: transform 0.25s ease, opacity 0.2s;
-    overflow: hidden;
-  }
-  .floating-builder.collapsed {
-    height: 64px;
-    overflow: hidden;
-  }
-  .floating-builder.collapsed .fb-body { display: none; }
-  .floating-builder.closed {
-    transform: translateY(120%) scale(0.9);
-    opacity: 0;
-    pointer-events: none;
-  }
-  .fb-header {
-    padding: 14px 16px 12px;
-    background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
-    border-bottom: 1px solid var(--border);
-    flex-shrink: 0;
-  }
-  .fb-title-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  .fb-title {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-0);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .fb-title::before {
-    content: '';
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 8px var(--accent);
-  }
-  .fb-actions-top {
-    display: flex;
-    gap: 4px;
-  }
-  .fb-action {
-    width: 24px;
-    height: 24px;
-    border-radius: 6px;
-    background: var(--bg-3);
-    border: none;
-    color: var(--text-1);
-    cursor: pointer;
-    font-size: 16px;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.15s;
-  }
-  .fb-action:hover {
-    background: var(--bg-hover);
-    color: var(--text-0);
-  }
-  .fb-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 6px;
-    margin-bottom: 8px;
-  }
-  .fb-stat {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-  }
-  .fb-stat-label {
-    font-size: 9px;
-    color: var(--text-2);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-weight: 600;
-  }
-  .fb-stat-val {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--text-0);
-    font-variant-numeric: tabular-nums;
-  }
-  .fb-body {
-    overflow-y: auto;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* MINI TOGGLE IN TAB BAR */
-  .floating-toggle-mini {
-    margin-left: auto;
-    padding: 8px 14px;
-    background: var(--bg-2);
-    border: 1px solid var(--border-light);
-    border-radius: 8px;
-    color: var(--text-1);
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.15s;
-    align-self: center;
-    margin-top: 7px;
-    margin-bottom: 7px;
-    font-family: inherit;
-  }
-  .floating-toggle-mini:hover {
-    color: var(--text-0);
-    border-color: var(--accent);
-    background: var(--bg-3);
-  }
-  .ft-icon {
-    color: var(--accent);
-    font-size: 14px;
-  }
-  .ft-badge {
-    background: var(--accent);
-    color: var(--bg-0);
-    font-size: 10px;
-    font-weight: 700;
-    padding: 1px 6px;
-    border-radius: 999px;
-    min-width: 18px;
-    text-align: center;
-  }
-  
-  /* FAB (when fully closed) */
-  .fab {
-    position: fixed;
-    bottom: 24px;
-    right: 24px;
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: var(--bg-0);
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 8px 24px rgba(94, 234, 212, 0.4);
-    z-index: 200;
-    font-size: 22px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.15s;
-  }
-  .fab:hover { transform: scale(1.1); }
-  .fab-count {
-    position: absolute;
-    top: -4px;
-    right: -4px;
-    background: var(--sharp);
-    color: white;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 2px 6px;
-    border-radius: 999px;
-    min-width: 20px;
-    text-align: center;
-  }
-  
-  /* BUILT LINEUPS TAB */
-  .lineup-section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 24px 0 12px;
-    padding: 0 4px;
-  }
-  .lineup-section-header:first-child { margin-top: 0; }
-  .lineup-section-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text-0);
-    letter-spacing: -0.01em;
-  }
-  .lineup-section-sub {
-    font-size: 12px;
-    color: var(--text-2);
-    margin-top: 2px;
-  }
-  .lineup-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-  .built-card {
-    background: var(--bg-1);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    transition: all 0.2s;
-  }
-  .built-card:hover {
-    border-color: var(--border-light);
-    transform: translateY(-2px);
-  }
-  .built-card.cash { border-top: 3px solid var(--accent); }
-  .built-card.gpp { border-top: 3px solid var(--sharp); }
-  .built-card-header {
-    padding: 14px 18px;
-    background: var(--bg-2);
-    border-bottom: 1px solid var(--border);
-  }
-  .built-card-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-  .built-card-name {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-0);
-  }
-  .built-card-rank {
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 700;
-    padding: 3px 8px;
-    border-radius: 4px;
-  }
-  .built-card.cash .built-card-rank {
-    background: rgba(94, 234, 212, 0.15);
-    color: var(--accent);
-  }
-  .built-card.gpp .built-card-rank {
-    background: rgba(139, 92, 246, 0.15);
-    color: var(--sharp);
-  }
-  .built-card-stats {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
-  .bc-stat { display: flex; flex-direction: column; gap: 2px; }
-  .bc-stat-label {
-    font-size: 9px;
-    color: var(--text-2);
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    font-weight: 600;
-  }
-  .bc-stat-val {
-    font-size: 15px;
-    font-weight: 700;
-    color: var(--text-0);
-    font-variant-numeric: tabular-nums;
-  }
-  .bc-stat-val.accent { color: var(--accent); }
-  .bc-stat-val.sharp { color: var(--sharp); }
-  .built-card-players {
-    padding: 8px;
-  }
-  .bc-player {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-  }
-  .bc-player + .bc-player { margin-top: 2px; }
-  .bc-player:hover { background: var(--bg-2); }
-  .bc-player-info { display: flex; flex-direction: column; min-width: 0; flex: 1; }
-  .bc-player-name {
-    color: var(--text-0);
-    font-weight: 600;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .bc-player-meta {
-    color: var(--text-2);
-    font-size: 10px;
-    margin-top: 1px;
-  }
-  .bc-player-sal {
-    font-size: 12px;
-    color: var(--text-1);
-    font-variant-numeric: tabular-nums;
-    font-weight: 600;
-    margin-left: 8px;
-    flex-shrink: 0;
-  }
-  .built-card-actions {
-    padding: 12px 14px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    gap: 8px;
-  }
-  .built-card-actions .btn {
-    flex: 1;
-    padding: 8px 12px;
-    font-size: 12px;
-  }
-  
-  /* STATUS BAR — locked / excluded chips persistent at top */
-  .status-bar {
-    background: var(--bg-1);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 12px 16px;
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-  .status-section {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex: 1;
-    min-width: 0;
-  }
-  .status-section.empty { display: none; }
-  .status-label {
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-weight: 700;
-    color: var(--text-1);
-    white-space: nowrap;
-  }
-  .status-chips {
-    display: flex;
-    gap: 6px;
-    flex-wrap: wrap;
-    flex: 1;
-  }
-  .status-chip {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 8px 4px 10px;
-    border-radius: 999px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: default;
-    border: 1px solid;
-  }
-  .status-chip.locked {
-    background: rgba(94, 234, 212, 0.12);
-    border-color: var(--accent);
-    color: var(--accent);
-  }
-  .status-chip.excluded {
-    background: rgba(239, 68, 68, 0.12);
-    border-color: var(--danger);
-    color: var(--danger);
-  }
-  .status-chip-x {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: inherit;
-    cursor: pointer;
-    font-size: 11px;
-    line-height: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-  }
-  .status-chip-x:hover { background: rgba(255, 255, 255, 0.2); }
-  .status-clear {
-    padding: 6px 12px;
-    font-size: 11px;
-    flex-shrink: 0;
-  }
 
-  /* GUIDE TAB */
-  .guide-hero {
-    background: linear-gradient(135deg, rgba(94, 234, 212, 0.06), rgba(139, 92, 246, 0.06));
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 28px 24px;
-    margin-bottom: 20px;
-  }
-  .guide-hero-tag {
-    display: inline-block;
-    background: rgba(94, 234, 212, 0.15);
-    color: var(--accent);
-    font-size: 10px;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    padding: 4px 10px;
-    border-radius: 999px;
-    margin-bottom: 10px;
-  }
-  .guide-hero h1 {
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--text-0);
-    letter-spacing: -0.02em;
-    margin-bottom: 6px;
-  }
-  .guide-hero-sub {
-    font-size: 13px;
-    color: var(--text-1);
-  }
-  .guide-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-  }
-  .guide-card {
-    background: var(--bg-1);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px 20px;
-  }
-  .guide-card-wide { grid-column: 1 / -1; }
-  .guide-card-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 14px;
-  }
-  .guide-icon {
-    font-size: 20px;
-    line-height: 1;
-  }
-  .guide-card h3 {
-    font-size: 14px;
-    font-weight: 700;
-    color: var(--text-0);
-    letter-spacing: -0.01em;
-  }
-  .guide-bullet {
-    font-size: 13px;
-    color: var(--text-1);
-    margin-bottom: 10px;
-    line-height: 1.5;
-  }
-  .guide-bullet:last-child { margin-bottom: 0; }
-  .guide-bullet b { color: var(--text-0); font-weight: 600; }
-  .guide-bullet code {
-    background: var(--bg-3);
-    padding: 1px 6px;
-    border-radius: 4px;
-    font-family: 'SF Mono', Monaco, monospace;
-    font-size: 11px;
-    color: var(--accent);
-  }
-  .g-stat { color: var(--accent); font-weight: 700; }
-  .g-good { color: var(--good); font-weight: 600; }
-  .g-bad { color: var(--danger); font-weight: 600; }
-  .guide-defs {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .guide-defs > div {
-    font-size: 12px;
-    color: var(--text-1);
-    padding: 8px 10px;
-    background: var(--bg-2);
-    border-radius: 6px;
-    line-height: 1.45;
-  }
-  .guide-defs b { color: var(--accent); font-weight: 700; margin-right: 4px; }
-  .guide-watchlist {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-  .gw-player {
-    background: var(--bg-2);
-    border-radius: 8px;
-    padding: 12px;
-    border-left: 3px solid var(--accent);
-  }
-  .gw-name {
-    font-size: 13px;
-    font-weight: 700;
-    color: var(--text-0);
-    margin-bottom: 4px;
-  }
-  .gw-stats {
-    font-size: 11px;
-    color: var(--text-2);
-    margin-bottom: 6px;
-  }
-  .gw-take {
-    font-size: 12px;
-    color: var(--text-1);
-    line-height: 1.4;
-  }
+/* HEADER */
+.header {
+background: var(–bg-1);
+border-bottom: 1px solid var(–border);
+padding: 16px 32px;
+display: flex;
+justify-content: space-between;
+align-items: center;
+position: sticky;
+top: 0;
+z-index: 100;
+}
+.brand {
+display: flex;
+align-items: center;
+gap: 12px;
+}
+.logo {
+width: 38px;
+height: 32px;
+background: linear-gradient(135deg, var(–accent), var(–sharp));
+border-radius: 8px;
+display: flex;
+align-items: center;
+justify-content: center;
+font-weight: 800;
+color: var(–bg-0);
+font-size: 13px;
+letter-spacing: -0.02em;
+}
+.brand-name {
+font-size: 18px;
+font-weight: 700;
+letter-spacing: -0.02em;
+}
+.brand-tag {
+font-size: 10px;
+color: var(–text-2);
+text-transform: uppercase;
+letter-spacing: 0.1em;
+margin-top: -2px;
+}
+.event-info {
+display: flex;
+gap: 24px;
+align-items: center;
+}
+.event-block { display: flex; flex-direction: column; }
+.event-label {
+font-size: 10px;
+color: var(–text-2);
+text-transform: uppercase;
+letter-spacing: 0.08em;
+}
+.event-value {
+font-size: 13px;
+font-weight: 600;
+color: var(–text-0);
+}
+.live-indicator {
+display: flex;
+align-items: center;
+gap: 6px;
+background: rgba(16, 185, 129, 0.1);
+border: 1px solid rgba(16, 185, 129, 0.3);
+padding: 4px 10px;
+border-radius: 999px;
+font-size: 11px;
+color: var(–good);
+}
+.live-dot {
+width: 6px;
+height: 6px;
+background: var(–good);
+border-radius: 50%;
+animation: pulse 2s infinite;
+}
+@keyframes pulse {
+0%, 100% { opacity: 1; }
+50% { opacity: 0.5; }
+}
 
-  /* TABLET (1200px and below) */
-  @media (max-width: 1200px) {
-    .lineup-cards { grid-template-columns: repeat(2, 1fr); }
-    .legend { grid-template-columns: repeat(3, 1fr); }
-    .guide-grid { grid-template-columns: 1fr; }
-    .guide-watchlist { grid-template-columns: repeat(2, 1fr); }
-  }
-  
-  /* MOBILE (768px and below) — iOS optimized */
-  @media (max-width: 768px) {
-    body { 
-      font-size: 13px;
-      /* iOS safe areas */
-      padding-top: env(safe-area-inset-top);
-      padding-bottom: env(safe-area-inset-bottom);
-    }
-    
-    /* Header collapse */
-    .header { 
-      padding: 12px 16px; 
-      flex-direction: column; 
-      align-items: flex-start; 
-      gap: 10px;
-      padding-top: max(12px, env(safe-area-inset-top));
-    }
-    .event-info { 
-      gap: 12px; 
-      flex-wrap: wrap; 
-      width: 100%;
-    }
-    .event-block { flex: 1; min-width: 0; }
-    .event-value { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .live-indicator { font-size: 10px; padding: 3px 8px; }
-    
-    /* Tabs scroll horizontally */
-    .tabs { 
-      padding: 0 12px; 
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      white-space: nowrap;
-      align-items: center;
-      scrollbar-width: none;
-    }
-    .tabs::-webkit-scrollbar { display: none; }
-    .tab { 
-      padding: 14px 16px; 
-      font-size: 13px; 
-      flex-shrink: 0;
-      min-height: 44px; /* iOS touch target */
-      display: flex;
-      align-items: center;
-    }
-    .floating-toggle-mini {
-      margin-left: 8px;
-      padding: 8px 12px;
-      font-size: 12px;
-      flex-shrink: 0;
-      min-height: 36px;
-    }
-    
-    main { padding: 14px 12px 100px; }
-    
-    /* Legend stack */
-    .legend { 
-      grid-template-columns: 1fr 1fr; 
-      gap: 8px 12px; 
-      padding: 12px 14px;
-    }
-    .legend-desc { font-size: 10px; }
-    
-    /* Status bar more compact */
-    .status-bar { padding: 10px 12px; gap: 10px; }
-    .status-section { width: 100%; }
-    .status-clear { width: 100%; }
-    
-    /* Controls stack vertically */
-    .controls {
-      padding: 12px;
-      flex-direction: column;
-      align-items: stretch;
-      gap: 12px;
-    }
-    .control-group { 
-      flex-wrap: wrap; 
-      gap: 6px; 
-    }
-    .input-search { 
-      width: 100%; 
-      min-height: 40px;
-      font-size: 16px; /* iOS won't zoom on focus if 16+ */
-    }
-    .filter-chip { 
-      font-size: 12px; 
-      padding: 8px 12px;
-      min-height: 36px;
-    }
-    
-    /* Player table — horizontal scroll with momentum */
-    .table-wrap { 
-      border-radius: 8px;
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    table { font-size: 12px; min-width: 700px; }
-    th { padding: 10px 6px; font-size: 11px; }
-    td { padding: 10px 6px; }
-    .player-cell { gap: 8px; }
-    .player-avatar { width: 30px; height: 30px; font-size: 10px; }
-    .player-name { font-size: 12px; }
-    .player-sub { font-size: 10px; }
-    .score-cell { min-width: 50px; gap: 4px; }
-    .score-bar { min-width: 24px; }
-    .row-action-btn { 
-      width: 30px; height: 30px; 
-      font-size: 13px; 
-      min-width: 30px; /* prevent shrink */
-    }
-    
-    /* Hide low-priority columns on mobile */
-    table th:nth-child(6),  /* Ceil */
-    table td:nth-child(6),
-    table th:nth-child(13), /* Equity */
-    table td:nth-child(13) { display: none; }
-    
-    /* Detail row reflow */
-    .detail-content { 
-      padding: 16px; 
-      grid-template-columns: 1fr; 
-      gap: 16px; 
-    }
-    
-    /* Floating builder — bottom sheet on mobile */
-    .floating-builder {
-      bottom: 0;
-      right: 0;
-      left: 0;
-      width: 100%;
-      max-height: 80vh;
-      border-radius: 16px 16px 0 0;
-      border-bottom: none;
-      padding-bottom: env(safe-area-inset-bottom);
-    }
-    .floating-builder.collapsed { 
-      height: calc(60px + env(safe-area-inset-bottom));
-    }
-    .fb-header { padding: 14px 16px 12px; }
-    .fb-action { 
-      width: 32px; height: 32px; 
-      font-size: 18px;
-    }
-    .btn { min-height: 44px; font-size: 14px; }
-    .fab {
-      bottom: calc(16px + env(safe-area-inset-bottom));
-      right: 16px;
-      width: 56px;
-      height: 56px;
-      font-size: 22px;
-    }
-    
-    .prob-grid { padding: 12px; gap: 6px; }
-    .prob-card { padding: 10px; }
-    .prob-value { font-size: 17px; }
-    .prob-label { font-size: 9px; }
-    
-    /* Built lineups stack */
-    .lineup-cards { grid-template-columns: 1fr; gap: 12px; }
-    .lineup-section-header { 
-      flex-direction: column; 
-      align-items: flex-start; 
-      gap: 6px;
-      margin: 16px 0 10px; 
-    }
-    .lineup-section-title { font-size: 16px; }
-    
-    /* Built card content */
-    .built-card-header { padding: 12px 14px; }
-    .bc-stat-val { font-size: 14px; }
-    .bc-player { padding: 8px 10px; font-size: 12px; min-height: 44px; }
-    .bc-player-name { font-size: 12px; }
-    
-    /* Brand smaller */
-    .brand-name { font-size: 16px; }
-    .brand-tag { font-size: 9px; }
-    
-    /* Guide tab */
-    .guide-hero { padding: 20px 16px; }
-    .guide-hero h1 { font-size: 20px; }
-    .guide-hero-sub { font-size: 12px; }
-    .guide-card { padding: 14px 16px; }
-    .guide-card h3 { font-size: 13px; }
-    .guide-bullet { font-size: 12px; }
-    .guide-watchlist { grid-template-columns: 1fr; }
-  }
-  
-  /* SMALL MOBILE (480px and below) */
-  @media (max-width: 480px) {
-    .header { padding: 10px 12px; }
-    main { padding: 12px 8px 100px; }
-    
-    .legend { grid-template-columns: 1fr; gap: 6px; padding: 10px 12px; }
-    
-    /* Hide more columns at very small */
-    table th:nth-child(7),  /* SG */
-    table td:nth-child(7),
-    table th:nth-child(9),  /* Form */
-    table td:nth-child(9) { display: none; }
-    
-    .control-label { display: none; }
-    .event-block:nth-child(2) { display: none; }
-  }
+/* TABS */
+.tabs {
+background: var(–bg-1);
+border-bottom: 1px solid var(–border);
+padding: 0 32px;
+display: flex;
+gap: 4px;
+}
+.tab {
+padding: 14px 20px;
+color: var(–text-1);
+font-size: 13px;
+font-weight: 500;
+cursor: pointer;
+border-bottom: 2px solid transparent;
+transition: all 0.15s;
+}
+.tab:hover { color: var(–text-0); }
+.tab.active {
+color: var(–accent);
+border-bottom-color: var(–accent);
+}
+
+/* MAIN */
+main {
+padding: 24px 32px 80px;
+max-width: 1800px;
+margin: 0 auto;
+}
+
+/* CONTROLS BAR */
+.controls {
+background: var(–bg-1);
+border: 1px solid var(–border);
+border-radius: 12px;
+padding: 16px 20px;
+display: flex;
+gap: 24px;
+align-items: center;
+margin-bottom: 16px;
+flex-wrap: wrap;
+}
+.control-group {
+display: flex;
+align-items: center;
+gap: 8px;
+}
+.control-label {
+font-size: 11px;
+color: var(–text-2);
+text-transform: uppercase;
+letter-spacing: 0.08em;
+font-weight: 600;
+}
+.input-search {
+background: var(–bg-2);
+border: 1px solid var(–border);
+color: var(–text-0);
+padding: 8px 12px;
+border-radius: 8px;
+font-size: 13px;
+width: 200px;
+font-family: inherit;
+}
+.input-search:focus {
+outline: none;
+border-color: var(–accent);
+}
+.filter-chip {
+background: var(–bg-2);
+border: 1px solid var(–border);
+color: var(–text-1);
+padding: 6px 12px;
+border-radius: 999px;
+font-size: 12px;
+cursor: pointer;
+transition: all 0.15s;
+font-weight: 500;
+}
+.filter-chip:hover {
+border-color: var(–border-light);
+color: var(–text-0);
+}
+.filter-chip.active {
+background: var(–accent-dim);
+border-color: var(–accent);
+color: var(–accent);
+}
+.filter-chip.active.tier-chalk { background: rgba(236, 72, 153, 0.15); border-color: var(–chalk); color: var(–chalk); }
+.filter-chip.active.tier-sharp { background: rgba(139, 92, 246, 0.15); border-color: var(–sharp); color: var(–sharp); }
+.filter-chip.active.tier-contrarian { background: rgba(245, 158, 11, 0.15); border-color: var(–warn); color: var(–warn); }
+
+/* TABLE */
+.table-wrap {
+background: var(–bg-1);
+border: 1px solid var(–border);
+border-radius: 12px;
+overflow: hidden;
+}
+table {
+width: 100%;
+border-collapse: collapse;
+font-size: 13px;
+}
+thead tr {
+background: var(–bg-2);
+border-bottom: 1px solid var(–border);
+}
+th {
+padding: 10px 12px;
+text-align: left;
+font-size: 11px;
+color: var(–text-2);
+text-transform: uppercase;
+letter-spacing: 0.08em;
+font-weight: 600;
+cursor: pointer;
+user-select: none;
+white-space: nowrap;
+position: sticky;
+top: 0;
+background: var(–bg-2);
+}
+th:hover { color: var(–text-0); }
+th.sortable::after {
+content: ’ ↕’;
+color: var(–text-2);
+opacity: 0.4;
+}
+th.sort-asc::after { content: ’ ↑’; opacity: 1; color: var(–accent); }
+th.sort-desc::after { content: ’ ↓’; opacity: 1; color: var(–accent); }
+td {
+padding: 12px;
+border-bottom: 1px solid var(–border);
+vertical-align: middle;
+}
+tbody tr {
+transition: background 0.15s;
+cursor: pointer;
+}
+tbody tr:hover { background: var(–bg-2); }
+tbody tr.expanded { background: var(–bg-2); }
+tbody tr.selected { background: rgba(94, 234, 212, 0.06); }
+
+/* PLAYER CELL */
+.player-cell {
+display: flex;
+align-items: center;
+gap: 12px;
+}
+.player-avatar {
+width: 32px;
+height: 32px;
+border-radius: 50%;
+background: linear-gradient(135deg, var(–bg-3), var(–bg-2));
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 11px;
+font-weight: 700;
+color: var(–text-1);
+flex-shrink: 0;
+}
+.player-info { display: flex; flex-direction: column; }
+.player-name {
+font-weight: 600;
+color: var(–text-0);
+font-size: 13px;
+}
+.player-sub {
+font-size: 11px;
+color: var(–text-2);
+}
+
+/* COMPOSITE BARS */
+.score-cell {
+display: flex;
+align-items: center;
+gap: 8px;
+min-width: 80px;
+}
+.score-bar {
+flex: 1;
+height: 6px;
+background: var(–bg-3);
+border-radius: 3px;
+overflow: hidden;
+min-width: 40px;
+}
+.score-bar-fill {
+height: 100%;
+border-radius: 3px;
+transition: width 0.3s;
+}
+.bar-good { background: var(–good); }
+.bar-mid { background: var(–accent); }
+.bar-warn { background: var(–warn); }
+.bar-low { background: var(–text-2); }
+.score-value {
+font-size: 11px;
+color: var(–text-1);
+min-width: 22px;
+text-align: right;
+font-variant-numeric: tabular-nums;
+}
+
+/* TIER BADGE */
+.tier-badge {
+display: inline-flex;
+align-items: center;
+padding: 3px 8px;
+border-radius: 4px;
+font-size: 10px;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 0.05em;
+}
+.tier-CHALK { background: rgba(236, 72, 153, 0.15); color: var(–chalk); }
+.tier-SHARP { background: rgba(139, 92, 246, 0.15); color: var(–sharp); }
+.tier-CONTRARIAN { background: rgba(245, 158, 11, 0.15); color: var(–warn); }
+.tier-FADE { background: rgba(239, 68, 68, 0.15); color: var(–danger); }
+.tier-NEUTRAL { background: var(–bg-3); color: var(–text-2); }
+
+/* STARS */
+.stars { color: var(–warn); letter-spacing: -2px; }
+.stars .empty { color: var(–bg-3); }
+
+/* SALARY */
+.salary-cell {
+font-variant-numeric: tabular-nums;
+font-weight: 600;
+color: var(–text-0);
+}
+.leverage-pos { color: var(–good); font-weight: 600; }
+.leverage-neg { color: var(–text-2); }
+
+/* OWN BADGE */
+.own-cell {
+display: inline-flex;
+align-items: center;
+gap: 4px;
+font-variant-numeric: tabular-nums;
+}
+.own-low { color: var(–good); }
+.own-mid { color: var(–text-1); }
+.own-high { color: var(–chalk); }
+
+/* CHECKBOX */
+.check-col {
+width: 36px;
+text-align: center;
+}
+.lineup-check {
+width: 18px;
+height: 18px;
+accent-color: var(–accent);
+cursor: pointer;
+}
+
+/* EXPANDED ROW */
+.detail-row { background: var(–bg-2); }
+.detail-row td {
+padding: 0;
+border-bottom: 1px solid var(–border);
+}
+.detail-content {
+padding: 24px 28px;
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 32px;
+}
+.detail-section h4 {
+font-size: 11px;
+color: var(–text-2);
+text-transform: uppercase;
+letter-spacing: 0.08em;
+font-weight: 600;
+margin-bottom: 12px;
+}
+.detail-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 8px 16px;
+}
+.detail-item {
+display: flex;
+justify-content: space-between;
+font-size: 12px;
+padding: 4px 0;
+border-bottom: 1px solid var(–border);
+}
+.detail-key { color: var(–text-2); }
+.detail-val { color: var(–text-0); font-weight: 500; font-variant-numeric: tabular-nums; }
+.detail-val.pos { color: var(–good); }
+.detail-val.neg { color: var(–danger); }
+.detail-note {
+background: rgba(245, 158, 11, 0.08);
+border-left: 2px solid var(–warn);
+padding: 8px 12px;
+border-radius: 4px;
+font-size: 12px;
+color: var(–text-1);
+margin-top: 12px;
+}
+
+/* LINEUP BUILDER */
+.builder-grid {
+display: grid;
+grid-template-columns: 1fr 380px;
+gap: 16px;
+}
+.lineup-panel {
+background: var(–bg-1);
+border: 1px solid var(–border);
+border-radius: 12px;
+overflow: hidden;
+position: sticky;
+top: 110px;
+align-self: start;
+}
+.lineup-header {
+padding: 16px 20px;
+border-bottom: 1px solid var(–border);
+background: var(–bg-2);
+}
+.lineup-title {
+font-size: 14px;
+font-weight: 700;
+color: var(–text-0);
+margin-bottom: 4px;
+}
+.lineup-stats {
+display: flex;
+gap: 12px;
+font-size: 12px;
+color: var(–text-1);
+}
+.lineup-stat-val {
+color: var(–text-0);
+font-weight: 600;
+font-variant-numeric: tabular-nums;
+}
+.salary-bar {
+height: 4px;
+background: var(–bg-3);
+border-radius: 2px;
+margin: 12px 0 4px;
+overflow: hidden;
+}
+.salary-bar-fill {
+height: 100%;
+background: var(–accent);
+transition: width 0.3s;
+}
+.salary-bar-fill.over { background: var(–danger); }
+.lineup-slots {
+padding: 8px;
+}
+.lineup-slot {
+display: flex;
+align-items: center;
+justify-content: space-between;
+padding: 10px 12px;
+border-radius: 8px;
+margin-bottom: 4px;
+font-size: 13px;
+transition: background 0.15s;
+}
+.lineup-slot.empty {
+background: var(–bg-2);
+color: var(–text-2);
+border: 1px dashed var(–border);
+}
+.lineup-slot.filled {
+background: var(–bg-2);
+}
+.slot-info { display: flex; flex-direction: column; }
+.slot-name { color: var(–text-0); font-weight: 500; }
+.slot-meta { color: var(–text-2); font-size: 11px; }
+.slot-remove {
+width: 22px;
+height: 22px;
+border-radius: 50%;
+background: var(–bg-3);
+border: none;
+color: var(–text-2);
+cursor: pointer;
+transition: all 0.15s;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 14px;
+}
+.slot-remove:hover {
+background: var(–danger);
+color: white;
+}
+.lineup-actions {
+padding: 16px;
+border-top: 1px solid var(–border);
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+.btn {
+padding: 10px 16px;
+border-radius: 8px;
+border: none;
+font-size: 13px;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.15s;
+font-family: inherit;
+}
+.btn-primary {
+background: var(–accent);
+color: var(–bg-0);
+}
+.btn-primary:hover { background: #4dd6c0; }
+.btn-primary:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-secondary {
+background: var(–bg-3);
+color: var(–text-0);
+}
+.btn-secondary:hover { background: var(–bg-hover); }
+.btn-ghost {
+background: transparent;
+color: var(–text-1);
+border: 1px solid var(–border);
+}
+.btn-ghost:hover { color: var(–text-0); border-color: var(–border-light); }
+
+/* PROBABILITY DISPLAY */
+.prob-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 8px;
+padding: 16px;
+background: var(–bg-2);
+border-top: 1px solid var(–border);
+}
+.prob-card {
+background: var(–bg-1);
+padding: 10px 12px;
+border-radius: 8px;
+border: 1px solid var(–border);
+}
+.prob-label {
+font-size: 10px;
+color: var(–text-2);
+text-transform: uppercase;
+letter-spacing: 0.08em;
+font-weight: 600;
+}
+.prob-value {
+font-size: 18px;
+font-weight: 700;
+color: var(–accent);
+font-variant-numeric: tabular-nums;
+margin-top: 2px;
+}
+
+/* HIDDEN BY DEFAULT */
+.hidden { display: none !important; }
+
+/* COLUMN LEGEND */
+.legend {
+display: grid;
+grid-template-columns: repeat(6, 1fr);
+gap: 12px;
+background: var(–bg-1);
+border: 1px solid var(–border);
+border-radius: 12px;
+padding: 14px 18px;
+margin-bottom: 20px;
+}
+.legend-item {
+display: flex;
+flex-direction: column;
+gap: 3px;
+min-width: 0;
+}
+.legend-key {
+font-size: 11px;
+font-weight: 700;
+color: var(–accent);
+text-transform: uppercase;
+letter-spacing: 0.08em;
+}
+.legend-desc {
+font-size: 11px;
+color: var(–text-2);
+line-height: 1.35;
+}
+
+/* LOCK / EXCLUDE BUTTONS */
+.row-actions {
+display: flex;
+gap: 4px;
+align-items: center;
+}
+.row-action-btn {
+width: 26px;
+height: 26px;
+border-radius: 6px;
+border: 1px solid var(–border);
+background: var(–bg-2);
+color: var(–text-2);
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 13px;
+transition: all 0.15s;
+padding: 0;
+flex-shrink: 0;
+}
+.row-action-btn:hover {
+border-color: var(–border-light);
+color: var(–text-0);
+background: var(–bg-3);
+}
+.row-action-btn.active.lock {
+background: rgba(94, 234, 212, 0.15);
+border-color: var(–accent);
+color: var(–accent);
+}
+.row-action-btn.active.exclude {
+background: rgba(239, 68, 68, 0.15);
+border-color: var(–danger);
+color: var(–danger);
+}
+tr.locked-row {
+background: rgba(94, 234, 212, 0.04) !important;
+}
+tr.locked-row td:first-child {
+border-left: 2px solid var(–accent);
+}
+tr.excluded-row {
+opacity: 0.4;
+}
+tr.excluded-row td {
+text-decoration: line-through;
+text-decoration-color: var(–danger);
+}
+
+/* FLOATING BUILDER PANEL */
+.floating-builder {
+position: fixed;
+bottom: 24px;
+right: 24px;
+width: 360px;
+max-height: calc(100vh - 48px);
+background: var(–bg-1);
+border: 1px solid var(–border-light);
+border-radius: 14px;
+box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(94, 234, 212, 0.05);
+z-index: 200;
+display: flex;
+flex-direction: column;
+transition: transform 0.25s ease, opacity 0.2s;
+overflow: hidden;
+}
+.floating-builder.collapsed {
+height: 64px;
+overflow: hidden;
+}
+.floating-builder.collapsed .fb-body { display: none; }
+.floating-builder.closed {
+transform: translateY(120%) scale(0.9);
+opacity: 0;
+pointer-events: none;
+}
+.fb-header {
+padding: 14px 16px 12px;
+background: linear-gradient(180deg, var(–bg-2), var(–bg-1));
+border-bottom: 1px solid var(–border);
+flex-shrink: 0;
+}
+.fb-title-row {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 10px;
+}
+.fb-title {
+font-size: 14px;
+font-weight: 700;
+color: var(–text-0);
+display: flex;
+align-items: center;
+gap: 8px;
+}
+.fb-title::before {
+content: ‘’;
+width: 6px;
+height: 6px;
+border-radius: 50%;
+background: var(–accent);
+box-shadow: 0 0 8px var(–accent);
+}
+.fb-actions-top {
+display: flex;
+gap: 4px;
+}
+.fb-action {
+width: 24px;
+height: 24px;
+border-radius: 6px;
+background: var(–bg-3);
+border: none;
+color: var(–text-1);
+cursor: pointer;
+font-size: 16px;
+line-height: 1;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.15s;
+}
+.fb-action:hover {
+background: var(–bg-hover);
+color: var(–text-0);
+}
+.fb-stats {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 6px;
+margin-bottom: 8px;
+}
+.fb-stat {
+display: flex;
+flex-direction: column;
+gap: 1px;
+}
+.fb-stat-label {
+font-size: 9px;
+color: var(–text-2);
+text-transform: uppercase;
+letter-spacing: 0.06em;
+font-weight: 600;
+}
+.fb-stat-val {
+font-size: 13px;
+font-weight: 700;
+color: var(–text-0);
+font-variant-numeric: tabular-nums;
+}
+.fb-body {
+overflow-y: auto;
+flex: 1;
+display: flex;
+flex-direction: column;
+}
+
+/* MINI TOGGLE IN TAB BAR */
+.floating-toggle-mini {
+margin-left: auto;
+padding: 8px 14px;
+background: var(–bg-2);
+border: 1px solid var(–border-light);
+border-radius: 8px;
+color: var(–text-1);
+font-size: 12px;
+font-weight: 600;
+cursor: pointer;
+display: flex;
+align-items: center;
+gap: 6px;
+transition: all 0.15s;
+align-self: center;
+margin-top: 7px;
+margin-bottom: 7px;
+font-family: inherit;
+}
+.floating-toggle-mini:hover {
+color: var(–text-0);
+border-color: var(–accent);
+background: var(–bg-3);
+}
+.ft-icon {
+color: var(–accent);
+font-size: 14px;
+}
+.ft-badge {
+background: var(–accent);
+color: var(–bg-0);
+font-size: 10px;
+font-weight: 700;
+padding: 1px 6px;
+border-radius: 999px;
+min-width: 18px;
+text-align: center;
+}
+
+/* FAB (when fully closed) */
+.fab {
+position: fixed;
+bottom: 24px;
+right: 24px;
+width: 56px;
+height: 56px;
+border-radius: 50%;
+background: var(–accent);
+color: var(–bg-0);
+border: none;
+cursor: pointer;
+box-shadow: 0 8px 24px rgba(94, 234, 212, 0.4);
+z-index: 200;
+font-size: 22px;
+font-weight: 700;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: transform 0.15s;
+}
+.fab:hover { transform: scale(1.1); }
+.fab-count {
+position: absolute;
+top: -4px;
+right: -4px;
+background: var(–sharp);
+color: white;
+font-size: 11px;
+font-weight: 700;
+padding: 2px 6px;
+border-radius: 999px;
+min-width: 20px;
+text-align: center;
+}
+
+/* BUILT LINEUPS TAB */
+.lineup-section-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin: 24px 0 12px;
+padding: 0 4px;
+}
+.lineup-section-header:first-child { margin-top: 0; }
+.lineup-section-title {
+font-size: 18px;
+font-weight: 700;
+color: var(–text-0);
+letter-spacing: -0.01em;
+}
+.lineup-section-sub {
+font-size: 12px;
+color: var(–text-2);
+margin-top: 2px;
+}
+.lineup-cards {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 16px;
+}
+.built-card {
+background: var(–bg-1);
+border: 1px solid var(–border);
+border-radius: 12px;
+overflow: hidden;
+transition: all 0.2s;
+}
+.built-card:hover {
+border-color: var(–border-light);
+transform: translateY(-2px);
+}
+.built-card.cash { border-top: 3px solid var(–accent); }
+.built-card.gpp { border-top: 3px solid var(–sharp); }
+.built-card-header {
+padding: 14px 18px;
+background: var(–bg-2);
+border-bottom: 1px solid var(–border);
+}
+.built-card-title {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 8px;
+}
+.built-card-name {
+font-size: 14px;
+font-weight: 700;
+color: var(–text-0);
+}
+.built-card-rank {
+font-size: 10px;
+text-transform: uppercase;
+letter-spacing: 0.08em;
+font-weight: 700;
+padding: 3px 8px;
+border-radius: 4px;
+}
+.built-card.cash .built-card-rank {
+background: rgba(94, 234, 212, 0.15);
+color: var(–accent);
+}
+.built-card.gpp .built-card-rank {
+background: rgba(139, 92, 246, 0.15);
+color: var(–sharp);
+}
+.built-card-stats {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 8px;
+}
+.bc-stat { display: flex; flex-direction: column; gap: 2px; }
+.bc-stat-label {
+font-size: 9px;
+color: var(–text-2);
+text-transform: uppercase;
+letter-spacing: 0.06em;
+font-weight: 600;
+}
+.bc-stat-val {
+font-size: 15px;
+font-weight: 700;
+color: var(–text-0);
+font-variant-numeric: tabular-nums;
+}
+.bc-stat-val.accent { color: var(–accent); }
+.bc-stat-val.sharp { color: var(–sharp); }
+.built-card-players {
+padding: 8px;
+}
+.bc-player {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 8px 10px;
+border-radius: 6px;
+font-size: 12px;
+}
+.bc-player + .bc-player { margin-top: 2px; }
+.bc-player:hover { background: var(–bg-2); }
+.bc-player-info { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.bc-player-name {
+color: var(–text-0);
+font-weight: 600;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+.bc-player-meta {
+color: var(–text-2);
+font-size: 10px;
+margin-top: 1px;
+}
+.bc-player-sal {
+font-size: 12px;
+color: var(–text-1);
+font-variant-numeric: tabular-nums;
+font-weight: 600;
+margin-left: 8px;
+flex-shrink: 0;
+}
+.built-card-actions {
+padding: 12px 14px;
+border-top: 1px solid var(–border);
+display: flex;
+gap: 8px;
+}
+.built-card-actions .btn {
+flex: 1;
+padding: 8px 12px;
+font-size: 12px;
+}
+
+/* STATUS BAR — locked / excluded chips persistent at top */
+.status-bar {
+background: var(–bg-1);
+border: 1px solid var(–border);
+border-radius: 12px;
+padding: 12px 16px;
+margin-bottom: 16px;
+display: flex;
+align-items: center;
+gap: 16px;
+flex-wrap: wrap;
+}
+.status-section {
+display: flex;
+align-items: center;
+gap: 8px;
+flex: 1;
+min-width: 0;
+}
+.status-section.empty { display: none; }
+.status-label {
+font-size: 11px;
+text-transform: uppercase;
+letter-spacing: 0.08em;
+font-weight: 700;
+color: var(–text-1);
+white-space: nowrap;
+}
+.status-chips {
+display: flex;
+gap: 6px;
+flex-wrap: wrap;
+flex: 1;
+}
+.status-chip {
+display: inline-flex;
+align-items: center;
+gap: 6px;
+padding: 4px 8px 4px 10px;
+border-radius: 999px;
+font-size: 12px;
+font-weight: 600;
+cursor: default;
+border: 1px solid;
+}
+.status-chip.locked {
+background: rgba(94, 234, 212, 0.12);
+border-color: var(–accent);
+color: var(–accent);
+}
+.status-chip.excluded {
+background: rgba(239, 68, 68, 0.12);
+border-color: var(–danger);
+color: var(–danger);
+}
+.status-chip-x {
+width: 16px;
+height: 16px;
+border-radius: 50%;
+background: rgba(255, 255, 255, 0.1);
+border: none;
+color: inherit;
+cursor: pointer;
+font-size: 11px;
+line-height: 1;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 0;
+}
+.status-chip-x:hover { background: rgba(255, 255, 255, 0.2); }
+.status-clear {
+padding: 6px 12px;
+font-size: 11px;
+flex-shrink: 0;
+}
+
+/* GUIDE TAB */
+.guide-hero {
+background: linear-gradient(135deg, rgba(94, 234, 212, 0.06), rgba(139, 92, 246, 0.06));
+border: 1px solid var(–border);
+border-radius: 12px;
+padding: 28px 24px;
+margin-bottom: 20px;
+}
+.guide-hero-tag {
+display: inline-block;
+background: rgba(94, 234, 212, 0.15);
+color: var(–accent);
+font-size: 10px;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 0.1em;
+padding: 4px 10px;
+border-radius: 999px;
+margin-bottom: 10px;
+}
+.guide-hero h1 {
+font-size: 26px;
+font-weight: 700;
+color: var(–text-0);
+letter-spacing: -0.02em;
+margin-bottom: 6px;
+}
+.guide-hero-sub {
+font-size: 13px;
+color: var(–text-1);
+}
+.guide-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 14px;
+}
+.guide-card {
+background: var(–bg-1);
+border: 1px solid var(–border);
+border-radius: 12px;
+padding: 18px 20px;
+}
+.guide-card-wide { grid-column: 1 / -1; }
+.guide-card-header {
+display: flex;
+align-items: center;
+gap: 10px;
+margin-bottom: 14px;
+}
+.guide-icon {
+font-size: 20px;
+line-height: 1;
+}
+.guide-card h3 {
+font-size: 14px;
+font-weight: 700;
+color: var(–text-0);
+letter-spacing: -0.01em;
+}
+.guide-bullet {
+font-size: 13px;
+color: var(–text-1);
+margin-bottom: 10px;
+line-height: 1.5;
+}
+.guide-bullet:last-child { margin-bottom: 0; }
+.guide-bullet b { color: var(–text-0); font-weight: 600; }
+.guide-bullet code {
+background: var(–bg-3);
+padding: 1px 6px;
+border-radius: 4px;
+font-family: ‘SF Mono’, Monaco, monospace;
+font-size: 11px;
+color: var(–accent);
+}
+.g-stat { color: var(–accent); font-weight: 700; }
+.g-good { color: var(–good); font-weight: 600; }
+.g-bad { color: var(–danger); font-weight: 600; }
+.guide-defs {
+display: flex;
+flex-direction: column;
+gap: 8px;
+}
+.guide-defs > div {
+font-size: 12px;
+color: var(–text-1);
+padding: 8px 10px;
+background: var(–bg-2);
+border-radius: 6px;
+line-height: 1.45;
+}
+.guide-defs b { color: var(–accent); font-weight: 700; margin-right: 4px; }
+.guide-watchlist {
+display: grid;
+grid-template-columns: repeat(3, 1fr);
+gap: 10px;
+}
+.gw-player {
+background: var(–bg-2);
+border-radius: 8px;
+padding: 12px;
+border-left: 3px solid var(–accent);
+}
+.gw-name {
+font-size: 13px;
+font-weight: 700;
+color: var(–text-0);
+margin-bottom: 4px;
+}
+.gw-stats {
+font-size: 11px;
+color: var(–text-2);
+margin-bottom: 6px;
+}
+.gw-take {
+font-size: 12px;
+color: var(–text-1);
+line-height: 1.4;
+}
+
+/* SIGNATURE EVENT SPECIALISTS — denser table-style layout */
+.sig-event-list {
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+.sig-row {
+display: grid;
+grid-template-columns: 1.6fr 1fr 1fr 1.8fr;
+gap: 12px;
+align-items: center;
+background: var(–bg-2);
+border-radius: 8px;
+padding: 10px 14px;
+border-left: 3px solid var(–sharp);
+}
+.sig-row.tier-1 { border-left-color: var(–accent); background: rgba(94, 234, 212, 0.04); }
+.sig-row-name {
+font-size: 13px;
+font-weight: 700;
+color: var(–text-0);
+}
+.sig-row-name-sub {
+font-size: 10px;
+color: var(–text-2);
+margin-top: 2px;
+font-weight: 400;
+}
+.sig-row-fit, .sig-row-cost {
+font-size: 11px;
+color: var(–text-1);
+display: flex;
+flex-direction: column;
+gap: 2px;
+}
+.sig-row-fit b, .sig-row-cost b {
+color: var(–text-0);
+font-size: 13px;
+font-weight: 700;
+font-variant-numeric: tabular-nums;
+}
+.sig-row-results {
+font-size: 11px;
+display: flex;
+flex-wrap: wrap;
+gap: 4px;
+}
+.sig-result-pill {
+background: var(–bg-3);
+color: var(–text-1);
+padding: 3px 8px;
+border-radius: 999px;
+font-weight: 600;
+font-size: 10px;
+white-space: nowrap;
+}
+.sig-result-pill.win {
+background: rgba(245, 158, 11, 0.18);
+color: var(–warn);
+border: 1px solid var(–warn);
+}
+.sig-result-pill.top10 {
+background: rgba(94, 234, 212, 0.15);
+color: var(–accent);
+}
+
+/* TABLET (1200px and below) */
+@media (max-width: 1200px) {
+.lineup-cards { grid-template-columns: repeat(2, 1fr); }
+.legend { grid-template-columns: repeat(3, 1fr); }
+.guide-grid { grid-template-columns: 1fr; }
+.guide-watchlist { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* MOBILE (768px and below) — iOS optimized */
+@media (max-width: 768px) {
+body {
+font-size: 13px;
+/* iOS safe areas */
+padding-top: env(safe-area-inset-top);
+padding-bottom: env(safe-area-inset-bottom);
+}
+
+```
+/* Header collapse */
+.header { 
+  padding: 12px 16px; 
+  flex-direction: column; 
+  align-items: flex-start; 
+  gap: 10px;
+  padding-top: max(12px, env(safe-area-inset-top));
+}
+.event-info { 
+  gap: 12px; 
+  flex-wrap: wrap; 
+  width: 100%;
+}
+.event-block { flex: 1; min-width: 0; }
+.event-value { font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.live-indicator { font-size: 10px; padding: 3px 8px; }
+
+/* Tabs scroll horizontally */
+.tabs { 
+  padding: 0 12px; 
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  white-space: nowrap;
+  align-items: center;
+  scrollbar-width: none;
+}
+.tabs::-webkit-scrollbar { display: none; }
+.tab { 
+  padding: 14px 16px; 
+  font-size: 13px; 
+  flex-shrink: 0;
+  min-height: 44px; /* iOS touch target */
+  display: flex;
+  align-items: center;
+}
+.floating-toggle-mini {
+  margin-left: 8px;
+  padding: 8px 12px;
+  font-size: 12px;
+  flex-shrink: 0;
+  min-height: 36px;
+}
+
+main { padding: 14px 12px 100px; }
+
+/* Legend stack */
+.legend { 
+  grid-template-columns: 1fr 1fr; 
+  gap: 8px 12px; 
+  padding: 12px 14px;
+}
+.legend-desc { font-size: 10px; }
+
+/* Status bar more compact */
+.status-bar { padding: 10px 12px; gap: 10px; }
+.status-section { width: 100%; }
+.status-clear { width: 100%; }
+
+/* Controls stack vertically */
+.controls {
+  padding: 12px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+}
+.control-group { 
+  flex-wrap: wrap; 
+  gap: 6px; 
+}
+.input-search { 
+  width: 100%; 
+  min-height: 40px;
+  font-size: 16px; /* iOS won't zoom on focus if 16+ */
+}
+.filter-chip { 
+  font-size: 12px; 
+  padding: 8px 12px;
+  min-height: 36px;
+}
+
+/* Player table — horizontal scroll with momentum */
+.table-wrap { 
+  border-radius: 8px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+table { font-size: 12px; min-width: 700px; }
+th { padding: 10px 6px; font-size: 11px; }
+td { padding: 10px 6px; }
+.player-cell { gap: 8px; }
+.player-avatar { width: 30px; height: 30px; font-size: 10px; }
+.player-name { font-size: 12px; }
+.player-sub { font-size: 10px; }
+.score-cell { min-width: 50px; gap: 4px; }
+.score-bar { min-width: 24px; }
+.row-action-btn { 
+  width: 30px; height: 30px; 
+  font-size: 13px; 
+  min-width: 30px; /* prevent shrink */
+}
+
+/* Hide low-priority columns on mobile */
+table th:nth-child(6),  /* Ceil */
+table td:nth-child(6),
+table th:nth-child(13), /* Equity */
+table td:nth-child(13) { display: none; }
+
+/* Detail row reflow */
+.detail-content { 
+  padding: 16px; 
+  grid-template-columns: 1fr; 
+  gap: 16px; 
+}
+
+/* Floating builder — bottom sheet on mobile */
+.floating-builder {
+  bottom: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+  max-height: 80vh;
+  border-radius: 16px 16px 0 0;
+  border-bottom: none;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+.floating-builder.collapsed { 
+  height: calc(60px + env(safe-area-inset-bottom));
+}
+.fb-header { padding: 14px 16px 12px; }
+.fb-action { 
+  width: 32px; height: 32px; 
+  font-size: 18px;
+}
+.btn { min-height: 44px; font-size: 14px; }
+.fab {
+  bottom: calc(16px + env(safe-area-inset-bottom));
+  right: 16px;
+  width: 56px;
+  height: 56px;
+  font-size: 22px;
+}
+
+.prob-grid { padding: 12px; gap: 6px; }
+.prob-card { padding: 10px; }
+.prob-value { font-size: 17px; }
+.prob-label { font-size: 9px; }
+
+/* Built lineups stack */
+.lineup-cards { grid-template-columns: 1fr; gap: 12px; }
+.lineup-section-header { 
+  flex-direction: column; 
+  align-items: flex-start; 
+  gap: 6px;
+  margin: 16px 0 10px; 
+}
+.lineup-section-title { font-size: 16px; }
+
+/* Built card content */
+.built-card-header { padding: 12px 14px; }
+.bc-stat-val { font-size: 14px; }
+.bc-player { padding: 8px 10px; font-size: 12px; min-height: 44px; }
+.bc-player-name { font-size: 12px; }
+
+/* Brand smaller */
+.brand-name { font-size: 16px; }
+.brand-tag { font-size: 9px; }
+
+/* Guide tab */
+.guide-hero { padding: 20px 16px; }
+.guide-hero h1 { font-size: 20px; }
+.guide-hero-sub { font-size: 12px; }
+.guide-card { padding: 14px 16px; }
+.guide-card h3 { font-size: 13px; }
+.guide-bullet { font-size: 12px; }
+.guide-watchlist { grid-template-columns: 1fr; }
+.sig-row { grid-template-columns: 1fr; gap: 6px; padding: 12px 14px; }
+.sig-row-fit, .sig-row-cost { flex-direction: row; gap: 6px; align-items: baseline; }
+.sig-row-fit b, .sig-row-cost b { font-size: 12px; }
+```
+
+}
+
+/* SMALL MOBILE (480px and below) */
+@media (max-width: 480px) {
+.header { padding: 10px 12px; }
+main { padding: 12px 8px 100px; }
+
+```
+.legend { grid-template-columns: 1fr; gap: 6px; padding: 10px 12px; }
+
+/* Hide more columns at very small */
+table th:nth-child(7),  /* SG */
+table td:nth-child(7),
+table th:nth-child(9),  /* Form */
+table td:nth-child(9) { display: none; }
+
+.control-label { display: none; }
+.event-block:nth-child(2) { display: none; }
+```
+
+}
 </style>
+
 </head>
 <body>
 
-<script type="application/json" id="player-data">[{"name": "Collin Morikawa", "salary": 9800, "salary_rank": 4, "sg_score": 89, "fit_score": 57, "form_score": 90, "form_grade": "good", "proj": 87.6, "cash_proj": 91.6, "ceiling": 123.0, "sigma": 21.8, "leverage": -13.0, "own_pct": 11.4, "tout_tier": "SHARP", "buzz": 4.1, "equity_tier": 4, "win_prob": 0.0325, "top10_prob": 0.2609, "doral_rank": 31, "dist_rank": 43, "lc_sg": 1.29, "recent_5": "1/T7/5/T7/T4", "buzz_sources": "GNN:STRONG#3 | Lineups:Model Top 10 | RG:STRONG (\"plug ears, I'm in\") | Mayo:CONVICTION", "news_note": "Elite approach, Open Champ \u2014 \u26a0\ufe0f recent back issue flagged (monitor)", "dg_baseline": 1.675, "dg_age": 0.015, "dg_dist": 0.004, "dg_acc": 0.031, "dg_history": -0.047, "dg_final": 1.768, "sg_app": 1.37, "sg_ott": 0.56, "sg_t2g": 2.16, "sg_l20": 3.18, "momentum": 1.87, "dk_odds": 2100}, {"name": "Cameron Young", "salary": 10200, "salary_rank": 2, "sg_score": 91, "fit_score": 80, "form_score": 90, "form_grade": "good", "proj": 94.0, "cash_proj": 94.0, "ceiling": 131.0, "sigma": 22.6, "leverage": -2.0, "own_pct": 16.1, "tout_tier": "NEUTRAL", "buzz": 5.2, "equity_tier": 4, "win_prob": 0.0454, "top10_prob": 0.3025, "doral_rank": 6, "dist_rank": 8, "lc_sg": null, "recent_5": "T7/T3/1/T3/T25", "buzz_sources": "GNN:STRONG#2 | Lineups:Model Top 10 | RG:STRONG (model #2) | Mayo:Primary outright", "news_note": "Won The Players, T3 Masters \u2014 emotional proof", "dg_baseline": 1.862, "dg_age": 0.016, "dg_dist": 0.166, "dg_acc": 0.002, "dg_history": -0.047, "dg_final": 2.135, "sg_app": 0.82, "sg_ott": 0.91, "sg_t2g": 2.0, "sg_l20": 3.1, "momentum": 1.14, "dk_odds": 1475}, {"name": "Scottie Scheffler", "salary": 13600, "salary_rank": 1, "sg_score": 100, "fit_score": 76, "form_score": 90, "form_grade": "good", "proj": 113.7, "cash_proj": 117.7, "ceiling": 150.0, "sigma": 21.9, "leverage": -4.0, "own_pct": 27.8, "tout_tier": "CHALK", "buzz": 3.1, "equity_tier": 5, "win_prob": 0.1789, "top10_prob": 0.5208, "doral_rank": 9, "dist_rank": 12, "lc_sg": 2.44, "recent_5": "T12/T24/T22/2/2", "buzz_sources": "GNN:STRONG#1 | Lineups:Model Top 10", "news_note": "World #1 favorite, control + steady mistakes", "dg_baseline": 2.945, "dg_age": 0.012, "dg_dist": 0.12, "dg_acc": 0.017, "dg_history": -0.047, "dg_final": 3.056, "sg_app": 0.61, "sg_ott": 0.87, "sg_t2g": 2.22, "sg_l20": 2.7, "momentum": -0.69, "dk_odds": 300}, {"name": "Si Woo Kim", "salary": 9200, "salary_rank": 9, "sg_score": 65, "fit_score": 50, "form_score": 90, "form_grade": "good", "proj": 84.2, "cash_proj": 84.2, "ceiling": 120.0, "sigma": 21.5, "leverage": -19.5, "own_pct": 16.6, "tout_tier": "NEUTRAL", "buzz": 3.0, "equity_tier": 3, "win_prob": 0.0224, "top10_prob": 0.2205, "doral_rank": 49, "dist_rank": 57, "lc_sg": null, "recent_5": "T13/T50/T10/47/3", "buzz_sources": "Lineups:Model Top 10 | RG:Model #9", "news_note": "", "dg_baseline": 1.495, "dg_age": 0.008, "dg_dist": -0.043, "dg_acc": 0.037, "dg_history": -0.047, "dg_final": 1.599, "sg_app": 0.91, "sg_ott": 0.71, "sg_t2g": 1.85, "sg_l20": 1.61, "momentum": 0.23, "dk_odds": 3100}, {"name": "Adam Scott", "salary": 8400, "salary_rank": 17, "sg_score": 63, "fit_score": 71, "form_score": 70, "form_grade": "ok", "proj": 77.9, "cash_proj": 77.9, "ceiling": 113.0, "sigma": 22.0, "leverage": 4.0, "own_pct": 13.9, "tout_tier": "NEUTRAL", "buzz": 2.1, "equity_tier": 3, "win_prob": 0.0205, "top10_prob": 0.2011, "doral_rank": 13, "dist_rank": 12, "lc_sg": null, "recent_5": "4/T11/T56/T21/T24", "buzz_sources": "RG:Model #4 (defending) | Mayo:LIKE", "news_note": "", "dg_baseline": 1.128, "dg_age": -0.058, "dg_dist": 0.12, "dg_acc": -0.004, "dg_history": 0.075, "dg_final": 1.208, "sg_app": 1.04, "sg_ott": 0.49, "sg_t2g": 1.58, "sg_l20": 1.87, "momentum": 0.82, "dk_odds": 3400}, {"name": "Justin Rose", "salary": 8700, "salary_rank": 14, "sg_score": 68, "fit_score": 57, "form_score": 25, "form_grade": "poor", "proj": 75.8, "cash_proj": 71.8, "ceiling": 114.0, "sigma": 22.5, "leverage": -7.5, "own_pct": 9.0, "tout_tier": "SHARP", "buzz": 4.0, "equity_tier": 3, "win_prob": 0.0211, "top10_prob": 0.2041, "doral_rank": 32, "dist_rank": 32, "lc_sg": null, "recent_5": "T37/CUT/CUT/T13/T3", "buzz_sources": "GNN:LIKE#10 | RG:Model #3 | Mayo:LIKE clubs caveat", "news_note": "Veteran ball-striker, 200-225 yard prox elite", "dg_baseline": 1.218, "dg_age": -0.058, "dg_dist": 0.033, "dg_acc": 0.004, "dg_history": -0.007, "dg_final": 1.076, "sg_app": 1.16, "sg_ott": 0.16, "sg_t2g": 1.42, "sg_l20": 2.13, "momentum": 1.03, "dk_odds": 3300}, {"name": "Chris Gotterup", "salary": 9300, "salary_rank": 8, "sg_score": 60, "fit_score": 89, "form_score": 70, "form_grade": "ok", "proj": 82.2, "cash_proj": 82.2, "ceiling": 120.0, "sigma": 22.8, "leverage": -0.0, "own_pct": 13.0, "tout_tier": "NEUTRAL", "buzz": 4.0, "equity_tier": 3, "win_prob": 0.0199, "top10_prob": 0.1873, "doral_rank": 2, "dist_rank": 2, "lc_sg": null, "recent_5": "T18/T56/T6/T24/T25", "buzz_sources": "MayoSubstack:STRONG (already PME Strong, confirmation only) | GNN:LIKE#9 | Mayo:Top tier bet", "news_note": "", "dg_baseline": 1.218, "dg_age": 0.026, "dg_dist": 0.231, "dg_acc": -0.013, "dg_history": -0.047, "dg_final": 1.494, "sg_app": 0.6, "sg_ott": 0.76, "sg_t2g": 1.62, "sg_l20": 1.52, "momentum": 0.11, "dk_odds": 3500}, {"name": "Ryo Hisatsune", "salary": 7000, "salary_rank": 41, "sg_score": 50, "fit_score": 55, "form_score": 70, "form_grade": "ok", "proj": 72.5, "cash_proj": 72.5, "ceiling": 106.0, "sigma": 21.8, "leverage": 2.0, "own_pct": 13.3, "tout_tier": "NEUTRAL", "buzz": 2.1, "equity_tier": 2, "win_prob": 0.0088, "top10_prob": 0.1243, "doral_rank": 39, "dist_rank": 36, "lc_sg": null, "recent_5": "T33/T13/T30/T8/T60", "buzz_sources": "Lineups:Elite Profile (key)", "news_note": "", "dg_baseline": 0.711, "dg_age": 0.039, "dg_dist": 0.017, "dg_acc": 0.011, "dg_history": -0.047, "dg_final": 0.932, "sg_app": 0.68, "sg_ott": 0.63, "sg_t2g": 1.51, "sg_l20": 1.34, "momentum": 1.05, "dk_odds": 8000}, {"name": "Patrick Cantlay", "salary": 9400, "salary_rank": 7, "sg_score": 65, "fit_score": 61, "form_score": 90, "form_grade": "good", "proj": 83.6, "cash_proj": 87.6, "ceiling": 119.0, "sigma": 21.6, "leverage": -8.5, "own_pct": 8.5, "tout_tier": "NEUTRAL", "buzz": 2.4, "equity_tier": 3, "win_prob": 0.0247, "top10_prob": 0.2294, "doral_rank": 24, "dist_rank": 27, "lc_sg": 0.97, "recent_5": "CUT/T32/T7/T12/T8", "buzz_sources": "Lineups:Model Top 10 | RG:Model #7", "news_note": "", "dg_baseline": 1.437, "dg_age": -0.007, "dg_dist": 0.057, "dg_acc": 0.003, "dg_history": -0.047, "dg_final": 1.545, "sg_app": 0.6, "sg_ott": 0.53, "sg_t2g": 1.72, "sg_l20": 1.66, "momentum": 0.15, "dk_odds": 2800}, {"name": "Jake Knapp", "salary": 9500, "salary_rank": 6, "sg_score": 62, "fit_score": 84, "form_score": 90, "form_grade": "good", "proj": 81.2, "cash_proj": 81.2, "ceiling": 119.0, "sigma": 22.7, "leverage": -3.5, "own_pct": 15.3, "tout_tier": "NEUTRAL", "buzz": 3.9, "equity_tier": 3, "win_prob": 0.0188, "top10_prob": 0.1899, "doral_rank": 4, "dist_rank": 4, "lc_sg": null, "recent_5": "6/CUT/T6/11/T74", "buzz_sources": "GNN:LIKE#6 | Lineups:Outright target | RG:Model #10", "news_note": "", "dg_baseline": 1.247, "dg_age": 0.003, "dg_dist": 0.202, "dg_acc": -0.007, "dg_history": -0.047, "dg_final": 1.431, "sg_app": 0.61, "sg_ott": 0.56, "sg_t2g": 1.25, "sg_l20": 1.64, "momentum": 0.15, "dk_odds": 3700}, {"name": "Russell Henley", "salary": 9900, "salary_rank": 3, "sg_score": 74, "fit_score": 36, "form_score": 90, "form_grade": "good", "proj": 83.2, "cash_proj": 87.2, "ceiling": 119.0, "sigma": 21.4, "leverage": -31.0, "own_pct": 11.0, "tout_tier": "NEUTRAL", "buzz": 1.6, "equity_tier": 4, "win_prob": 0.0305, "top10_prob": 0.2589, "doral_rank": 64, "dist_rank": 68, "lc_sg": 0.86, "recent_5": "T6/T13/CUT/T3/T25", "buzz_sources": "GNN:LIKE#8 | Lineups:Model Top 10 | RG:Model #8 | Mayo:FADE", "news_note": "Augusta-strong, fits Doral discipline profile", "dg_baseline": 1.773, "dg_age": -0.019, "dg_dist": -0.123, "dg_acc": 0.035, "dg_history": -0.013, "dg_final": 1.496, "sg_app": 0.67, "sg_ott": 0.35, "sg_t2g": 1.36, "sg_l20": 1.99, "momentum": 0.06, "dk_odds": 2250}, {"name": "Austin Smotherman", "salary": 6300, "salary_rank": 61, "sg_score": 33, "fit_score": 53, "form_score": 25, "form_grade": "poor", "proj": 61.6, "cash_proj": 57.6, "ceiling": 98.0, "sigma": 22.2, "leverage": 9.0, "own_pct": null, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0036, "top10_prob": 0.072, "doral_rank": 43, "dist_rank": 44, "lc_sg": null, "recent_5": "WD/T13/CUT/T36/T74", "buzz_sources": "", "news_note": "", "dg_baseline": 0.122, "dg_age": 0.003, "dg_dist": 0.002, "dg_acc": 0.019, "dg_history": -0.047, "dg_final": 0.281, "sg_app": 0.86, "sg_ott": 0.48, "sg_t2g": 0.99, "sg_l20": 0.7, "momentum": 0.52, "dk_odds": 20000}, {"name": "Akshay Bhatia", "salary": 8100, "salary_rank": 20, "sg_score": 65, "fit_score": 53, "form_score": 25, "form_grade": "poor", "proj": 74.0, "cash_proj": 72.5, "ceiling": 111.0, "sigma": 22.0, "leverage": -11.5, "own_pct": 10.7, "tout_tier": "NEUTRAL", "buzz": 0.8, "equity_tier": 3, "win_prob": 0.0156, "top10_prob": 0.1709, "doral_rank": 42, "dist_rank": 39, "lc_sg": 0.79, "recent_5": "1/T13/CUT/CUT/T16", "buzz_sources": "GNN:LIKE#7", "news_note": "Won Bay Hill 2026 from 5 back, Florida resilience", "dg_baseline": 1.206, "dg_age": 0.037, "dg_dist": 0.013, "dg_acc": 0.001, "dg_history": -0.047, "dg_final": 0.991, "sg_app": 0.96, "sg_ott": 0.03, "sg_t2g": 1.01, "sg_l20": 1.89, "momentum": 0.81, "dk_odds": 4500}, {"name": "Jacob Bridgeman", "salary": 8300, "salary_rank": 18, "sg_score": 62, "fit_score": 60, "form_score": 70, "form_grade": "ok", "proj": 79.1, "cash_proj": 79.1, "ceiling": 114.0, "sigma": 22.0, "leverage": -5.0, "own_pct": 18.5, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 3, "win_prob": 0.0166, "top10_prob": 0.1848, "doral_rank": 27, "dist_rank": 28, "lc_sg": null, "recent_5": "T18/T5/T14/T41/T33", "buzz_sources": "", "news_note": "", "dg_baseline": 1.243, "dg_age": 0.027, "dg_dist": 0.051, "dg_acc": 0.002, "dg_history": -0.047, "dg_final": 1.307, "sg_app": 0.69, "sg_ott": 0.38, "sg_t2g": 1.01, "sg_l20": 1.62, "momentum": 0.72, "dk_odds": 4200}, {"name": "Shane Lowry", "salary": 7600, "salary_rank": 29, "sg_score": 52, "fit_score": 50, "form_score": 25, "form_grade": "poor", "proj": 73.7, "cash_proj": 70.7, "ceiling": 109.0, "sigma": 21.7, "leverage": -8.5, "own_pct": 9.8, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0128, "top10_prob": 0.159, "doral_rank": 47, "dist_rank": 47, "lc_sg": 0.72, "recent_5": "CUT/CUT/T28/T30/T42", "buzz_sources": "", "news_note": "", "dg_baseline": 1.101, "dg_age": -0.028, "dg_dist": -0.008, "dg_acc": 0.007, "dg_history": 0.012, "dg_final": 0.988, "sg_app": 1.0, "sg_ott": 0.16, "sg_t2g": 1.1, "sg_l20": 1.1, "momentum": 0.06, "dk_odds": 5500}, {"name": "Sudarshan Yellamaraju", "salary": 7000, "salary_rank": 41, "sg_score": 50, "fit_score": 67, "form_score": 90, "form_grade": "good", "proj": 67.1, "cash_proj": 67.1, "ceiling": 105.0, "sigma": 22.3, "leverage": 9.0, "own_pct": 13.9, "tout_tier": "NEUTRAL", "buzz": 2.1, "equity_tier": 2, "win_prob": 0.0064, "top10_prob": 0.1036, "doral_rank": 15, "dist_rank": 16, "lc_sg": 0.76, "recent_5": "T37/T5/T6/T14/T52", "buzz_sources": "RG:LIKE rolling", "news_note": "", "dg_baseline": 0.411, "dg_age": 0.034, "dg_dist": 0.095, "dg_acc": 0.004, "dg_history": -0.047, "dg_final": 0.609, "sg_app": 0.55, "sg_ott": 0.48, "sg_t2g": 0.88, "sg_l20": 1.6, "momentum": 1.52, "dk_odds": 11000}, {"name": "Min Woo Lee", "salary": 8600, "salary_rank": 15, "sg_score": 55, "fit_score": 82, "form_score": 90, "form_grade": "good", "proj": 83.8, "cash_proj": 83.8, "ceiling": 122.0, "sigma": 22.4, "leverage": 4.0, "own_pct": 14.4, "tout_tier": "NEUTRAL", "buzz": 2.1, "equity_tier": 3, "win_prob": 0.017, "top10_prob": 0.1848, "doral_rank": 5, "dist_rank": 5, "lc_sg": null, "recent_5": "T6/T32/T3/CUT/T60", "buzz_sources": "RG:BET 40-1", "news_note": "", "dg_baseline": 1.074, "dg_age": 0.021, "dg_dist": 0.18, "dg_acc": -0.002, "dg_history": -0.047, "dg_final": 1.602, "sg_app": 0.29, "sg_ott": 0.74, "sg_t2g": 1.37, "sg_l20": 1.29, "momentum": 0.45, "dk_odds": 4100}, {"name": "Hideki Matsuyama", "salary": 9000, "salary_rank": 11, "sg_score": 63, "fit_score": 52, "form_score": 70, "form_grade": "ok", "proj": 80.8, "cash_proj": 84.8, "ceiling": 116.0, "sigma": 21.9, "leverage": -15.5, "own_pct": 13.4, "tout_tier": "NEUTRAL", "buzz": 3.5, "equity_tier": 3, "win_prob": 0.0224, "top10_prob": 0.2136, "doral_rank": 45, "dist_rank": 45, "lc_sg": 0.85, "recent_5": "T28/T41/T27/T21/T12", "buzz_sources": "MayoSubstack:STRONG (200+ approach specialist) | Lineups:Model Top 10 | RG:Model #6 | Mayo:BET-OF-WEEK", "news_note": "Veteran calm, pattern fit", "dg_baseline": 1.533, "dg_age": -0.007, "dg_dist": -0.001, "dg_acc": 0.003, "dg_history": 0.008, "dg_final": 1.386, "sg_app": 0.91, "sg_ott": 0.04, "sg_t2g": 1.4, "sg_l20": 1.42, "momentum": -0.02, "dk_odds": 3100}, {"name": "J.J. Spaun", "salary": 7800, "salary_rank": 25, "sg_score": 49, "fit_score": 56, "form_score": 25, "form_grade": "poor", "proj": 75.8, "cash_proj": 71.8, "ceiling": 112.0, "sigma": 21.8, "leverage": -6.5, "own_pct": 3.3, "tout_tier": "NEUTRAL", "buzz": 1.0, "equity_tier": 2, "win_prob": 0.0135, "top10_prob": 0.1608, "doral_rank": 36, "dist_rank": 35, "lc_sg": null, "recent_5": "T24/CUT/1/CUT/T25", "buzz_sources": "RG:LIKE approach improving", "news_note": "Recent breakout form, 17-under at The Players, fits Doral long-iron profile", "dg_baseline": 1.147, "dg_age": -0.013, "dg_dist": 0.018, "dg_acc": 0.016, "dg_history": -0.047, "dg_final": 1.114, "sg_app": 0.82, "sg_ott": 0.4, "sg_t2g": 1.22, "sg_l20": 0.83, "momentum": -0.59, "dk_odds": 5200}, {"name": "Sam Stevens", "salary": 7300, "salary_rank": 35, "sg_score": 48, "fit_score": 64, "form_score": 70, "form_grade": "ok", "proj": 72.6, "cash_proj": 75.1, "ceiling": 108.0, "sigma": 21.7, "leverage": 7.0, "own_pct": 10.2, "tout_tier": "SHARP", "buzz": 3.2, "equity_tier": 2, "win_prob": 0.0098, "top10_prob": 0.1315, "doral_rank": 21, "dist_rank": 24, "lc_sg": 0.77, "recent_5": "CUT/58/5/T24/T65", "buzz_sources": "RG:LIKE T2G | Mayo:LIKE 80-1", "news_note": "", "dg_baseline": 0.74, "dg_age": 0.012, "dg_dist": 0.074, "dg_acc": 0.004, "dg_history": -0.047, "dg_final": 0.935, "sg_app": 0.55, "sg_ott": 0.53, "sg_t2g": 1.1, "sg_l20": 1.15, "momentum": 0.41, "dk_odds": 7200}, {"name": "Ryan Gerard", "salary": 7200, "salary_rank": 37, "sg_score": 46, "fit_score": 56, "form_score": 25, "form_grade": "poor", "proj": 75.0, "cash_proj": 71.0, "ceiling": 110.0, "sigma": 21.9, "leverage": 0.5, "own_pct": 13.2, "tout_tier": "NEUTRAL", "buzz": 1.1, "equity_tier": 2, "win_prob": 0.0093, "top10_prob": 0.1302, "doral_rank": 37, "dist_rank": 36, "lc_sg": null, "recent_5": "CUT/T27/CUT/T38/T33", "buzz_sources": "", "news_note": "", "dg_baseline": 0.91, "dg_age": 0.026, "dg_dist": 0.017, "dg_acc": 0.013, "dg_history": -0.047, "dg_final": 1.09, "sg_app": 0.86, "sg_ott": 0.31, "sg_t2g": 0.98, "sg_l20": 0.83, "momentum": 0.06, "dk_odds": 7600}, {"name": "Daniel Berger", "salary": 7100, "salary_rank": 39, "sg_score": 41, "fit_score": 56, "form_score": 50, "form_grade": "mixed", "proj": 67.3, "cash_proj": 65.8, "ceiling": 104.0, "sigma": 22.0, "leverage": 1.5, "own_pct": 7.1, "tout_tier": "NEUTRAL", "buzz": 1.1, "equity_tier": 2, "win_prob": 0.0079, "top10_prob": 0.1179, "doral_rank": 34, "dist_rank": 33, "lc_sg": null, "recent_5": "T32/2/T66/CUT/T42", "buzz_sources": "Mayo:LIKE \"burger time\" @100", "news_note": "", "dg_baseline": 0.576, "dg_age": -0.002, "dg_dist": 0.024, "dg_acc": 0.015, "dg_history": -0.007, "dg_final": 0.608, "sg_app": 0.93, "sg_ott": 0.23, "sg_t2g": 0.86, "sg_l20": 0.8, "momentum": 0.2, "dk_odds": 9000}, {"name": "Kurt Kitayama", "salary": 7900, "salary_rank": 23, "sg_score": 45, "fit_score": 75, "form_score": 70, "form_grade": "ok", "proj": 76.1, "cash_proj": 76.1, "ceiling": 114.0, "sigma": 22.5, "leverage": 5.5, "own_pct": 7.7, "tout_tier": "NEUTRAL", "buzz": 1.0, "equity_tier": 2, "win_prob": 0.0138, "top10_prob": 0.1628, "doral_rank": 10, "dist_rank": 9, "lc_sg": null, "recent_5": "T18/CUT/T60/51/T8", "buzz_sources": "RG:LIKE T2G/long", "news_note": "", "dg_baseline": 0.859, "dg_age": -0.003, "dg_dist": 0.145, "dg_acc": -0.004, "dg_history": -0.047, "dg_final": 1.135, "sg_app": 0.8, "sg_ott": 0.38, "sg_t2g": 0.92, "sg_l20": 0.79, "momentum": -0.26, "dk_odds": 5100}, {"name": "Sepp Straka", "salary": 7900, "salary_rank": 23, "sg_score": 45, "fit_score": 52, "form_score": 70, "form_grade": "ok", "proj": 72.2, "cash_proj": 72.2, "ceiling": 109.0, "sigma": 22.2, "leverage": -13.0, "own_pct": 9.1, "tout_tier": "NEUTRAL", "buzz": 2.2, "equity_tier": 2, "win_prob": 0.0128, "top10_prob": 0.1554, "doral_rank": 44, "dist_rank": 45, "lc_sg": null, "recent_5": "T13/T8/CUT/T41/T42", "buzz_sources": "Mayo:LIKE eachway @60", "news_note": "", "dg_baseline": 0.989, "dg_age": -0.002, "dg_dist": -0.001, "dg_acc": 0.012, "dg_history": -0.047, "dg_final": 0.892, "sg_app": 0.85, "sg_ott": 0.23, "sg_t2g": 1.21, "sg_l20": 0.65, "momentum": -0.52, "dk_odds": 5500}, {"name": "Viktor Hovland", "salary": 8900, "salary_rank": 12, "sg_score": 59, "fit_score": 56, "form_score": 70, "form_grade": "ok", "proj": 77.8, "cash_proj": 81.8, "ceiling": 113.0, "sigma": 22.0, "leverage": -10.5, "own_pct": 7.2, "tout_tier": "NEUTRAL", "buzz": 1.4, "equity_tier": 3, "win_prob": 0.0211, "top10_prob": 0.2011, "doral_rank": 34, "dist_rank": 34, "lc_sg": 0.95, "recent_5": "T13/T13/CUT/T18/T42", "buzz_sources": "Lineups:Model Top 10 | Mayo:LIKE", "news_note": "", "dg_baseline": 1.24, "dg_age": 0.018, "dg_dist": 0.023, "dg_acc": 0.01, "dg_history": -0.047, "dg_final": 1.203, "sg_app": 0.71, "sg_ott": 0.14, "sg_t2g": 1.18, "sg_l20": 1.47, "momentum": 0.03, "dk_odds": 3300}, {"name": "Gary Woodland", "salary": 7400, "salary_rank": 33, "sg_score": 56, "fit_score": 80, "form_score": 90, "form_grade": "good", "proj": 70.7, "cash_proj": 70.7, "ceiling": 107.0, "sigma": 22.4, "leverage": 10.5, "own_pct": 5.2, "tout_tier": "SHARP", "buzz": 3.4, "equity_tier": 2, "win_prob": 0.0091, "top10_prob": 0.1243, "doral_rank": 7, "dist_rank": 7, "lc_sg": null, "recent_5": "CUT/T14/1/T33/T8", "buzz_sources": "Lineups:FEATURED (Memorial Park comp, Florida swing history) | Lineups:SPOTLIGHT (full article) | RG:Model #11", "news_note": "", "dg_baseline": 0.69, "dg_age": -0.041, "dg_dist": 0.175, "dg_acc": -0.003, "dg_history": 0.024, "dg_final": 0.82, "sg_app": 0.25, "sg_ott": 0.69, "sg_t2g": 0.58, "sg_l20": 1.75, "momentum": 1.24, "dk_odds": 7800}, {"name": "Tommy Fleetwood", "salary": 9700, "salary_rank": 5, "sg_score": 60, "fit_score": 57, "form_score": 90, "form_grade": "good", "proj": 84.4, "cash_proj": 88.4, "ceiling": 120.0, "sigma": 21.6, "leverage": -13.0, "own_pct": 11.1, "tout_tier": "NEUTRAL", "buzz": 0.1, "equity_tier": 4, "win_prob": 0.0305, "top10_prob": 0.2532, "doral_rank": 32, "dist_rank": 41, "lc_sg": 0.99, "recent_5": "49/T8/T10/T33/T52", "buzz_sources": "GNN:LIKE#5 | Lineups:Model Top 10", "news_note": "Reigning FedExCup champ, no longer carrying the no-PGA-win question", "dg_baseline": 1.602, "dg_age": -0.012, "dg_dist": 0.01, "dg_acc": 0.025, "dg_history": -0.051, "dg_final": 1.569, "sg_app": 0.41, "sg_ott": 0.55, "sg_t2g": 1.32, "sg_l20": 1.16, "momentum": -0.84, "dk_odds": 2250}, {"name": "Nicolai Hojgaard", "salary": 7800, "salary_rank": 25, "sg_score": 53, "fit_score": 85, "form_score": 50, "form_grade": "mixed", "proj": 78.7, "cash_proj": 77.2, "ceiling": 116.0, "sigma": 22.5, "leverage": 11.0, "own_pct": 10.9, "tout_tier": "NEUTRAL", "buzz": 2.2, "equity_tier": 2, "win_prob": 0.0138, "top10_prob": 0.159, "doral_rank": 3, "dist_rank": 3, "lc_sg": null, "recent_5": "T27/T55/2/CUT/T55", "buzz_sources": "", "news_note": "", "dg_baseline": 1.015, "dg_age": 0.033, "dg_dist": 0.209, "dg_acc": -0.011, "dg_history": -0.047, "dg_final": 1.296, "sg_app": 0.59, "sg_ott": 0.34, "sg_t2g": 0.98, "sg_l20": 1.21, "momentum": 0.14, "dk_odds": 5100}, {"name": "Corey Conners", "salary": 6900, "salary_rank": 43, "sg_score": 47, "fit_score": 49, "form_score": 70, "form_grade": "ok", "proj": 67.7, "cash_proj": 71.7, "ceiling": 103.0, "sigma": 21.9, "leverage": -2.0, "own_pct": 7.3, "tout_tier": "NEUTRAL", "buzz": 2.2, "equity_tier": 2, "win_prob": 0.0084, "top10_prob": 0.1232, "doral_rank": 50, "dist_rank": 54, "lc_sg": 0.95, "recent_5": "T33/T13/T14/T49/T55", "buzz_sources": "Mayo:LIKE eachway @90", "news_note": "", "dg_baseline": 0.761, "dg_age": -0.007, "dg_dist": -0.031, "dg_acc": 0.026, "dg_history": -0.047, "dg_final": 0.626, "sg_app": 0.67, "sg_ott": 0.21, "sg_t2g": 0.82, "sg_l20": 1.02, "momentum": 0.19, "dk_odds": 8400}, {"name": "Pierceson Coody", "salary": 7300, "salary_rank": 35, "sg_score": 31, "fit_score": 80, "form_score": 25, "form_grade": "poor", "proj": 71.4, "cash_proj": 67.4, "ceiling": 109.0, "sigma": 22.4, "leverage": 13.5, "own_pct": 7.8, "tout_tier": "NEUTRAL", "buzz": 1.1, "equity_tier": 2, "win_prob": 0.0093, "top10_prob": 0.1254, "doral_rank": 7, "dist_rank": 6, "lc_sg": null, "recent_5": "CUT/CUT/T55/WD/T16", "buzz_sources": "", "news_note": "", "dg_baseline": 0.596, "dg_age": 0.028, "dg_dist": 0.177, "dg_acc": -0.006, "dg_history": -0.047, "dg_final": 0.866, "sg_app": 0.64, "sg_ott": 0.54, "sg_t2g": 0.8, "sg_l20": 0.09, "momentum": -0.55, "dk_odds": 7600}, {"name": "Jordan Smith", "salary": 6800, "salary_rank": 46, "sg_score": 42, "fit_score": 66, "form_score": 25, "form_grade": "poor", "proj": 72.1, "cash_proj": 68.1, "ceiling": 108.0, "sigma": 22.0, "leverage": 17.0, "own_pct": 6.3, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0079, "top10_prob": 0.1179, "doral_rank": 17, "dist_rank": 20, "lc_sg": null, "recent_5": "CUT/3/T44/CUT/T16", "buzz_sources": "", "news_note": "", "dg_baseline": 0.641, "dg_age": -0.004, "dg_dist": 0.082, "dg_acc": 0.012, "dg_history": -0.047, "dg_final": 0.915, "sg_app": 0.39, "sg_ott": 0.55, "sg_t2g": 0.75, "sg_l20": 0.78, "momentum": 0.21, "dk_odds": 9000}, {"name": "Sahith Theegala", "salary": 7600, "salary_rank": 29, "sg_score": 56, "fit_score": 57, "form_score": 90, "form_grade": "good", "proj": 72.3, "cash_proj": 72.3, "ceiling": 109.0, "sigma": 22.2, "leverage": -2.5, "own_pct": 12.1, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0101, "top10_prob": 0.134, "doral_rank": 30, "dist_rank": 30, "lc_sg": null, "recent_5": "T6/T32/CUT/T10/T25", "buzz_sources": "", "news_note": "", "dg_baseline": 0.8, "dg_age": 0.019, "dg_dist": 0.043, "dg_acc": -0.005, "dg_history": -0.047, "dg_final": 0.917, "sg_app": 0.54, "sg_ott": -0.02, "sg_t2g": 0.96, "sg_l20": 1.64, "momentum": 1.09, "dk_odds": 7000}, {"name": "Rickie Fowler", "salary": 8000, "salary_rank": 21, "sg_score": 54, "fit_score": 55, "form_score": 25, "form_grade": "poor", "proj": 74.4, "cash_proj": 70.4, "ceiling": 110.0, "sigma": 22.0, "leverage": -8.0, "own_pct": 9.2, "tout_tier": "NEUTRAL", "buzz": 1.6, "equity_tier": 3, "win_prob": 0.0166, "top10_prob": 0.1848, "doral_rank": 39, "dist_rank": 40, "lc_sg": null, "recent_5": "T9/T42/CUT/CUT/T8", "buzz_sources": "RG:LIKE | Mayo:Value 50-1", "news_note": "", "dg_baseline": 1.124, "dg_age": -0.021, "dg_dist": 0.012, "dg_acc": 0.015, "dg_history": 0.046, "dg_final": 1.007, "sg_app": 0.44, "sg_ott": 0.43, "sg_t2g": 0.72, "sg_l20": 1.17, "momentum": -0.14, "dk_odds": 4200}, {"name": "Maverick McNealy", "salary": 8800, "salary_rank": 13, "sg_score": 64, "fit_score": 64, "form_score": 70, "form_grade": "ok", "proj": 81.4, "cash_proj": 83.9, "ceiling": 119.0, "sigma": 22.2, "leverage": -2.5, "own_pct": 9.7, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 3, "win_prob": 0.0211, "top10_prob": 0.2041, "doral_rank": 20, "dist_rank": 22, "lc_sg": 0.81, "recent_5": "T13/T32/T21/T18/T16", "buzz_sources": "", "news_note": "", "dg_baseline": 1.364, "dg_age": 0.01, "dg_dist": 0.075, "dg_acc": 0.001, "dg_history": -0.047, "dg_final": 1.432, "sg_app": 0.13, "sg_ott": 0.49, "sg_t2g": 0.99, "sg_l20": 1.71, "momentum": 0.28, "dk_odds": 3300}, {"name": "Joel Dahmen", "salary": 6100, "salary_rank": 67, "sg_score": 25, "fit_score": 36, "form_score": 25, "form_grade": "poor", "proj": 54.9, "cash_proj": 50.9, "ceiling": 90.0, "sigma": 22.0, "leverage": 4.0, "own_pct": 2.8, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0021, "top10_prob": 0.0526, "doral_rank": 63, "dist_rank": 66, "lc_sg": null, "recent_5": "T9/CUT/CUT/T64/CUT", "buzz_sources": "", "news_note": "", "dg_baseline": -0.098, "dg_age": -0.026, "dg_dist": -0.1, "dg_acc": 0.028, "dg_history": -0.047, "dg_final": -0.129, "sg_app": 0.48, "sg_ott": 0.52, "sg_t2g": 0.61, "sg_l20": 0.33, "momentum": 0.46, "dk_odds": 34000}, {"name": "Sam Burns", "salary": 9100, "salary_rank": 10, "sg_score": 65, "fit_score": 71, "form_score": 70, "form_grade": "ok", "proj": 79.7, "cash_proj": 82.2, "ceiling": 117.0, "sigma": 22.3, "leverage": 0.5, "own_pct": 7.4, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 3, "win_prob": 0.0275, "top10_prob": 0.2309, "doral_rank": 13, "dist_rank": 12, "lc_sg": 0.83, "recent_5": "CUT/T13/T21/T7/T16", "buzz_sources": "GNN:LIKE#4 | RG:CONCERN putter-reliant | Mayo:SKIP", "news_note": "", "dg_baseline": 1.448, "dg_age": 0.012, "dg_dist": 0.12, "dg_acc": -0.007, "dg_history": -0.047, "dg_final": 1.299, "sg_app": 0.44, "sg_ott": 0.33, "sg_t2g": 0.51, "sg_l20": 1.64, "momentum": 0.0, "dk_odds": 2500}, {"name": "Jordan Spieth", "salary": 8200, "salary_rank": 19, "sg_score": 53, "fit_score": 65, "form_score": 70, "form_grade": "ok", "proj": 76.3, "cash_proj": 76.3, "ceiling": 112.0, "sigma": 21.8, "leverage": 1.5, "own_pct": 8.4, "tout_tier": "NEUTRAL", "buzz": 0.8, "equity_tier": 3, "win_prob": 0.0175, "top10_prob": 0.1873, "doral_rank": 19, "dist_rank": 18, "lc_sg": null, "recent_5": "T32/T11/T63/T12/T33", "buzz_sources": "Lineups:Elite Profile", "news_note": "Returning to Doral form profile", "dg_baseline": 1.053, "dg_age": -0.001, "dg_dist": 0.088, "dg_acc": -0.004, "dg_history": 0.021, "dg_final": 1.128, "sg_app": 0.63, "sg_ott": 0.04, "sg_t2g": 0.89, "sg_l20": 1.22, "momentum": 0.05, "dk_odds": 4000}, {"name": "Bud Cauley", "salary": 6600, "salary_rank": 52, "sg_score": 43, "fit_score": 46, "form_score": 70, "form_grade": "ok", "proj": 65.4, "cash_proj": 65.4, "ceiling": 101.0, "sigma": 21.8, "leverage": -0.0, "own_pct": 6.3, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0064, "top10_prob": 0.1068, "doral_rank": 55, "dist_rank": 55, "lc_sg": null, "recent_5": "T18/T32/74/T21/7", "buzz_sources": "", "news_note": "", "dg_baseline": 0.513, "dg_age": -0.015, "dg_dist": -0.032, "dg_acc": 0.009, "dg_history": -0.047, "dg_final": 0.5, "sg_app": 0.44, "sg_ott": 0.1, "sg_t2g": 0.81, "sg_l20": 1.04, "momentum": 0.63, "dk_odds": 11000}, {"name": "Michael Thorbjornsen", "salary": null, "salary_rank": null, "sg_score": 37, "fit_score": null, "form_score": 70, "form_grade": "ok", "proj": null, "cash_proj": null, "ceiling": null, "sigma": null, "leverage": null, "own_pct": null, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0143, "top10_prob": 0.1688, "doral_rank": null, "dist_rank": null, "lc_sg": null, "recent_5": "T33/T22/T14/CUT/T33", "buzz_sources": "", "news_note": "", "dg_baseline": null, "dg_age": null, "dg_dist": null, "dg_acc": null, "dg_history": null, "dg_final": null, "sg_app": 0.18, "sg_ott": 0.34, "sg_t2g": 0.86, "sg_l20": 1.06, "momentum": 0.18, "dk_odds": 4900}, {"name": "Nick Taylor", "salary": 6900, "salary_rank": 43, "sg_score": 40, "fit_score": 37, "form_score": 50, "form_grade": "mixed", "proj": 64.4, "cash_proj": 62.9, "ceiling": 100.0, "sigma": 21.2, "leverage": -9.0, "own_pct": 7.8, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0071, "top10_prob": 0.1121, "doral_rank": 60, "dist_rank": 63, "lc_sg": null, "recent_5": "T42/CUT/T28/T41/T60", "buzz_sources": "", "news_note": "", "dg_baseline": 0.78, "dg_age": -0.024, "dg_dist": -0.087, "dg_acc": 0.012, "dg_history": -0.047, "dg_final": 0.428, "sg_app": 0.55, "sg_ott": -0.01, "sg_t2g": 0.98, "sg_l20": 0.54, "momentum": -0.42, "dk_odds": 10000}, {"name": "Matt Wallace", "salary": 6600, "salary_rank": 52, "sg_score": 35, "fit_score": 47, "form_score": 50, "form_grade": "mixed", "proj": 64.0, "cash_proj": 62.5, "ceiling": 100.0, "sigma": 21.8, "leverage": -1.0, "own_pct": 6.5, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0055, "top10_prob": 0.0936, "doral_rank": 54, "dist_rank": 51, "lc_sg": null, "recent_5": "CUT/T40/T51/T2/T55", "buzz_sources": "", "news_note": "", "dg_baseline": 0.371, "dg_age": -0.015, "dg_dist": -0.018, "dg_acc": 0.001, "dg_history": -0.047, "dg_final": 0.419, "sg_app": 0.47, "sg_ott": 0.06, "sg_t2g": 0.74, "sg_l20": 0.61, "momentum": 0.12, "dk_odds": 13000}, {"name": "Harris English", "salary": 8500, "salary_rank": 16, "sg_score": 59, "fit_score": 55, "form_score": 70, "form_grade": "ok", "proj": 77.4, "cash_proj": 77.4, "ceiling": 113.0, "sigma": 21.5, "leverage": -13.0, "own_pct": 10.6, "tout_tier": "FADE", "buzz": -0.3, "equity_tier": 3, "win_prob": 0.017, "top10_prob": 0.1848, "doral_rank": 41, "dist_rank": 38, "lc_sg": null, "recent_5": "T24/CUT/T21/T30/T4", "buzz_sources": "Lineups:Elite Profile", "news_note": "", "dg_baseline": 1.29, "dg_age": -0.018, "dg_dist": 0.014, "dg_acc": 0.01, "dg_history": 0.034, "dg_final": 1.193, "sg_app": 0.0, "sg_ott": 0.51, "sg_t2g": 0.5, "sg_l20": 1.39, "momentum": -0.03, "dk_odds": 4100}, {"name": "Andrew Putnam", "salary": 6300, "salary_rank": 61, "sg_score": 47, "fit_score": 5, "form_score": 70, "form_grade": "ok", "proj": 57.1, "cash_proj": 57.1, "ceiling": 91.0, "sigma": 20.9, "leverage": -5.5, "own_pct": null, "tout_tier": "NEUTRAL", "buzz": 1.1, "equity_tier": 1, "win_prob": 0.0025, "top10_prob": 0.0621, "doral_rank": 71, "dist_rank": 71, "lc_sg": null, "recent_5": "T32/T30/T44/T5/T42", "buzz_sources": "", "news_note": "", "dg_baseline": 0.496, "dg_age": -0.02, "dg_dist": -0.295, "dg_acc": 0.035, "dg_history": -0.047, "dg_final": 0.005, "sg_app": 0.51, "sg_ott": -0.29, "sg_t2g": 0.7, "sg_l20": 1.34, "momentum": 0.98, "dk_odds": 29000}, {"name": "Alex Noren", "salary": 7200, "salary_rank": 37, "sg_score": 50, "fit_score": 37, "form_score": 70, "form_grade": "ok", "proj": 69.1, "cash_proj": 71.6, "ceiling": 104.0, "sigma": 21.5, "leverage": -10.0, "own_pct": 7.6, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0101, "top10_prob": 0.1367, "doral_rank": 61, "dist_rank": 65, "lc_sg": 0.81, "recent_5": "T24/T32/T30/T30/T65", "buzz_sources": "", "news_note": "", "dg_baseline": 1.084, "dg_age": -0.049, "dg_dist": -0.093, "dg_acc": 0.013, "dg_history": -0.027, "dg_final": 0.71, "sg_app": 0.41, "sg_ott": 0.02, "sg_t2g": 0.7, "sg_l20": 0.96, "momentum": -0.25, "dk_odds": 7000}, {"name": "Ryan Fox", "salary": 6800, "salary_rank": 46, "sg_score": 47, "fit_score": 66, "form_score": 25, "form_grade": "poor", "proj": 66.0, "cash_proj": 62.0, "ceiling": 101.0, "sigma": 21.9, "leverage": 13.5, "own_pct": 7.2, "tout_tier": "NEUTRAL", "buzz": 1.1, "equity_tier": 2, "win_prob": 0.0064, "top10_prob": 0.102, "doral_rank": 16, "dist_rank": 15, "lc_sg": null, "recent_5": "T7/T24/CUT/CUT/T16", "buzz_sources": "", "news_note": "", "dg_baseline": 0.617, "dg_age": -0.029, "dg_dist": 0.115, "dg_acc": -0.021, "dg_history": -0.047, "dg_final": 0.54, "sg_app": 0.05, "sg_ott": 0.3, "sg_t2g": 0.62, "sg_l20": 1.17, "momentum": 0.51, "dk_odds": 11000}, {"name": "Max Homa", "salary": 6400, "salary_rank": 58, "sg_score": 37, "fit_score": 56, "form_score": 25, "form_grade": "poor", "proj": 62.2, "cash_proj": 58.2, "ceiling": 100.0, "sigma": 22.4, "leverage": 12.0, "own_pct": null, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0049, "top10_prob": 0.0854, "doral_rank": 37, "dist_rank": 31, "lc_sg": null, "recent_5": "T32/CUT/CUT/T9/T69", "buzz_sources": "", "news_note": "", "dg_baseline": 0.428, "dg_age": -0.012, "dg_dist": 0.037, "dg_acc": -0.004, "dg_history": -0.047, "dg_final": 0.311, "sg_app": 0.34, "sg_ott": 0.11, "sg_t2g": 0.29, "sg_l20": 0.68, "momentum": 0.32, "dk_odds": 14500}, {"name": "Andrew Novak", "salary": 6500, "salary_rank": 55, "sg_score": 34, "fit_score": 52, "form_score": 25, "form_grade": "poor", "proj": 67.1, "cash_proj": 63.1, "ceiling": 104.0, "sigma": 22.2, "leverage": 5.5, "own_pct": null, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0051, "top10_prob": 0.0888, "doral_rank": 45, "dist_rank": 42, "lc_sg": null, "recent_5": "CUT/T55/T14/CUT/T16", "buzz_sources": "", "news_note": "", "dg_baseline": 0.416, "dg_age": 0.007, "dg_dist": 0.008, "dg_acc": 0.001, "dg_history": -0.047, "dg_final": 0.619, "sg_app": 0.3, "sg_ott": 0.1, "sg_t2g": 0.47, "sg_l20": 0.47, "momentum": -0.05, "dk_odds": 14000}, {"name": "Patrick Rodgers", "salary": 6400, "salary_rank": 58, "sg_score": 33, "fit_score": 62, "form_score": 25, "form_grade": "poor", "proj": 62.4, "cash_proj": 58.4, "ceiling": 99.0, "sigma": 22.1, "leverage": 17.5, "own_pct": null, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0047, "top10_prob": 0.0844, "doral_rank": 23, "dist_rank": 19, "lc_sg": null, "recent_5": "T11/T40/CUT/CUT/T16", "buzz_sources": "", "news_note": "", "dg_baseline": 0.429, "dg_age": -0.005, "dg_dist": 0.084, "dg_acc": -0.012, "dg_history": -0.047, "dg_final": 0.32, "sg_app": 0.28, "sg_ott": 0.03, "sg_t2g": 0.52, "sg_l20": 0.39, "momentum": 0.08, "dk_odds": 15000}, {"name": "Jason Day", "salary": 7700, "salary_rank": 27, "sg_score": 48, "fit_score": 49, "form_score": 70, "form_grade": "ok", "proj": 71.2, "cash_proj": 71.2, "ceiling": 107.0, "sigma": 21.9, "leverage": -10.0, "own_pct": 7.8, "tout_tier": "NEUTRAL", "buzz": 1.9, "equity_tier": 2, "win_prob": 0.0149, "top10_prob": 0.1731, "doral_rank": 51, "dist_rank": 50, "lc_sg": null, "recent_5": "CUT/T59/T6/T12/T42", "buzz_sources": "Lineups:Elite Profile", "news_note": "", "dg_baseline": 1.027, "dg_age": -0.026, "dg_dist": -0.013, "dg_acc": 0.001, "dg_history": -0.012, "dg_final": 0.813, "sg_app": 0.01, "sg_ott": 0.18, "sg_t2g": 0.67, "sg_l20": 0.84, "momentum": -0.2, "dk_odds": 4700}, {"name": "Aldrich Potgieter", "salary": 6300, "salary_rank": 61, "sg_score": 19, "fit_score": 100, "form_score": 25, "form_grade": "poor", "proj": 60.7, "cash_proj": 56.7, "ceiling": 98.0, "sigma": 23.3, "leverage": 30.5, "own_pct": null, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0041, "top10_prob": 0.0677, "doral_rank": 1, "dist_rank": 1, "lc_sg": null, "recent_5": "CUT/CUT/T21/CUT/T25", "buzz_sources": "", "news_note": "", "dg_baseline": -0.317, "dg_age": 0.048, "dg_dist": 0.313, "dg_acc": -0.019, "dg_history": -0.047, "dg_final": 0.224, "sg_app": -0.15, "sg_ott": 0.62, "sg_t2g": 0.1, "sg_l20": 0.1, "momentum": 0.41, "dk_odds": 17500}, {"name": "Taylor Pendrith", "salary": 6700, "salary_rank": 49, "sg_score": 18, "fit_score": 73, "form_score": 25, "form_grade": "poor", "proj": 65.6, "cash_proj": 61.6, "ceiling": 102.0, "sigma": 22.2, "leverage": 20.5, "own_pct": 4.0, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0068, "top10_prob": 0.102, "doral_rank": 11, "dist_rank": 10, "lc_sg": null, "recent_5": "T38/T46/CUT/CUT/T71", "buzz_sources": "", "news_note": "", "dg_baseline": 0.297, "dg_age": -0.01, "dg_dist": 0.137, "dg_acc": -0.004, "dg_history": -0.047, "dg_final": 0.515, "sg_app": 0.04, "sg_ott": 0.48, "sg_t2g": 0.65, "sg_l20": -0.55, "momentum": -1.2, "dk_odds": 10500}, {"name": "Keegan Bradley", "salary": 7500, "salary_rank": 31, "sg_score": 44, "fit_score": 63, "form_score": 70, "form_grade": "ok", "proj": 73.3, "cash_proj": 73.3, "ceiling": 110.0, "sigma": 22.0, "leverage": 5.0, "own_pct": 5.4, "tout_tier": "CONTRARIAN", "buzz": -0.3, "equity_tier": 2, "win_prob": 0.0126, "top10_prob": 0.1536, "doral_rank": 22, "dist_rank": 25, "lc_sg": null, "recent_5": "CUT/T50/T55/T21/T12", "buzz_sources": "Lineups:Elite Profile", "news_note": "", "dg_baseline": 0.983, "dg_age": -0.032, "dg_dist": 0.065, "dg_acc": 0.005, "dg_history": -0.022, "dg_final": 0.958, "sg_app": -0.16, "sg_ott": 0.38, "sg_t2g": 0.57, "sg_l20": 0.65, "momentum": -0.58, "dk_odds": 5600}, {"name": "Matt McCarty", "salary": 6800, "salary_rank": 46, "sg_score": 38, "fit_score": 45, "form_score": 25, "form_grade": "poor", "proj": 70.2, "cash_proj": 66.2, "ceiling": 104.0, "sigma": 21.6, "leverage": -4.0, "own_pct": 7.6, "tout_tier": "NEUTRAL", "buzz": 0.8, "equity_tier": 2, "win_prob": 0.0077, "top10_prob": 0.1159, "doral_rank": 57, "dist_rank": 57, "lc_sg": null, "recent_5": "CUT/CUT/T39/T24/T12", "buzz_sources": "RG:LIKE T2G mini-run", "news_note": "", "dg_baseline": 0.694, "dg_age": 0.019, "dg_dist": -0.043, "dg_acc": 0.015, "dg_history": -0.047, "dg_final": 0.794, "sg_app": 0.07, "sg_ott": 0.21, "sg_t2g": 0.15, "sg_l20": 0.45, "momentum": -0.3, "dk_odds": 9200}, {"name": "Brian Harman", "salary": 6600, "salary_rank": 52, "sg_score": 40, "fit_score": 37, "form_score": 70, "form_grade": "ok", "proj": 63.1, "cash_proj": 63.1, "ceiling": 99.0, "sigma": 21.7, "leverage": -5.0, "own_pct": 6.8, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0055, "top10_prob": 0.0949, "doral_rank": 62, "dist_rank": 64, "lc_sg": null, "recent_5": "50/T11/T39/T33/T25", "buzz_sources": "", "news_note": "", "dg_baseline": 0.524, "dg_age": -0.029, "dg_dist": -0.091, "dg_acc": 0.013, "dg_history": -0.047, "dg_final": 0.36, "sg_app": 0.21, "sg_ott": -0.16, "sg_t2g": 0.32, "sg_l20": 0.76, "momentum": 0.18, "dk_odds": 13000}, {"name": "J.T. Poston", "salary": 6500, "salary_rank": 55, "sg_score": 28, "fit_score": 41, "form_score": 25, "form_grade": "poor", "proj": 63.5, "cash_proj": 59.5, "ceiling": 99.0, "sigma": 21.5, "leverage": 1.0, "own_pct": 4.9, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0064, "top10_prob": 0.1052, "doral_rank": 59, "dist_rank": 59, "lc_sg": null, "recent_5": "CUT/T50/CUT/T21/T60", "buzz_sources": "", "news_note": "", "dg_baseline": 0.508, "dg_age": -0.001, "dg_dist": -0.067, "dg_acc": 0.014, "dg_history": -0.047, "dg_final": 0.382, "sg_app": 0.16, "sg_ott": 0.15, "sg_t2g": 0.21, "sg_l20": -0.07, "momentum": -0.73, "dk_odds": 11000}, {"name": "Sungjae Im", "salary": 6700, "salary_rank": 49, "sg_score": 31, "fit_score": 48, "form_score": 50, "form_grade": "mixed", "proj": 62.9, "cash_proj": 65.4, "ceiling": 99.0, "sigma": 22.1, "leverage": 1.0, "own_pct": 3.0, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0071, "top10_prob": 0.1103, "doral_rank": 52, "dist_rank": 52, "lc_sg": 0.92, "recent_5": "CUT/T4/T60/46/T42", "buzz_sources": "", "news_note": "", "dg_baseline": 0.105, "dg_age": 0.02, "dg_dist": -0.023, "dg_acc": 0.011, "dg_history": -0.047, "dg_final": 0.334, "sg_app": -0.23, "sg_ott": 0.22, "sg_t2g": 0.47, "sg_l20": 0.54, "momentum": 0.34, "dk_odds": 10000}, {"name": "Ricky Castillo", "salary": 6900, "salary_rank": 43, "sg_score": 35, "fit_score": 66, "form_score": 70, "form_grade": "ok", "proj": 67.8, "cash_proj": 67.8, "ceiling": 106.0, "sigma": 22.3, "leverage": 11.0, "own_pct": 13.6, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0068, "top10_prob": 0.1085, "doral_rank": 18, "dist_rank": 17, "lc_sg": 0.74, "recent_5": "1/T70/T46/T44/T60", "buzz_sources": "", "news_note": "", "dg_baseline": 0.449, "dg_age": 0.033, "dg_dist": 0.09, "dg_acc": 0.0, "dg_history": -0.047, "dg_final": 0.649, "sg_app": -0.21, "sg_ott": 0.3, "sg_t2g": 0.2, "sg_l20": 0.51, "momentum": 0.14, "dk_odds": 10500}, {"name": "Harry Hall", "salary": 7400, "salary_rank": 33, "sg_score": 45, "fit_score": 48, "form_score": 25, "form_grade": "poor", "proj": 69.3, "cash_proj": 65.3, "ceiling": 105.0, "sigma": 21.4, "leverage": -9.5, "own_pct": 5.0, "tout_tier": "NEUTRAL", "buzz": 1.1, "equity_tier": 2, "win_prob": 0.0115, "top10_prob": 0.1439, "doral_rank": 53, "dist_rank": 49, "lc_sg": null, "recent_5": "T9/CUT/T28/CUT/T65", "buzz_sources": "", "news_note": "", "dg_baseline": 0.896, "dg_age": 0.017, "dg_dist": -0.01, "dg_acc": -0.011, "dg_history": -0.047, "dg_final": 0.716, "sg_app": 0.07, "sg_ott": -0.18, "sg_t2g": 0.32, "sg_l20": 0.81, "momentum": -0.4, "dk_odds": 6100}, {"name": "Chandler Blanchet", "salary": 6100, "salary_rank": 67, "sg_score": 28, "fit_score": 36, "form_score": 25, "form_grade": "poor", "proj": 58.0, "cash_proj": 54.0, "ceiling": 94.0, "sigma": 21.8, "leverage": 2.0, "own_pct": 1.6, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0021, "top10_prob": 0.0516, "doral_rank": 67, "dist_rank": 67, "lc_sg": null, "recent_5": "2/T18/CUT/CUT/T33", "buzz_sources": "", "news_note": "", "dg_baseline": 0.189, "dg_age": 0.006, "dg_dist": -0.102, "dg_acc": 0.024, "dg_history": -0.047, "dg_final": 0.069, "sg_app": 0.05, "sg_ott": 0.08, "sg_t2g": -0.29, "sg_l20": 0.23, "momentum": -0.03, "dk_odds": 34000}, {"name": "Justin Thomas", "salary": 7700, "salary_rank": 27, "sg_score": 33, "fit_score": 61, "form_score": 50, "form_grade": "unknown", "proj": 70.3, "cash_proj": 69.3, "ceiling": 107.0, "sigma": 22.6, "leverage": -0.5, "own_pct": 3.2, "tout_tier": "NEUTRAL", "buzz": 1.1, "equity_tier": 2, "win_prob": 0.0126, "top10_prob": 0.1409, "doral_rank": 25, "dist_rank": 22, "lc_sg": null, "recent_5": "", "buzz_sources": "", "news_note": "", "dg_baseline": 0.723, "dg_age": -0.002, "dg_dist": 0.075, "dg_acc": -0.017, "dg_history": -0.025, "dg_final": 0.78, "sg_app": 0.03, "sg_ott": -0.09, "sg_t2g": 0.27, "sg_l20": 0.05, "momentum": 0.0, "dk_odds": 5600}, {"name": "Ben Griffin", "salary": 8000, "salary_rank": 21, "sg_score": 44, "fit_score": 50, "form_score": 25, "form_grade": "poor", "proj": 74.6, "cash_proj": 74.6, "ceiling": 110.0, "sigma": 21.4, "leverage": -13.5, "own_pct": 5.8, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 3, "win_prob": 0.0152, "top10_prob": 0.1731, "doral_rank": 47, "dist_rank": 47, "lc_sg": 0.95, "recent_5": "CUT/CUT/T28/T33/T33", "buzz_sources": "", "news_note": "", "dg_baseline": 1.066, "dg_age": 0.012, "dg_dist": -0.008, "dg_acc": 0.004, "dg_history": -0.047, "dg_final": 1.032, "sg_app": -0.08, "sg_ott": -0.05, "sg_t2g": 0.45, "sg_l20": 0.54, "momentum": -1.03, "dk_odds": 4600}, {"name": "David Lipsky", "salary": 6000, "salary_rank": 70, "sg_score": 28, "fit_score": 27, "form_score": 25, "form_grade": "poor", "proj": 54.0, "cash_proj": 50.0, "ceiling": 89.0, "sigma": 21.7, "leverage": 1.5, "own_pct": 7.6, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0015, "top10_prob": 0.0427, "doral_rank": 69, "dist_rank": 69, "lc_sg": null, "recent_5": "CUT/T37/2/CUT/T71", "buzz_sources": "", "news_note": "", "dg_baseline": 0.027, "dg_age": -0.023, "dg_dist": -0.142, "dg_acc": 0.012, "dg_history": -0.019, "dg_final": -0.184, "sg_app": 0.07, "sg_ott": -0.27, "sg_t2g": 0.22, "sg_l20": 0.45, "momentum": 0.4, "dk_odds": 47000}, {"name": "Michael Kim", "salary": 6500, "salary_rank": 55, "sg_score": 38, "fit_score": 43, "form_score": 25, "form_grade": "poor", "proj": 60.8, "cash_proj": 56.8, "ceiling": 98.0, "sigma": 22.0, "leverage": -3.0, "own_pct": 5.6, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0047, "top10_prob": 0.0844, "doral_rank": 58, "dist_rank": 53, "lc_sg": null, "recent_5": "CUT/T30/T2/CUT/T25", "buzz_sources": "", "news_note": "", "dg_baseline": 0.511, "dg_age": -0.001, "dg_dist": -0.03, "dg_acc": -0.01, "dg_history": -0.047, "dg_final": 0.219, "sg_app": 0.13, "sg_ott": -0.35, "sg_t2g": -0.1, "sg_l20": 0.67, "momentum": 0.24, "dk_odds": 15000}, {"name": "Denny McCarthy", "salary": 6400, "salary_rank": 58, "sg_score": 30, "fit_score": 36, "form_score": 25, "form_grade": "poor", "proj": 59.6, "cash_proj": 55.6, "ceiling": 94.0, "sigma": 21.4, "leverage": -1.5, "own_pct": null, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0049, "top10_prob": 0.0888, "doral_rank": 64, "dist_rank": 61, "lc_sg": 0.79, "recent_5": "CUT/T26/T12/CUT/T65", "buzz_sources": "", "news_note": "", "dg_baseline": 0.472, "dg_age": -0.002, "dg_dist": -0.084, "dg_acc": 0.002, "dg_history": -0.047, "dg_final": 0.141, "sg_app": 0.1, "sg_ott": -0.15, "sg_t2g": -0.05, "sg_l20": 0.09, "momentum": -0.44, "dk_odds": 14500}, {"name": "Lucas Glover", "salary": 6000, "salary_rank": 70, "sg_score": 14, "fit_score": 23, "form_score": 25, "form_grade": "poor", "proj": 47.9, "cash_proj": 43.9, "ceiling": 82.0, "sigma": 21.5, "leverage": 1.5, "own_pct": 0.4, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0017, "top10_prob": 0.0456, "doral_rank": 70, "dist_rank": 70, "lc_sg": null, "recent_5": "CUT/CUT/CUT/WD/T42", "buzz_sources": "", "news_note": "", "dg_baseline": 0.057, "dg_age": -0.061, "dg_dist": -0.178, "dg_acc": 0.03, "dg_history": -0.047, "dg_final": -0.568, "sg_app": 0.04, "sg_ott": -0.05, "sg_t2g": -0.21, "sg_l20": -0.6, "momentum": -0.69, "dk_odds": 42000}, {"name": "Jhonattan Vegas", "salary": 6200, "salary_rank": 64, "sg_score": 21, "fit_score": 58, "form_score": 25, "form_grade": "poor", "proj": 50.6, "cash_proj": 46.6, "ceiling": 89.0, "sigma": 22.5, "leverage": 16.5, "own_pct": 2.0, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0019, "top10_prob": 0.0463, "doral_rank": 29, "dist_rank": 26, "lc_sg": null, "recent_5": "T18/CUT/T14/CUT/T74", "buzz_sources": "", "news_note": "", "dg_baseline": -0.278, "dg_age": -0.04, "dg_dist": 0.06, "dg_acc": -0.009, "dg_history": -0.047, "dg_final": -0.398, "sg_app": -0.23, "sg_ott": 0.09, "sg_t2g": -0.52, "sg_l20": 0.19, "momentum": 0.27, "dk_odds": 38000}, {"name": "Tom Hoge", "salary": 6100, "salary_rank": 67, "sg_score": 11, "fit_score": 36, "form_score": 25, "form_grade": "poor", "proj": 51.2, "cash_proj": 47.2, "ceiling": 87.0, "sigma": 22.2, "leverage": -0.5, "own_pct": 3.6, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0014, "top10_prob": 0.038, "doral_rank": 66, "dist_rank": 60, "lc_sg": null, "recent_5": "CUT/CUT/T71/CUT/T71", "buzz_sources": "", "news_note": "", "dg_baseline": -0.219, "dg_age": -0.019, "dg_dist": -0.074, "dg_acc": -0.003, "dg_history": -0.047, "dg_final": -0.355, "sg_app": 0.3, "sg_ott": -0.36, "sg_t2g": -0.42, "sg_l20": -0.56, "momentum": -0.12, "dk_odds": 52500}, {"name": "Nico Echavarria", "salary": 6200, "salary_rank": 64, "sg_score": 17, "fit_score": 36, "form_score": 25, "form_grade": "poor", "proj": 50.8, "cash_proj": 46.8, "ceiling": 87.0, "sigma": 22.4, "leverage": -2.0, "own_pct": 2.6, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.002, "top10_prob": 0.0488, "doral_rank": 67, "dist_rank": 62, "lc_sg": null, "recent_5": "T44/T66/CUT/CUT/81", "buzz_sources": "", "news_note": "", "dg_baseline": 0.0, "dg_age": 0.004, "dg_dist": -0.086, "dg_acc": 0.007, "dg_history": -0.047, "dg_final": -0.384, "sg_app": -0.2, "sg_ott": -0.11, "sg_t2g": -0.56, "sg_l20": -0.38, "momentum": -0.65, "dk_odds": 36000}, {"name": "Max Greyserman", "salary": 6200, "salary_rank": 64, "sg_score": 21, "fit_score": 61, "form_score": 25, "form_grade": "poor", "proj": 60.8, "cash_proj": 56.8, "ceiling": 97.0, "sigma": 22.6, "leverage": 22.5, "own_pct": 2.8, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0047, "top10_prob": 0.0824, "doral_rank": 25, "dist_rank": 20, "lc_sg": null, "recent_5": "T24/T18/CUT/CUT/CUT", "buzz_sources": "", "news_note": "", "dg_baseline": 0.201, "dg_age": 0.007, "dg_dist": 0.082, "dg_acc": -0.022, "dg_history": -0.047, "dg_final": 0.225, "sg_app": -0.1, "sg_ott": -0.47, "sg_t2g": -0.68, "sg_l20": -0.28, "momentum": -0.77, "dk_odds": 15000}, {"name": "Brian Campbell", "salary": 6000, "salary_rank": 70, "sg_score": 0, "fit_score": 0, "form_score": 25, "form_grade": "poor", "proj": 34.9, "cash_proj": 30.9, "ceiling": 71.0, "sigma": 21.9, "leverage": -1.0, "own_pct": 0.1, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0003, "top10_prob": 0.0124, "doral_rank": 72, "dist_rank": 72, "lc_sg": null, "recent_5": "CUT/WD/CUT/T24/T77", "buzz_sources": "", "news_note": "", "dg_baseline": -0.691, "dg_age": -0.002, "dg_dist": -0.297, "dg_acc": 0.015, "dg_history": -0.047, "dg_final": -1.373, "sg_app": -0.68, "sg_ott": -0.64, "sg_t2g": -1.35, "sg_l20": -0.89, "momentum": -0.08, "dk_odds": 275000}, {"name": "Alex Fitzpatrick", "salary": 6700, "salary_rank": 49, "sg_score": 27, "fit_score": 46, "form_score": 50, "form_grade": "unknown", "proj": 63.6, "cash_proj": 62.6, "ceiling": 100.0, "sigma": 21.8, "leverage": -13.5, "own_pct": 10.6, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": null, "top10_prob": null, "doral_rank": 55, "dist_rank": 56, "lc_sg": 0.89, "recent_5": "", "buzz_sources": "", "news_note": "", "dg_baseline": 0.392, "dg_age": 0.023, "dg_dist": -0.034, "dg_acc": 0.012, "dg_history": -0.047, "dg_final": 0.464, "sg_app": 0.0, "sg_ott": 0.0, "sg_t2g": 0.0, "sg_l20": 0.0, "momentum": 0.0, "dk_odds": null}, {"name": "Alex Smalley", "salary": 7100, "salary_rank": 39, "sg_score": 33, "fit_score": 60, "form_score": 50, "form_grade": "unknown", "proj": 70.9, "cash_proj": 69.9, "ceiling": 107.0, "sigma": 22.0, "leverage": -10.0, "own_pct": 9.0, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": null, "top10_prob": null, "doral_rank": 28, "dist_rank": 29, "lc_sg": null, "recent_5": "", "buzz_sources": "", "news_note": "", "dg_baseline": 0.783, "dg_age": 0.014, "dg_dist": 0.048, "dg_acc": 0.005, "dg_history": -0.047, "dg_final": 0.931, "sg_app": 0.0, "sg_ott": 0.0, "sg_t2g": 0.0, "sg_l20": 0.0, "momentum": 0.0, "dk_odds": null}, {"name": "Keith Mitchell", "salary": 7500, "salary_rank": 31, "sg_score": 32, "fit_score": 72, "form_score": 50, "form_grade": "unknown", "proj": 71.4, "cash_proj": 70.4, "ceiling": 108.0, "sigma": 22.3, "leverage": -10.0, "own_pct": 9.3, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": null, "top10_prob": null, "doral_rank": 12, "dist_rank": 11, "lc_sg": null, "recent_5": "", "buzz_sources": "", "news_note": "", "dg_baseline": 0.766, "dg_age": -0.007, "dg_dist": 0.128, "dg_acc": -0.001, "dg_history": -0.047, "dg_final": 0.962, "sg_app": 0.0, "sg_ott": 0.0, "sg_t2g": 0.0, "sg_l20": 0.0, "momentum": 0.0, "dk_odds": null}]</script>
+<script type="application/json" id="player-data">[{"name": "Collin Morikawa", "salary": 9800, "salary_rank": 4, "sg_score": 89, "fit_score": 57, "form_score": 90, "form_grade": "good", "proj": 87.6, "cash_proj": 91.6, "ceiling": 123.0, "sigma": 21.8, "leverage": -13.0, "own_pct": 11.4, "tout_tier": "SHARP", "buzz": 4.4, "equity_tier": 4, "win_prob": 0.0325, "top10_prob": 0.2609, "doral_rank": 31, "dist_rank": 43, "lc_sg": 1.29, "recent_5": "1/T7/5/T7/T4", "buzz_sources": "GenericArt:+3 \u00b7 Top10List:+1 \u00b7 JoshDuggalTW:+2", "news_note": "Elite approach, Open Champ \u2014 \u26a0\ufe0f recent back issue flagged (monitor)", "dg_baseline": 1.675, "dg_age": 0.015, "dg_dist": 0.004, "dg_acc": 0.031, "dg_history": -0.047, "dg_final": 1.768, "sg_app": 1.37, "sg_ott": 0.56, "sg_t2g": 2.16, "sg_l20": 3.18, "momentum": 1.87, "dk_odds": 2100}, {"name": "Cameron Young", "salary": 10200, "salary_rank": 2, "sg_score": 91, "fit_score": 80, "form_score": 90, "form_grade": "good", "proj": 94.0, "cash_proj": 94.0, "ceiling": 131.0, "sigma": 22.6, "leverage": -2.0, "own_pct": 16.1, "tout_tier": "NEUTRAL", "buzz": 9.8, "equity_tier": 4, "win_prob": 0.0454, "top10_prob": 0.3025, "doral_rank": 6, "dist_rank": 8, "lc_sg": null, "recent_5": "T7/T3/1/T3/T25", "buzz_sources": "VBG:+1 \u00b7 GenericArt:+3 \u00b7 Top10List:+2 \u00b7 CadillacTips:+3 \u00b7 SportsLine:+2", "news_note": "Won The Players, T3 Masters \u2014 emotional proof", "dg_baseline": 1.862, "dg_age": 0.016, "dg_dist": 0.166, "dg_acc": 0.002, "dg_history": -0.047, "dg_final": 2.135, "sg_app": 0.82, "sg_ott": 0.91, "sg_t2g": 2.0, "sg_l20": 3.1, "momentum": 1.14, "dk_odds": 1475}, {"name": "Scottie Scheffler", "salary": 13600, "salary_rank": 1, "sg_score": 100, "fit_score": 76, "form_score": 90, "form_grade": "good", "proj": 113.7, "cash_proj": 117.7, "ceiling": 150.0, "sigma": 21.9, "leverage": -4.0, "own_pct": 27.8, "tout_tier": "CHALK", "buzz": 3.7, "equity_tier": 5, "win_prob": 0.1789, "top10_prob": 0.5208, "doral_rank": 9, "dist_rank": 12, "lc_sg": 2.44, "recent_5": "T12/T24/T22/2/2", "buzz_sources": "VBG:+1 \u00b7 Top10List:+3", "news_note": "World #1 favorite, control + steady mistakes", "dg_baseline": 2.945, "dg_age": 0.012, "dg_dist": 0.12, "dg_acc": 0.017, "dg_history": -0.047, "dg_final": 3.056, "sg_app": 0.61, "sg_ott": 0.87, "sg_t2g": 2.22, "sg_l20": 2.7, "momentum": -0.69, "dk_odds": 300}, {"name": "Si Woo Kim", "salary": 9200, "salary_rank": 9, "sg_score": 65, "fit_score": 50, "form_score": 90, "form_grade": "good", "proj": 84.2, "cash_proj": 84.2, "ceiling": 120.0, "sigma": 21.5, "leverage": -19.5, "own_pct": 16.6, "tout_tier": "NEUTRAL", "buzz": 1.7, "equity_tier": 3, "win_prob": 0.0224, "top10_prob": 0.2205, "doral_rank": 49, "dist_rank": 57, "lc_sg": null, "recent_5": "T13/T50/T10/47/3", "buzz_sources": "DKSportsbook:+2", "news_note": "", "dg_baseline": 1.495, "dg_age": 0.008, "dg_dist": -0.043, "dg_acc": 0.037, "dg_history": -0.047, "dg_final": 1.599, "sg_app": 0.91, "sg_ott": 0.71, "sg_t2g": 1.85, "sg_l20": 1.61, "momentum": 0.23, "dk_odds": 3100}, {"name": "Adam Scott", "salary": 8400, "salary_rank": 17, "sg_score": 63, "fit_score": 71, "form_score": 70, "form_grade": "ok", "proj": 77.9, "cash_proj": 77.9, "ceiling": 113.0, "sigma": 22.0, "leverage": 4.0, "own_pct": 13.9, "tout_tier": "NEUTRAL", "buzz": 1.0, "equity_tier": 3, "win_prob": 0.0205, "top10_prob": 0.2011, "doral_rank": 13, "dist_rank": 12, "lc_sg": null, "recent_5": "4/T11/T56/T21/T24", "buzz_sources": "JoshDuggalTW:+2", "news_note": "", "dg_baseline": 1.128, "dg_age": -0.058, "dg_dist": 0.12, "dg_acc": -0.004, "dg_history": 0.075, "dg_final": 1.208, "sg_app": 1.04, "sg_ott": 0.49, "sg_t2g": 1.58, "sg_l20": 1.87, "momentum": 0.82, "dk_odds": 3400}, {"name": "Justin Rose", "salary": 8700, "salary_rank": 14, "sg_score": 68, "fit_score": 57, "form_score": 25, "form_grade": "poor", "proj": 75.8, "cash_proj": 71.8, "ceiling": 114.0, "sigma": 22.5, "leverage": -7.5, "own_pct": 9.0, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 3, "win_prob": 0.0211, "top10_prob": 0.2041, "doral_rank": 32, "dist_rank": 32, "lc_sg": null, "recent_5": "T37/CUT/CUT/T13/T3", "buzz_sources": "GNN:LIKE#10 | RG:Model #3 | Mayo:LIKE clubs caveat", "news_note": "Veteran ball-striker, 200-225 yard prox elite", "dg_baseline": 1.218, "dg_age": -0.058, "dg_dist": 0.033, "dg_acc": 0.004, "dg_history": -0.007, "dg_final": 1.076, "sg_app": 1.16, "sg_ott": 0.16, "sg_t2g": 1.42, "sg_l20": 2.13, "momentum": 1.03, "dk_odds": 3300}, {"name": "Chris Gotterup", "salary": 9300, "salary_rank": 8, "sg_score": 60, "fit_score": 89, "form_score": 70, "form_grade": "ok", "proj": 82.2, "cash_proj": 82.2, "ceiling": 120.0, "sigma": 22.8, "leverage": -0.0, "own_pct": 13.0, "tout_tier": "NEUTRAL", "buzz": 2.5, "equity_tier": 3, "win_prob": 0.0199, "top10_prob": 0.1873, "doral_rank": 2, "dist_rank": 2, "lc_sg": null, "recent_5": "T18/T56/T6/T24/T25", "buzz_sources": "VBG:+3", "news_note": "", "dg_baseline": 1.218, "dg_age": 0.026, "dg_dist": 0.231, "dg_acc": -0.013, "dg_history": -0.047, "dg_final": 1.494, "sg_app": 0.6, "sg_ott": 0.76, "sg_t2g": 1.62, "sg_l20": 1.52, "momentum": 0.11, "dk_odds": 3500}, {"name": "Ryo Hisatsune", "salary": 7000, "salary_rank": 41, "sg_score": 50, "fit_score": 55, "form_score": 70, "form_grade": "ok", "proj": 72.5, "cash_proj": 72.5, "ceiling": 106.0, "sigma": 21.8, "leverage": 2.0, "own_pct": 13.3, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0088, "top10_prob": 0.1243, "doral_rank": 39, "dist_rank": 36, "lc_sg": null, "recent_5": "T33/T13/T30/T8/T60", "buzz_sources": "Lineups:Elite Profile (key)", "news_note": "", "dg_baseline": 0.711, "dg_age": 0.039, "dg_dist": 0.017, "dg_acc": 0.011, "dg_history": -0.047, "dg_final": 0.932, "sg_app": 0.68, "sg_ott": 0.63, "sg_t2g": 1.51, "sg_l20": 1.34, "momentum": 1.05, "dk_odds": 8000}, {"name": "Patrick Cantlay", "salary": 9400, "salary_rank": 7, "sg_score": 65, "fit_score": 61, "form_score": 90, "form_grade": "good", "proj": 83.6, "cash_proj": 87.6, "ceiling": 119.0, "sigma": 21.6, "leverage": -8.5, "own_pct": 8.5, "tout_tier": "NEUTRAL", "buzz": 0.8, "equity_tier": 3, "win_prob": 0.0247, "top10_prob": 0.2294, "doral_rank": 24, "dist_rank": 27, "lc_sg": 0.97, "recent_5": "CUT/T32/T7/T12/T8", "buzz_sources": "DKSportsbook:+1", "news_note": "", "dg_baseline": 1.437, "dg_age": -0.007, "dg_dist": 0.057, "dg_acc": 0.003, "dg_history": -0.047, "dg_final": 1.545, "sg_app": 0.6, "sg_ott": 0.53, "sg_t2g": 1.72, "sg_l20": 1.66, "momentum": 0.15, "dk_odds": 2800}, {"name": "Jake Knapp", "salary": 9500, "salary_rank": 6, "sg_score": 62, "fit_score": 84, "form_score": 90, "form_grade": "good", "proj": 81.2, "cash_proj": 81.2, "ceiling": 119.0, "sigma": 22.7, "leverage": -3.5, "own_pct": 15.3, "tout_tier": "NEUTRAL", "buzz": 2.5, "equity_tier": 3, "win_prob": 0.0188, "top10_prob": 0.1899, "doral_rank": 4, "dist_rank": 4, "lc_sg": null, "recent_5": "6/CUT/T6/11/T74", "buzz_sources": "GenericArt:+2 \u00b7 Top10List:+1", "news_note": "", "dg_baseline": 1.247, "dg_age": 0.003, "dg_dist": 0.202, "dg_acc": -0.007, "dg_history": -0.047, "dg_final": 1.431, "sg_app": 0.61, "sg_ott": 0.56, "sg_t2g": 1.25, "sg_l20": 1.64, "momentum": 0.15, "dk_odds": 3700}, {"name": "Russell Henley", "salary": 9900, "salary_rank": 3, "sg_score": 74, "fit_score": 36, "form_score": 90, "form_grade": "good", "proj": 83.2, "cash_proj": 87.2, "ceiling": 119.0, "sigma": 21.4, "leverage": -31.0, "own_pct": 11.0, "tout_tier": "SHARP", "buzz": 3.6, "equity_tier": 4, "win_prob": 0.0305, "top10_prob": 0.2589, "doral_rank": 64, "dist_rank": 68, "lc_sg": 0.86, "recent_5": "T6/T13/CUT/T3/T25", "buzz_sources": "Top10List:+2 \u00b7 SportsLine:+2", "news_note": "Augusta-strong, fits Doral discipline profile", "dg_baseline": 1.773, "dg_age": -0.019, "dg_dist": -0.123, "dg_acc": 0.035, "dg_history": -0.013, "dg_final": 1.496, "sg_app": 0.67, "sg_ott": 0.35, "sg_t2g": 1.36, "sg_l20": 1.99, "momentum": 0.06, "dk_odds": 2250}, {"name": "Austin Smotherman", "salary": 6300, "salary_rank": 61, "sg_score": 33, "fit_score": 53, "form_score": 25, "form_grade": "poor", "proj": 61.6, "cash_proj": 57.6, "ceiling": 98.0, "sigma": 22.2, "leverage": 9.0, "own_pct": null, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0036, "top10_prob": 0.072, "doral_rank": 43, "dist_rank": 44, "lc_sg": null, "recent_5": "WD/T13/CUT/T36/T74", "buzz_sources": "", "news_note": "", "dg_baseline": 0.122, "dg_age": 0.003, "dg_dist": 0.002, "dg_acc": 0.019, "dg_history": -0.047, "dg_final": 0.281, "sg_app": 0.86, "sg_ott": 0.48, "sg_t2g": 0.99, "sg_l20": 0.7, "momentum": 0.52, "dk_odds": 20000}, {"name": "Akshay Bhatia", "salary": 8100, "salary_rank": 20, "sg_score": 65, "fit_score": 53, "form_score": 25, "form_grade": "poor", "proj": 74.0, "cash_proj": 72.5, "ceiling": 111.0, "sigma": 22.0, "leverage": -11.5, "own_pct": 10.7, "tout_tier": "NEUTRAL", "buzz": 0.9, "equity_tier": 3, "win_prob": 0.0156, "top10_prob": 0.1709, "doral_rank": 42, "dist_rank": 39, "lc_sg": 0.79, "recent_5": "1/T13/CUT/CUT/T16", "buzz_sources": "Top10List:+1", "news_note": "Won Bay Hill 2026 from 5 back, Florida resilience", "dg_baseline": 1.206, "dg_age": 0.037, "dg_dist": 0.013, "dg_acc": 0.001, "dg_history": -0.047, "dg_final": 0.991, "sg_app": 0.96, "sg_ott": 0.03, "sg_t2g": 1.01, "sg_l20": 1.89, "momentum": 0.81, "dk_odds": 4500}, {"name": "Jacob Bridgeman", "salary": 8300, "salary_rank": 18, "sg_score": 62, "fit_score": 60, "form_score": 70, "form_grade": "ok", "proj": 79.1, "cash_proj": 79.1, "ceiling": 114.0, "sigma": 22.0, "leverage": -5.0, "own_pct": 18.5, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 3, "win_prob": 0.0166, "top10_prob": 0.1848, "doral_rank": 27, "dist_rank": 28, "lc_sg": null, "recent_5": "T18/T5/T14/T41/T33", "buzz_sources": "", "news_note": "", "dg_baseline": 1.243, "dg_age": 0.027, "dg_dist": 0.051, "dg_acc": 0.002, "dg_history": -0.047, "dg_final": 1.307, "sg_app": 0.69, "sg_ott": 0.38, "sg_t2g": 1.01, "sg_l20": 1.62, "momentum": 0.72, "dk_odds": 4200}, {"name": "Shane Lowry", "salary": 7600, "salary_rank": 29, "sg_score": 52, "fit_score": 50, "form_score": 25, "form_grade": "poor", "proj": 73.7, "cash_proj": 70.7, "ceiling": 109.0, "sigma": 21.7, "leverage": -8.5, "own_pct": 9.8, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0128, "top10_prob": 0.159, "doral_rank": 47, "dist_rank": 47, "lc_sg": 0.72, "recent_5": "CUT/CUT/T28/T30/T42", "buzz_sources": "", "news_note": "", "dg_baseline": 1.101, "dg_age": -0.028, "dg_dist": -0.008, "dg_acc": 0.007, "dg_history": 0.012, "dg_final": 0.988, "sg_app": 1.0, "sg_ott": 0.16, "sg_t2g": 1.1, "sg_l20": 1.1, "momentum": 0.06, "dk_odds": 5500}, {"name": "Sudarshan Yellamaraju", "salary": 7000, "salary_rank": 41, "sg_score": 50, "fit_score": 67, "form_score": 90, "form_grade": "good", "proj": 67.1, "cash_proj": 67.1, "ceiling": 105.0, "sigma": 22.3, "leverage": 9.0, "own_pct": 13.9, "tout_tier": "NEUTRAL", "buzz": 1.6, "equity_tier": 2, "win_prob": 0.0064, "top10_prob": 0.1036, "doral_rank": 15, "dist_rank": 16, "lc_sg": 0.76, "recent_5": "T37/T5/T6/T14/T52", "buzz_sources": "GenericArt:+2", "news_note": "", "dg_baseline": 0.411, "dg_age": 0.034, "dg_dist": 0.095, "dg_acc": 0.004, "dg_history": -0.047, "dg_final": 0.609, "sg_app": 0.55, "sg_ott": 0.48, "sg_t2g": 0.88, "sg_l20": 1.6, "momentum": 1.52, "dk_odds": 11000}, {"name": "Min Woo Lee", "salary": 8600, "salary_rank": 15, "sg_score": 55, "fit_score": 82, "form_score": 90, "form_grade": "good", "proj": 83.8, "cash_proj": 83.8, "ceiling": 122.0, "sigma": 22.4, "leverage": 4.0, "own_pct": 14.4, "tout_tier": "NEUTRAL", "buzz": 5.1, "equity_tier": 3, "win_prob": 0.017, "top10_prob": 0.1848, "doral_rank": 5, "dist_rank": 5, "lc_sg": null, "recent_5": "T6/T32/T3/CUT/T60", "buzz_sources": "VBG:+3 \u00b7 DKSportsbook:+3", "news_note": "", "dg_baseline": 1.074, "dg_age": 0.021, "dg_dist": 0.18, "dg_acc": -0.002, "dg_history": -0.047, "dg_final": 1.602, "sg_app": 0.29, "sg_ott": 0.74, "sg_t2g": 1.37, "sg_l20": 1.29, "momentum": 0.45, "dk_odds": 4100}, {"name": "Hideki Matsuyama", "salary": 9000, "salary_rank": 11, "sg_score": 63, "fit_score": 52, "form_score": 70, "form_grade": "ok", "proj": 80.8, "cash_proj": 84.8, "ceiling": 116.0, "sigma": 21.9, "leverage": -15.5, "own_pct": 13.4, "tout_tier": "NEUTRAL", "buzz": 1.7, "equity_tier": 3, "win_prob": 0.0224, "top10_prob": 0.2136, "doral_rank": 45, "dist_rank": 45, "lc_sg": 0.85, "recent_5": "T28/T41/T27/T21/T12", "buzz_sources": "SportsLine:+2", "news_note": "Veteran calm, pattern fit", "dg_baseline": 1.533, "dg_age": -0.007, "dg_dist": -0.001, "dg_acc": 0.003, "dg_history": 0.008, "dg_final": 1.386, "sg_app": 0.91, "sg_ott": 0.04, "sg_t2g": 1.4, "sg_l20": 1.42, "momentum": -0.02, "dk_odds": 3100}, {"name": "J.J. Spaun", "salary": 7800, "salary_rank": 25, "sg_score": 49, "fit_score": 56, "form_score": 25, "form_grade": "poor", "proj": 75.8, "cash_proj": 71.8, "ceiling": 112.0, "sigma": 21.8, "leverage": -6.5, "own_pct": 3.3, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0135, "top10_prob": 0.1608, "doral_rank": 36, "dist_rank": 35, "lc_sg": null, "recent_5": "T24/CUT/1/CUT/T25", "buzz_sources": "RG:LIKE approach improving", "news_note": "Recent breakout form, 17-under at The Players, fits Doral long-iron profile", "dg_baseline": 1.147, "dg_age": -0.013, "dg_dist": 0.018, "dg_acc": 0.016, "dg_history": -0.047, "dg_final": 1.114, "sg_app": 0.82, "sg_ott": 0.4, "sg_t2g": 1.22, "sg_l20": 0.83, "momentum": -0.59, "dk_odds": 5200}, {"name": "Sam Stevens", "salary": 7300, "salary_rank": 35, "sg_score": 48, "fit_score": 64, "form_score": 70, "form_grade": "ok", "proj": 72.6, "cash_proj": 75.1, "ceiling": 108.0, "sigma": 21.7, "leverage": 7.0, "own_pct": 10.2, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0098, "top10_prob": 0.1315, "doral_rank": 21, "dist_rank": 24, "lc_sg": 0.77, "recent_5": "CUT/58/5/T24/T65", "buzz_sources": "RG:LIKE T2G | Mayo:LIKE 80-1", "news_note": "", "dg_baseline": 0.74, "dg_age": 0.012, "dg_dist": 0.074, "dg_acc": 0.004, "dg_history": -0.047, "dg_final": 0.935, "sg_app": 0.55, "sg_ott": 0.53, "sg_t2g": 1.1, "sg_l20": 1.15, "momentum": 0.41, "dk_odds": 7200}, {"name": "Ryan Gerard", "salary": 7200, "salary_rank": 37, "sg_score": 46, "fit_score": 56, "form_score": 25, "form_grade": "poor", "proj": 75.0, "cash_proj": 71.0, "ceiling": 110.0, "sigma": 21.9, "leverage": 0.5, "own_pct": 13.2, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0093, "top10_prob": 0.1302, "doral_rank": 37, "dist_rank": 36, "lc_sg": null, "recent_5": "CUT/T27/CUT/T38/T33", "buzz_sources": "", "news_note": "", "dg_baseline": 0.91, "dg_age": 0.026, "dg_dist": 0.017, "dg_acc": 0.013, "dg_history": -0.047, "dg_final": 1.09, "sg_app": 0.86, "sg_ott": 0.31, "sg_t2g": 0.98, "sg_l20": 0.83, "momentum": 0.06, "dk_odds": 7600}, {"name": "Daniel Berger", "salary": 7100, "salary_rank": 39, "sg_score": 41, "fit_score": 56, "form_score": 50, "form_grade": "mixed", "proj": 67.3, "cash_proj": 65.8, "ceiling": 104.0, "sigma": 22.0, "leverage": 1.5, "own_pct": 7.1, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0079, "top10_prob": 0.1179, "doral_rank": 34, "dist_rank": 33, "lc_sg": null, "recent_5": "T32/2/T66/CUT/T42", "buzz_sources": "Mayo:LIKE \"burger time\" @100", "news_note": "", "dg_baseline": 0.576, "dg_age": -0.002, "dg_dist": 0.024, "dg_acc": 0.015, "dg_history": -0.007, "dg_final": 0.608, "sg_app": 0.93, "sg_ott": 0.23, "sg_t2g": 0.86, "sg_l20": 0.8, "momentum": 0.2, "dk_odds": 9000}, {"name": "Kurt Kitayama", "salary": 7900, "salary_rank": 23, "sg_score": 45, "fit_score": 75, "form_score": 70, "form_grade": "ok", "proj": 76.1, "cash_proj": 76.1, "ceiling": 114.0, "sigma": 22.5, "leverage": 5.5, "own_pct": 7.7, "tout_tier": "SHARP", "buzz": 8.3, "equity_tier": 2, "win_prob": 0.0138, "top10_prob": 0.1628, "doral_rank": 10, "dist_rank": 9, "lc_sg": null, "recent_5": "T18/CUT/T60/51/T8", "buzz_sources": "DKSportsbook:+2 \u00b7 Top10List:+1 \u00b7 CadillacTips:+3 \u00b7 JoshDuggalTW:+2 \u00b7 SportsLine:+2", "news_note": "", "dg_baseline": 0.859, "dg_age": -0.003, "dg_dist": 0.145, "dg_acc": -0.004, "dg_history": -0.047, "dg_final": 1.135, "sg_app": 0.8, "sg_ott": 0.38, "sg_t2g": 0.92, "sg_l20": 0.79, "momentum": -0.26, "dk_odds": 5100}, {"name": "Sepp Straka", "salary": 7900, "salary_rank": 23, "sg_score": 45, "fit_score": 52, "form_score": 70, "form_grade": "ok", "proj": 72.2, "cash_proj": 72.2, "ceiling": 109.0, "sigma": 22.2, "leverage": -13.0, "own_pct": 9.1, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0128, "top10_prob": 0.1554, "doral_rank": 44, "dist_rank": 45, "lc_sg": null, "recent_5": "T13/T8/CUT/T41/T42", "buzz_sources": "Mayo:LIKE eachway @60", "news_note": "", "dg_baseline": 0.989, "dg_age": -0.002, "dg_dist": -0.001, "dg_acc": 0.012, "dg_history": -0.047, "dg_final": 0.892, "sg_app": 0.85, "sg_ott": 0.23, "sg_t2g": 1.21, "sg_l20": 0.65, "momentum": -0.52, "dk_odds": 5500}, {"name": "Viktor Hovland", "salary": 8900, "salary_rank": 12, "sg_score": 59, "fit_score": 56, "form_score": 70, "form_grade": "ok", "proj": 77.8, "cash_proj": 81.8, "ceiling": 113.0, "sigma": 22.0, "leverage": -10.5, "own_pct": 7.2, "tout_tier": "NEUTRAL", "buzz": 0.9, "equity_tier": 3, "win_prob": 0.0211, "top10_prob": 0.2011, "doral_rank": 34, "dist_rank": 34, "lc_sg": 0.95, "recent_5": "T13/T13/CUT/T18/T42", "buzz_sources": "Top10List:+1", "news_note": "", "dg_baseline": 1.24, "dg_age": 0.018, "dg_dist": 0.023, "dg_acc": 0.01, "dg_history": -0.047, "dg_final": 1.203, "sg_app": 0.71, "sg_ott": 0.14, "sg_t2g": 1.18, "sg_l20": 1.47, "momentum": 0.03, "dk_odds": 3300}, {"name": "Gary Woodland", "salary": 7400, "salary_rank": 33, "sg_score": 56, "fit_score": 80, "form_score": 90, "form_grade": "good", "proj": 70.7, "cash_proj": 70.7, "ceiling": 107.0, "sigma": 22.4, "leverage": 10.5, "own_pct": 5.2, "tout_tier": "NEUTRAL", "buzz": 1.7, "equity_tier": 2, "win_prob": 0.0091, "top10_prob": 0.1243, "doral_rank": 7, "dist_rank": 7, "lc_sg": null, "recent_5": "CUT/T14/1/T33/T8", "buzz_sources": "VBG:+2", "news_note": "", "dg_baseline": 0.69, "dg_age": -0.041, "dg_dist": 0.175, "dg_acc": -0.003, "dg_history": 0.024, "dg_final": 0.82, "sg_app": 0.25, "sg_ott": 0.69, "sg_t2g": 0.58, "sg_l20": 1.75, "momentum": 1.24, "dk_odds": 7800}, {"name": "Tommy Fleetwood", "salary": 9700, "salary_rank": 5, "sg_score": 60, "fit_score": 57, "form_score": 90, "form_grade": "good", "proj": 84.4, "cash_proj": 88.4, "ceiling": 120.0, "sigma": 21.6, "leverage": -13.0, "own_pct": 11.1, "tout_tier": "NEUTRAL", "buzz": 0.9, "equity_tier": 4, "win_prob": 0.0305, "top10_prob": 0.2532, "doral_rank": 32, "dist_rank": 41, "lc_sg": 0.99, "recent_5": "49/T8/T10/T33/T52", "buzz_sources": "Top10List:+1", "news_note": "Reigning FedExCup champ, no longer carrying the no-PGA-win question", "dg_baseline": 1.602, "dg_age": -0.012, "dg_dist": 0.01, "dg_acc": 0.025, "dg_history": -0.051, "dg_final": 1.569, "sg_app": 0.41, "sg_ott": 0.55, "sg_t2g": 1.32, "sg_l20": 1.16, "momentum": -0.84, "dk_odds": 2250}, {"name": "Nicolai Hojgaard", "salary": 7800, "salary_rank": 25, "sg_score": 53, "fit_score": 85, "form_score": 50, "form_grade": "mixed", "proj": 78.7, "cash_proj": 77.2, "ceiling": 116.0, "sigma": 22.5, "leverage": 11.0, "own_pct": 10.9, "tout_tier": "SHARP", "buzz": 3.5, "equity_tier": 2, "win_prob": 0.0138, "top10_prob": 0.159, "doral_rank": 3, "dist_rank": 3, "lc_sg": null, "recent_5": "T27/T55/2/CUT/T55", "buzz_sources": "VBG:+3 \u00b7 JoshDuggalTW:+2", "news_note": "", "dg_baseline": 1.015, "dg_age": 0.033, "dg_dist": 0.209, "dg_acc": -0.011, "dg_history": -0.047, "dg_final": 1.296, "sg_app": 0.59, "sg_ott": 0.34, "sg_t2g": 0.98, "sg_l20": 1.21, "momentum": 0.14, "dk_odds": 5100}, {"name": "Corey Conners", "salary": 6900, "salary_rank": 43, "sg_score": 47, "fit_score": 49, "form_score": 70, "form_grade": "ok", "proj": 67.7, "cash_proj": 71.7, "ceiling": 103.0, "sigma": 21.9, "leverage": -2.0, "own_pct": 7.3, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0084, "top10_prob": 0.1232, "doral_rank": 50, "dist_rank": 54, "lc_sg": 0.95, "recent_5": "T33/T13/T14/T49/T55", "buzz_sources": "Mayo:LIKE eachway @90", "news_note": "", "dg_baseline": 0.761, "dg_age": -0.007, "dg_dist": -0.031, "dg_acc": 0.026, "dg_history": -0.047, "dg_final": 0.626, "sg_app": 0.67, "sg_ott": 0.21, "sg_t2g": 0.82, "sg_l20": 1.02, "momentum": 0.19, "dk_odds": 8400}, {"name": "Pierceson Coody", "salary": 7300, "salary_rank": 35, "sg_score": 31, "fit_score": 80, "form_score": 25, "form_grade": "poor", "proj": 71.4, "cash_proj": 67.4, "ceiling": 109.0, "sigma": 22.4, "leverage": 13.5, "own_pct": 7.8, "tout_tier": "NEUTRAL", "buzz": 1.0, "equity_tier": 2, "win_prob": 0.0093, "top10_prob": 0.1254, "doral_rank": 7, "dist_rank": 6, "lc_sg": null, "recent_5": "CUT/CUT/T55/WD/T16", "buzz_sources": "JoshDuggalTW:+2", "news_note": "", "dg_baseline": 0.596, "dg_age": 0.028, "dg_dist": 0.177, "dg_acc": -0.006, "dg_history": -0.047, "dg_final": 0.866, "sg_app": 0.64, "sg_ott": 0.54, "sg_t2g": 0.8, "sg_l20": 0.09, "momentum": -0.55, "dk_odds": 7600}, {"name": "Jordan Smith", "salary": 6800, "salary_rank": 46, "sg_score": 42, "fit_score": 66, "form_score": 25, "form_grade": "poor", "proj": 72.1, "cash_proj": 68.1, "ceiling": 108.0, "sigma": 22.0, "leverage": 17.0, "own_pct": 6.3, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0079, "top10_prob": 0.1179, "doral_rank": 17, "dist_rank": 20, "lc_sg": null, "recent_5": "CUT/3/T44/CUT/T16", "buzz_sources": "", "news_note": "", "dg_baseline": 0.641, "dg_age": -0.004, "dg_dist": 0.082, "dg_acc": 0.012, "dg_history": -0.047, "dg_final": 0.915, "sg_app": 0.39, "sg_ott": 0.55, "sg_t2g": 0.75, "sg_l20": 0.78, "momentum": 0.21, "dk_odds": 9000}, {"name": "Sahith Theegala", "salary": 7600, "salary_rank": 29, "sg_score": 56, "fit_score": 57, "form_score": 90, "form_grade": "good", "proj": 72.3, "cash_proj": 72.3, "ceiling": 109.0, "sigma": 22.2, "leverage": -2.5, "own_pct": 12.1, "tout_tier": "NEUTRAL", "buzz": 1.7, "equity_tier": 2, "win_prob": 0.0101, "top10_prob": 0.134, "doral_rank": 30, "dist_rank": 30, "lc_sg": null, "recent_5": "T6/T32/CUT/T10/T25", "buzz_sources": "SportsLine:+2", "news_note": "", "dg_baseline": 0.8, "dg_age": 0.019, "dg_dist": 0.043, "dg_acc": -0.005, "dg_history": -0.047, "dg_final": 0.917, "sg_app": 0.54, "sg_ott": -0.02, "sg_t2g": 0.96, "sg_l20": 1.64, "momentum": 1.09, "dk_odds": 7000}, {"name": "Rickie Fowler", "salary": 8000, "salary_rank": 21, "sg_score": 54, "fit_score": 55, "form_score": 25, "form_grade": "poor", "proj": 74.4, "cash_proj": 70.4, "ceiling": 110.0, "sigma": 22.0, "leverage": -8.0, "own_pct": 9.2, "tout_tier": "NEUTRAL", "buzz": 2.0, "equity_tier": 3, "win_prob": 0.0166, "top10_prob": 0.1848, "doral_rank": 39, "dist_rank": 40, "lc_sg": null, "recent_5": "T9/T42/CUT/CUT/T8", "buzz_sources": "CadillacTips:+2", "news_note": "", "dg_baseline": 1.124, "dg_age": -0.021, "dg_dist": 0.012, "dg_acc": 0.015, "dg_history": 0.046, "dg_final": 1.007, "sg_app": 0.44, "sg_ott": 0.43, "sg_t2g": 0.72, "sg_l20": 1.17, "momentum": -0.14, "dk_odds": 4200}, {"name": "Maverick McNealy", "salary": 8800, "salary_rank": 13, "sg_score": 64, "fit_score": 64, "form_score": 70, "form_grade": "ok", "proj": 81.4, "cash_proj": 83.9, "ceiling": 119.0, "sigma": 22.2, "leverage": -2.5, "own_pct": 9.7, "tout_tier": "NEUTRAL", "buzz": 0.8, "equity_tier": 3, "win_prob": 0.0211, "top10_prob": 0.2041, "doral_rank": 20, "dist_rank": 22, "lc_sg": 0.81, "recent_5": "T13/T32/T21/T18/T16", "buzz_sources": "DKSportsbook:+1", "news_note": "", "dg_baseline": 1.364, "dg_age": 0.01, "dg_dist": 0.075, "dg_acc": 0.001, "dg_history": -0.047, "dg_final": 1.432, "sg_app": 0.13, "sg_ott": 0.49, "sg_t2g": 0.99, "sg_l20": 1.71, "momentum": 0.28, "dk_odds": 3300}, {"name": "Joel Dahmen", "salary": 6100, "salary_rank": 67, "sg_score": 25, "fit_score": 36, "form_score": 25, "form_grade": "poor", "proj": 54.9, "cash_proj": 50.9, "ceiling": 90.0, "sigma": 22.0, "leverage": 4.0, "own_pct": 2.8, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0021, "top10_prob": 0.0526, "doral_rank": 63, "dist_rank": 66, "lc_sg": null, "recent_5": "T9/CUT/CUT/T64/CUT", "buzz_sources": "", "news_note": "", "dg_baseline": -0.098, "dg_age": -0.026, "dg_dist": -0.1, "dg_acc": 0.028, "dg_history": -0.047, "dg_final": -0.129, "sg_app": 0.48, "sg_ott": 0.52, "sg_t2g": 0.61, "sg_l20": 0.33, "momentum": 0.46, "dk_odds": 34000}, {"name": "Sam Burns", "salary": 9100, "salary_rank": 10, "sg_score": 65, "fit_score": 71, "form_score": 70, "form_grade": "ok", "proj": 79.7, "cash_proj": 82.2, "ceiling": 117.0, "sigma": 22.3, "leverage": 0.5, "own_pct": 7.4, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 3, "win_prob": 0.0275, "top10_prob": 0.2309, "doral_rank": 13, "dist_rank": 12, "lc_sg": 0.83, "recent_5": "CUT/T13/T21/T7/T16", "buzz_sources": "GNN:LIKE#4 | RG:CONCERN putter-reliant | Mayo:SKIP", "news_note": "", "dg_baseline": 1.448, "dg_age": 0.012, "dg_dist": 0.12, "dg_acc": -0.007, "dg_history": -0.047, "dg_final": 1.299, "sg_app": 0.44, "sg_ott": 0.33, "sg_t2g": 0.51, "sg_l20": 1.64, "momentum": 0.0, "dk_odds": 2500}, {"name": "Jordan Spieth", "salary": 8200, "salary_rank": 19, "sg_score": 53, "fit_score": 65, "form_score": 70, "form_grade": "ok", "proj": 76.3, "cash_proj": 76.3, "ceiling": 112.0, "sigma": 21.8, "leverage": 1.5, "own_pct": 8.4, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 3, "win_prob": 0.0175, "top10_prob": 0.1873, "doral_rank": 19, "dist_rank": 18, "lc_sg": null, "recent_5": "T32/T11/T63/T12/T33", "buzz_sources": "Lineups:Elite Profile", "news_note": "Returning to Doral form profile", "dg_baseline": 1.053, "dg_age": -0.001, "dg_dist": 0.088, "dg_acc": -0.004, "dg_history": 0.021, "dg_final": 1.128, "sg_app": 0.63, "sg_ott": 0.04, "sg_t2g": 0.89, "sg_l20": 1.22, "momentum": 0.05, "dk_odds": 4000}, {"name": "Bud Cauley", "salary": 6600, "salary_rank": 52, "sg_score": 43, "fit_score": 46, "form_score": 70, "form_grade": "ok", "proj": 65.4, "cash_proj": 65.4, "ceiling": 101.0, "sigma": 21.8, "leverage": -0.0, "own_pct": 6.3, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0064, "top10_prob": 0.1068, "doral_rank": 55, "dist_rank": 55, "lc_sg": null, "recent_5": "T18/T32/74/T21/7", "buzz_sources": "", "news_note": "", "dg_baseline": 0.513, "dg_age": -0.015, "dg_dist": -0.032, "dg_acc": 0.009, "dg_history": -0.047, "dg_final": 0.5, "sg_app": 0.44, "sg_ott": 0.1, "sg_t2g": 0.81, "sg_l20": 1.04, "momentum": 0.63, "dk_odds": 11000}, {"name": "Michael Thorbjornsen", "salary": null, "salary_rank": null, "sg_score": 37, "fit_score": null, "form_score": 70, "form_grade": "ok", "proj": null, "cash_proj": null, "ceiling": null, "sigma": null, "leverage": null, "own_pct": null, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0143, "top10_prob": 0.1688, "doral_rank": null, "dist_rank": null, "lc_sg": null, "recent_5": "T33/T22/T14/CUT/T33", "buzz_sources": "", "news_note": "", "dg_baseline": null, "dg_age": null, "dg_dist": null, "dg_acc": null, "dg_history": null, "dg_final": null, "sg_app": 0.18, "sg_ott": 0.34, "sg_t2g": 0.86, "sg_l20": 1.06, "momentum": 0.18, "dk_odds": 4900}, {"name": "Nick Taylor", "salary": 6900, "salary_rank": 43, "sg_score": 40, "fit_score": 37, "form_score": 50, "form_grade": "mixed", "proj": 64.4, "cash_proj": 62.9, "ceiling": 100.0, "sigma": 21.2, "leverage": -9.0, "own_pct": 7.8, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0071, "top10_prob": 0.1121, "doral_rank": 60, "dist_rank": 63, "lc_sg": null, "recent_5": "T42/CUT/T28/T41/T60", "buzz_sources": "", "news_note": "", "dg_baseline": 0.78, "dg_age": -0.024, "dg_dist": -0.087, "dg_acc": 0.012, "dg_history": -0.047, "dg_final": 0.428, "sg_app": 0.55, "sg_ott": -0.01, "sg_t2g": 0.98, "sg_l20": 0.54, "momentum": -0.42, "dk_odds": 10000}, {"name": "Matt Wallace", "salary": 6600, "salary_rank": 52, "sg_score": 35, "fit_score": 47, "form_score": 50, "form_grade": "mixed", "proj": 64.0, "cash_proj": 62.5, "ceiling": 100.0, "sigma": 21.8, "leverage": -1.0, "own_pct": 6.5, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0055, "top10_prob": 0.0936, "doral_rank": 54, "dist_rank": 51, "lc_sg": null, "recent_5": "CUT/T40/T51/T2/T55", "buzz_sources": "", "news_note": "", "dg_baseline": 0.371, "dg_age": -0.015, "dg_dist": -0.018, "dg_acc": 0.001, "dg_history": -0.047, "dg_final": 0.419, "sg_app": 0.47, "sg_ott": 0.06, "sg_t2g": 0.74, "sg_l20": 0.61, "momentum": 0.12, "dk_odds": 13000}, {"name": "Harris English", "salary": 8500, "salary_rank": 16, "sg_score": 59, "fit_score": 55, "form_score": 70, "form_grade": "ok", "proj": 77.4, "cash_proj": 77.4, "ceiling": 113.0, "sigma": 21.5, "leverage": -13.0, "own_pct": 10.6, "tout_tier": "SHARP", "buzz": 3.4, "equity_tier": 3, "win_prob": 0.017, "top10_prob": 0.1848, "doral_rank": 41, "dist_rank": 38, "lc_sg": null, "recent_5": "T24/CUT/T21/T30/T4", "buzz_sources": "GenericArt:+1 \u00b7 SportsLine:+3", "news_note": "", "dg_baseline": 1.29, "dg_age": -0.018, "dg_dist": 0.014, "dg_acc": 0.01, "dg_history": 0.034, "dg_final": 1.193, "sg_app": 0.0, "sg_ott": 0.51, "sg_t2g": 0.5, "sg_l20": 1.39, "momentum": -0.03, "dk_odds": 4100}, {"name": "Andrew Putnam", "salary": 6300, "salary_rank": 61, "sg_score": 47, "fit_score": 5, "form_score": 70, "form_grade": "ok", "proj": 57.1, "cash_proj": 57.1, "ceiling": 91.0, "sigma": 20.9, "leverage": -5.5, "own_pct": null, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0025, "top10_prob": 0.0621, "doral_rank": 71, "dist_rank": 71, "lc_sg": null, "recent_5": "T32/T30/T44/T5/T42", "buzz_sources": "", "news_note": "", "dg_baseline": 0.496, "dg_age": -0.02, "dg_dist": -0.295, "dg_acc": 0.035, "dg_history": -0.047, "dg_final": 0.005, "sg_app": 0.51, "sg_ott": -0.29, "sg_t2g": 0.7, "sg_l20": 1.34, "momentum": 0.98, "dk_odds": 29000}, {"name": "Alex Noren", "salary": 7200, "salary_rank": 37, "sg_score": 50, "fit_score": 37, "form_score": 70, "form_grade": "ok", "proj": 69.1, "cash_proj": 71.6, "ceiling": 104.0, "sigma": 21.5, "leverage": -10.0, "own_pct": 7.6, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0101, "top10_prob": 0.1367, "doral_rank": 61, "dist_rank": 65, "lc_sg": 0.81, "recent_5": "T24/T32/T30/T30/T65", "buzz_sources": "", "news_note": "", "dg_baseline": 1.084, "dg_age": -0.049, "dg_dist": -0.093, "dg_acc": 0.013, "dg_history": -0.027, "dg_final": 0.71, "sg_app": 0.41, "sg_ott": 0.02, "sg_t2g": 0.7, "sg_l20": 0.96, "momentum": -0.25, "dk_odds": 7000}, {"name": "Ryan Fox", "salary": 6800, "salary_rank": 46, "sg_score": 47, "fit_score": 66, "form_score": 25, "form_grade": "poor", "proj": 66.0, "cash_proj": 62.0, "ceiling": 101.0, "sigma": 21.9, "leverage": 13.5, "own_pct": 7.2, "tout_tier": "NEUTRAL", "buzz": 1.7, "equity_tier": 2, "win_prob": 0.0064, "top10_prob": 0.102, "doral_rank": 16, "dist_rank": 15, "lc_sg": null, "recent_5": "T7/T24/CUT/CUT/T16", "buzz_sources": "DKSportsbook:+2", "news_note": "", "dg_baseline": 0.617, "dg_age": -0.029, "dg_dist": 0.115, "dg_acc": -0.021, "dg_history": -0.047, "dg_final": 0.54, "sg_app": 0.05, "sg_ott": 0.3, "sg_t2g": 0.62, "sg_l20": 1.17, "momentum": 0.51, "dk_odds": 11000}, {"name": "Max Homa", "salary": 6400, "salary_rank": 58, "sg_score": 37, "fit_score": 56, "form_score": 25, "form_grade": "poor", "proj": 62.2, "cash_proj": 58.2, "ceiling": 100.0, "sigma": 22.4, "leverage": 12.0, "own_pct": null, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0049, "top10_prob": 0.0854, "doral_rank": 37, "dist_rank": 31, "lc_sg": null, "recent_5": "T32/CUT/CUT/T9/T69", "buzz_sources": "", "news_note": "", "dg_baseline": 0.428, "dg_age": -0.012, "dg_dist": 0.037, "dg_acc": -0.004, "dg_history": -0.047, "dg_final": 0.311, "sg_app": 0.34, "sg_ott": 0.11, "sg_t2g": 0.29, "sg_l20": 0.68, "momentum": 0.32, "dk_odds": 14500}, {"name": "Andrew Novak", "salary": 6500, "salary_rank": 55, "sg_score": 34, "fit_score": 52, "form_score": 25, "form_grade": "poor", "proj": 67.1, "cash_proj": 63.1, "ceiling": 104.0, "sigma": 22.2, "leverage": 5.5, "own_pct": null, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0051, "top10_prob": 0.0888, "doral_rank": 45, "dist_rank": 42, "lc_sg": null, "recent_5": "CUT/T55/T14/CUT/T16", "buzz_sources": "", "news_note": "", "dg_baseline": 0.416, "dg_age": 0.007, "dg_dist": 0.008, "dg_acc": 0.001, "dg_history": -0.047, "dg_final": 0.619, "sg_app": 0.3, "sg_ott": 0.1, "sg_t2g": 0.47, "sg_l20": 0.47, "momentum": -0.05, "dk_odds": 14000}, {"name": "Patrick Rodgers", "salary": 6400, "salary_rank": 58, "sg_score": 33, "fit_score": 62, "form_score": 25, "form_grade": "poor", "proj": 62.4, "cash_proj": 58.4, "ceiling": 99.0, "sigma": 22.1, "leverage": 17.5, "own_pct": null, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0047, "top10_prob": 0.0844, "doral_rank": 23, "dist_rank": 19, "lc_sg": null, "recent_5": "T11/T40/CUT/CUT/T16", "buzz_sources": "", "news_note": "", "dg_baseline": 0.429, "dg_age": -0.005, "dg_dist": 0.084, "dg_acc": -0.012, "dg_history": -0.047, "dg_final": 0.32, "sg_app": 0.28, "sg_ott": 0.03, "sg_t2g": 0.52, "sg_l20": 0.39, "momentum": 0.08, "dk_odds": 15000}, {"name": "Jason Day", "salary": 7700, "salary_rank": 27, "sg_score": 48, "fit_score": 49, "form_score": 70, "form_grade": "ok", "proj": 71.2, "cash_proj": 71.2, "ceiling": 107.0, "sigma": 21.9, "leverage": -10.0, "own_pct": 7.8, "tout_tier": "NEUTRAL", "buzz": 0.9, "equity_tier": 2, "win_prob": 0.0149, "top10_prob": 0.1731, "doral_rank": 51, "dist_rank": 50, "lc_sg": null, "recent_5": "CUT/T59/T6/T12/T42", "buzz_sources": "Top10List:+1", "news_note": "", "dg_baseline": 1.027, "dg_age": -0.026, "dg_dist": -0.013, "dg_acc": 0.001, "dg_history": -0.012, "dg_final": 0.813, "sg_app": 0.01, "sg_ott": 0.18, "sg_t2g": 0.67, "sg_l20": 0.84, "momentum": -0.2, "dk_odds": 4700}, {"name": "Aldrich Potgieter", "salary": 6300, "salary_rank": 61, "sg_score": 19, "fit_score": 100, "form_score": 25, "form_grade": "poor", "proj": 60.7, "cash_proj": 56.7, "ceiling": 98.0, "sigma": 23.3, "leverage": 30.5, "own_pct": null, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0041, "top10_prob": 0.0677, "doral_rank": 1, "dist_rank": 1, "lc_sg": null, "recent_5": "CUT/CUT/T21/CUT/T25", "buzz_sources": "", "news_note": "", "dg_baseline": -0.317, "dg_age": 0.048, "dg_dist": 0.313, "dg_acc": -0.019, "dg_history": -0.047, "dg_final": 0.224, "sg_app": -0.15, "sg_ott": 0.62, "sg_t2g": 0.1, "sg_l20": 0.1, "momentum": 0.41, "dk_odds": 17500}, {"name": "Taylor Pendrith", "salary": 6700, "salary_rank": 49, "sg_score": 18, "fit_score": 73, "form_score": 25, "form_grade": "poor", "proj": 65.6, "cash_proj": 61.6, "ceiling": 102.0, "sigma": 22.2, "leverage": 20.5, "own_pct": 4.0, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0068, "top10_prob": 0.102, "doral_rank": 11, "dist_rank": 10, "lc_sg": null, "recent_5": "T38/T46/CUT/CUT/T71", "buzz_sources": "", "news_note": "", "dg_baseline": 0.297, "dg_age": -0.01, "dg_dist": 0.137, "dg_acc": -0.004, "dg_history": -0.047, "dg_final": 0.515, "sg_app": 0.04, "sg_ott": 0.48, "sg_t2g": 0.65, "sg_l20": -0.55, "momentum": -1.2, "dk_odds": 10500}, {"name": "Keegan Bradley", "salary": 7500, "salary_rank": 31, "sg_score": 44, "fit_score": 63, "form_score": 70, "form_grade": "ok", "proj": 73.3, "cash_proj": 73.3, "ceiling": 110.0, "sigma": 22.0, "leverage": 5.0, "own_pct": 5.4, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0126, "top10_prob": 0.1536, "doral_rank": 22, "dist_rank": 25, "lc_sg": null, "recent_5": "CUT/T50/T55/T21/T12", "buzz_sources": "Lineups:Elite Profile", "news_note": "", "dg_baseline": 0.983, "dg_age": -0.032, "dg_dist": 0.065, "dg_acc": 0.005, "dg_history": -0.022, "dg_final": 0.958, "sg_app": -0.16, "sg_ott": 0.38, "sg_t2g": 0.57, "sg_l20": 0.65, "momentum": -0.58, "dk_odds": 5600}, {"name": "Matt McCarty", "salary": 6800, "salary_rank": 46, "sg_score": 38, "fit_score": 45, "form_score": 25, "form_grade": "poor", "proj": 70.2, "cash_proj": 66.2, "ceiling": 104.0, "sigma": 21.6, "leverage": -4.0, "own_pct": 7.6, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0077, "top10_prob": 0.1159, "doral_rank": 57, "dist_rank": 57, "lc_sg": null, "recent_5": "CUT/CUT/T39/T24/T12", "buzz_sources": "RG:LIKE T2G mini-run", "news_note": "", "dg_baseline": 0.694, "dg_age": 0.019, "dg_dist": -0.043, "dg_acc": 0.015, "dg_history": -0.047, "dg_final": 0.794, "sg_app": 0.07, "sg_ott": 0.21, "sg_t2g": 0.15, "sg_l20": 0.45, "momentum": -0.3, "dk_odds": 9200}, {"name": "Brian Harman", "salary": 6600, "salary_rank": 52, "sg_score": 40, "fit_score": 37, "form_score": 70, "form_grade": "ok", "proj": 63.1, "cash_proj": 63.1, "ceiling": 99.0, "sigma": 21.7, "leverage": -5.0, "own_pct": 6.8, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0055, "top10_prob": 0.0949, "doral_rank": 62, "dist_rank": 64, "lc_sg": null, "recent_5": "50/T11/T39/T33/T25", "buzz_sources": "", "news_note": "", "dg_baseline": 0.524, "dg_age": -0.029, "dg_dist": -0.091, "dg_acc": 0.013, "dg_history": -0.047, "dg_final": 0.36, "sg_app": 0.21, "sg_ott": -0.16, "sg_t2g": 0.32, "sg_l20": 0.76, "momentum": 0.18, "dk_odds": 13000}, {"name": "J.T. Poston", "salary": 6500, "salary_rank": 55, "sg_score": 28, "fit_score": 41, "form_score": 25, "form_grade": "poor", "proj": 63.5, "cash_proj": 59.5, "ceiling": 99.0, "sigma": 21.5, "leverage": 1.0, "own_pct": 4.9, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0064, "top10_prob": 0.1052, "doral_rank": 59, "dist_rank": 59, "lc_sg": null, "recent_5": "CUT/T50/CUT/T21/T60", "buzz_sources": "", "news_note": "", "dg_baseline": 0.508, "dg_age": -0.001, "dg_dist": -0.067, "dg_acc": 0.014, "dg_history": -0.047, "dg_final": 0.382, "sg_app": 0.16, "sg_ott": 0.15, "sg_t2g": 0.21, "sg_l20": -0.07, "momentum": -0.73, "dk_odds": 11000}, {"name": "Sungjae Im", "salary": 6700, "salary_rank": 49, "sg_score": 31, "fit_score": 48, "form_score": 50, "form_grade": "mixed", "proj": 62.9, "cash_proj": 65.4, "ceiling": 99.0, "sigma": 22.1, "leverage": 1.0, "own_pct": 3.0, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0071, "top10_prob": 0.1103, "doral_rank": 52, "dist_rank": 52, "lc_sg": 0.92, "recent_5": "CUT/T4/T60/46/T42", "buzz_sources": "", "news_note": "", "dg_baseline": 0.105, "dg_age": 0.02, "dg_dist": -0.023, "dg_acc": 0.011, "dg_history": -0.047, "dg_final": 0.334, "sg_app": -0.23, "sg_ott": 0.22, "sg_t2g": 0.47, "sg_l20": 0.54, "momentum": 0.34, "dk_odds": 10000}, {"name": "Ricky Castillo", "salary": 6900, "salary_rank": 43, "sg_score": 35, "fit_score": 66, "form_score": 70, "form_grade": "ok", "proj": 67.8, "cash_proj": 67.8, "ceiling": 106.0, "sigma": 22.3, "leverage": 11.0, "own_pct": 13.6, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0068, "top10_prob": 0.1085, "doral_rank": 18, "dist_rank": 17, "lc_sg": 0.74, "recent_5": "1/T70/T46/T44/T60", "buzz_sources": "", "news_note": "", "dg_baseline": 0.449, "dg_age": 0.033, "dg_dist": 0.09, "dg_acc": 0.0, "dg_history": -0.047, "dg_final": 0.649, "sg_app": -0.21, "sg_ott": 0.3, "sg_t2g": 0.2, "sg_l20": 0.51, "momentum": 0.14, "dk_odds": 10500}, {"name": "Harry Hall", "salary": 7400, "salary_rank": 33, "sg_score": 45, "fit_score": 48, "form_score": 25, "form_grade": "poor", "proj": 69.3, "cash_proj": 65.3, "ceiling": 105.0, "sigma": 21.4, "leverage": -9.5, "own_pct": 5.0, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0115, "top10_prob": 0.1439, "doral_rank": 53, "dist_rank": 49, "lc_sg": null, "recent_5": "T9/CUT/T28/CUT/T65", "buzz_sources": "", "news_note": "", "dg_baseline": 0.896, "dg_age": 0.017, "dg_dist": -0.01, "dg_acc": -0.011, "dg_history": -0.047, "dg_final": 0.716, "sg_app": 0.07, "sg_ott": -0.18, "sg_t2g": 0.32, "sg_l20": 0.81, "momentum": -0.4, "dk_odds": 6100}, {"name": "Chandler Blanchet", "salary": 6100, "salary_rank": 67, "sg_score": 28, "fit_score": 36, "form_score": 25, "form_grade": "poor", "proj": 58.0, "cash_proj": 54.0, "ceiling": 94.0, "sigma": 21.8, "leverage": 2.0, "own_pct": 1.6, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0021, "top10_prob": 0.0516, "doral_rank": 67, "dist_rank": 67, "lc_sg": null, "recent_5": "2/T18/CUT/CUT/T33", "buzz_sources": "", "news_note": "", "dg_baseline": 0.189, "dg_age": 0.006, "dg_dist": -0.102, "dg_acc": 0.024, "dg_history": -0.047, "dg_final": 0.069, "sg_app": 0.05, "sg_ott": 0.08, "sg_t2g": -0.29, "sg_l20": 0.23, "momentum": -0.03, "dk_odds": 34000}, {"name": "Justin Thomas", "salary": 7700, "salary_rank": 27, "sg_score": 33, "fit_score": 61, "form_score": 50, "form_grade": "unknown", "proj": 70.3, "cash_proj": 69.3, "ceiling": 107.0, "sigma": 22.6, "leverage": -0.5, "own_pct": 3.2, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 2, "win_prob": 0.0126, "top10_prob": 0.1409, "doral_rank": 25, "dist_rank": 22, "lc_sg": null, "recent_5": "", "buzz_sources": "", "news_note": "", "dg_baseline": 0.723, "dg_age": -0.002, "dg_dist": 0.075, "dg_acc": -0.017, "dg_history": -0.025, "dg_final": 0.78, "sg_app": 0.03, "sg_ott": -0.09, "sg_t2g": 0.27, "sg_l20": 0.05, "momentum": 0.0, "dk_odds": 5600}, {"name": "Ben Griffin", "salary": 8000, "salary_rank": 21, "sg_score": 44, "fit_score": 50, "form_score": 25, "form_grade": "poor", "proj": 74.6, "cash_proj": 74.6, "ceiling": 110.0, "sigma": 21.4, "leverage": -13.5, "own_pct": 5.8, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 3, "win_prob": 0.0152, "top10_prob": 0.1731, "doral_rank": 47, "dist_rank": 47, "lc_sg": 0.95, "recent_5": "CUT/CUT/T28/T33/T33", "buzz_sources": "", "news_note": "", "dg_baseline": 1.066, "dg_age": 0.012, "dg_dist": -0.008, "dg_acc": 0.004, "dg_history": -0.047, "dg_final": 1.032, "sg_app": -0.08, "sg_ott": -0.05, "sg_t2g": 0.45, "sg_l20": 0.54, "momentum": -1.03, "dk_odds": 4600}, {"name": "David Lipsky", "salary": 6000, "salary_rank": 70, "sg_score": 28, "fit_score": 27, "form_score": 25, "form_grade": "poor", "proj": 54.0, "cash_proj": 50.0, "ceiling": 89.0, "sigma": 21.7, "leverage": 1.5, "own_pct": 7.6, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0015, "top10_prob": 0.0427, "doral_rank": 69, "dist_rank": 69, "lc_sg": null, "recent_5": "CUT/T37/2/CUT/T71", "buzz_sources": "", "news_note": "", "dg_baseline": 0.027, "dg_age": -0.023, "dg_dist": -0.142, "dg_acc": 0.012, "dg_history": -0.019, "dg_final": -0.184, "sg_app": 0.07, "sg_ott": -0.27, "sg_t2g": 0.22, "sg_l20": 0.45, "momentum": 0.4, "dk_odds": 47000}, {"name": "Michael Kim", "salary": 6500, "salary_rank": 55, "sg_score": 38, "fit_score": 43, "form_score": 25, "form_grade": "poor", "proj": 60.8, "cash_proj": 56.8, "ceiling": 98.0, "sigma": 22.0, "leverage": -3.0, "own_pct": 5.6, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0047, "top10_prob": 0.0844, "doral_rank": 58, "dist_rank": 53, "lc_sg": null, "recent_5": "CUT/T30/T2/CUT/T25", "buzz_sources": "", "news_note": "", "dg_baseline": 0.511, "dg_age": -0.001, "dg_dist": -0.03, "dg_acc": -0.01, "dg_history": -0.047, "dg_final": 0.219, "sg_app": 0.13, "sg_ott": -0.35, "sg_t2g": -0.1, "sg_l20": 0.67, "momentum": 0.24, "dk_odds": 15000}, {"name": "Denny McCarthy", "salary": 6400, "salary_rank": 58, "sg_score": 30, "fit_score": 36, "form_score": 25, "form_grade": "poor", "proj": 59.6, "cash_proj": 55.6, "ceiling": 94.0, "sigma": 21.4, "leverage": -1.5, "own_pct": null, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0049, "top10_prob": 0.0888, "doral_rank": 64, "dist_rank": 61, "lc_sg": 0.79, "recent_5": "CUT/T26/T12/CUT/T65", "buzz_sources": "", "news_note": "", "dg_baseline": 0.472, "dg_age": -0.002, "dg_dist": -0.084, "dg_acc": 0.002, "dg_history": -0.047, "dg_final": 0.141, "sg_app": 0.1, "sg_ott": -0.15, "sg_t2g": -0.05, "sg_l20": 0.09, "momentum": -0.44, "dk_odds": 14500}, {"name": "Lucas Glover", "salary": 6000, "salary_rank": 70, "sg_score": 14, "fit_score": 23, "form_score": 25, "form_grade": "poor", "proj": 47.9, "cash_proj": 43.9, "ceiling": 82.0, "sigma": 21.5, "leverage": 1.5, "own_pct": 0.4, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0017, "top10_prob": 0.0456, "doral_rank": 70, "dist_rank": 70, "lc_sg": null, "recent_5": "CUT/CUT/CUT/WD/T42", "buzz_sources": "", "news_note": "", "dg_baseline": 0.057, "dg_age": -0.061, "dg_dist": -0.178, "dg_acc": 0.03, "dg_history": -0.047, "dg_final": -0.568, "sg_app": 0.04, "sg_ott": -0.05, "sg_t2g": -0.21, "sg_l20": -0.6, "momentum": -0.69, "dk_odds": 42000}, {"name": "Jhonattan Vegas", "salary": 6200, "salary_rank": 64, "sg_score": 21, "fit_score": 58, "form_score": 25, "form_grade": "poor", "proj": 50.6, "cash_proj": 46.6, "ceiling": 89.0, "sigma": 22.5, "leverage": 16.5, "own_pct": 2.0, "tout_tier": "NEUTRAL", "buzz": 0.8, "equity_tier": 1, "win_prob": 0.0019, "top10_prob": 0.0463, "doral_rank": 29, "dist_rank": 26, "lc_sg": null, "recent_5": "T18/CUT/T14/CUT/T74", "buzz_sources": "DKSportsbook:+1", "news_note": "", "dg_baseline": -0.278, "dg_age": -0.04, "dg_dist": 0.06, "dg_acc": -0.009, "dg_history": -0.047, "dg_final": -0.398, "sg_app": -0.23, "sg_ott": 0.09, "sg_t2g": -0.52, "sg_l20": 0.19, "momentum": 0.27, "dk_odds": 38000}, {"name": "Tom Hoge", "salary": 6100, "salary_rank": 67, "sg_score": 11, "fit_score": 36, "form_score": 25, "form_grade": "poor", "proj": 51.2, "cash_proj": 47.2, "ceiling": 87.0, "sigma": 22.2, "leverage": -0.5, "own_pct": 3.6, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0014, "top10_prob": 0.038, "doral_rank": 66, "dist_rank": 60, "lc_sg": null, "recent_5": "CUT/CUT/T71/CUT/T71", "buzz_sources": "", "news_note": "", "dg_baseline": -0.219, "dg_age": -0.019, "dg_dist": -0.074, "dg_acc": -0.003, "dg_history": -0.047, "dg_final": -0.355, "sg_app": 0.3, "sg_ott": -0.36, "sg_t2g": -0.42, "sg_l20": -0.56, "momentum": -0.12, "dk_odds": 52500}, {"name": "Nico Echavarria", "salary": 6200, "salary_rank": 64, "sg_score": 17, "fit_score": 36, "form_score": 25, "form_grade": "poor", "proj": 50.8, "cash_proj": 46.8, "ceiling": 87.0, "sigma": 22.4, "leverage": -2.0, "own_pct": 2.6, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.002, "top10_prob": 0.0488, "doral_rank": 67, "dist_rank": 62, "lc_sg": null, "recent_5": "T44/T66/CUT/CUT/81", "buzz_sources": "", "news_note": "", "dg_baseline": 0.0, "dg_age": 0.004, "dg_dist": -0.086, "dg_acc": 0.007, "dg_history": -0.047, "dg_final": -0.384, "sg_app": -0.2, "sg_ott": -0.11, "sg_t2g": -0.56, "sg_l20": -0.38, "momentum": -0.65, "dk_odds": 36000}, {"name": "Max Greyserman", "salary": 6200, "salary_rank": 64, "sg_score": 21, "fit_score": 61, "form_score": 25, "form_grade": "poor", "proj": 60.8, "cash_proj": 56.8, "ceiling": 97.0, "sigma": 22.6, "leverage": 22.5, "own_pct": 2.8, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0047, "top10_prob": 0.0824, "doral_rank": 25, "dist_rank": 20, "lc_sg": null, "recent_5": "T24/T18/CUT/CUT/CUT", "buzz_sources": "", "news_note": "", "dg_baseline": 0.201, "dg_age": 0.007, "dg_dist": 0.082, "dg_acc": -0.022, "dg_history": -0.047, "dg_final": 0.225, "sg_app": -0.1, "sg_ott": -0.47, "sg_t2g": -0.68, "sg_l20": -0.28, "momentum": -0.77, "dk_odds": 15000}, {"name": "Brian Campbell", "salary": 6000, "salary_rank": 70, "sg_score": 0, "fit_score": 0, "form_score": 25, "form_grade": "poor", "proj": 34.9, "cash_proj": 30.9, "ceiling": 71.0, "sigma": 21.9, "leverage": -1.0, "own_pct": 0.1, "tout_tier": "CONTRARIAN", "buzz": 0.0, "equity_tier": 1, "win_prob": 0.0003, "top10_prob": 0.0124, "doral_rank": 72, "dist_rank": 72, "lc_sg": null, "recent_5": "CUT/WD/CUT/T24/T77", "buzz_sources": "", "news_note": "", "dg_baseline": -0.691, "dg_age": -0.002, "dg_dist": -0.297, "dg_acc": 0.015, "dg_history": -0.047, "dg_final": -1.373, "sg_app": -0.68, "sg_ott": -0.64, "sg_t2g": -1.35, "sg_l20": -0.89, "momentum": -0.08, "dk_odds": 275000}, {"name": "Alex Fitzpatrick", "salary": 6700, "salary_rank": 49, "sg_score": 27, "fit_score": 46, "form_score": 50, "form_grade": "unknown", "proj": 63.6, "cash_proj": 62.6, "ceiling": 100.0, "sigma": 21.8, "leverage": -13.5, "own_pct": 10.6, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": null, "top10_prob": null, "doral_rank": 55, "dist_rank": 56, "lc_sg": 0.89, "recent_5": "", "buzz_sources": "", "news_note": "", "dg_baseline": 0.392, "dg_age": 0.023, "dg_dist": -0.034, "dg_acc": 0.012, "dg_history": -0.047, "dg_final": 0.464, "sg_app": 0.0, "sg_ott": 0.0, "sg_t2g": 0.0, "sg_l20": 0.0, "momentum": 0.0, "dk_odds": null}, {"name": "Alex Smalley", "salary": 7100, "salary_rank": 39, "sg_score": 33, "fit_score": 60, "form_score": 50, "form_grade": "unknown", "proj": 70.9, "cash_proj": 69.9, "ceiling": 107.0, "sigma": 22.0, "leverage": -10.0, "own_pct": 9.0, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": null, "top10_prob": null, "doral_rank": 28, "dist_rank": 29, "lc_sg": null, "recent_5": "", "buzz_sources": "", "news_note": "", "dg_baseline": 0.783, "dg_age": 0.014, "dg_dist": 0.048, "dg_acc": 0.005, "dg_history": -0.047, "dg_final": 0.931, "sg_app": 0.0, "sg_ott": 0.0, "sg_t2g": 0.0, "sg_l20": 0.0, "momentum": 0.0, "dk_odds": null}, {"name": "Keith Mitchell", "salary": 7500, "salary_rank": 31, "sg_score": 32, "fit_score": 72, "form_score": 50, "form_grade": "unknown", "proj": 71.4, "cash_proj": 70.4, "ceiling": 108.0, "sigma": 22.3, "leverage": -10.0, "own_pct": 9.3, "tout_tier": "NEUTRAL", "buzz": 0.0, "equity_tier": 1, "win_prob": null, "top10_prob": null, "doral_rank": 12, "dist_rank": 11, "lc_sg": null, "recent_5": "", "buzz_sources": "", "news_note": "", "dg_baseline": 0.766, "dg_age": -0.007, "dg_dist": 0.128, "dg_acc": -0.001, "dg_history": -0.047, "dg_final": 0.962, "sg_app": 0.0, "sg_ott": 0.0, "sg_t2g": 0.0, "sg_l20": 0.0, "momentum": 0.0, "dk_odds": null}]</script>
 
 <div class="header">
   <div class="brand">
@@ -1464,6 +1541,7 @@
   </div>
 
   <!-- LOCK / EXCLUDE STATUS BAR — only shows when something is set -->
+
   <div class="status-bar hidden" id="status-bar">
     <div class="status-section" id="status-locked-wrap">
       <span class="status-label">🔒 Locked</span>
@@ -1477,6 +1555,7 @@
   </div>
 
   <!-- TAB: PLAYER POOL -->
+
   <div id="tab-pool">
     <div class="controls">
       <div class="control-group">
@@ -1506,34 +1585,37 @@
       </div>
     </div>
 
-    <div class="table-wrap">
-      <table id="player-table">
-        <thead>
-          <tr>
-            <th class="check-col"></th>
-            <th class="sortable sort-desc" data-sort="cash_proj">Player</th>
-            <th title="Lock or exclude">⚙</th>
-            <th class="sortable" data-sort="salary" title="DK Salary">💰</th>
-            <th class="sortable" data-sort="cash_proj" title="Cash Projection">📊 Proj</th>
-            <th class="sortable" data-sort="ceiling" title="90th-percentile ceiling">🚀 Ceil</th>
-            <th class="sortable" data-sort="sg_score" title="Strokes Gained composite">SG</th>
-            <th class="sortable" data-sort="fit_score" title="Course fit">🎯 Fit</th>
-            <th class="sortable" data-sort="form_score" title="Recent form">📈 Form</th>
-            <th class="sortable" data-sort="leverage" title="Leverage vs market">⚖ Lev</th>
-            <th class="sortable" data-sort="own_pct" title="Projected ownership %">👥 Own</th>
-            <th title="Buzz × ownership tier">Tier</th>
-            <th class="sortable" data-sort="equity_tier" title="Win equity tier">⭐</th>
-          </tr>
-        </thead>
-        <tbody id="player-tbody"></tbody>
-      </table>
-    </div>
+```
+<div class="table-wrap">
+  <table id="player-table">
+    <thead>
+      <tr>
+        <th class="check-col"></th>
+        <th class="sortable sort-desc" data-sort="cash_proj">Player</th>
+        <th title="Lock or exclude">⚙</th>
+        <th class="sortable" data-sort="salary" title="DK Salary">💰</th>
+        <th class="sortable" data-sort="cash_proj" title="Cash Projection">📊 Proj</th>
+        <th class="sortable" data-sort="ceiling" title="90th-percentile ceiling">🚀 Ceil</th>
+        <th class="sortable" data-sort="sg_score" title="Strokes Gained composite">SG</th>
+        <th class="sortable" data-sort="fit_score" title="Course fit">🎯 Fit</th>
+        <th class="sortable" data-sort="form_score" title="Recent form">📈 Form</th>
+        <th class="sortable" data-sort="leverage" title="Leverage vs market">⚖ Lev</th>
+        <th class="sortable" data-sort="own_pct" title="Projected ownership %">👥 Own</th>
+        <th title="Buzz × ownership tier">Tier</th>
+        <th class="sortable" data-sort="equity_tier" title="Win equity tier">⭐</th>
+      </tr>
+    </thead>
+    <tbody id="player-tbody"></tbody>
+  </table>
+</div>
+```
+
   </div>
 
   <!-- (Lineup Builder is now a floating panel — see below) -->
 
-
   <!-- TAB: BUILT LINEUPS -->
+
   <div id="tab-builds" class="hidden">
     <div class="lineup-section-header">
       <div>
@@ -1546,104 +1628,122 @@
       <div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">Computing optimal lineups...</div>
     </div>
 
-    <div class="lineup-section-header">
-      <div>
-        <div class="lineup-section-title">GPP Builds</div>
-        <div class="lineup-section-sub">Optimized for tournaments · top 3 by P(top 20%) with low-own diversity</div>
-      </div>
-      <button class="btn btn-ghost" id="btn-rebuild-gpp">Rebuild</button>
-    </div>
-    <div class="lineup-cards" id="gpp-builds">
-      <div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">Computing optimal lineups...</div>
-    </div>
+```
+<div class="lineup-section-header">
+  <div>
+    <div class="lineup-section-title">GPP Builds</div>
+    <div class="lineup-section-sub">Optimized for tournaments · top 3 by P(top 20%) with low-own diversity</div>
+  </div>
+  <button class="btn btn-ghost" id="btn-rebuild-gpp">Rebuild</button>
+</div>
+<div class="lineup-cards" id="gpp-builds">
+  <div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">Computing optimal lineups...</div>
+</div>
+```
+
   </div>
 
   <!-- TAB: GUIDE -->
+
   <div id="tab-guide" class="hidden">
     <div class="guide-hero">
       <div class="guide-hero-tag">This Week's Edge</div>
       <h1>Cadillac Championship · Trump Doral · Blue Monster</h1>
       <p class="guide-hero-sub">7,739 yards · par 72 · 72-player signature event · No cut · $20M purse</p>
     </div>
-    
-    <div class="guide-grid">
-      <!-- Course Profile -->
-      <div class="guide-card">
-        <div class="guide-card-header">
-          <span class="guide-icon">🏌️</span>
-          <h3>Course Profile</h3>
-        </div>
-        <p class="guide-bullet"><b>Distance dominates.</b> Driving distance has a <span class="g-stat">0.993 correlation</span> with total course fit at Doral. Accuracy adj is actually <span class="g-stat">−0.517</span> negatively correlated with fit.</p>
-        <p class="guide-bullet"><b>Bermuda greens.</b> TifEagle, fast.</p>
-        <p class="guide-bullet"><b>Water on 10 holes.</b> Bogey avoidance matters; wayward drives get penalized hard.</p>
-        <p class="guide-bullet"><b>Wind exposure.</b> Open links-style, exposed fairways. Wind players get an edge.</p>
-      </div>
 
-      <!-- The Edge Strategy -->
-      <div class="guide-card">
-        <div class="guide-card-header">
-          <span class="guide-icon">🎯</span>
-          <h3>How We Build</h3>
-        </div>
-        <p class="guide-bullet"><b>Distance fit first.</b> Every cash anchor must be in the top 20 by <code>driving_dist_adj</code>. No exceptions at this course.</p>
-        <p class="guide-bullet"><b>Tout buzz = anti-signal.</b> High buzz + high ownership = <span class="tier-badge tier-CHALK">CHALK</span> = fade for GPP.</p>
-        <p class="guide-bullet"><b>Form filter.</b> Poor-form players (2+ cuts in last 5) get a −4 penalty on cash projection.</p>
-        <p class="guide-bullet"><b>Long-course bonus.</b> Players with 0.85+ SG over 20+ starts on courses 7,400+ yards get a +4 boost.</p>
-      </div>
-
-      <!-- Composite Scores -->
-      <div class="guide-card">
-        <div class="guide-card-header">
-          <span class="guide-icon">📊</span>
-          <h3>What the Scores Mean</h3>
-        </div>
-        <div class="guide-defs">
-          <div><b>SG</b> · 50/50 blend of recent form (SG L20) and baseline talent. Normalized 0-100.</div>
-          <div><b>Fit</b> · DataGolf course fit at this course. Pure distance bias here.</div>
-          <div><b>Form</b> · Last 5 events. <span class="g-good">good</span>=0 cuts + 2 top10s. <span class="g-bad">poor</span>=2+ cuts.</div>
-          <div><b>Lev</b> · DK pricing vs course fit + market. Positive = underpriced.</div>
-          <div><b>Tier</b> · Buzz × ownership. SHARP = smart pivots. CHALK = fade. CONTRARIAN = no one talking.</div>
-          <div><b>Equity</b> · Win + top-10 odds rolled into 1-5 stars.</div>
-        </div>
-      </div>
-
-      <!-- Cash vs GPP -->
-      <div class="guide-card">
-        <div class="guide-card-header">
-          <span class="guide-icon">💰</span>
-          <h3>Cash vs GPP</h3>
-        </div>
-        <p class="guide-bullet"><b>Cash games (50/50, double-up).</b> Need to beat field median (~452 DK pts). Maximize <code>cash_proj</code>. High-floor anchors. Ownership doesn't matter.</p>
-        <p class="guide-bullet"><b>GPP (tournaments).</b> Need top 20% (~497) or better. Maximize ceiling × leverage − ownership penalty. One bust kills you, one spike wins big.</p>
-        <p class="guide-bullet"><b>Break-even cash:</b> 55.6% on a $25 DU. Below that, you're burning EV.</p>
-      </div>
-
-      <!-- Players to Watch -->
-      <div class="guide-card guide-card-wide">
-        <div class="guide-card-header">
-          <span class="guide-icon">⭐</span>
-          <h3>Top Course-Fit Plays</h3>
-        </div>
-        <p class="guide-bullet" style="margin-bottom:14px;font-size:12px;color:var(--text-2);">Top 6 by DataGolf course fit at Doral, filtered to remove poor-form players (2+ recent cuts).</p>
-        <div class="guide-watchlist" id="guide-watchlist"></div>
-      </div>
-
-      <!-- Field intel -->
-      <div class="guide-card guide-card-wide">
-        <div class="guide-card-header">
-          <span class="guide-icon">📰</span>
-          <h3>Field Intel</h3>
-        </div>
-        <p class="guide-bullet"><b>Field is missing 5 of top 15 OWGR:</b> McIlroy, Schauffele, MacIntyre, Aberg, Matt Fitzpatrick.</p>
-        <p class="guide-bullet"><b>Past Doral winners in field:</b> Adam Scott (2016), Justin Rose (2012). Course history adj is small (~0.075 SG/round) — don't overweight.</p>
-        <p class="guide-bullet"><b>Injury watch:</b> Collin Morikawa (recent back issue flagged). Plays through it but humid 4-round signature event is a different test.</p>
-        <p class="guide-bullet"><b>Course got longer.</b> Plays 7,739 now vs ~7,500 in 2016. Distance edge is bigger than ever.</p>
-      </div>
+```
+<div class="guide-grid">
+  <!-- Course Profile -->
+  <div class="guide-card">
+    <div class="guide-card-header">
+      <span class="guide-icon">🏌️</span>
+      <h3>Course Profile</h3>
     </div>
+    <p class="guide-bullet"><b>Distance dominates.</b> Driving distance has a <span class="g-stat">0.993 correlation</span> with total course fit at Doral. Accuracy adj is actually <span class="g-stat">−0.517</span> negatively correlated with fit.</p>
+    <p class="guide-bullet"><b>Bermuda greens.</b> TifEagle, fast.</p>
+    <p class="guide-bullet"><b>Water on 10 holes.</b> Bogey avoidance matters; wayward drives get penalized hard.</p>
+    <p class="guide-bullet"><b>Wind exposure.</b> Open links-style, exposed fairways. Wind players get an edge.</p>
+  </div>
+
+  <!-- The Edge Strategy -->
+  <div class="guide-card">
+    <div class="guide-card-header">
+      <span class="guide-icon">🎯</span>
+      <h3>How We Build</h3>
+    </div>
+    <p class="guide-bullet"><b>Distance fit first.</b> Every cash anchor must be in the top 20 by <code>driving_dist_adj</code>. No exceptions at this course.</p>
+    <p class="guide-bullet"><b>Tout buzz = anti-signal.</b> High buzz + high ownership = <span class="tier-badge tier-CHALK">CHALK</span> = fade for GPP.</p>
+    <p class="guide-bullet"><b>Form filter.</b> Poor-form players (2+ cuts in last 5) get a −4 penalty on cash projection.</p>
+    <p class="guide-bullet"><b>Long-course bonus.</b> Players with 0.85+ SG over 20+ starts on courses 7,400+ yards get a +4 boost.</p>
+  </div>
+
+  <!-- Composite Scores -->
+  <div class="guide-card">
+    <div class="guide-card-header">
+      <span class="guide-icon">📊</span>
+      <h3>What the Scores Mean</h3>
+    </div>
+    <div class="guide-defs">
+      <div><b>SG</b> · 50/50 blend of recent form (SG L20) and baseline talent. Normalized 0-100.</div>
+      <div><b>Fit</b> · DataGolf course fit at this course. Pure distance bias here.</div>
+      <div><b>Form</b> · Last 5 events. <span class="g-good">good</span>=0 cuts + 2 top10s. <span class="g-bad">poor</span>=2+ cuts.</div>
+      <div><b>Lev</b> · DK pricing vs course fit + market. Positive = underpriced.</div>
+      <div><b>Tier</b> · Buzz × ownership. SHARP = smart pivots. CHALK = fade. CONTRARIAN = no one talking.</div>
+      <div><b>Equity</b> · Win + top-10 odds rolled into 1-5 stars.</div>
+    </div>
+  </div>
+
+  <!-- Cash vs GPP -->
+  <div class="guide-card">
+    <div class="guide-card-header">
+      <span class="guide-icon">💰</span>
+      <h3>Cash vs GPP</h3>
+    </div>
+    <p class="guide-bullet"><b>Cash games (50/50, double-up).</b> Need to beat field median (~452 DK pts). Maximize <code>cash_proj</code>. High-floor anchors. Ownership doesn't matter.</p>
+    <p class="guide-bullet"><b>GPP (tournaments).</b> Need top 20% (~497) or better. Maximize ceiling × leverage − ownership penalty. One bust kills you, one spike wins big.</p>
+    <p class="guide-bullet"><b>Break-even cash:</b> 55.6% on a $25 DU. Below that, you're burning EV.</p>
+  </div>
+
+  <!-- Players to Watch -->
+  <div class="guide-card guide-card-wide">
+    <div class="guide-card-header">
+      <span class="guide-icon">⭐</span>
+      <h3>Top Course-Fit Plays</h3>
+    </div>
+    <p class="guide-bullet" style="margin-bottom:14px;font-size:12px;color:var(--text-2);">Top 6 by DataGolf course fit at Doral, filtered to remove poor-form players (2+ recent cuts).</p>
+    <div class="guide-watchlist" id="guide-watchlist"></div>
+  </div>
+
+  <!-- Signature Event Specialists -->
+  <div class="guide-card guide-card-wide">
+    <div class="guide-card-header">
+      <span class="guide-icon">🏆</span>
+      <h3>Signature Event Specialists</h3>
+    </div>
+    <p class="guide-bullet" style="margin-bottom:14px;font-size:12px;color:var(--text-2);">Field players who have BOTH a top-25 finish at a recent no-cut signature event (2025 RBC Heritage or Truist) AND a top-30 Doral course fit. The intersection of "tournament-tested in elite-only fields" and "fits this course."</p>
+    <div class="sig-event-list" id="sig-event-list"></div>
+  </div>
+
+  <!-- Field intel -->
+  <div class="guide-card guide-card-wide">
+    <div class="guide-card-header">
+      <span class="guide-icon">📰</span>
+      <h3>Field Intel</h3>
+    </div>
+    <p class="guide-bullet"><b>Field is missing 5 of top 15 OWGR:</b> McIlroy, Schauffele, MacIntyre, Aberg, Matt Fitzpatrick.</p>
+    <p class="guide-bullet"><b>Past Doral winners in field:</b> Adam Scott (2016), Justin Rose (2012). Course history adj is small (~0.075 SG/round) — don't overweight.</p>
+    <p class="guide-bullet"><b>Injury watch:</b> Collin Morikawa (recent back issue flagged). Plays through it but humid 4-round signature event is a different test.</p>
+    <p class="guide-bullet"><b>Course got longer.</b> Plays 7,739 now vs ~7,500 in 2016. Distance edge is bigger than ever.</p>
+  </div>
+</div>
+```
+
   </div>
 </main>
 
 <!-- FLOATING LINEUP BUILDER -->
+
 <div class="floating-builder" id="floating-builder">
   <div class="fb-header">
     <div class="fb-title-row">
@@ -1671,43 +1771,46 @@
       <div class="salary-bar-fill" id="salary-bar" style="width:0%"></div>
     </div>
   </div>
-  
+
   <div class="fb-body">
     <div class="lineup-slots" id="lineup-slots"></div>
-    
-    <div class="prob-grid" id="prob-grid">
-      <div class="prob-card">
-        <div class="prob-label">Cash %</div>
-        <div class="prob-value" id="prob-cash">—</div>
-      </div>
-      <div class="prob-card">
-        <div class="prob-label">Top 20%</div>
-        <div class="prob-value" id="prob-top20">—</div>
-      </div>
-      <div class="prob-card">
-        <div class="prob-label">Mean</div>
-        <div class="prob-value" id="prob-mean">—</div>
-      </div>
-      <div class="prob-card">
-        <div class="prob-label">Ceiling</div>
-        <div class="prob-value" id="prob-ceiling">—</div>
-      </div>
-    </div>
 
-    <div class="lineup-actions">
-      <button class="btn btn-primary" id="btn-optimize">Optimize for Cash</button>
-      <button class="btn btn-secondary" id="btn-optimize-gpp">Optimize for GPP</button>
-      <button class="btn btn-ghost" id="btn-clear">Clear</button>
-    </div>
+```
+<div class="prob-grid" id="prob-grid">
+  <div class="prob-card">
+    <div class="prob-label">Cash %</div>
+    <div class="prob-value" id="prob-cash">—</div>
+  </div>
+  <div class="prob-card">
+    <div class="prob-label">Top 20%</div>
+    <div class="prob-value" id="prob-top20">—</div>
+  </div>
+  <div class="prob-card">
+    <div class="prob-label">Mean</div>
+    <div class="prob-value" id="prob-mean">—</div>
+  </div>
+  <div class="prob-card">
+    <div class="prob-label">Ceiling</div>
+    <div class="prob-value" id="prob-ceiling">—</div>
+  </div>
+</div>
+
+<div class="lineup-actions">
+  <button class="btn btn-primary" id="btn-optimize">Optimize for Cash</button>
+  <button class="btn btn-secondary" id="btn-optimize-gpp">Optimize for GPP</button>
+  <button class="btn btn-ghost" id="btn-clear">Clear</button>
+</div>
+```
+
   </div>
 </div>
 
 <!-- FLOATING TOGGLE (FAB) — when builder is closed -->
+
 <button class="fab" id="fab-open" style="display:none;">
   <span class="fab-icon">⊞</span>
   <span class="fab-count" id="fab-count">0</span>
 </button>
-
 
 <script>
 const PLAYERS = JSON.parse(document.getElementById('player-data').textContent);
@@ -1823,6 +1926,84 @@ function renderStatusBar() {
   }).join('');
 }
 
+// Signature event finishes for field players at recent NO-CUT signature events.
+// Sources: 2025 RBC Heritage (full leaderboard, Apr 2025), 2025 Truist Championship (May 2025).
+// Format: { 'Player Name': [['EVENT_CODE', position], ...] }
+const SIG_EVENTS = {
+  'Justin Thomas':       [['RBC25', 1],  ['TRU25', 2]],
+  'Andrew Novak':        [['RBC25', 2]],
+  'Daniel Berger':       [['RBC25', 3]],
+  'Mackenzie Hughes':    [['RBC25', 3]],
+  'Brian Harman':        [['RBC25', 3]],
+  'Maverick McNealy':    [['RBC25', 3]],
+  'Tommy Fleetwood':     [['TRU25', 4],  ['RBC25', 7]],
+  'Scottie Scheffler':   [['RBC25', 8]],
+  'Russell Henley':      [['RBC25', 8]],
+  'Si Woo Kim':          [['RBC25', 8]],
+  'Sepp Straka':         [['TRU25', 1],  ['RBC25', 13]],
+  'Patrick Cantlay':     [['TRU25', 4],  ['RBC25', 13]],
+  'Shane Lowry':         [['TRU25', 2],  ['RBC25', 18]],
+  'Cameron Young':       [['TRU25', 7],  ['RBC25', 54]],
+  'Jacob Bridgeman':     [['TRU25', 4],  ['RBC25', 61]],
+  'Sungjae Im':          [['RBC25', 11]],
+  'Sam Burns':           [['RBC25', 13]],
+  'Viktor Hovland':      [['RBC25', 13]],
+  'Jordan Spieth':       [['RBC25', 18]],
+  'Ryo Hisatsune':       [['RBC25', 18]],
+  'Tom Hoge':            [['RBC25', 18]],
+  'Keegan Bradley':      [['RBC25', 18]],
+  'Stephan Jaeger':      [['TRU25', 7],  ['RBC25', 32]],
+};
+const SIG_LABELS = { 'RBC25': 'RBC \'25', 'TRU25': 'Truist \'25' };
+
+function renderSignatureSpecialists() {
+  // Filtered intersection: signature event T25+ AND Doral CF top-30
+  const intersection = [];
+  for (const [name, finishes] of Object.entries(SIG_EVENTS)) {
+    const p = PLAYERS.find(x => x.name === name && x.salary);
+    if (!p) continue;
+    if (!p.doral_rank || p.doral_rank > 30) continue;
+    const bestSig = Math.min(...finishes.map(f => f[1]));
+    if (bestSig > 25) continue;
+    intersection.push({ player: p, finishes, bestSig });
+  }
+  // Sort by best signature finish, then by CF rank
+  intersection.sort((a, b) => a.bestSig - b.bestSig || a.player.doral_rank - b.player.doral_rank);
+  
+  const list = document.getElementById('sig-event-list');
+  if (!list) return;
+  
+  if (intersection.length === 0) {
+    list.innerHTML = '<div style="text-align:center;padding:24px;color:var(--text-2);">No players match the intersection.</div>';
+    return;
+  }
+  
+  list.innerHTML = intersection.map(({player: p, finishes, bestSig}) => {
+    const tier1 = bestSig <= 10;
+    const valuePerK = ((p.cash_proj || 0) / (p.salary / 1000)).toFixed(1);
+    const pills = finishes.map(([evt, pos]) => {
+      const cls = pos === 1 ? 'win' : pos <= 10 ? 'top10' : '';
+      const label = pos === 1 ? `${SIG_LABELS[evt]} WIN` : `${SIG_LABELS[evt]} T${pos}`;
+      return `<span class="sig-result-pill ${cls}">${label}</span>`;
+    }).join('');
+    return `<div class="sig-row ${tier1 ? 'tier-1' : ''}">
+      <div>
+        <div class="sig-row-name">${p.name}</div>
+        <div class="sig-row-name-sub">${p.form_grade} form · ${p.own_pct?.toFixed(1)}% own</div>
+      </div>
+      <div class="sig-row-fit">
+        <span>CF / Dist</span>
+        <b>#${p.doral_rank} / #${p.dist_rank}</b>
+      </div>
+      <div class="sig-row-cost">
+        <span>$ · Proj</span>
+        <b>$${(p.salary/1000).toFixed(1)}K · ${p.cash_proj?.toFixed(1)}</b>
+      </div>
+      <div class="sig-row-results">${pills}</div>
+    </div>`;
+  }).join('');
+}
+
 function renderGuide() {
   // KB's Top Plays = top 6 by course fit (doral_rank) that don't have poor form.
   // This grounds the watchlist in the dominant signal at this course (distance/CF)
@@ -1843,6 +2024,7 @@ function renderGuide() {
       </div>`;
     }).join('');
   }
+  renderSignatureSpecialists();
 }
 
 function generateTake(p) {
@@ -2576,5 +2758,6 @@ renderLineupPanel();
 renderStatusBar();
 bindEvents();
 </script>
+
 </body>
 </html>
