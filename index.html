@@ -48,6 +48,10 @@
 --tier-chalk:      #f59e0b;
 --tier-fade:       #ef4444;
 --tier-neutral:    #8b94a3;
+
+/* Mobile / touch */
+--touch-min: 44px;
+--card-gap: 10px;
 }
 
 /* ---------- RESET ---------- */
@@ -1288,6 +1292,9 @@ transform: translateY(0) translateX(420px);
 .guide-watchlist { grid-template-columns: 1fr 1fr 1fr; }
 
 .fab { display: none; }
+
+/* Defensive: cards never show on desktop even if a higher-specificity rule sneaks in */
+.player-cards { display: none !important; }
 }
 
 /* Wide desktop tweaks */
@@ -1296,14 +1303,186 @@ transform: translateY(0) translateX(420px);
 .built-cards { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* ---------- COLUMN VISIBILITY (mobile) ---------- */
+/* ---------- MOBILE PLAYER CARDS (hidden by default; mobile breakpoint flips) ---------- */
+.player-cards { display: none; flex-direction: column; gap: var(--card-gap); }
+.p-card {
+background: var(--bg-1);
+border: 1px solid var(--border);
+border-radius: 12px;
+padding: var(--s3);
+display: grid;
+grid-template-columns: 36px 1fr auto;
+grid-template-areas:
+"avatar name   salary"
+"avatar sub    proj"
+"stats  stats  stats"
+"tags   tags   tags"
+"actions actions actions";
+gap: 6px var(--s3);
+}
+.p-card.locked { border-color: var(--accent); background: rgba(94, 234, 212, 0.04); }
+.p-card.excluded { opacity: 0.45; }
+.p-card.expanded { border-color: var(--border-strong); }
+.p-card .player-avatar { grid-area: avatar; width: 36px; height: 36px; font-size: 11px; }
+.pc-name {
+grid-area: name;
+font-size: 15px;
+font-weight: 700;
+color: var(--text-0);
+white-space: normal;
+overflow: visible;
+max-width: none;
+line-height: 1.2;
+align-self: center;
+}
+.pc-sub {
+grid-area: sub;
+font-size: 11px;
+color: var(--text-2);
+display: flex;
+gap: 8px;
+align-items: center;
+}
+.pc-salary {
+grid-area: salary;
+font-size: 13px;
+font-weight: 700;
+text-align: right;
+font-variant-numeric: tabular-nums;
+color: var(--text-0);
+align-self: center;
+}
+.pc-proj {
+grid-area: proj;
+font-size: 11px;
+color: var(--text-2);
+text-align: right;
+font-variant-numeric: tabular-nums;
+}
+.pc-stats {
+grid-area: stats;
+display: grid;
+grid-template-columns: repeat(4, 1fr);
+gap: 6px var(--s3);
+background: var(--bg-2);
+border-radius: 8px;
+padding: 8px 10px;
+margin-top: 4px;
+}
+.pc-stat { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.pc-stat-label {
+font-size: 9px;
+text-transform: uppercase;
+letter-spacing: 0.06em;
+color: var(--text-3);
+font-weight: 700;
+}
+.pc-stat-val {
+font-size: 12px;
+font-weight: 700;
+color: var(--text-0);
+font-variant-numeric: tabular-nums;
+}
+.pc-stat .score-cell { gap: 4px; }
+.pc-stat .score-num { font-size: 11px; }
+.pc-tags {
+grid-area: tags;
+display: flex;
+flex-wrap: wrap;
+gap: 6px;
+align-items: center;
+}
+.pc-actions {
+grid-area: actions;
+display: grid;
+grid-template-columns: 1fr 1fr 1.4fr;
+gap: 6px;
+margin-top: 4px;
+}
+.pc-btn {
+min-height: var(--touch-min);
+border-radius: 8px;
+border: 1px solid var(--border-strong);
+background: var(--bg-2);
+color: var(--text-1);
+font-size: 12px;
+font-weight: 600;
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 4px;
+cursor: pointer;
+transition: all 0.15s;
+padding: 0 6px;
+}
+.pc-btn.lock.active { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
+.pc-btn.exclude.active { background: rgba(239, 68, 68, 0.12); color: var(--bad); border-color: rgba(239, 68, 68, 0.3); }
+.pc-btn.add { background: var(--accent); color: var(--bg-0); border-color: var(--accent); }
+.pc-btn.add.in-lineup { background: var(--bg-3); color: var(--text-2); border-color: var(--border); }
+.pc-detail {
+grid-column: 1 / -1;
+margin-top: var(--s3);
+padding-top: var(--s3);
+border-top: 1px solid var(--border);
+display: none;
+}
+.p-card.expanded .pc-detail { display: block; }
+.pc-detail .detail-content { padding: 0; }
+.pc-empty { text-align: center; padding: 48px var(--s3); color: var(--text-2); }
+
+/* ---------- MOBILE (max-width: 767px) ---------- */
 @media (max-width: 767px) {
-/* Hide less-critical columns: Ceil, SG, Form pill, Equity */
-table th:nth-child(6), table td:nth-child(6),  /* Ceiling */
-table th:nth-child(7), table td:nth-child(7),  /* SG score */
-table th:nth-child(9), table td:nth-child(9),  /* Form */
-table th:nth-child(13), table td:nth-child(13)  /* Equity */
-{ display: none; }
+/* Layout swap: cards replace the table */
+.table-wrap { display: none; }
+.player-cards { display: flex; }
+
+/* Reduce sticky chrome — only the tab bar stays pinned on mobile */
+.header { position: static; }
+.toolbar { position: static; top: auto; }
+.tabs { top: 0; }
+
+/* Bigger touch targets — chips stay visually compact, hit area extended via ::before */
+.filter-group { height: auto; min-height: var(--touch-min); }
+.filter-chip { min-height: 36px; padding: 8px 12px; position: relative; }
+.filter-chip::before {
+content: "";
+position: absolute;
+inset: -6px -2px;
+}
+.status-chip-x { position: relative; }
+.status-chip-x::before {
+content: "";
+position: absolute;
+inset: -8px;
+}
+.slot-remove {
+width: var(--touch-min);
+height: var(--touch-min);
+font-size: 18px;
+}
+.sheet-action-btn { width: 40px; height: 40px; font-size: 16px; }
+
+/* Visible scroll affordance — fade right edge so users see content continues */
+.tabs, .filter-strip {
+-webkit-mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 24px), transparent 100%);
+mask-image: linear-gradient(to right, #000 0, #000 calc(100% - 24px), transparent 100%);
+}
+
+/* Lineup sheet polish */
+.sheet-header { padding: var(--s2) var(--s3) var(--s3); }
+.sheet-body { padding: var(--s3); }
+.sheet-footer {
+padding: var(--s3);
+padding-bottom: max(var(--s3), env(safe-area-inset-bottom));
+}
+.sheet-stats { gap: 6px; }
+.slot { min-height: 56px; }
+}
+
+/* Very narrow phones */
+@media (max-width: 360px) {
+.prob-card { padding: var(--s2); }
+.prob-value { font-size: 16px; }
 }
 </style>
 
@@ -1408,6 +1587,8 @@ table th:nth-child(13), table td:nth-child(13)  /* Equity */
     <tbody id="player-tbody"></tbody>
   </table>
 </div>
+
+<div class="player-cards" id="player-cards"></div>
 ```
 
   </div>
@@ -2010,9 +2191,12 @@ function generateTake(p) {
 function renderPool() {
   const players = filterPlayers();
   const tbody = document.getElementById('player-tbody');
+  const cardsContainer = document.getElementById('player-cards');
   let html = '';
+  let cardsHtml = '';
   players.forEach(p => {
-    const expanded = state.expanded === p.name ? 'expanded' : '';
+    const isExpanded = state.expanded === p.name;
+    const expanded = isExpanded ? 'expanded' : '';
     const inLineup = state.lineup.includes(p.name);
     const isLocked = state.locked.has(p.name);
     const isExcluded = state.excluded.has(p.name);
@@ -2047,19 +2231,21 @@ function renderPool() {
       <td>${renderTier(p.tout_tier)}</td>
       <td>${renderStars(p.equity_tier ?? 1)}</td>
     </tr>`;
-    if (state.expanded === p.name) {
+    if (isExpanded) {
       html += renderDetailRow(p);
     }
+    cardsHtml += renderPlayerCard(p, isLocked, isExcluded, inLineup, isExpanded);
   });
   if (players.length === 0) {
     html = '<tr><td colspan="13" style="text-align:center;padding:48px;color:var(--text-2);">No players match your filters</td></tr>';
+    cardsHtml = '<div class="pc-empty">No players match your filters</div>';
   }
   tbody.innerHTML = html;
+  if (cardsContainer) cardsContainer.innerHTML = cardsHtml;
 }
 
-function renderDetailRow(p) {
-  return `<tr class="detail-row"><td colspan="13">
-    <div class="detail-content">
+function renderCardDetail(p) {
+  return `<div class="detail-content">
       <div class="detail-section">
         <h4>SG Breakdown</h4>
         <div class="detail-grid">
@@ -2096,8 +2282,35 @@ function renderDetailRow(p) {
         ${p.news_note ? `<div class="detail-note">⚠️ ${p.news_note}</div>` : ''}
         ${p.buzz_sources && p.buzz_sources !== 'nan' ? `<div class="detail-note" style="border-left-color:var(--sharp);background:rgba(139,92,246,0.08);">📣 ${p.buzz_sources}</div>` : ''}
       </div>
+    </div>`;
+}
+
+function renderDetailRow(p) {
+  return `<tr class="detail-row"><td colspan="13">${renderCardDetail(p)}</td></tr>`;
+}
+
+function renderPlayerCard(p, isLocked, isExcluded, inLineup, expanded) {
+  const cls = ['p-card', expanded && 'expanded', isLocked && 'locked', isExcluded && 'excluded'].filter(Boolean).join(' ');
+  return `<article class="${cls}" data-player="${p.name}">
+    <div class="player-avatar">${getInitials(p.name)}</div>
+    <div class="pc-name">${p.name}</div>
+    <div class="pc-sub">CF #${p.doral_rank ?? '—'}<span class="player-sub-dot"></span>Dist #${p.dist_rank ?? '—'}${p.tout_tier && p.tout_tier !== 'NEUTRAL' ? '<span class="player-sub-dot"></span>' + p.tout_tier : ''}</div>
+    <div class="pc-salary">${fmtMoney(p.salary)}</div>
+    <div class="pc-proj">${p.cash_proj?.toFixed(1) ?? '—'} proj · ${p.ceiling ?? '—'} ceil</div>
+    <div class="pc-stats">
+      <div class="pc-stat"><span class="pc-stat-label">SG</span>${renderScoreBar(p.sg_score)}</div>
+      <div class="pc-stat"><span class="pc-stat-label">Fit</span>${renderScoreBar(p.fit_score)}</div>
+      <div class="pc-stat"><span class="pc-stat-label">Lev</span><span class="pc-stat-val">${renderLeverage(p.leverage)}</span></div>
+      <div class="pc-stat"><span class="pc-stat-label">Own</span><span class="pc-stat-val">${p.own_pct?.toFixed(1) ?? '—'}%</span></div>
     </div>
-  </td></tr>`;
+    <div class="pc-tags">${renderTier(p.tout_tier)} ${renderFormPill(p.form_grade)} ${renderStars(p.equity_tier ?? 1)}</div>
+    <div class="pc-actions">
+      <button class="pc-btn lock ${isLocked ? 'active' : ''}" data-lock="${p.name}"><span>🔒</span><span>${isLocked ? 'Locked' : 'Lock'}</span></button>
+      <button class="pc-btn exclude ${isExcluded ? 'active' : ''}" data-exclude="${p.name}"><span>⊘</span><span>${isExcluded ? 'Out' : 'Fade'}</span></button>
+      <button class="pc-btn add row-check ${inLineup ? 'checked in-lineup' : ''}" data-player="${p.name}"><span>${inLineup ? '✓ In Lineup' : '+ Add'}</span></button>
+    </div>
+    ${expanded ? `<div class="pc-detail">${renderCardDetail(p)}</div>` : ''}
+  </article>`;
 }
 
 function renderLineupPanel() {
@@ -2357,11 +2570,12 @@ function bindEvents() {
       renderStatusBar();
       return;
     }
-    // Add to lineup via row-check (custom checkbox span)
-    if (e.target.classList.contains('row-check')) {
+    // Add to lineup via row-check (custom checkbox span on table; "+ Add" button on card)
+    const checkEl = e.target.closest('.row-check');
+    if (checkEl) {
       e.stopPropagation();
-      const name = e.target.dataset.player;
-      const isChecked = e.target.classList.contains('checked');
+      const name = checkEl.dataset.player;
+      const isChecked = checkEl.classList.contains('checked');
       if (!isChecked) {
         const filledCount = state.lineup.filter(n => n).length;
         if (filledCount >= 6) {
@@ -2398,9 +2612,9 @@ function bindEvents() {
       openBuilder();
       return;
     }
-    // Player row click → expand
-    const row = e.target.closest('tr[data-player]');
-    if (row && !row.classList.contains('detail-row')) {
+    // Player row/card click → expand. Skip if the click landed on an action button.
+    const row = e.target.closest('[data-player]');
+    if (row && !row.classList.contains('detail-row') && !e.target.closest('button,.row-check,[data-lock],[data-exclude]')) {
       const name = row.dataset.player;
       state.expanded = state.expanded === name ? null : name;
       if (state.tab === 'pool') renderPool();

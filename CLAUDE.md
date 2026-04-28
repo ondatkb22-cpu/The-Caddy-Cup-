@@ -18,10 +18,10 @@ The single file is structured in four contiguous regions — know which region y
 
 | Lines | Region | Notes |
 |------:|--------|-------|
-| 8–1308 | `<style>` | Design tokens (`:root` CSS vars at top), mobile-first layout, dark theme |
-| 1313 | `<script type="application/json" id="player-data">` | Slate data — single JSON array of player objects, parsed at startup |
-| 1314–1689 | HTML body | Header, tab bar, `<main>` with one `<div id="tab-*">` per tab, floating lineup sheet, FAB |
-| 1690–2792 | `<script>` | All app logic (vanilla JS, no framework) |
+| 8–1486 | `<style>` | Design tokens (`:root` CSS vars at top), mobile-first layout, dark theme. Three media queries: `min-width: 768px` (desktop scale-up), `min-width: 1200px` (wide), `max-width: 767px` (mobile — card layout for the player pool, sticky-stack reduction, enlarged touch targets, scroll-fade on tabs/filters) |
+| 1491 | `<script type="application/json" id="player-data">` | Slate data — single JSON array of player objects, parsed at startup |
+| 1492–1893 | HTML body | Header, tab bar, `<main>` with one `<div id="tab-*">` per tab, the `.table-wrap` + sibling `.player-cards` container for the pool, floating lineup sheet, FAB |
+| 1894–3010 | `<script>` | All app logic (vanilla JS, no framework) |
 
 Tabs (data-tab values): `pool`, `top-plays`, `builds`, `field`, `guide`, plus `builder` which opens the lineup sheet instead of switching tabs.
 
@@ -34,6 +34,7 @@ Key pieces:
 - **Players** come from `PLAYERS = JSON.parse(...)` at startup. To update the slate, replace the JSON inside the `<script type="application/json" id="player-data">` tag — that's the single source of truth.
 - **Filtering / sorting**: `filterPlayers()` reads `state` and returns the displayed subset.
 - **Renderers** (`renderPool`, `renderLineupPanel`, `renderTopPlays`, `renderField`, `renderGuide`, `renderBuilds`, `renderStatusBar`, `renderSignatureSpecialists`) each rebuild their tab's DOM from `PLAYERS` + `state`. After mutating state, call the renderers that depend on it (typically `renderPool()`, `renderLineupPanel()`, `renderStatusBar()`).
+- **Mobile rendering**: `renderPool()` writes the same filtered list into both the desktop `<table>` (via `renderDetailRow`/inline `<tr>` markup) AND a sibling `<div id="player-cards">` (via `renderPlayerCard`). A media query at `max-width: 767px` toggles which one is `display:none` — no JS branching on viewport, no re-render on resize. The two views share the per-row detail content via `renderCardDetail(p)`, which both `renderDetailRow` and `renderPlayerCard` call. **Cards reuse the same `data-player`, `data-lock`, `data-exclude`, and `class="row-check"` attributes as the table rows** so the body click delegation works for both without per-view branching.
 - **Optimizer**: `optimizeLineup(mode)` (single best lineup) and `buildTopLineups(mode, n, minUnique)` (top-N diverse) use recursive backtracking with salary-cap pruning over the top ~30 candidates ranked by `scoreFn`, then re-rank finalists by Monte Carlo win probability.
 - **Simulation**: `simulateLineup(players, nSims, seed)` uses Box-Muller on `(p.proj, p.sigma)` per player and counts hits above thresholds. **Pass a seed for reproducibility** — the optimizer always does (`12345 + i` for single-best, `7777 + idx` for multi). `mulberry32(seed)` is the deterministic PRNG.
 - **Event handling**: a single delegated click handler on `document.body` (line ~2300) dispatches on `data-lock`, `data-exclude`, `data-unlock`, `data-unexclude`, `data-remove`, `data-load-lineup`, `.row-check`, and player rows. Add new interactive controls by adding a `data-*` attribute and a branch in this handler rather than per-element listeners.
