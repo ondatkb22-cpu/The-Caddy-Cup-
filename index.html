@@ -2191,7 +2191,6 @@ function generateTake(p) {
 function renderPool() {
   const players = filterPlayers();
   const tbody = document.getElementById('player-tbody');
-  const cardsContainer = document.getElementById('player-cards');
   let html = '';
   let cardsHtml = '';
   players.forEach(p => {
@@ -2241,7 +2240,7 @@ function renderPool() {
     cardsHtml = '<div class="pc-empty">No players match your filters</div>';
   }
   tbody.innerHTML = html;
-  if (cardsContainer) cardsContainer.innerHTML = cardsHtml;
+  document.getElementById('player-cards').innerHTML = cardsHtml;
 }
 
 function renderCardDetail(p) {
@@ -2294,7 +2293,7 @@ function renderPlayerCard(p, isLocked, isExcluded, inLineup, expanded) {
   return `<article class="${cls}" data-player="${p.name}">
     <div class="player-avatar">${getInitials(p.name)}</div>
     <div class="pc-name">${p.name}</div>
-    <div class="pc-sub">CF #${p.doral_rank ?? '—'}<span class="player-sub-dot"></span>Dist #${p.dist_rank ?? '—'}${p.tout_tier && p.tout_tier !== 'NEUTRAL' ? '<span class="player-sub-dot"></span>' + p.tout_tier : ''}</div>
+    <div class="pc-sub">CF #${p.doral_rank ?? '—'}<span class="player-sub-dot"></span>Dist #${p.dist_rank ?? '—'}</div>
     <div class="pc-salary">${fmtMoney(p.salary)}</div>
     <div class="pc-proj">${p.cash_proj?.toFixed(1) ?? '—'} proj · ${p.ceiling ?? '—'} ceil</div>
     <div class="pc-stats">
@@ -2614,7 +2613,7 @@ function bindEvents() {
     }
     // Player row/card click → expand. Skip if the click landed on an action button.
     const row = e.target.closest('[data-player]');
-    if (row && !row.classList.contains('detail-row') && !e.target.closest('button,.row-check,[data-lock],[data-exclude]')) {
+    if (row && !row.classList.contains('detail-row') && !e.target.closest('button,.row-check')) {
       const name = row.dataset.player;
       state.expanded = state.expanded === name ? null : name;
       if (state.tab === 'pool') renderPool();
