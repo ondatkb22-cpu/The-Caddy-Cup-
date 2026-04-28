@@ -1385,14 +1385,30 @@ table td:nth-child(13) { display: none; }
   bottom: 0;
   right: 0;
   left: 0;
-  width: 100%;
-  max-height: 80vh;
+  top: auto;
+  width: 100vw;
+  max-width: 100vw;
+  max-height: 75vh;
   border-radius: 16px 16px 0 0;
   border-bottom: none;
   padding-bottom: env(safe-area-inset-bottom);
+  background: var(--bg-1);
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.6);
+  z-index: 1000;
 }
 .floating-builder.collapsed { 
   height: calc(60px + env(safe-area-inset-bottom));
+  max-height: calc(60px + env(safe-area-inset-bottom));
+}
+.floating-builder.closed {
+  transform: translateY(110%);
+  pointer-events: none;
+}
+.fb-body {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+  min-height: 0;
 }
 .fb-header { padding: 14px 16px 12px; }
 .fb-action { 
@@ -2806,6 +2822,11 @@ renderPool();
 renderLineupPanel();
 renderStatusBar();
 bindEvents();
+
+// Default builder closed on mobile (avoids covering content on first load)
+if (window.matchMedia('(max-width: 768px)').matches) {
+  closeBuilder();
+}
 </script>
 
 </body>
