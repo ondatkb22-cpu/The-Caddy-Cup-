@@ -1331,42 +1331,15 @@ table th:nth-child(13), table td:nth-child(13)  /* Equity */
 
 <div class="tabs">
   <div class="tab active" data-tab="pool">Pool</div>
-  <div class="tab" data-tab="builds">Built Lineups</div>
+  <div class="tab" data-tab="top-plays">Top Plays</div>
+  <div class="tab" data-tab="builds">Builds</div>
+  <div class="tab" data-tab="field">Field</div>
   <div class="tab" data-tab="guide">Guide</div>
   <div class="tab" data-tab="builder" id="builder-tab">My Lineup<span class="tab-badge" id="builder-badge">0</span></div>
 </div>
 
 <main>
-  <!-- COLUMN LEGEND -->
-  <div class="legend" id="legend">
-    <div class="legend-item">
-      <span class="legend-key">SG</span>
-      <span class="legend-desc">Strokes Gained — recent form + baseline talent (50/50 blend)</span>
-    </div>
-    <div class="legend-item">
-      <span class="legend-key">Fit</span>
-      <span class="legend-desc">Course fit @ Doral — distance-weighted DG decomposition</span>
-    </div>
-    <div class="legend-item">
-      <span class="legend-key">Form</span>
-      <span class="legend-desc">Last 5 events — cuts, top-10s, top-25s</span>
-    </div>
-    <div class="legend-item">
-      <span class="legend-key">Lev</span>
-      <span class="legend-desc">Leverage — DK pricing vs course fit + market</span>
-    </div>
-    <div class="legend-item">
-      <span class="legend-key">Tier</span>
-      <span class="legend-desc">SHARP · CONTRARIAN · CHALK · FADE based on buzz × ownership</span>
-    </div>
-    <div class="legend-item">
-      <span class="legend-key">Equity</span>
-      <span class="legend-desc">5-star tier from win + top-10 probability</span>
-    </div>
-  </div>
-
   <!-- LOCK / EXCLUDE STATUS BAR — only shows when something is set -->
-
   <div class="status-bar hidden" id="status-bar">
     <div class="status-section" id="status-locked-wrap">
       <span class="status-label">🔒 Locked</span>
@@ -1440,6 +1413,76 @@ table th:nth-child(13), table td:nth-child(13)  /* Equity */
   </div>
 
   <!-- (Lineup Builder is now a floating panel — see below) -->
+
+  <!-- TAB: TOP PLAYS -->
+
+  <div id="tab-top-plays" class="hidden">
+    <div class="guide-grid">
+      <!-- Top Course-Fit Plays -->
+      <div class="guide-card guide-card-wide">
+        <div class="guide-card-header">
+          <span class="guide-icon">⭐</span>
+          <h3>Top Course-Fit Plays</h3>
+        </div>
+        <p class="guide-bullet" style="margin-bottom:14px;font-size:12px;color:var(--text-2);">Top 6 by DataGolf course fit at Doral, filtered to remove poor-form players (2+ recent cuts).</p>
+        <div class="guide-watchlist" id="guide-watchlist"></div>
+      </div>
+
+```
+  <!-- Signature Event Specialists -->
+  <div class="guide-card guide-card-wide">
+    <div class="guide-card-header">
+      <span class="guide-icon">🏆</span>
+      <h3>Signature Event Specialists</h3>
+    </div>
+    <p class="guide-bullet" style="margin-bottom:14px;font-size:12px;color:var(--text-2);">Field players who have BOTH a top-25 finish at a no-cut signature event AND a top-30 Doral course fit. Sources: 2026 Pebble Beach + RBC Heritage (this season, weighted 1.0) and 2025 RBC Heritage + Truist (analog inference, weighted 0.6). Sorted by weighted signature score — current-season finishes pull players up.</p>
+    <div class="sig-event-list" id="sig-event-list"></div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- TAB: FIELD INTEL -->
+
+  <div id="tab-field" class="hidden">
+    <div class="guide-grid">
+      <!-- Field summary -->
+      <div class="guide-card guide-card-wide">
+        <div class="guide-card-header">
+          <span class="guide-icon">📰</span>
+          <h3>Field Intel</h3>
+        </div>
+        <p class="guide-bullet"><b>Field is missing 5 of top 15 OWGR:</b> McIlroy, Schauffele, MacIntyre, Aberg, Matt Fitzpatrick.</p>
+        <p class="guide-bullet"><b>Past Doral winners in field:</b> Adam Scott (2016), Justin Rose (2012). Course history adj is small (~0.075 SG/round) — don't overweight.</p>
+        <p class="guide-bullet"><b>Injury watch:</b> Collin Morikawa (recent back issue flagged). Plays through it but humid 4-round signature event is a different test.</p>
+        <p class="guide-bullet"><b>Course got longer.</b> Plays 7,739 now vs ~7,500 in 2016. Distance edge is bigger than ever.</p>
+      </div>
+
+```
+  <!-- Late updates placeholder -->
+  <div class="guide-card guide-card-wide">
+    <div class="guide-card-header">
+      <span class="guide-icon">⚡</span>
+      <h3>Late Updates</h3>
+    </div>
+    <p class="guide-bullet" style="color:var(--text-2);">Live news, late WDs, weather/wind shifts, and tee time waves will appear here as they're confirmed. Check back Wed evening + Thu morning before lock.</p>
+    <p class="guide-bullet"><b>Last updated:</b> Tue Apr 28 · 10:48 AM CDT</p>
+  </div>
+  
+  <!-- Tout buzz summary -->
+  <div class="guide-card guide-card-wide">
+    <div class="guide-card-header">
+      <span class="guide-icon">🔥</span>
+      <h3>Heaviest Tout Chalk (Fade Watchlist)</h3>
+    </div>
+    <p class="guide-bullet" style="margin-bottom:14px;font-size:12px;color:var(--text-2);">Players showing up across the most expert touts. High consensus = expect inflated ownership = GPP fade candidates.</p>
+    <div id="field-chalk-list"></div>
+  </div>
+</div>
+```
+
+  </div>
 
   <!-- TAB: BUILT LINEUPS -->
 
@@ -1536,36 +1579,38 @@ table th:nth-child(13), table td:nth-child(13)  /* Equity */
     <p class="guide-bullet"><b>Break-even cash:</b> 55.6% on a $25 DU. Below that, you're burning EV.</p>
   </div>
 
-  <!-- Players to Watch -->
+  <!-- Column Legend -->
   <div class="guide-card guide-card-wide">
     <div class="guide-card-header">
-      <span class="guide-icon">⭐</span>
-      <h3>Top Course-Fit Plays</h3>
+      <span class="guide-icon">📋</span>
+      <h3>Column Legend</h3>
     </div>
-    <p class="guide-bullet" style="margin-bottom:14px;font-size:12px;color:var(--text-2);">Top 6 by DataGolf course fit at Doral, filtered to remove poor-form players (2+ recent cuts).</p>
-    <div class="guide-watchlist" id="guide-watchlist"></div>
-  </div>
-
-  <!-- Signature Event Specialists -->
-  <div class="guide-card guide-card-wide">
-    <div class="guide-card-header">
-      <span class="guide-icon">🏆</span>
-      <h3>Signature Event Specialists</h3>
+    <div class="legend">
+      <div class="legend-item">
+        <span class="legend-key">SG</span>
+        <span class="legend-desc">Strokes Gained — recent form + baseline talent (50/50 blend)</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-key">Fit</span>
+        <span class="legend-desc">Course fit @ Doral — distance-weighted DG decomposition</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-key">Form</span>
+        <span class="legend-desc">Last 5 events — cuts, top-10s, top-25s</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-key">Lev</span>
+        <span class="legend-desc">Leverage — DK pricing vs course fit + market</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-key">Tier</span>
+        <span class="legend-desc">SHARP · CONTRARIAN · CHALK · FADE based on buzz × ownership</span>
+      </div>
+      <div class="legend-item">
+        <span class="legend-key">Equity</span>
+        <span class="legend-desc">5-star tier from win + top-10 probability</span>
+      </div>
     </div>
-    <p class="guide-bullet" style="margin-bottom:14px;font-size:12px;color:var(--text-2);">Field players who have BOTH a top-25 finish at a no-cut signature event AND a top-30 Doral course fit. Sources: 2026 Pebble Beach + RBC Heritage (this season, weighted 1.0) and 2025 RBC Heritage + Truist (analog inference, weighted 0.6). Sorted by weighted signature score — current-season finishes pull players up.</p>
-    <div class="sig-event-list" id="sig-event-list"></div>
-  </div>
-
-  <!-- Field intel -->
-  <div class="guide-card guide-card-wide">
-    <div class="guide-card-header">
-      <span class="guide-icon">📰</span>
-      <h3>Field Intel</h3>
-    </div>
-    <p class="guide-bullet"><b>Field is missing 5 of top 15 OWGR:</b> McIlroy, Schauffele, MacIntyre, Aberg, Matt Fitzpatrick.</p>
-    <p class="guide-bullet"><b>Past Doral winners in field:</b> Adam Scott (2016), Justin Rose (2012). Course history adj is small (~0.075 SG/round) — don't overweight.</p>
-    <p class="guide-bullet"><b>Injury watch:</b> Collin Morikawa (recent back issue flagged). Plays through it but humid 4-round signature event is a different test.</p>
-    <p class="guide-bullet"><b>Course got longer.</b> Plays 7,739 now vs ~7,500 in 2016. Distance edge is bigger than ever.</p>
   </div>
 </div>
 ```
@@ -1893,8 +1938,8 @@ function renderSignatureSpecialists() {
   }).join('');
 }
 
-function renderGuide() {
-  // KB's Top Plays = top 6 by course fit (doral_rank) that don't have poor form.
+function renderTopPlays() {
+  // Top 6 by course fit (doral_rank) that don't have poor form.
   // This grounds the watchlist in the dominant signal at this course (distance/CF)
   // while dropping form-broken players (2+ recent cuts) who carry too much variance.
   const watch = PLAYERS
@@ -1914,6 +1959,35 @@ function renderGuide() {
     }).join('');
   }
   renderSignatureSpecialists();
+}
+
+function renderField() {
+  // Heaviest tout chalk = highest buzz scores (multiple sources)
+  // These are the players the most experts are pushing — fade for GPP leverage.
+  const chalk = PLAYERS
+    .filter(p => p.salary && p.buzz != null && p.buzz >= 3.0)
+    .sort((a, b) => b.buzz - a.buzz)
+    .slice(0, 8);
+  const list = document.getElementById('field-chalk-list');
+  if (!list) return;
+  if (chalk.length === 0) {
+    list.innerHTML = '<p class="guide-bullet" style="color:var(--text-2);">No high-buzz consensus chalk identified yet.</p>';
+    return;
+  }
+  list.innerHTML = chalk.map(p => {
+    const sources = (p.buzz_sources || '').split(' · ').filter(Boolean).length;
+    return `<div class="gw-player">
+      <div class="gw-name">${p.name} <span style="font-size:11px;color:var(--text-3);font-weight:500;">· ${sources} source${sources !== 1 ? 's' : ''}</span></div>
+      <div class="gw-stats">Buzz ${p.buzz?.toFixed(1)} · ${p.own_pct?.toFixed(1) ?? '—'}% own · CF#${p.doral_rank ?? '—'} · ${p.tout_tier}</div>
+      <div class="gw-take" style="font-size:10px;color:var(--text-3);">${p.buzz_sources || ''}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderGuide() {
+  // Guide tab is now reference content only — methodology, scoring, course profile.
+  // All cards in this tab are static HTML (no dynamic data to render).
+  // Top Plays + Sig Events moved to tab-top-plays. Field intel moved to tab-field.
 }
 
 function generateTake(p) {
@@ -2157,11 +2231,16 @@ function bindEvents() {
       document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
       t.classList.add('active');
       state.tab = t.dataset.tab;
-      ['tab-pool', 'tab-builds', 'tab-guide'].forEach(id =>
+      // Map dataset.tab → element ID. "top-plays" → "tab-top-plays"
+      ['tab-pool', 'tab-top-plays', 'tab-builds', 'tab-field', 'tab-guide'].forEach(id =>
         document.getElementById(id).classList.add('hidden'));
-      document.getElementById('tab-' + state.tab).classList.remove('hidden');
+      const targetId = 'tab-' + state.tab;
+      const target = document.getElementById(targetId);
+      if (target) target.classList.remove('hidden');
       if (state.tab === 'pool') renderPool();
+      if (state.tab === 'top-plays') renderTopPlays();
       if (state.tab === 'builds') renderBuilds();
+      if (state.tab === 'field') renderField();
       if (state.tab === 'guide') renderGuide();
     });
   });
