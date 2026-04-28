@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Edge | PGA DFS Intelligence</title>
+<title>The Escalade Escalation · PGA Insights by KB</title>
 <style>
   :root {
     --bg-0: #0a0e14;
@@ -52,7 +52,7 @@
     gap: 12px;
   }
   .logo {
-    width: 32px;
+    width: 38px;
     height: 32px;
     background: linear-gradient(135deg, var(--accent), var(--sharp));
     border-radius: 8px;
@@ -61,7 +61,8 @@
     justify-content: center;
     font-weight: 800;
     color: var(--bg-0);
-    font-size: 16px;
+    font-size: 13px;
+    letter-spacing: -0.02em;
   }
   .brand-name {
     font-size: 18px;
@@ -143,70 +144,6 @@
     padding: 24px 32px 80px;
     max-width: 1800px;
     margin: 0 auto;
-  }
-  
-  /* INSIGHT CARDS */
-  .insights {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-  .insight-card {
-    background: var(--bg-1);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 18px;
-    transition: all 0.2s;
-  }
-  .insight-card:hover {
-    border-color: var(--border-light);
-    transform: translateY(-1px);
-  }
-  .insight-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  .insight-title {
-    font-size: 11px;
-    color: var(--text-2);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    font-weight: 600;
-  }
-  .insight-icon {
-    width: 24px;
-    height: 24px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-  }
-  .icon-lock { background: rgba(94, 234, 212, 0.15); color: var(--accent); }
-  .icon-pivot { background: rgba(139, 92, 246, 0.15); color: var(--sharp); }
-  .icon-fade { background: rgba(236, 72, 153, 0.15); color: var(--chalk); }
-  .icon-punt { background: rgba(245, 158, 11, 0.15); color: var(--warn); }
-  .insight-player {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--text-0);
-    margin-bottom: 4px;
-    letter-spacing: -0.01em;
-  }
-  .insight-meta {
-    font-size: 12px;
-    color: var(--text-1);
-    display: flex;
-    gap: 8px;
-    align-items: center;
-  }
-  .insight-meta span:not(:last-child)::after {
-    content: '·';
-    margin-left: 8px;
-    color: var(--text-2);
   }
   
   /* CONTROLS BAR */
@@ -644,6 +581,272 @@
   /* HIDDEN BY DEFAULT */
   .hidden { display: none !important; }
   
+  /* COLUMN LEGEND */
+  .legend {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 12px;
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+  }
+  .legend-item {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+  }
+  .legend-key {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .legend-desc {
+    font-size: 11px;
+    color: var(--text-2);
+    line-height: 1.35;
+  }
+  
+  /* LOCK / EXCLUDE BUTTONS */
+  .row-actions {
+    display: flex;
+    gap: 4px;
+    align-items: center;
+  }
+  .row-action-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: var(--bg-2);
+    color: var(--text-2);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    transition: all 0.15s;
+    padding: 0;
+    flex-shrink: 0;
+  }
+  .row-action-btn:hover {
+    border-color: var(--border-light);
+    color: var(--text-0);
+    background: var(--bg-3);
+  }
+  .row-action-btn.active.lock {
+    background: rgba(94, 234, 212, 0.15);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .row-action-btn.active.exclude {
+    background: rgba(239, 68, 68, 0.15);
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+  tr.locked-row {
+    background: rgba(94, 234, 212, 0.04) !important;
+  }
+  tr.locked-row td:first-child {
+    border-left: 2px solid var(--accent);
+  }
+  tr.excluded-row {
+    opacity: 0.4;
+  }
+  tr.excluded-row td {
+    text-decoration: line-through;
+    text-decoration-color: var(--danger);
+  }
+  
+  /* FLOATING BUILDER PANEL */
+  .floating-builder {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 360px;
+    max-height: calc(100vh - 48px);
+    background: var(--bg-1);
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(94, 234, 212, 0.05);
+    z-index: 200;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, opacity 0.2s;
+    overflow: hidden;
+  }
+  .floating-builder.collapsed {
+    height: 64px;
+    overflow: hidden;
+  }
+  .floating-builder.collapsed .fb-body { display: none; }
+  .floating-builder.closed {
+    transform: translateY(120%) scale(0.9);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .fb-header {
+    padding: 14px 16px 12px;
+    background: linear-gradient(180deg, var(--bg-2), var(--bg-1));
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .fb-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  .fb-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-0);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .fb-title::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 8px var(--accent);
+  }
+  .fb-actions-top {
+    display: flex;
+    gap: 4px;
+  }
+  .fb-action {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background: var(--bg-3);
+    border: none;
+    color: var(--text-1);
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+  }
+  .fb-action:hover {
+    background: var(--bg-hover);
+    color: var(--text-0);
+  }
+  .fb-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    margin-bottom: 8px;
+  }
+  .fb-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .fb-stat-label {
+    font-size: 9px;
+    color: var(--text-2);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+  .fb-stat-val {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-0);
+    font-variant-numeric: tabular-nums;
+  }
+  .fb-body {
+    overflow-y: auto;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* MINI TOGGLE IN TAB BAR */
+  .floating-toggle-mini {
+    margin-left: auto;
+    padding: 8px 14px;
+    background: var(--bg-2);
+    border: 1px solid var(--border-light);
+    border-radius: 8px;
+    color: var(--text-1);
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.15s;
+    align-self: center;
+    margin-top: 7px;
+    margin-bottom: 7px;
+    font-family: inherit;
+  }
+  .floating-toggle-mini:hover {
+    color: var(--text-0);
+    border-color: var(--accent);
+    background: var(--bg-3);
+  }
+  .ft-icon {
+    color: var(--accent);
+    font-size: 14px;
+  }
+  .ft-badge {
+    background: var(--accent);
+    color: var(--bg-0);
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 999px;
+    min-width: 18px;
+    text-align: center;
+  }
+  
+  /* FAB (when fully closed) */
+  .fab {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--bg-0);
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(94, 234, 212, 0.4);
+    z-index: 200;
+    font-size: 22px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.15s;
+  }
+  .fab:hover { transform: scale(1.1); }
+  .fab-count {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    background: var(--sharp);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: 999px;
+    min-width: 20px;
+    text-align: center;
+  }
+  
   /* BUILT LINEUPS TAB */
   .lineup-section-header {
     display: flex;
@@ -781,24 +984,227 @@
     font-size: 12px;
   }
   
+  /* STATUS BAR — locked / excluded chips persistent at top */
+  .status-bar {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .status-section {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 0;
+  }
+  .status-section.empty { display: none; }
+  .status-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    color: var(--text-1);
+    white-space: nowrap;
+  }
+  .status-chips {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    flex: 1;
+  }
+  .status-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: default;
+    border: 1px solid;
+  }
+  .status-chip.locked {
+    background: rgba(94, 234, 212, 0.12);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .status-chip.excluded {
+    background: rgba(239, 68, 68, 0.12);
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+  .status-chip-x {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 11px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+  .status-chip-x:hover { background: rgba(255, 255, 255, 0.2); }
+  .status-clear {
+    padding: 6px 12px;
+    font-size: 11px;
+    flex-shrink: 0;
+  }
+
+  /* GUIDE TAB */
+  .guide-hero {
+    background: linear-gradient(135deg, rgba(94, 234, 212, 0.06), rgba(139, 92, 246, 0.06));
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 28px 24px;
+    margin-bottom: 20px;
+  }
+  .guide-hero-tag {
+    display: inline-block;
+    background: rgba(94, 234, 212, 0.15);
+    color: var(--accent);
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+  }
+  .guide-hero h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-0);
+    letter-spacing: -0.02em;
+    margin-bottom: 6px;
+  }
+  .guide-hero-sub {
+    font-size: 13px;
+    color: var(--text-1);
+  }
+  .guide-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .guide-card {
+    background: var(--bg-1);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .guide-card-wide { grid-column: 1 / -1; }
+  .guide-card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .guide-icon {
+    font-size: 20px;
+    line-height: 1;
+  }
+  .guide-card h3 {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-0);
+    letter-spacing: -0.01em;
+  }
+  .guide-bullet {
+    font-size: 13px;
+    color: var(--text-1);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  .guide-bullet:last-child { margin-bottom: 0; }
+  .guide-bullet b { color: var(--text-0); font-weight: 600; }
+  .guide-bullet code {
+    background: var(--bg-3);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: 'SF Mono', Monaco, monospace;
+    font-size: 11px;
+    color: var(--accent);
+  }
+  .g-stat { color: var(--accent); font-weight: 700; }
+  .g-good { color: var(--good); font-weight: 600; }
+  .g-bad { color: var(--danger); font-weight: 600; }
+  .guide-defs {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .guide-defs > div {
+    font-size: 12px;
+    color: var(--text-1);
+    padding: 8px 10px;
+    background: var(--bg-2);
+    border-radius: 6px;
+    line-height: 1.45;
+  }
+  .guide-defs b { color: var(--accent); font-weight: 700; margin-right: 4px; }
+  .guide-watchlist {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .gw-player {
+    background: var(--bg-2);
+    border-radius: 8px;
+    padding: 12px;
+    border-left: 3px solid var(--accent);
+  }
+  .gw-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-0);
+    margin-bottom: 4px;
+  }
+  .gw-stats {
+    font-size: 11px;
+    color: var(--text-2);
+    margin-bottom: 6px;
+  }
+  .gw-take {
+    font-size: 12px;
+    color: var(--text-1);
+    line-height: 1.4;
+  }
+
   /* TABLET (1200px and below) */
   @media (max-width: 1200px) {
-    .builder-grid { grid-template-columns: 1fr; }
-    .lineup-panel { position: relative; top: 0; }
-    .insights { grid-template-columns: repeat(2, 1fr); }
     .lineup-cards { grid-template-columns: repeat(2, 1fr); }
+    .legend { grid-template-columns: repeat(3, 1fr); }
+    .guide-grid { grid-template-columns: 1fr; }
+    .guide-watchlist { grid-template-columns: repeat(2, 1fr); }
   }
   
-  /* MOBILE (768px and below) */
+  /* MOBILE (768px and below) — iOS optimized */
   @media (max-width: 768px) {
-    body { font-size: 13px; }
+    body { 
+      font-size: 13px;
+      /* iOS safe areas */
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
     
     /* Header collapse */
     .header { 
       padding: 12px 16px; 
       flex-direction: column; 
       align-items: flex-start; 
-      gap: 12px;
+      gap: 10px;
+      padding-top: max(12px, env(safe-area-inset-top));
     }
     .event-info { 
       gap: 12px; 
@@ -811,27 +1217,44 @@
     
     /* Tabs scroll horizontally */
     .tabs { 
-      padding: 0 16px; 
+      padding: 0 12px; 
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
       white-space: nowrap;
+      align-items: center;
+      scrollbar-width: none;
     }
+    .tabs::-webkit-scrollbar { display: none; }
     .tab { 
-      padding: 12px 14px; 
-      font-size: 12px; 
+      padding: 14px 16px; 
+      font-size: 13px; 
       flex-shrink: 0;
+      min-height: 44px; /* iOS touch target */
+      display: flex;
+      align-items: center;
+    }
+    .floating-toggle-mini {
+      margin-left: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      flex-shrink: 0;
+      min-height: 36px;
     }
     
-    main { padding: 16px 12px 60px; }
+    main { padding: 14px 12px 100px; }
     
-    /* Insights stack */
-    .insights { 
-      grid-template-columns: 1fr; 
-      gap: 10px; 
-      margin-bottom: 16px;
+    /* Legend stack */
+    .legend { 
+      grid-template-columns: 1fr 1fr; 
+      gap: 8px 12px; 
+      padding: 12px 14px;
     }
-    .insight-card { padding: 14px; }
-    .insight-player { font-size: 16px; }
+    .legend-desc { font-size: 10px; }
+    
+    /* Status bar more compact */
+    .status-bar { padding: 10px 12px; gap: 10px; }
+    .status-section { width: 100%; }
+    .status-clear { width: 100%; }
     
     /* Controls stack vertically */
     .controls {
@@ -844,30 +1267,43 @@
       flex-wrap: wrap; 
       gap: 6px; 
     }
-    .input-search { width: 100%; }
-    .filter-chip { font-size: 11px; padding: 5px 10px; }
+    .input-search { 
+      width: 100%; 
+      min-height: 40px;
+      font-size: 16px; /* iOS won't zoom on focus if 16+ */
+    }
+    .filter-chip { 
+      font-size: 12px; 
+      padding: 8px 12px;
+      min-height: 36px;
+    }
     
-    /* Player table — convert to card-style rows */
+    /* Player table — horizontal scroll with momentum */
     .table-wrap { 
       border-radius: 8px;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
     }
-    table { font-size: 12px; min-width: 600px; }
-    th { padding: 8px 6px; font-size: 9px; }
-    td { padding: 8px 6px; }
+    table { font-size: 12px; min-width: 700px; }
+    th { padding: 10px 6px; font-size: 11px; }
+    td { padding: 10px 6px; }
     .player-cell { gap: 8px; }
-    .player-avatar { width: 28px; height: 28px; font-size: 10px; }
+    .player-avatar { width: 30px; height: 30px; font-size: 10px; }
     .player-name { font-size: 12px; }
     .player-sub { font-size: 10px; }
-    .score-cell { min-width: 60px; gap: 4px; }
-    .score-bar { min-width: 30px; }
+    .score-cell { min-width: 50px; gap: 4px; }
+    .score-bar { min-width: 24px; }
+    .row-action-btn { 
+      width: 30px; height: 30px; 
+      font-size: 13px; 
+      min-width: 30px; /* prevent shrink */
+    }
     
     /* Hide low-priority columns on mobile */
-    table th:nth-child(5),  /* Ceil */
-    table td:nth-child(5),
-    table th:nth-child(12), /* Equity */
-    table td:nth-child(12) { display: none; }
+    table th:nth-child(6),  /* Ceil */
+    table td:nth-child(6),
+    table th:nth-child(13), /* Equity */
+    table td:nth-child(13) { display: none; }
     
     /* Detail row reflow */
     .detail-content { 
@@ -876,16 +1312,37 @@
       gap: 16px; 
     }
     
-    /* Lineup builder full width */
-    .builder-grid { gap: 12px; }
-    .lineup-panel { 
-      border-radius: 8px;
-      position: relative; 
-      top: 0;
+    /* Floating builder — bottom sheet on mobile */
+    .floating-builder {
+      bottom: 0;
+      right: 0;
+      left: 0;
+      width: 100%;
+      max-height: 80vh;
+      border-radius: 16px 16px 0 0;
+      border-bottom: none;
+      padding-bottom: env(safe-area-inset-bottom);
     }
+    .floating-builder.collapsed { 
+      height: calc(60px + env(safe-area-inset-bottom));
+    }
+    .fb-header { padding: 14px 16px 12px; }
+    .fb-action { 
+      width: 32px; height: 32px; 
+      font-size: 18px;
+    }
+    .btn { min-height: 44px; font-size: 14px; }
+    .fab {
+      bottom: calc(16px + env(safe-area-inset-bottom));
+      right: 16px;
+      width: 56px;
+      height: 56px;
+      font-size: 22px;
+    }
+    
     .prob-grid { padding: 12px; gap: 6px; }
-    .prob-card { padding: 8px 10px; }
-    .prob-value { font-size: 16px; }
+    .prob-card { padding: 10px; }
+    .prob-value { font-size: 17px; }
     .prob-label { font-size: 9px; }
     
     /* Built lineups stack */
@@ -893,36 +1350,46 @@
     .lineup-section-header { 
       flex-direction: column; 
       align-items: flex-start; 
-      gap: 4px;
+      gap: 6px;
       margin: 16px 0 10px; 
     }
     .lineup-section-title { font-size: 16px; }
     
     /* Built card content */
     .built-card-header { padding: 12px 14px; }
-    .bc-stat-val { font-size: 13px; }
-    .bc-player { padding: 6px 8px; font-size: 11px; }
+    .bc-stat-val { font-size: 14px; }
+    .bc-player { padding: 8px 10px; font-size: 12px; min-height: 44px; }
     .bc-player-name { font-size: 12px; }
     
     /* Brand smaller */
     .brand-name { font-size: 16px; }
     .brand-tag { font-size: 9px; }
-    .logo { width: 28px; height: 28px; font-size: 14px; }
+    
+    /* Guide tab */
+    .guide-hero { padding: 20px 16px; }
+    .guide-hero h1 { font-size: 20px; }
+    .guide-hero-sub { font-size: 12px; }
+    .guide-card { padding: 14px 16px; }
+    .guide-card h3 { font-size: 13px; }
+    .guide-bullet { font-size: 12px; }
+    .guide-watchlist { grid-template-columns: 1fr; }
   }
   
   /* SMALL MOBILE (480px and below) */
   @media (max-width: 480px) {
     .header { padding: 10px 12px; }
-    main { padding: 12px 8px 60px; }
+    main { padding: 12px 8px 100px; }
+    
+    .legend { grid-template-columns: 1fr; gap: 6px; padding: 10px 12px; }
     
     /* Hide more columns at very small */
-    table th:nth-child(6),  /* SG */
-    table td:nth-child(6),
-    table th:nth-child(8),  /* Form score bar */
-    table td:nth-child(8) { display: none; }
+    table th:nth-child(7),  /* SG */
+    table td:nth-child(7),
+    table th:nth-child(9),  /* Form */
+    table td:nth-child(9) { display: none; }
     
-    .control-label { display: none; } /* hide labels, keep chips */
-    .event-block:nth-child(2) { display: none; } /* hide "course" line */
+    .control-label { display: none; }
+    .event-block:nth-child(2) { display: none; }
   }
 </style>
 </head>
@@ -932,10 +1399,10 @@
 
 <div class="header">
   <div class="brand">
-    <div class="logo">E</div>
+    <div class="logo">KB</div>
     <div>
-      <div class="brand-name">Edge</div>
-      <div class="brand-tag">PGA DFS Intelligence</div>
+      <div class="brand-name">The Escalade Escalation</div>
+      <div class="brand-tag">PGA Insights by KB</div>
     </div>
   </div>
   <div class="event-info">
@@ -959,14 +1426,55 @@
 </div>
 
 <div class="tabs">
-  <div class="tab active" data-tab="pool">Player Pool</div>
-  <div class="tab" data-tab="builder">Lineup Builder</div>
+  <div class="tab active" data-tab="pool">Pool</div>
   <div class="tab" data-tab="builds">Built Lineups</div>
+  <div class="tab" data-tab="guide">Guide</div>
+  <button class="floating-toggle-mini" id="floating-toggle-tab" title="Open Lineup Builder">
+    <span class="ft-icon">⊞</span> Builder <span class="ft-badge" id="ft-badge">0</span>
+  </button>
 </div>
 
 <main>
-  <!-- INSIGHT CARDS -->
-  <div class="insights" id="insights"></div>
+  <!-- COLUMN LEGEND -->
+  <div class="legend" id="legend">
+    <div class="legend-item">
+      <span class="legend-key">SG</span>
+      <span class="legend-desc">Strokes Gained — recent form + baseline talent (50/50 blend)</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-key">Fit</span>
+      <span class="legend-desc">Course fit @ Doral — distance-weighted DG decomposition</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-key">Form</span>
+      <span class="legend-desc">Last 5 events — cuts, top-10s, top-25s</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-key">Lev</span>
+      <span class="legend-desc">Leverage — DK pricing vs course fit + market</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-key">Tier</span>
+      <span class="legend-desc">SHARP · CONTRARIAN · CHALK · FADE based on buzz × ownership</span>
+    </div>
+    <div class="legend-item">
+      <span class="legend-key">Equity</span>
+      <span class="legend-desc">5-star tier from win + top-10 probability</span>
+    </div>
+  </div>
+
+  <!-- LOCK / EXCLUDE STATUS BAR — only shows when something is set -->
+  <div class="status-bar hidden" id="status-bar">
+    <div class="status-section" id="status-locked-wrap">
+      <span class="status-label">🔒 Locked</span>
+      <div class="status-chips" id="status-locked"></div>
+    </div>
+    <div class="status-section" id="status-excluded-wrap">
+      <span class="status-label">⊘ Excluded</span>
+      <div class="status-chips" id="status-excluded"></div>
+    </div>
+    <button class="btn btn-ghost status-clear" id="status-clear">Clear All</button>
+  </div>
 
   <!-- TAB: PLAYER POOL -->
   <div id="tab-pool">
@@ -1004,16 +1512,17 @@
           <tr>
             <th class="check-col"></th>
             <th class="sortable sort-desc" data-sort="cash_proj">Player</th>
-            <th class="sortable" data-sort="salary">Salary</th>
-            <th class="sortable" data-sort="cash_proj">Proj</th>
-            <th class="sortable" data-sort="ceiling">Ceil</th>
-            <th class="sortable" data-sort="sg_score">SG</th>
-            <th class="sortable" data-sort="fit_score">Fit</th>
-            <th class="sortable" data-sort="form_score">Form</th>
-            <th class="sortable" data-sort="leverage">Lev</th>
-            <th class="sortable" data-sort="own_pct">Own</th>
-            <th>Tier</th>
-            <th class="sortable" data-sort="equity_tier">Equity</th>
+            <th title="Lock or exclude">⚙</th>
+            <th class="sortable" data-sort="salary" title="DK Salary">💰</th>
+            <th class="sortable" data-sort="cash_proj" title="Cash Projection">📊 Proj</th>
+            <th class="sortable" data-sort="ceiling" title="90th-percentile ceiling">🚀 Ceil</th>
+            <th class="sortable" data-sort="sg_score" title="Strokes Gained composite">SG</th>
+            <th class="sortable" data-sort="fit_score" title="Course fit">🎯 Fit</th>
+            <th class="sortable" data-sort="form_score" title="Recent form">📈 Form</th>
+            <th class="sortable" data-sort="leverage" title="Leverage vs market">⚖ Lev</th>
+            <th class="sortable" data-sort="own_pct" title="Projected ownership %">👥 Own</th>
+            <th title="Buzz × ownership tier">Tier</th>
+            <th class="sortable" data-sort="equity_tier" title="Win equity tier">⭐</th>
           </tr>
         </thead>
         <tbody id="player-tbody"></tbody>
@@ -1021,69 +1530,8 @@
     </div>
   </div>
 
-  <!-- TAB: BUILDER -->
-  <div id="tab-builder" class="hidden">
-    <div class="builder-grid">
-      <div class="table-wrap">
-        <table id="builder-table">
-          <thead>
-            <tr>
-              <th class="check-col"></th>
-              <th class="sortable sort-desc" data-sort="cash_proj">Player</th>
-              <th class="sortable" data-sort="salary">$</th>
-              <th class="sortable" data-sort="cash_proj">Proj</th>
-              <th class="sortable" data-sort="own_pct">Own</th>
-              <th>Tier</th>
-              <th class="sortable" data-sort="leverage">Lev</th>
-              <th class="sortable" data-sort="fit_score">Fit</th>
-            </tr>
-          </thead>
-          <tbody id="builder-tbody"></tbody>
-        </table>
-      </div>
-      
-      <div class="lineup-panel">
-        <div class="lineup-header">
-          <div class="lineup-title">My Lineup</div>
-          <div class="lineup-stats">
-            <span>Salary: <span class="lineup-stat-val" id="lineup-salary">$0</span></span>
-            <span>Remaining: <span class="lineup-stat-val" id="lineup-remaining">$50,000</span></span>
-            <span>Slots: <span class="lineup-stat-val" id="lineup-count">0/6</span></span>
-          </div>
-          <div class="salary-bar">
-            <div class="salary-bar-fill" id="salary-bar" style="width:0%"></div>
-          </div>
-        </div>
-        
-        <div class="lineup-slots" id="lineup-slots"></div>
-        
-        <div class="prob-grid" id="prob-grid">
-          <div class="prob-card">
-            <div class="prob-label">Cash %</div>
-            <div class="prob-value" id="prob-cash">—</div>
-          </div>
-          <div class="prob-card">
-            <div class="prob-label">Top 20%</div>
-            <div class="prob-value" id="prob-top20">—</div>
-          </div>
-          <div class="prob-card">
-            <div class="prob-label">Mean</div>
-            <div class="prob-value" id="prob-mean">—</div>
-          </div>
-          <div class="prob-card">
-            <div class="prob-label">Ceiling</div>
-            <div class="prob-value" id="prob-ceiling">—</div>
-          </div>
-        </div>
+  <!-- (Lineup Builder is now a floating panel — see below) -->
 
-        <div class="lineup-actions">
-          <button class="btn btn-primary" id="btn-optimize">Optimize for Cash</button>
-          <button class="btn btn-secondary" id="btn-optimize-gpp">Optimize for GPP</button>
-          <button class="btn btn-ghost" id="btn-clear">Clear Lineup</button>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- TAB: BUILT LINEUPS -->
   <div id="tab-builds" class="hidden">
@@ -1109,7 +1557,156 @@
       <div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">Computing optimal lineups...</div>
     </div>
   </div>
+
+  <!-- TAB: GUIDE -->
+  <div id="tab-guide" class="hidden">
+    <div class="guide-hero">
+      <div class="guide-hero-tag">This Week's Edge</div>
+      <h1>Cadillac Championship · Trump Doral · Blue Monster</h1>
+      <p class="guide-hero-sub">7,739 yards · par 72 · 72-player signature event · No cut · $20M purse</p>
+    </div>
+    
+    <div class="guide-grid">
+      <!-- Course Profile -->
+      <div class="guide-card">
+        <div class="guide-card-header">
+          <span class="guide-icon">🏌️</span>
+          <h3>Course Profile</h3>
+        </div>
+        <p class="guide-bullet"><b>Distance dominates.</b> Driving distance has a <span class="g-stat">0.993 correlation</span> with total course fit at Doral. Accuracy adj is actually <span class="g-stat">−0.517</span> negatively correlated with fit.</p>
+        <p class="guide-bullet"><b>Bermuda greens.</b> TifEagle, fast.</p>
+        <p class="guide-bullet"><b>Water on 10 holes.</b> Bogey avoidance matters; wayward drives get penalized hard.</p>
+        <p class="guide-bullet"><b>Wind exposure.</b> Open links-style, exposed fairways. Wind players get an edge.</p>
+      </div>
+
+      <!-- The Edge Strategy -->
+      <div class="guide-card">
+        <div class="guide-card-header">
+          <span class="guide-icon">🎯</span>
+          <h3>How We Build</h3>
+        </div>
+        <p class="guide-bullet"><b>Distance fit first.</b> Every cash anchor must be in the top 20 by <code>driving_dist_adj</code>. No exceptions at this course.</p>
+        <p class="guide-bullet"><b>Tout buzz = anti-signal.</b> High buzz + high ownership = <span class="tier-badge tier-CHALK">CHALK</span> = fade for GPP.</p>
+        <p class="guide-bullet"><b>Form filter.</b> Poor-form players (2+ cuts in last 5) get a −4 penalty on cash projection.</p>
+        <p class="guide-bullet"><b>Long-course bonus.</b> Players with 0.85+ SG over 20+ starts on courses 7,400+ yards get a +4 boost.</p>
+      </div>
+
+      <!-- Composite Scores -->
+      <div class="guide-card">
+        <div class="guide-card-header">
+          <span class="guide-icon">📊</span>
+          <h3>What the Scores Mean</h3>
+        </div>
+        <div class="guide-defs">
+          <div><b>SG</b> · 50/50 blend of recent form (SG L20) and baseline talent. Normalized 0-100.</div>
+          <div><b>Fit</b> · DataGolf course fit at this course. Pure distance bias here.</div>
+          <div><b>Form</b> · Last 5 events. <span class="g-good">good</span>=0 cuts + 2 top10s. <span class="g-bad">poor</span>=2+ cuts.</div>
+          <div><b>Lev</b> · DK pricing vs course fit + market. Positive = underpriced.</div>
+          <div><b>Tier</b> · Buzz × ownership. SHARP = smart pivots. CHALK = fade. CONTRARIAN = no one talking.</div>
+          <div><b>Equity</b> · Win + top-10 odds rolled into 1-5 stars.</div>
+        </div>
+      </div>
+
+      <!-- Cash vs GPP -->
+      <div class="guide-card">
+        <div class="guide-card-header">
+          <span class="guide-icon">💰</span>
+          <h3>Cash vs GPP</h3>
+        </div>
+        <p class="guide-bullet"><b>Cash games (50/50, double-up).</b> Need to beat field median (~452 DK pts). Maximize <code>cash_proj</code>. High-floor anchors. Ownership doesn't matter.</p>
+        <p class="guide-bullet"><b>GPP (tournaments).</b> Need top 20% (~497) or better. Maximize ceiling × leverage − ownership penalty. One bust kills you, one spike wins big.</p>
+        <p class="guide-bullet"><b>Break-even cash:</b> 55.6% on a $25 DU. Below that, you're burning EV.</p>
+      </div>
+
+      <!-- Players to Watch -->
+      <div class="guide-card guide-card-wide">
+        <div class="guide-card-header">
+          <span class="guide-icon">⭐</span>
+          <h3>Players to Watch (KB's Top Plays)</h3>
+        </div>
+        <div class="guide-watchlist" id="guide-watchlist"></div>
+      </div>
+
+      <!-- Field intel -->
+      <div class="guide-card guide-card-wide">
+        <div class="guide-card-header">
+          <span class="guide-icon">📰</span>
+          <h3>Field Intel</h3>
+        </div>
+        <p class="guide-bullet"><b>Field is missing 5 of top 15 OWGR:</b> McIlroy, Schauffele, MacIntyre, Aberg, Matt Fitzpatrick.</p>
+        <p class="guide-bullet"><b>Past Doral winners in field:</b> Adam Scott (2016), Justin Rose (2012). Course history adj is small (~0.075 SG/round) — don't overweight.</p>
+        <p class="guide-bullet"><b>Injury watch:</b> Collin Morikawa (recent back issue flagged). Plays through it but humid 4-round signature event is a different test.</p>
+        <p class="guide-bullet"><b>Course got longer.</b> Plays 7,739 now vs ~7,500 in 2016. Distance edge is bigger than ever.</p>
+      </div>
+    </div>
+  </div>
 </main>
+
+<!-- FLOATING LINEUP BUILDER -->
+<div class="floating-builder" id="floating-builder">
+  <div class="fb-header">
+    <div class="fb-title-row">
+      <div class="fb-title">My Lineup</div>
+      <div class="fb-actions-top">
+        <button class="fb-action" id="fb-collapse" title="Minimize">—</button>
+        <button class="fb-action" id="fb-close" title="Close">×</button>
+      </div>
+    </div>
+    <div class="fb-stats">
+      <div class="fb-stat">
+        <div class="fb-stat-label">Salary</div>
+        <div class="fb-stat-val" id="lineup-salary">$0</div>
+      </div>
+      <div class="fb-stat">
+        <div class="fb-stat-label">Left</div>
+        <div class="fb-stat-val" id="lineup-remaining">$50,000</div>
+      </div>
+      <div class="fb-stat">
+        <div class="fb-stat-label">Slots</div>
+        <div class="fb-stat-val" id="lineup-count">0/6</div>
+      </div>
+    </div>
+    <div class="salary-bar">
+      <div class="salary-bar-fill" id="salary-bar" style="width:0%"></div>
+    </div>
+  </div>
+  
+  <div class="fb-body">
+    <div class="lineup-slots" id="lineup-slots"></div>
+    
+    <div class="prob-grid" id="prob-grid">
+      <div class="prob-card">
+        <div class="prob-label">Cash %</div>
+        <div class="prob-value" id="prob-cash">—</div>
+      </div>
+      <div class="prob-card">
+        <div class="prob-label">Top 20%</div>
+        <div class="prob-value" id="prob-top20">—</div>
+      </div>
+      <div class="prob-card">
+        <div class="prob-label">Mean</div>
+        <div class="prob-value" id="prob-mean">—</div>
+      </div>
+      <div class="prob-card">
+        <div class="prob-label">Ceiling</div>
+        <div class="prob-value" id="prob-ceiling">—</div>
+      </div>
+    </div>
+
+    <div class="lineup-actions">
+      <button class="btn btn-primary" id="btn-optimize">Optimize for Cash</button>
+      <button class="btn btn-secondary" id="btn-optimize-gpp">Optimize for GPP</button>
+      <button class="btn btn-ghost" id="btn-clear">Clear</button>
+    </div>
+  </div>
+</div>
+
+<!-- FLOATING TOGGLE (FAB) — when builder is closed -->
+<button class="fab" id="fab-open" style="display:none;">
+  <span class="fab-icon">⊞</span>
+  <span class="fab-count" id="fab-count">0</span>
+</button>
+
 
 <script>
 const PLAYERS = JSON.parse(document.getElementById('player-data').textContent);
@@ -1123,6 +1720,10 @@ let state = {
   sort: { col: 'cash_proj', dir: 'desc' },
   expanded: null,
   lineup: [],
+  locked: new Set(),
+  excluded: new Set(),
+  builderOpen: true,
+  builderCollapsed: false,
   fieldThreshold: 452,
 };
 
@@ -1192,35 +1793,67 @@ function filterPlayers() {
 }
 
 // RENDER
-function renderInsights() {
-  const all = PLAYERS.filter(p => p.salary);
-  const lock = all.slice().sort((a,b) => (b.cash_proj??0) - (a.cash_proj??0))[0];
-  const sharp = all.filter(p => p.tout_tier === 'SHARP').slice().sort((a,b) => (b.cash_proj??0) - (a.cash_proj??0))[0];
-  const fade = all.filter(p => p.tout_tier === 'CHALK').slice().sort((a,b) => (b.own_pct??0) - (a.own_pct??0))[0];
-  const punt = all.filter(p => p.salary < 7000 && p.fit_score >= 50 && p.form_score >= 70).slice().sort((a,b) => (b.cash_proj??0) - (a.cash_proj??0))[0];
+// (renderInsights/insightCard removed — replaced by column legend)
+// (renderBuilder removed — floating panel updates via renderLineupPanel)
+
+function renderStatusBar() {
+  const bar = document.getElementById('status-bar');
+  const lockedWrap = document.getElementById('status-locked-wrap');
+  const excludedWrap = document.getElementById('status-excluded-wrap');
+  const lockedDiv = document.getElementById('status-locked');
+  const excludedDiv = document.getElementById('status-excluded');
   
-  const html = [
-    insightCard('Top Lock', lock, 'lock', '🔒'),
-    insightCard('Sharp Pivot', sharp, 'pivot', '⚡'),
-    insightCard('Fade the Chalk', fade, 'fade', '🚫'),
-    insightCard('Best Punt', punt, 'punt', '💎'),
-  ].join('');
-  document.getElementById('insights').innerHTML = html;
+  const hasAny = state.locked.size > 0 || state.excluded.size > 0;
+  bar.classList.toggle('hidden', !hasAny);
+  
+  if (state.locked.size === 0) lockedWrap.classList.add('empty');
+  else lockedWrap.classList.remove('empty');
+  if (state.excluded.size === 0) excludedWrap.classList.add('empty');
+  else excludedWrap.classList.remove('empty');
+  
+  lockedDiv.innerHTML = [...state.locked].map(name => {
+    const p = PLAYERS.find(x => x.name === name);
+    const sal = p?.salary ? ` ($${(p.salary/1000).toFixed(1)}K)` : '';
+    return `<span class="status-chip locked">${name}${sal}<button class="status-chip-x" data-unlock="${name}">×</button></span>`;
+  }).join('');
+  
+  excludedDiv.innerHTML = [...state.excluded].map(name => {
+    return `<span class="status-chip excluded">${name}<button class="status-chip-x" data-unexclude="${name}">×</button></span>`;
+  }).join('');
 }
-function insightCard(title, p, cls, icon) {
-  if (!p) return `<div class="insight-card"><div class="insight-header"><div class="insight-title">${title}</div></div><div class="insight-player" style="color:var(--text-2);">No match</div></div>`;
-  return `<div class="insight-card" data-player="${p.name}">
-    <div class="insight-header">
-      <div class="insight-title">${title}</div>
-      <div class="insight-icon icon-${cls}">${icon}</div>
-    </div>
-    <div class="insight-player">${p.name}</div>
-    <div class="insight-meta">
-      <span>${fmtMoney(p.salary)}</span>
-      <span>${p.cash_proj?.toFixed(1) ?? '—'} proj</span>
-      <span>${p.own_pct?.toFixed(1) ?? '—'}% own</span>
-    </div>
-  </div>`;
+
+function renderGuide() {
+  // Pull top 6 plays by cash_proj for the watchlist, with KB-style takes
+  const watch = PLAYERS
+    .filter(p => p.salary && p.cash_proj)
+    .sort((a, b) => b.cash_proj - a.cash_proj)
+    .slice(0, 6);
+  const list = document.getElementById('guide-watchlist');
+  if (list) {
+    list.innerHTML = watch.map(p => {
+      const valuePerK = ((p.cash_proj || 0) / (p.salary / 1000)).toFixed(2);
+      const take = generateTake(p);
+      return `<div class="gw-player">
+        <div class="gw-name">${p.name}</div>
+        <div class="gw-stats">$${p.salary.toLocaleString()} · ${p.cash_proj?.toFixed(1)} proj · ${valuePerK} pts/$1K · CF#${p.doral_rank}</div>
+        <div class="gw-take">${take}</div>
+      </div>`;
+    }).join('');
+  }
+}
+
+function generateTake(p) {
+  const takes = [];
+  if (p.doral_rank && p.doral_rank <= 5) takes.push('Top-5 course fit at Doral.');
+  else if (p.doral_rank && p.doral_rank <= 10) takes.push('Top-10 course fit.');
+  if (p.tout_tier === 'SHARP') takes.push('Sharp pivot — tout-favored, low ownership.');
+  if (p.tout_tier === 'CHALK') takes.push('Heavy chalk — fade for GPP.');
+  if (p.tout_tier === 'CONTRARIAN') takes.push('Off the board — pure leverage.');
+  if (p.form_grade === 'good') takes.push('In form — no recent cuts.');
+  if (p.form_grade === 'poor') takes.push('Form concern — multiple recent cuts.');
+  if (p.lc_sg && p.lc_sg >= 0.85) takes.push(`Elite long-course SG (${p.lc_sg}).`);
+  if (p.leverage && p.leverage >= 5) takes.push('Underpriced vs market.');
+  return takes.slice(0, 2).join(' ') || 'Solid all-around play.';
 }
 
 function renderPool() {
@@ -1230,7 +1863,10 @@ function renderPool() {
   players.forEach(p => {
     const expanded = state.expanded === p.name ? 'expanded' : '';
     const inLineup = state.lineup.includes(p.name);
-    html += `<tr class="${expanded} ${inLineup ? 'selected' : ''}" data-player="${p.name}">
+    const isLocked = state.locked.has(p.name);
+    const isExcluded = state.excluded.has(p.name);
+    const rowClasses = [expanded, inLineup ? 'selected' : '', isLocked ? 'locked-row' : '', isExcluded ? 'excluded-row' : ''].filter(Boolean).join(' ');
+    html += `<tr class="${rowClasses}" data-player="${p.name}">
       <td class="check-col"><input type="checkbox" class="lineup-check" ${inLineup ? 'checked' : ''} data-player="${p.name}"></td>
       <td>
         <div class="player-cell">
@@ -1239,6 +1875,12 @@ function renderPool() {
             <div class="player-name">${p.name}</div>
             <div class="player-sub">CF #${p.doral_rank ?? '—'} · Dist #${p.dist_rank ?? '—'}</div>
           </div>
+        </div>
+      </td>
+      <td>
+        <div class="row-actions">
+          <button class="row-action-btn lock ${isLocked ? 'active' : ''}" data-lock="${p.name}" title="Lock to lineup">🔒</button>
+          <button class="row-action-btn exclude ${isExcluded ? 'active' : ''}" data-exclude="${p.name}" title="Exclude from lineup">⊘</button>
         </div>
       </td>
       <td class="salary-cell">${fmtMoney(p.salary)}</td>
@@ -1257,13 +1899,13 @@ function renderPool() {
     }
   });
   if (players.length === 0) {
-    html = '<tr><td colspan="12" style="text-align:center;padding:48px;color:var(--text-2);">No players match your filters</td></tr>';
+    html = '<tr><td colspan="13" style="text-align:center;padding:48px;color:var(--text-2);">No players match your filters</td></tr>';
   }
   tbody.innerHTML = html;
 }
 
 function renderDetailRow(p) {
-  return `<tr class="detail-row"><td colspan="12">
+  return `<tr class="detail-row"><td colspan="13">
     <div class="detail-content">
       <div class="detail-section">
         <h4>SG Breakdown</h4>
@@ -1302,35 +1944,6 @@ function renderDetailRow(p) {
       </div>
     </div>
   </td></tr>`;
-}
-
-function renderBuilder() {
-  const players = filterPlayers();
-  const tbody = document.getElementById('builder-tbody');
-  let html = '';
-  players.forEach(p => {
-    const inLineup = state.lineup.includes(p.name);
-    html += `<tr class="${inLineup ? 'selected' : ''}" data-player="${p.name}">
-      <td class="check-col"><input type="checkbox" class="lineup-check" ${inLineup ? 'checked' : ''} data-player="${p.name}"></td>
-      <td>
-        <div class="player-cell">
-          <div class="player-avatar">${getInitials(p.name)}</div>
-          <div class="player-info">
-            <div class="player-name">${p.name}</div>
-            <div class="player-sub">CF #${p.doral_rank ?? '—'} · Dist #${p.dist_rank ?? '—'}</div>
-          </div>
-        </div>
-      </td>
-      <td class="salary-cell">${fmtMoney(p.salary)}</td>
-      <td>${p.cash_proj?.toFixed(1) ?? '—'}</td>
-      <td><span class="own-cell ${getOwnClass(p.own_pct ?? 0)}">${p.own_pct?.toFixed(1) ?? '—'}%</span></td>
-      <td>${renderTier(p.tout_tier)}</td>
-      <td>${renderLeverage(p.leverage)}</td>
-      <td>${renderScoreBar(p.fit_score)}</td>
-    </tr>`;
-  });
-  tbody.innerHTML = html;
-  renderLineupPanel();
 }
 
 function renderLineupPanel() {
@@ -1385,6 +1998,12 @@ function renderLineupPanel() {
     ['prob-cash', 'prob-top20', 'prob-mean', 'prob-ceiling'].forEach(id =>
       document.getElementById(id).textContent = '—');
   }
+  
+  // Update badge counts in tab toggle and FAB
+  const badge = document.getElementById('ft-badge');
+  const fabCount = document.getElementById('fab-count');
+  if (badge) badge.textContent = state.lineup.length;
+  if (fabCount) fabCount.textContent = state.lineup.length;
 }
 
 function simulateLineup(players, nSims = 5000) {
@@ -1422,13 +2041,30 @@ function bindEvents() {
       document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
       t.classList.add('active');
       state.tab = t.dataset.tab;
-      ['tab-pool', 'tab-builder', 'tab-builds'].forEach(id =>
+      ['tab-pool', 'tab-builds', 'tab-guide'].forEach(id =>
         document.getElementById(id).classList.add('hidden'));
       document.getElementById('tab-' + state.tab).classList.remove('hidden');
       if (state.tab === 'pool') renderPool();
-      if (state.tab === 'builder') renderBuilder();
       if (state.tab === 'builds') renderBuilds();
+      if (state.tab === 'guide') renderGuide();
     });
+  });
+  
+  // Floating builder toggle from tab bar
+  document.getElementById('floating-toggle-tab').addEventListener('click', () => {
+    openBuilder();
+  });
+  
+  // FAB to reopen builder
+  document.getElementById('fab-open').addEventListener('click', () => openBuilder());
+  
+  // Builder collapse / close
+  document.getElementById('fb-collapse').addEventListener('click', () => {
+    state.builderCollapsed = !state.builderCollapsed;
+    document.getElementById('floating-builder').classList.toggle('collapsed', state.builderCollapsed);
+  });
+  document.getElementById('fb-close').addEventListener('click', () => {
+    closeBuilder();
   });
   
   // Search
@@ -1464,12 +2100,68 @@ function bindEvents() {
       });
       th.classList.add('sort-' + state.sort.dir);
       if (state.tab === 'pool') renderPool();
-      else if (state.tab === 'builder') renderBuilder();
     });
   });
   
   // Row clicks (delegation)
   document.body.addEventListener('click', e => {
+    // Lock button
+    const lockBtn = e.target.closest('[data-lock]');
+    if (lockBtn) {
+      e.stopPropagation();
+      const name = lockBtn.dataset.lock;
+      if (state.locked.has(name)) {
+        state.locked.delete(name);
+      } else {
+        state.locked.add(name);
+        state.excluded.delete(name);
+        if (!state.lineup.includes(name) && state.lineup.length < 6) {
+          state.lineup.push(name);
+        }
+      }
+      renderPool();
+      renderLineupPanel();
+      renderStatusBar();
+      return;
+    }
+    // Exclude button
+    const excBtn = e.target.closest('[data-exclude]');
+    if (excBtn) {
+      e.stopPropagation();
+      const name = excBtn.dataset.exclude;
+      if (state.excluded.has(name)) {
+        state.excluded.delete(name);
+      } else {
+        state.excluded.add(name);
+        state.locked.delete(name);
+        state.lineup = state.lineup.filter(n => n !== name);
+      }
+      renderPool();
+      renderLineupPanel();
+      renderStatusBar();
+      return;
+    }
+    // Status chip X — unlock
+    const unlockBtn = e.target.closest('[data-unlock]');
+    if (unlockBtn) {
+      e.stopPropagation();
+      state.locked.delete(unlockBtn.dataset.unlock);
+      renderPool();
+      renderLineupPanel();
+      renderStatusBar();
+      return;
+    }
+    // Status chip X — unexclude
+    const unexBtn = e.target.closest('[data-unexclude]');
+    if (unexBtn) {
+      e.stopPropagation();
+      state.excluded.delete(unexBtn.dataset.unexclude);
+      renderPool();
+      renderLineupPanel();
+      renderStatusBar();
+      return;
+    }
+    // Add to lineup checkbox
     if (e.target.classList.contains('lineup-check')) {
       e.stopPropagation();
       const name = e.target.dataset.player;
@@ -1484,26 +2176,25 @@ function bindEvents() {
       } else {
         state.lineup = state.lineup.filter(n => n !== name);
       }
-      if (state.tab === 'pool') renderPool();
-      else if (state.tab === 'builder') renderBuilder();
+      renderPool();
+      renderLineupPanel();
       return;
     }
+    // Remove from lineup slot
     if (e.target.dataset.remove) {
       state.lineup = state.lineup.filter(n => n !== e.target.dataset.remove);
-      renderBuilder();
+      renderPool();
+      renderLineupPanel();
       return;
     }
-    // Insight card click
-    const card = e.target.closest('.insight-card');
-    if (card && card.dataset.player) {
-      // Switch to pool and expand
-      document.querySelector('.tab[data-tab="pool"]').click();
-      state.expanded = card.dataset.player;
+    // Load lineup from built card
+    const loadTarget = e.target.closest('[data-load-lineup]');
+    if (loadTarget) {
+      e.stopPropagation();
+      state.lineup = loadTarget.dataset.loadLineup.split('|');
       renderPool();
-      setTimeout(() => {
-        const row = document.querySelector(`tr[data-player="${card.dataset.player}"]`);
-        if (row) row.scrollIntoView({behavior: 'smooth', block: 'center'});
-      }, 100);
+      renderLineupPanel();
+      openBuilder();
       return;
     }
     // Player row click → expand
@@ -1515,76 +2206,125 @@ function bindEvents() {
     }
   });
   
-  // Optimize buttons
+  // Builder action buttons
   document.getElementById('btn-clear').addEventListener('click', () => {
-    state.lineup = [];
-    renderBuilder();
+    state.lineup = state.lineup.filter(n => state.locked.has(n));  // keep locks
+    renderPool();
+    renderLineupPanel();
   });
   document.getElementById('btn-optimize').addEventListener('click', () => {
     state.lineup = optimizeLineup('cash');
-    renderBuilder();
+    renderPool();
+    renderLineupPanel();
   });
   document.getElementById('btn-optimize-gpp').addEventListener('click', () => {
     state.lineup = optimizeLineup('gpp');
-    renderBuilder();
+    renderPool();
+    renderLineupPanel();
+  });
+  
+  // Status bar "Clear All" — wipes locks + excludes
+  document.getElementById('status-clear').addEventListener('click', () => {
+    state.locked.clear();
+    state.excluded.clear();
+    renderPool();
+    renderLineupPanel();
+    renderStatusBar();
   });
   
   // Rebuild buttons in Built Lineups tab
   document.getElementById('btn-rebuild-cash').addEventListener('click', () => renderBuilds());
   document.getElementById('btn-rebuild-gpp').addEventListener('click', () => renderBuilds());
-  
-  // Load-to-builder from a built card
-  document.body.addEventListener('click', e => {
-    const target = e.target.closest('[data-load-lineup]');
-    if (!target) return;
-    e.stopPropagation();
-    const names = target.dataset.loadLineup.split('|');
-    state.lineup = names;
-    document.querySelector('.tab[data-tab="builder"]').click();
-  });
+}
+
+function openBuilder() {
+  const fb = document.getElementById('floating-builder');
+  const fab = document.getElementById('fab-open');
+  fb.classList.remove('closed');
+  fb.classList.remove('collapsed');
+  state.builderOpen = true;
+  state.builderCollapsed = false;
+  fab.style.display = 'none';
+}
+function closeBuilder() {
+  const fb = document.getElementById('floating-builder');
+  const fab = document.getElementById('fab-open');
+  fb.classList.add('closed');
+  state.builderOpen = false;
+  fab.style.display = 'flex';
 }
 
 // OPTIMIZER (DP knapsack-style with score maximization)
 function optimizeLineup(mode = 'cash') {
   const CAP = 50000;
-  const priced = PLAYERS.filter(p => p.salary && p.cash_proj != null);
+  const MIN_SAL = 49200;  // industry standard: leave no more than $800 on cap
+  // Filter: respect excludes, but keep locked players in the pool always
+  const priced = PLAYERS.filter(p => 
+    p.salary && p.cash_proj != null && !state.excluded.has(p.name)
+  );
   
+  // Industry-standard scoring: points-per-dollar (value) is heavily weighted
+  // This is what RotoGrinders LineupHQ, FantasyLabs, ETR all use under the hood
   const scoreFn = mode === 'cash'
-    ? (p => (p.cash_proj ?? 0))
-    : (p => 0.4 * (p.cash_proj ?? 0) + 0.4 * (p.ceiling ?? 0) + 0.6 * (p.leverage ?? 0) - 0.2 * (p.own_pct ?? 10));
+    ? (p => {
+        // Cash = projection-driven, but value matters for the fillers
+        const proj = p.cash_proj ?? 0;
+        const valuePerK = proj / (p.salary / 1000);
+        return proj + 0.5 * valuePerK;  // value bonus
+      })
+    : (p => {
+        // GPP = ceiling + leverage + value
+        const proj = p.cash_proj ?? 0;
+        const ceil = p.ceiling ?? proj;
+        const valuePerK = proj / (p.salary / 1000);
+        return 0.4 * proj + 0.4 * ceil + 0.6 * (p.leverage ?? 0) - 0.2 * (p.own_pct ?? 10) + 0.3 * valuePerK;
+      });
   
-  // Beam search with salary diversity penalty
-  // Round salaries to nearest 100 for state collapsing
-  const players = priced.map(p => ({...p, sal100: Math.round(p.salary / 100)}));
+  const players = priced.slice().sort((a, b) => scoreFn(b) - scoreFn(a));
   
-  // Sort by score desc — anchor strongest plays
-  players.sort((a, b) => scoreFn(b) - scoreFn(a));
+  // Lock setup
+  const lockedPlayers = players.filter(p => state.locked.has(p.name));
+  const unlockedPool = players.filter(p => !state.locked.has(p.name));
+  const slotsToFill = 6 - lockedPlayers.length;
   
-  // Build many candidate lineups
-  // Strategy: enumerate all valid 6-combos from top 30 by score
-  const TOP = players.slice(0, 30);
+  if (slotsToFill < 0 || slotsToFill > 6) return state.lineup;
+  if (slotsToFill === 0) return lockedPlayers.map(p => p.name);
+  
+  const lockedSal = lockedPlayers.reduce((s, p) => s + p.salary, 0);
+  if (lockedSal > CAP) return state.lineup;
+  
+  // Adaptive pool size — bigger when more is excluded (more alternatives needed)
+  const poolSize = Math.min(unlockedPool.length, 30 + state.excluded.size * 2);
+  const TOP = unlockedPool.slice(0, poolSize);
   const candidates = [];
+  const lockedNames = lockedPlayers.map(p => p.name);
+  const lockedScore = lockedPlayers.reduce((s, p) => s + scoreFn(p), 0);
   
   function recurse(start, picked, sal, score) {
-    if (picked.length === 6) {
-      if (sal >= 47000 && sal <= CAP) {
-        candidates.push({lineup: picked.slice(), salary: sal, score: score});
+    if (picked.length === slotsToFill) {
+      const totalSal = lockedSal + sal;
+      // Min salary floor: industry standard ~$49,200 (don't leave $800+ on cap)
+      if (totalSal >= MIN_SAL && totalSal <= CAP) {
+        candidates.push({
+          lineup: [...lockedNames, ...picked], 
+          salary: totalSal, 
+          score: lockedScore + score,
+        });
       }
       return;
     }
     if (candidates.length > 50000) return;
-    const need = 6 - picked.length;
+    const need = slotsToFill - picked.length;
     for (let i = start; i < TOP.length; i++) {
       const p = TOP[i];
       const newSal = sal + p.salary;
-      if (newSal > CAP) continue;
-      // Pruning: can we still hit min cap?
+      if (lockedSal + newSal > CAP) continue;
       const remaining = need - 1;
-      const cheapestRest = TOP.slice(i + 1).map(x => x.salary).sort((a,b)=>a-b).slice(0, remaining).reduce((a,b)=>a+b, 0);
-      if (newSal + cheapestRest > CAP) continue;
-      // Pruning: max salary remaining slots can give us
-      const expensiveRest = TOP.slice(i + 1).map(x => x.salary).sort((a,b)=>b-a).slice(0, remaining).reduce((a,b)=>a+b, 0);
-      if (newSal + expensiveRest < 47000) continue;
+      const restSorted = TOP.slice(i + 1).map(x => x.salary).sort((a,b)=>a-b);
+      const cheapestRest = restSorted.slice(0, remaining).reduce((a,b)=>a+b, 0);
+      if (lockedSal + newSal + cheapestRest > CAP) continue;
+      const expensiveRest = restSorted.slice().reverse().slice(0, remaining).reduce((a,b)=>a+b, 0);
+      if (lockedSal + newSal + expensiveRest < MIN_SAL) continue;
       
       picked.push(p.name);
       recurse(i + 1, picked, newSal, score + scoreFn(p));
@@ -1593,9 +2333,36 @@ function optimizeLineup(mode = 'cash') {
   }
   recurse(0, [], 0, 0);
   
-  if (candidates.length === 0) return [];
+  // Fallback: if no candidates hit min floor, relax to 47K
+  if (candidates.length === 0) {
+    function recurseRelaxed(start, picked, sal, score) {
+      if (picked.length === slotsToFill) {
+        const totalSal = lockedSal + sal;
+        if (totalSal >= 47000 && totalSal <= CAP) {
+          candidates.push({lineup: [...lockedNames, ...picked], salary: totalSal, score: lockedScore + score});
+        }
+        return;
+      }
+      if (candidates.length > 50000) return;
+      const need = slotsToFill - picked.length;
+      for (let i = start; i < TOP.length; i++) {
+        const p = TOP[i];
+        const newSal = sal + p.salary;
+        if (lockedSal + newSal > CAP) continue;
+        const remaining = need - 1;
+        const restSorted = TOP.slice(i + 1).map(x => x.salary).sort((a,b)=>a-b);
+        const cheapestRest = restSorted.slice(0, remaining).reduce((a,b)=>a+b, 0);
+        if (lockedSal + newSal + cheapestRest > CAP) continue;
+        picked.push(p.name);
+        recurseRelaxed(i + 1, picked, newSal, score + scoreFn(p));
+        picked.pop();
+      }
+    }
+    recurseRelaxed(0, [], 0, 0);
+  }
   
-  // Top 30 by raw score → simulate to pick best probability
+  if (candidates.length === 0) return state.lineup;
+  
   candidates.sort((a, b) => b.score - a.score);
   const top30 = candidates.slice(0, 30);
   
@@ -1616,35 +2383,66 @@ function optimizeLineup(mode = 'cash') {
 // MULTI-LINEUP GENERATOR — produces top N diverse lineups
 function buildTopLineups(mode, n = 3, minUnique = 2) {
   const CAP = 50000;
-  const priced = PLAYERS.filter(p => p.salary && p.cash_proj != null);
+  // Respect excludes; locks must be in every lineup
+  const priced = PLAYERS.filter(p => 
+    p.salary && p.cash_proj != null && !state.excluded.has(p.name)
+  );
   
   const scoreFn = mode === 'cash'
     ? (p => (p.cash_proj ?? 0))
     : (p => 0.4 * (p.cash_proj ?? 0) + 0.4 * (p.ceiling ?? 0) + 0.6 * (p.leverage ?? 0) - 0.2 * (p.own_pct ?? 10));
   
   const players = priced.slice().sort((a, b) => scoreFn(b) - scoreFn(a));
-  const TOP = players.slice(0, 30);
+  const lockedPlayers = players.filter(p => state.locked.has(p.name));
+  const unlockedPool = players.filter(p => !state.locked.has(p.name));
+  const slotsToFill = 6 - lockedPlayers.length;
+  
+  if (slotsToFill <= 0) {
+    if (slotsToFill === 0) {
+      const lp = lockedPlayers.map(p => PLAYERS.find(x => x.name === p.name));
+      const probs = simulateLineup(lp, 2000);
+      return [{
+        lineup: lockedPlayers.map(p => p.name),
+        salary: lockedPlayers.reduce((s,p) => s + p.salary, 0),
+        cash: probs.cash, top20: probs.top20, mean: probs.mean, ceiling: probs.ceiling,
+        target: mode === 'cash' ? probs.cash : probs.top20,
+      }];
+    }
+    return [];
+  }
+  
+  const lockedSal = lockedPlayers.reduce((s, p) => s + p.salary, 0);
+  if (lockedSal > CAP) return [];
+  const lockedScore = lockedPlayers.reduce((s, p) => s + scoreFn(p), 0);
+  const lockedNames = lockedPlayers.map(p => p.name);
+  
+  const TOP = unlockedPool.slice(0, 30);
   const candidates = [];
   
   function recurse(start, picked, sal, score) {
-    if (picked.length === 6) {
-      if (sal >= 47000 && sal <= CAP) {
-        candidates.push({lineup: picked.slice(), salary: sal, score: score});
+    if (picked.length === slotsToFill) {
+      const totalSal = lockedSal + sal;
+      if (totalSal >= 47000 && totalSal <= CAP) {
+        candidates.push({
+          lineup: [...lockedNames, ...picked],
+          salary: totalSal,
+          score: lockedScore + score,
+        });
       }
       return;
     }
     if (candidates.length > 50000) return;
-    const need = 6 - picked.length;
+    const need = slotsToFill - picked.length;
     for (let i = start; i < TOP.length; i++) {
       const p = TOP[i];
       const newSal = sal + p.salary;
-      if (newSal > CAP) continue;
+      if (lockedSal + newSal > CAP) continue;
       const remaining = need - 1;
       const restSorted = TOP.slice(i + 1).map(x => x.salary).sort((a,b)=>a-b);
       const cheapestRest = restSorted.slice(0, remaining).reduce((a,b)=>a+b, 0);
-      if (newSal + cheapestRest > CAP) continue;
+      if (lockedSal + newSal + cheapestRest > CAP) continue;
       const expensiveRest = restSorted.slice().reverse().slice(0, remaining).reduce((a,b)=>a+b, 0);
-      if (newSal + expensiveRest < 47000) continue;
+      if (lockedSal + newSal + expensiveRest < 47000) continue;
       picked.push(p.name);
       recurse(i + 1, picked, newSal, score + scoreFn(p));
       picked.pop();
@@ -1751,8 +2549,9 @@ function renderBuiltCard(lineup, mode, idx) {
 }
 
 // INIT
-renderInsights();
 renderPool();
+renderLineupPanel();
+renderStatusBar();
 bindEvents();
 </script>
 </body>
