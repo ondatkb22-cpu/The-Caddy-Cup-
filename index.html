@@ -979,7 +979,27 @@ display: flex;
 align-items: center;
 justify-content: space-between;
 margin-bottom: var(--s3);
+gap: var(--s2);
 }
+.built-section-actions { display: flex; gap: var(--s2); }
+.btn-sm { padding: 6px 12px; min-height: 32px; font-size: 12px; }
+
+/* Overlap-highlighting in built-cards: players appearing in multiple
+   lineups within the same section get a colored left-border + label. */
+.bc-player.overlap-2 { border-left: 2px solid rgba(245, 158, 11, 0.6); }
+.bc-player.overlap-3 { border-left: 2px solid var(--accent); background: rgba(94, 234, 212, 0.04); }
+.bc-overlap-tag {
+display: inline-block;
+font-size: 9px;
+font-weight: 700;
+padding: 1px 5px;
+border-radius: 3px;
+margin-left: 6px;
+text-transform: uppercase;
+letter-spacing: 0.04em;
+}
+.bc-overlap-tag.overlap-2 { background: rgba(245, 158, 11, 0.15); color: var(--warn); }
+.bc-overlap-tag.overlap-3 { background: rgba(94, 234, 212, 0.15); color: var(--accent); }
 .built-section-title {
 font-size: 16px;
 font-weight: 700;
@@ -1734,7 +1754,10 @@ padding-bottom: max(var(--s3), env(safe-area-inset-bottom));
           <div class="built-section-title">Cash Builds</div>
           <div class="built-section-sub">Optimized for double-up · top 3 by P(field median+)</div>
         </div>
-        <button class="btn btn-secondary" id="btn-rebuild-cash">Rebuild</button>
+        <div class="built-section-actions">
+          <button class="btn btn-ghost btn-sm" id="btn-csv-cash" title="Download CSV">⬇ CSV</button>
+          <button class="btn btn-secondary" id="btn-rebuild-cash">Rebuild</button>
+        </div>
       </div>
       <div class="built-cards" id="cash-builds">
         <div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">Computing optimal lineups...</div>
@@ -1747,7 +1770,10 @@ padding-bottom: max(var(--s3), env(safe-area-inset-bottom));
       <div class="built-section-title">GPP Builds</div>
       <div class="built-section-sub">Optimized for tournaments · top 3 by P(top 20%) with low-own diversity</div>
     </div>
-    <button class="btn btn-secondary" id="btn-rebuild-gpp">Rebuild</button>
+    <div class="built-section-actions">
+      <button class="btn btn-ghost btn-sm" id="btn-csv-gpp" title="Download CSV">⬇ CSV</button>
+      <button class="btn btn-secondary" id="btn-rebuild-gpp">Rebuild</button>
+    </div>
   </div>
   <div class="built-cards" id="gpp-builds">
     <div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">Computing optimal lineups...</div>
@@ -2821,6 +2847,17 @@ function bindEvents() {
   // Rebuild buttons in Built Lineups tab
   document.getElementById('btn-rebuild-cash').addEventListener('click', () => renderBuilds());
   document.getElementById('btn-rebuild-gpp').addEventListener('click', () => renderBuilds());
+  // CSV downloads — guard against clicking before builds have computed
+  document.getElementById('btn-csv-cash').addEventListener('click', () => {
+    if (!_lastBuilds.cash.length) { showToast('Open Builds tab first to compute lineups'); return; }
+    downloadCSV('caddycup26-cash-lineups.csv', lineupsToCSV(_lastBuilds.cash, 'cash'));
+    showToast('Downloaded cash lineups CSV');
+  });
+  document.getElementById('btn-csv-gpp').addEventListener('click', () => {
+    if (!_lastBuilds.gpp.length) { showToast('Open Builds tab first to compute lineups'); return; }
+    downloadCSV('caddycup26-gpp-lineups.csv', lineupsToCSV(_lastBuilds.gpp, 'gpp'));
+    showToast('Downloaded GPP lineups CSV');
+  });
 }
 
 // Drag-to-dismiss on the lineup sheet — drag the handle or header strip down to close.
@@ -3145,32 +3182,47 @@ function buildTopLineups(mode, n = 3, minUnique = 2) {
   return picked;
 }
 
+// Cache last computed builds so CSV export and overlap counts don't have to recompute.
+let _lastBuilds = { cash: [], gpp: [] };
+
+// Compute "this name appears in N of these lineups". Returns Map<name, count>.
+function overlapCounts(lineups) {
+  const counts = new Map();
+  for (const l of lineups) {
+    for (const n of l.lineup) {
+      counts.set(n, (counts.get(n) || 0) + 1);
+    }
+  }
+  return counts;
+}
+
 function renderBuilds() {
-  // Show loading state
   document.getElementById('cash-builds').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">Computing optimal lineups...</div>';
   document.getElementById('gpp-builds').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">Computing optimal lineups...</div>';
-  
-  // Defer to next tick so loading state renders
+
   setTimeout(() => {
     const cash = buildTopLineups('cash', 3, 2);
     const gpp = buildTopLineups('gpp', 3, 2);
-    document.getElementById('cash-builds').innerHTML = cash.length 
-      ? cash.map((c, i) => renderBuiltCard(c, 'cash', i)).join('')
+    _lastBuilds = { cash, gpp };
+    const cashOverlap = overlapCounts(cash);
+    const gppOverlap = overlapCounts(gpp);
+    document.getElementById('cash-builds').innerHTML = cash.length
+      ? cash.map((c, i) => renderBuiltCard(c, 'cash', i, cashOverlap)).join('')
       : '<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">No valid lineups found</div>';
     document.getElementById('gpp-builds').innerHTML = gpp.length
-      ? gpp.map((c, i) => renderBuiltCard(c, 'gpp', i)).join('')
+      ? gpp.map((c, i) => renderBuiltCard(c, 'gpp', i, gppOverlap)).join('')
       : '<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">No valid lineups found</div>';
   }, 50);
 }
 
-function renderBuiltCard(lineup, mode, idx) {
+function renderBuiltCard(lineup, mode, idx, overlap) {
   const lp = lineup.lineup.map(n => PLAYERS.find(x => x.name === n)).sort((a,b) => b.salary - a.salary);
   const cumOwn = lp.reduce((s, p) => s + (p.own_pct ?? 0), 0);
   const labelMap = ['#1 Optimal', '#2 Pivot', '#3 Diversifier'];
   const isCash = mode === 'cash';
   const targetLabel = isCash ? 'Cash %' : 'Top 20%';
   const targetValue = ((isCash ? lineup.cash : lineup.top20) * 100).toFixed(1) + '%';
-  
+
   return `<div class="built-card">
     <div class="built-card-header">
       <div>
@@ -3193,20 +3245,60 @@ function renderBuiltCard(lineup, mode, idx) {
       </div>
     </div>
     <div class="built-card-body">
-      ${lp.map(p => `
-        <div class="bc-player">
+      ${lp.map(p => {
+        const c = overlap?.get(p.name) || 1;
+        const cls = c >= 3 ? ' overlap-3' : c === 2 ? ' overlap-2' : '';
+        const tag = c >= 2 ? `<span class="bc-overlap-tag overlap-${Math.min(c,3)}">${c}×</span>` : '';
+        return `
+        <div class="bc-player${cls}">
           <div>
-            <div class="bc-player-name">${p.name}</div>
+            <div class="bc-player-name">${p.name}${tag}</div>
             <div class="bc-player-meta">${p.cash_proj?.toFixed(1) ?? '—'} proj · ${p.own_pct?.toFixed(1) ?? '—'}% own · CF#${p.doral_rank ?? '—'}</div>
           </div>
           <div class="bc-player-salary">$${p.salary.toLocaleString()}</div>
-        </div>
-      `).join('')}
+        </div>`;
+      }).join('')}
     </div>
     <div class="built-card-actions">
       <button class="btn btn-secondary" data-load-lineup="${lineup.lineup.join('|')}">Load to Builder</button>
     </div>
   </div>`;
+}
+
+// CSV — wide format, one row per lineup, players sorted by salary desc.
+function lineupsToCSV(lineups, mode) {
+  const header = ['Rank', 'Mode', 'Salary', 'CashPct', 'Top20Pct', 'Mean', 'Ceiling', 'P1', 'P2', 'P3', 'P4', 'P5', 'P6'];
+  const rows = lineups.map((c, i) => {
+    const players = c.lineup
+      .map(n => PLAYERS.find(x => x.name === n))
+      .filter(Boolean)
+      .sort((a, b) => b.salary - a.salary);
+    const names = players.map(p => `"${p.name.replace(/"/g, '""')}"`);
+    while (names.length < 6) names.push('');
+    return [
+      `#${i+1}`,
+      mode.toUpperCase(),
+      c.salary,
+      (c.cash * 100).toFixed(1),
+      (c.top20 * 100).toFixed(1),
+      c.mean.toFixed(1),
+      c.ceiling.toFixed(1),
+      ...names,
+    ].join(',');
+  });
+  return [header.join(','), ...rows].join('\n');
+}
+
+function downloadCSV(filename, csv) {
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 100);
 }
 
 // INIT
