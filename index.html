@@ -2605,7 +2605,10 @@ function bindEvents() {
         document.getElementById(id).classList.add('hidden'));
       const targetId = 'tab-' + state.tab;
       const target = document.getElementById(targetId);
-      if (target) target.classList.remove('hidden');
+      if (target) {
+        target.classList.remove('hidden');
+        fadeTabIn(target);
+      }
       if (state.tab === 'pool') renderPool();
       if (state.tab === 'top-plays') renderTopPlays();
       if (state.tab === 'builds') renderBuilds();
@@ -2818,6 +2821,54 @@ function bindEvents() {
   // Rebuild buttons in Built Lineups tab
   document.getElementById('btn-rebuild-cash').addEventListener('click', () => renderBuilds());
   document.getElementById('btn-rebuild-gpp').addEventListener('click', () => renderBuilds());
+}
+
+// Drag-to-dismiss on the lineup sheet — drag the handle or header strip down to close.
+// Skips clicks on buttons inside the header so collapse/close still work.
+function bindSheetDrag() {
+  const sheet = document.getElementById('floating-builder');
+  if (!sheet) return;
+  const handle = sheet.querySelector('.sheet-handle');
+  const header = sheet.querySelector('.sheet-header');
+  let startY = null;
+  let dy = 0;
+
+  const onStart = (e) => {
+    if (!sheet.classList.contains('open')) return;
+    if (e.target.closest('button')) return;
+    startY = e.touches[0].clientY;
+    dy = 0;
+    sheet.style.transition = 'none';
+  };
+  const onMove = (e) => {
+    if (startY == null) return;
+    dy = Math.max(0, e.touches[0].clientY - startY);
+    sheet.style.transform = `translateY(${dy}px)`;
+  };
+  const onEnd = () => {
+    if (startY == null) return;
+    sheet.style.transition = '';
+    sheet.style.transform = '';
+    if (dy > 100) closeBuilder();
+    startY = null;
+    dy = 0;
+  };
+
+  [handle, header].filter(Boolean).forEach(el => {
+    el.addEventListener('touchstart', onStart, { passive: true });
+    el.addEventListener('touchmove', onMove, { passive: true });
+    el.addEventListener('touchend', onEnd);
+    el.addEventListener('touchcancel', onEnd);
+  });
+}
+
+// Animate the new tab body into view on tab switch.
+function fadeTabIn(targetEl) {
+  if (!targetEl || !targetEl.animate) return;
+  targetEl.animate(
+    [{ opacity: 0, transform: 'translateY(6px)' }, { opacity: 1, transform: 'translateY(0)' }],
+    { duration: 180, easing: 'cubic-bezier(0.4, 0, 0.2, 1)' }
+  );
 }
 
 function openBuilder() {
@@ -3166,6 +3217,7 @@ renderPool();
 renderLineupPanel();
 renderStatusBar();
 bindEvents();
+bindSheetDrag();
 syncDOMFromState();
 requestAnimationFrame(updateTabIndicator);
 
