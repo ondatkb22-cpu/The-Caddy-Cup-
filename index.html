@@ -1897,6 +1897,51 @@ let state = {
   fieldThreshold: 452,
 };
 
+// PERSISTENCE — survives page reloads. Tab + expanded are transient and not persisted.
+const STORAGE_KEY = 'caddy-cup-26-state-v1';
+function persistState() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      lineup: state.lineup,
+      locked: [...state.locked],
+      excluded: [...state.excluded],
+      sort: state.sort,
+      tier: state.tier,
+      salary: state.salary,
+      form: state.form,
+      search: state.search,
+    }));
+  } catch (e) { /* private mode / quota — ignore */ }
+}
+function restoreState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const d = JSON.parse(raw);
+    if (Array.isArray(d.lineup)) state.lineup = padLineup(d.lineup);
+    if (Array.isArray(d.locked)) state.locked = new Set(d.locked);
+    if (Array.isArray(d.excluded)) state.excluded = new Set(d.excluded);
+    if (d.sort?.col) state.sort = d.sort;
+    if (typeof d.tier === 'string') state.tier = d.tier;
+    if (typeof d.salary === 'string') state.salary = d.salary;
+    if (typeof d.form === 'string') state.form = d.form;
+    if (typeof d.search === 'string') state.search = d.search;
+  } catch (e) { /* ignore */ }
+}
+function syncDOMFromState() {
+  const searchInput = document.getElementById('search');
+  if (searchInput) searchInput.value = state.search || '';
+  ['tier', 'salary', 'form'].forEach(group => {
+    document.querySelectorAll(`[data-${group}]`).forEach(c => {
+      c.classList.toggle('active', c.dataset[group] === state[group]);
+    });
+  });
+  document.querySelectorAll('th.sortable').forEach(th => {
+    th.classList.remove('sort-asc', 'sort-desc');
+    if (th.dataset.sort === state.sort.col) th.classList.add('sort-' + state.sort.dir);
+  });
+}
+
 // HELPERS
 function getInitials(name) {
   const parts = name.split(' ');
@@ -2251,6 +2296,7 @@ function renderPool() {
   }
   tbody.innerHTML = html;
   document.getElementById('player-cards').innerHTML = cardsHtml;
+  persistState();
 }
 
 function renderCardDetail(p) {
@@ -3014,12 +3060,14 @@ function renderBuiltCard(lineup, mode, idx) {
 }
 
 // INIT
+restoreState();
 const pricedCount = PLAYERS.filter(p => p.salary).length;
 document.getElementById('priced-count').textContent = `Live · ${pricedCount} players priced`;
 renderPool();
 renderLineupPanel();
 renderStatusBar();
 bindEvents();
+syncDOMFromState();
 requestAnimationFrame(updateTabIndicator);
 
 // Show FAB on mobile by default so users can find the builder
