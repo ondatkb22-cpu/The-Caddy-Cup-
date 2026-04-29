@@ -931,21 +931,20 @@ border: 1.5px solid var(--accent);
 /* ---------- TOAST ---------- */
 .toast {
 position: fixed;
-bottom: calc(var(--s7) + env(safe-area-inset-bottom));
+top: calc(var(--s4) + env(safe-area-inset-top));
 left: 50%;
-transform: translateX(-50%) translateY(20px);
+transform: translateX(-50%) translateY(-24px);
 z-index: 250;
-background: var(--bg-2);
-border: 1px solid var(--border-strong);
-color: var(--text-0);
+background: var(--accent);
+color: var(--bg-0);
 padding: 10px 18px;
 border-radius: 999px;
 font-size: 13px;
-font-weight: 600;
-box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+font-weight: 700;
+box-shadow: 0 8px 28px rgba(94, 234, 212, 0.35), 0 2px 8px rgba(0, 0, 0, 0.4);
 opacity: 0;
 pointer-events: none;
-transition: opacity 0.2s, transform 0.2s;
+transition: opacity 0.22s, transform 0.22s cubic-bezier(0.4, 0, 0.2, 1);
 white-space: nowrap;
 max-width: calc(100vw - 32px);
 }
@@ -1480,26 +1479,28 @@ align-items: center;
 .pc-actions {
 grid-area: actions;
 display: grid;
-grid-template-columns: 0.9fr 0.9fr 2fr;
+grid-template-columns: 1fr 1fr;
 gap: 6px;
 margin-top: 4px;
 }
 .pc-btn {
 min-height: var(--touch-min);
+width: 100%;
 border-radius: 8px;
 border: 1px solid var(--border-strong);
 background: var(--bg-2);
 color: var(--text-1);
-font-size: 12px;
+font-size: 13px;
 font-weight: 600;
-display: inline-flex;
+display: flex;
 align-items: center;
 justify-content: center;
-gap: 4px;
+gap: 6px;
 cursor: pointer;
 transition: all 0.15s;
-padding: 0 6px;
+padding: 0 12px;
 }
+.pc-btn.add { grid-column: 1 / -1; min-height: 48px; font-size: 14px; }
 .pc-btn.lock.active { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
 .pc-btn.exclude.active { background: rgba(239, 68, 68, 0.12); color: var(--bad); border-color: rgba(239, 68, 68, 0.3); }
 .pc-btn.add { background: var(--accent); color: var(--bg-0); border-color: var(--accent); font-weight: 700; box-shadow: 0 2px 10px rgba(94, 234, 212, 0.18); }
