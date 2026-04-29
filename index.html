@@ -2890,8 +2890,13 @@ function bindEvents() {
   });
   
   // Rebuild buttons in Built Lineups tab
-  document.getElementById('btn-rebuild-cash').addEventListener('click', () => renderBuilds());
-  document.getElementById('btn-rebuild-gpp').addEventListener('click', () => renderBuilds());
+  const cycleBuildVariant = () => {
+    _buildSeed++;
+    renderBuilds();
+    showToast(`Variant ${_buildSeed + 1}`);
+  };
+  document.getElementById('btn-rebuild-cash').addEventListener('click', cycleBuildVariant);
+  document.getElementById('btn-rebuild-gpp').addEventListener('click', cycleBuildVariant);
   // CSV downloads — guard against clicking before builds have computed
   document.getElementById('btn-csv-cash').addEventListener('click', () => {
     if (!_lastBuilds.cash.length) { showToast('Open Builds tab first to compute lineups'); return; }
@@ -3110,7 +3115,7 @@ function optimizeLineup(mode = 'cash') {
 }
 
 // MULTI-LINEUP GENERATOR — produces top N diverse lineups
-function buildTopLineups(mode, n = 3, minUnique = 2) {
+function buildTopLineups(mode, n = 3, minUnique = 2, seedOffset = 0) {
   const CAP = 50000;
   // Respect excludes; locks must be in every lineup
   const priced = PLAYERS.filter(p => 
@@ -3198,8 +3203,10 @@ function buildTopLineups(mode, n = 3, minUnique = 2) {
   const evalPool = candidates.slice(0, 80);
   const scored = evalPool.map((c, idx) => {
     const lp = c.lineup.map(n => PLAYERS.find(x => x.name === n));
-    // Seed by candidate index so multiple calls give same ranking
-    const probs = simulateLineup(lp, 3000, 7777 + idx);
+    // Seed by candidate index + cycling offset. Same offset = stable ranking;
+    // Rebuild click increments offset to shuffle the Monte Carlo re-rank and
+    // surface different "top 3" picks among score-equivalent candidates.
+    const probs = simulateLineup(lp, 3000, 7777 + idx + seedOffset * 9973);
     return {
       ...c,
       cash: probs.cash,
@@ -3229,6 +3236,10 @@ function buildTopLineups(mode, n = 3, minUnique = 2) {
 
 // Cache last computed builds so CSV export and overlap counts don't have to recompute.
 let _lastBuilds = { cash: [], gpp: [] };
+// Rebuild cycling — each manual Rebuild click increments this so the Monte Carlo
+// re-rank seed shifts, producing different top-3 selections among lineups whose
+// composite scores are within noise of each other.
+let _buildSeed = 0;
 
 // Compute "this name appears in N of these lineups". Returns Map<name, count>.
 function overlapCounts(lineups) {
@@ -3246,8 +3257,8 @@ function renderBuilds() {
   document.getElementById('gpp-builds').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-2);">Computing optimal lineups...</div>';
 
   setTimeout(() => {
-    const cash = buildTopLineups('cash', 3, 2);
-    const gpp = buildTopLineups('gpp', 3, 2);
+    const cash = buildTopLineups('cash', 3, 2, _buildSeed);
+    const gpp = buildTopLineups('gpp', 3, 2, _buildSeed);
     _lastBuilds = { cash, gpp };
     const cashOverlap = overlapCounts(cash);
     const gppOverlap = overlapCounts(gpp);
