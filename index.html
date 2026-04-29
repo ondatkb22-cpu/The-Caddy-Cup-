@@ -1480,7 +1480,7 @@ align-items: center;
 .pc-actions {
 grid-area: actions;
 display: grid;
-grid-template-columns: 1fr 1fr 1.4fr;
+grid-template-columns: 1fr 1fr 1fr;
 gap: 6px;
 margin-top: 4px;
 }
@@ -1502,8 +1502,8 @@ padding: 0 6px;
 }
 .pc-btn.lock.active { background: var(--accent-dim); color: var(--accent); border-color: var(--accent); }
 .pc-btn.exclude.active { background: rgba(239, 68, 68, 0.12); color: var(--bad); border-color: rgba(239, 68, 68, 0.3); }
-.pc-btn.add { background: var(--accent); color: var(--bg-0); border-color: var(--accent); }
-.pc-btn.add.in-lineup { background: var(--bg-3); color: var(--text-2); border-color: var(--border); }
+.pc-btn.add { color: var(--accent); border-color: rgba(94, 234, 212, 0.4); background: rgba(94, 234, 212, 0.06); }
+.pc-btn.add.in-lineup { background: var(--accent); color: var(--bg-0); border-color: var(--accent); box-shadow: 0 0 12px rgba(94, 234, 212, 0.25); }
 .pc-detail {
 grid-column: 1 / -1;
 margin-top: var(--s3);
@@ -2469,7 +2469,7 @@ function renderPlayerCard(p, isLocked, isExcluded, inLineup, expanded) {
     <div class="pc-actions">
       <button class="pc-btn lock ${isLocked ? 'active' : ''}" data-lock="${p.name}"><span>🔒</span><span>${isLocked ? 'Locked' : 'Lock'}</span></button>
       <button class="pc-btn exclude ${isExcluded ? 'active' : ''}" data-exclude="${p.name}"><span>⊘</span><span>${isExcluded ? 'Out' : 'Fade'}</span></button>
-      <button class="pc-btn add row-check ${inLineup ? 'checked in-lineup' : ''}" data-player="${p.name}"><span>${inLineup ? '✓ In Lineup' : '+ Add'}</span></button>
+      <button class="pc-btn add row-check ${inLineup ? 'checked in-lineup' : ''}" data-player="${p.name}"><span>${inLineup ? '✓' : '+'}</span><span>${inLineup ? 'Added' : 'Add'}</span></button>
     </div>
     ${expanded ? `<div class="pc-detail">${renderCardDetail(p)}</div>` : ''}
   </article>`;
