@@ -928,6 +928,50 @@ justify-content: center;
 border: 1.5px solid var(--accent);
 }
 
+/* ---------- TOAST ---------- */
+.toast {
+position: fixed;
+bottom: calc(var(--s7) + env(safe-area-inset-bottom));
+left: 50%;
+transform: translateX(-50%) translateY(20px);
+z-index: 250;
+background: var(--bg-2);
+border: 1px solid var(--border-strong);
+color: var(--text-0);
+padding: 10px 18px;
+border-radius: 999px;
+font-size: 13px;
+font-weight: 600;
+box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+opacity: 0;
+pointer-events: none;
+transition: opacity 0.2s, transform 0.2s;
+white-space: nowrap;
+max-width: calc(100vw - 32px);
+}
+.toast.show {
+opacity: 1;
+transform: translateX(-50%) translateY(0);
+}
+
+/* ---------- CAP-BREACH BANNER ---------- */
+.cap-breach {
+display: flex;
+align-items: center;
+gap: 8px;
+background: rgba(239, 68, 68, 0.08);
+border: 1px solid rgba(239, 68, 68, 0.3);
+color: var(--bad);
+padding: 10px 12px;
+border-radius: 8px;
+font-size: 12px;
+font-weight: 600;
+margin-bottom: var(--s2);
+}
+.cap-breach.hidden { display: none; }
+.cap-breach b { color: var(--bad); font-weight: 800; }
+#cap-breach-amount { font-variant-numeric: tabular-nums; }
+
 /* ---------- BUILT LINEUPS ---------- */
 .built-section { margin-bottom: var(--s7); }
 .built-section-header {
@@ -1841,6 +1885,10 @@ padding-bottom: max(var(--s3), env(safe-area-inset-bottom));
   </div>
 
   <div class="sheet-body">
+    <div class="cap-breach hidden" id="cap-breach">
+      <span>⚠️</span>
+      <span><b>Over salary cap.</b> Reduce <span id="cap-breach-amount">$0</span> to submit.</span>
+    </div>
     <div id="lineup-slots"></div>
 
 <div class="prob-grid" id="prob-grid">
@@ -1877,6 +1925,9 @@ padding-bottom: max(var(--s3), env(safe-area-inset-bottom));
   ⊞
   <span class="fab-badge" id="fab-count">0</span>
 </button>
+
+<!-- Toast — transient confirmation messages -->
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 const PLAYERS = JSON.parse(document.getElementById('player-data').textContent);
@@ -1928,6 +1979,36 @@ function restoreState() {
     if (typeof d.search === 'string') state.search = d.search;
   } catch (e) { /* ignore */ }
 }
+// Toast — transient confirmation messages, auto-dismiss after ~2.2s
+let _toastTimer = null;
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  if (!el) return;
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+// Wrap a heavy synchronous action with a button loading state. The setTimeout 0
+// lets the browser paint the disabled/loading state before the work runs.
+function withButtonLoading(btnId, loadingText, work) {
+  const btn = document.getElementById(btnId);
+  if (!btn) { work(); return; }
+  const original = btn.textContent;
+  btn.textContent = loadingText;
+  btn.disabled = true;
+  btn.classList.add('btn-loading');
+  setTimeout(() => {
+    try { work(); }
+    finally {
+      btn.textContent = original;
+      btn.disabled = false;
+      btn.classList.remove('btn-loading');
+    }
+  }, 16);
+}
+
 function syncDOMFromState() {
   const searchInput = document.getElementById('search');
   if (searchInput) searchInput.value = state.search || '';
@@ -2406,6 +2487,16 @@ function renderLineupPanel() {
   remEl.textContent = fmtMoney(remaining);
   remEl.style.color = remaining < 0 ? 'var(--bad)' : 'var(--text-0)';
   document.getElementById('lineup-count').textContent = `${filledCount}/6`;
+  // Cap-breach banner
+  const breachEl = document.getElementById('cap-breach');
+  if (breachEl) {
+    if (remaining < 0) {
+      document.getElementById('cap-breach-amount').textContent = fmtMoney(-remaining);
+      breachEl.classList.remove('hidden');
+    } else {
+      breachEl.classList.add('hidden');
+    }
+  }
   
   // Probabilities — seed using the lineup composition so the displayed numbers
   // are stable: same lineup always shows the same cash%/top20%/mean/ceiling.
@@ -2677,6 +2768,7 @@ function bindEvents() {
       renderPool();
       renderLineupPanel();
       openBuilder();
+      showToast('Lineup loaded');
       return;
     }
     // Player row/card click → expand. Skip if the click landed on an action button.
@@ -2695,16 +2787,23 @@ function bindEvents() {
     state.lineup = padLineup(keptNames);
     renderPool();
     renderLineupPanel();
+    showToast(keptNames.length ? `Cleared (kept ${keptNames.length} locked)` : 'Lineup cleared');
   });
   document.getElementById('btn-optimize').addEventListener('click', () => {
-    state.lineup = padLineup(optimizeLineup('cash'));
-    renderPool();
-    renderLineupPanel();
+    withButtonLoading('btn-optimize', 'Optimizing…', () => {
+      state.lineup = padLineup(optimizeLineup('cash'));
+      renderPool();
+      renderLineupPanel();
+      showToast('Loaded best cash lineup');
+    });
   });
   document.getElementById('btn-optimize-gpp').addEventListener('click', () => {
-    state.lineup = padLineup(optimizeLineup('gpp'));
-    renderPool();
-    renderLineupPanel();
+    withButtonLoading('btn-optimize-gpp', 'Optimizing…', () => {
+      state.lineup = padLineup(optimizeLineup('gpp'));
+      renderPool();
+      renderLineupPanel();
+      showToast('Loaded best GPP lineup');
+    });
   });
   
   // Status bar "Clear All" — wipes locks + excludes
