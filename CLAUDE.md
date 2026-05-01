@@ -67,7 +67,7 @@ Strong success criteria let you loop independently. Weak criteria ("make it work
 **These guidelines are working if:** fewer unnecessary changes in diffs, fewer rewrites due to overcomplication, and clarifying questions come before implementation rather than after mistakes.
 ## Repository shape
 
-This is a **single-file static web app**. The entire product lives in `index.html` (~2.8K lines). There is no build system, no `package.json`, no dependencies, no tests, and no server. The README is intentionally minimal (`caddy cup / Caddy Champ dfs optimizer`).
+This is a **single-file static web app**. The entire product lives in `index.html` (~3.4K lines). There is no build system, no `package.json`, no dependencies, no tests, and no server. A more user-facing `README.md` exists alongside it (run instructions, tab overview, slate-update format) — keep them consistent when you change behavior.
 
 To run/preview, open `index.html` directly in a browser, or serve the directory with any static server (e.g. `python3 -m http.server`). There is nothing to install, lint, build, or test — changes are verified by reloading the page.
 
@@ -81,26 +81,28 @@ The single file is structured in four contiguous regions — know which region y
 
 | Lines | Region | Notes |
 |------:|--------|-------|
-| 8–1486 | `<style>` | Design tokens (`:root` CSS vars at top), mobile-first layout, dark theme. Three media queries: `min-width: 768px` (desktop scale-up), `min-width: 1200px` (wide), `max-width: 767px` (mobile — card layout for the player pool, sticky-stack reduction, enlarged touch targets, scroll-fade on tabs/filters) |
-| 1491 | `<script type="application/json" id="player-data">` | Slate data — single JSON array of player objects, parsed at startup |
-| 1492–1893 | HTML body | Header, tab bar, `<main>` with one `<div id="tab-*">` per tab, the `.table-wrap` + sibling `.player-cards` container for the pool, floating lineup sheet, FAB |
-| 1894–3010 | `<script>` | All app logic (vanilla JS, no framework) |
+| 8–1606 | `<style>` | Design tokens (`:root` CSS vars at top), mobile-first layout, dark theme. Four media queries: `min-width: 768px` (desktop scale-up, line ~1312), `min-width: 1200px` (wide, ~1384), `max-width: 767px` (mobile — card layout for the player pool, sticky-stack reduction, enlarged touch targets, scroll-fade on tabs/filters, ~1553), `max-width: 360px` (very narrow phones, ~1602) |
+| 1611 | `<script type="application/json" id="player-data">` | Slate data — single JSON array of player objects, parsed at startup. The line itself is enormous; do not `cat`/`grep` it without `head` limits |
+| 1612–1992 | HTML body | Header, tab bar, `<main>` with one `<div id="tab-*">` per tab, the `.table-wrap` + sibling `.player-cards` container for the pool, floating lineup sheet, cap-breach banner, FAB, toast |
+| 1994–3381 | `<script>` | All app logic (vanilla JS, no framework) |
 
-Tabs (data-tab values): `pool`, `top-plays`, `builds`, `field`, `guide`, plus `builder` which opens the lineup sheet instead of switching tabs.
+Tabs (data-tab values, in render order): `guide` (default), `pool`, `top-plays`, `field`, `builds`, plus `builder` which opens the lineup sheet instead of switching tabs (it has a count badge `#builder-badge`).
 
 ## App architecture (the JS region)
 
-Single global `state` object (line ~1693) holds: current `tab`, `search`/`tier`/`salary`/`form` filters, `sort` direction, `expanded` row, `lineup[6]` array of player names (nulls for empty slots), `Set`s for `locked` and `excluded`, and UI flags for the builder sheet. There is no framework — every state mutation is followed by manual calls to the relevant `render*` functions.
+Single global `state` object (line ~1996) holds: current `tab`, `search`/`tier`/`salary`/`form` filters, `sort` direction, `expanded` row, `lineup[6]` array of player names (nulls for empty slots), `Set`s for `locked` and `excluded`, UI flags for the builder sheet (`builderOpen`, `builderCollapsed`), and `fieldThreshold`. There is no framework — every state mutation is followed by manual calls to the relevant `render*` functions.
 
 Key pieces:
 
-- **Players** come from `PLAYERS = JSON.parse(...)` at startup. To update the slate, replace the JSON inside the `<script type="application/json" id="player-data">` tag — that's the single source of truth.
-- **Filtering / sorting**: `filterPlayers()` reads `state` and returns the displayed subset.
-- **Renderers** (`renderPool`, `renderLineupPanel`, `renderTopPlays`, `renderField`, `renderGuide`, `renderBuilds`, `renderStatusBar`, `renderSignatureSpecialists`) each rebuild their tab's DOM from `PLAYERS` + `state`. After mutating state, call the renderers that depend on it (typically `renderPool()`, `renderLineupPanel()`, `renderStatusBar()`).
-- **Mobile rendering**: `renderPool()` writes the same filtered list into both the desktop `<table>` (via `renderDetailRow`/inline `<tr>` markup) AND a sibling `<div id="player-cards">` (via `renderPlayerCard`). A media query at `max-width: 767px` toggles which one is `display:none` — no JS branching on viewport, no re-render on resize. The two views share the per-row detail content via `renderCardDetail(p)`, which both `renderDetailRow` and `renderPlayerCard` call. **Cards reuse the same `data-player`, `data-lock`, `data-exclude`, and `class="row-check"` attributes as the table rows** so the body click delegation works for both without per-view branching.
-- **Optimizer**: `optimizeLineup(mode)` (single best lineup) and `buildTopLineups(mode, n, minUnique)` (top-N diverse) use recursive backtracking with salary-cap pruning over the top ~30 candidates ranked by `scoreFn`, then re-rank finalists by Monte Carlo win probability.
-- **Simulation**: `simulateLineup(players, nSims, seed)` uses Box-Muller on `(p.proj, p.sigma)` per player and counts hits above thresholds. **Pass a seed for reproducibility** — the optimizer always does (`12345 + i` for single-best, `7777 + idx` for multi). `mulberry32(seed)` is the deterministic PRNG.
-- **Event handling**: a single delegated click handler on `document.body` (line ~2300) dispatches on `data-lock`, `data-exclude`, `data-unlock`, `data-unexclude`, `data-remove`, `data-load-lineup`, `.row-check`, and player rows. Add new interactive controls by adding a `data-*` attribute and a branch in this handler rather than per-element listeners.
+- **Players** come from `PLAYERS = JSON.parse(...)` at startup (line ~1994). To update the slate, replace the JSON inside the `<script type="application/json" id="player-data">` tag — that's the single source of truth.
+- **Persistence**: `persistState()` / `restoreState()` (line ~2014) round-trip a subset of `state` (`lineup`, `locked`, `excluded`, `sort`, `tier`, `salary`, `form`, `search`) through `localStorage` under key `caddy-cup-26-state-v1`. `tab` and `expanded` are intentionally **not** persisted. Bump the storage-key version when you change the persisted shape.
+- **Filtering / sorting**: `filterPlayers()` (line ~2139) reads `state` and returns the displayed subset.
+- **Renderers** (`renderPool`, `renderLineupPanel`, `renderTopPlays`, `renderField`, `renderGuide`, `renderBuilds`, `renderStatusBar`, `renderSignatureSpecialists`) each rebuild their tab's DOM from `PLAYERS` + `state`. After mutating state, call the renderers that depend on it (typical trio: `renderPool()`, `renderLineupPanel()`, `renderStatusBar()`), then `persistState()` if the mutation touched a persisted field.
+- **Mobile rendering**: `renderPool()` (line ~2388) writes the same filtered list into both the desktop `<table>` (via `renderDetailRow`/inline `<tr>` markup) AND a sibling `<div id="player-cards">` (via `renderPlayerCard`). A media query at `max-width: 767px` toggles which one is `display:none` — no JS branching on viewport, no re-render on resize. The two views share the per-row detail content via `renderCardDetail(p)`, which both `renderDetailRow` and `renderPlayerCard` call. **Cards reuse the same `data-player`, `data-lock`, `data-exclude`, and `class="row-check"` attributes as the table rows** so the body click delegation works for both without per-view branching.
+- **Optimizer**: `optimizeLineup(mode)` (single best, line ~2986) and `buildTopLineups(mode, n, minUnique, seedOffset)` (top-N diverse, line ~3118) use recursive backtracking with salary-cap pruning over the top ~30 candidates ranked by `scoreFn`, then re-rank finalists by Monte Carlo win probability. The Builds tab Rebuild button advances `seedOffset` to cycle through alternate variants.
+- **Simulation**: `simulateLineup(players, nSims, seed)` (line ~2614) uses Box-Muller on `(p.proj, p.sigma)` per player and counts hits above thresholds. **Pass a seed for reproducibility** — the optimizer always does (`12345 + i` for single-best, `7777 + idx` for multi). `mulberry32(seed)` is the deterministic PRNG (line ~2603).
+- **Event handling**: a single delegated click handler on `document.body` (line ~2736) dispatches on `data-lock`, `data-exclude`, `data-unlock`, `data-unexclude`, `data-remove`, `data-load-lineup`, `.row-check`, and player rows. Add new interactive controls by adding a `data-*` attribute and a branch in this handler rather than per-element listeners.
+- **UX helpers**: `showToast(msg)` (line ~2045) flashes a 2.2s confirmation in the `#toast` element. `withButtonLoading(btnId, loadingText, work)` (line ~2056) wraps a heavy synchronous action so the button shows a disabled/loading state during optimize runs (uses `setTimeout(0)` so the paint lands before the work starts). `renderLineupPanel()` toggles the `#cap-breach` banner when `salary > 50000`.
 
 ## Domain constants and conventions
 
@@ -115,7 +117,7 @@ These numbers are baked into the optimizer and simulator — change them in lock
 - **Tiers**: `SHARP` / `CONTRARIAN` / `CHALK` / `FADE` / `NEUTRAL` (via `tout_tier` field). `NEUTRAL` renders as an em dash, not a badge.
 - **Lineup array invariant**: always length 6, with `null` for empty slots. Use `padLineup(arr)` to normalize after any mutation that could break this.
 
-`SIG_EVENTS` (line ~1821) is a hardcoded mapping of player → signature-event finishes, with `SIG_YEAR_WEIGHTS` weighting current season at 1.0 and prior at 0.6. This drives the "Signature Event Specialists" card on the Top Plays tab.
+`SIG_EVENTS` (line ~2199) is a hardcoded mapping of player → signature-event finishes, with `SIG_YEAR_WEIGHTS` (line ~2237) weighting current-season events at 1.0 and prior at 0.6. This drives the "Signature Event Specialists" card on the Top Plays tab via `renderSignatureSpecialists()` (line ~2262).
 
 ## CSS conventions
 
@@ -125,10 +127,11 @@ CSS variables in `:root` (line ~16) define spacing, surfaces, borders, text colo
 
 - Edit `index.html` directly; there is no other source file. Prefer `Edit` over `Write` — the file is large.
 - Reading the whole file in one `Read` call exceeds the token limit. Use `offset`/`limit` to target the region you need (see the table above).
-- Avoid `grep`/`awk` over the whole file from Bash — line 1313's embedded JSON is enormous and floods stdout. Search with line-number-anchored Read calls or grep with `head` limits.
+- Avoid `grep`/`awk` over the whole file from Bash — line 1611's embedded JSON is enormous and floods stdout. Search with line-number-anchored Read calls or grep with `head` limits.
 - When changing optimizer scoring, course-fit logic, or salary constants, update **both** `optimizeLineup` and `buildTopLineups` — the score functions and pruning bounds are duplicated.
-- After any state mutation in event handlers, call the renderers manually (typical trio: `renderPool()`, `renderLineupPanel()`, `renderStatusBar()`).
+- After any state mutation in event handlers, call the renderers manually (typical trio: `renderPool()`, `renderLineupPanel()`, `renderStatusBar()`), and `persistState()` if the mutation touched a persisted field. Add a `showToast(...)` for confirmable user actions to match the rest of the UI.
+- If you change the shape of persisted state, bump the `STORAGE_KEY` version (`caddy-cup-26-state-v1` → `-v2`) so older clients don't restore an incompatible payload.
 
 ## Git workflow
 
-Active development branch for this task: `claude/add-claude-documentation-mFsvH`. Commit history is a long series of `Update index.html` commits — single-file iteration is the norm here.
+Active development branch for this task: `claude/add-claude-documentation-46po0`. Commit history alternates between terse `Update index.html` commits (in-app iteration) and short imperative messages describing the user-visible change (e.g. `Rebuild button now cycles through lineup variants`, `CSV export and overlap highlighting on Builds tab`, `Drag-to-dismiss on lineup sheet + tab content fade-in`). Match the imperative style for substantive changes; `Update index.html` is fine for tiny tweaks.
