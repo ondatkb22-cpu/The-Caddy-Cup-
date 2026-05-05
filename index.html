@@ -415,6 +415,12 @@ SG per shot (35%) · Proximity (25%) · Green hit rate (20%) · Bad shot avoidan
 <button class="filter-chip build-mode" data-bm="cash">💰 Cash</button>
 <button class="filter-chip build-mode" data-bm="gpp">🎯 GPP</button>
 </div>
+<div class="filter-group" style="margin-left:auto">
+<button class="filter-chip" id="gen-more-btn" onclick="generateMore(5)">➕ Generate +5</button>
+<button class="filter-chip" onclick="generateMore(10)">➕ +10</button>
+<button class="filter-chip" onclick="resetBuilds()">↺ Reset</button>
+<button class="filter-chip" style="background:var(--accent);color:#000;font-weight:700" onclick="exportLineups()">⬇ Export CSV</button>
+</div>
 </div>
 <div id="builds-content"></div>
 </div>
@@ -454,7 +460,7 @@ function renderSigma(v){if(v==null)return"—";const cls=v>=23?"sigma-high":v<20
 function renderOdds(v){if(v==null)return"—";return`<span style="font-weight:700;font-size:11px;color:var(--text-1)">+${v.toLocaleString()}</span>`}
 function renderSteam(pct){if(!pct)return`<span style="color:var(--text-3)">—</span>`;if(pct>=15)return`<span class="steam-in">🔥↑${pct}%</span>`;if(pct>0)return`<span class="steam-in">↑${pct}%</span>`;if(pct<=-15)return`<span class="steam-out">❄️↓${Math.abs(pct)}%</span>`;if(pct<0)return`<span class="steam-out">↓${Math.abs(pct)}%</span>`;return"—"}
 
-let state={tab:'guide',search:'',tier:'all',salary:'all',form:'all',lineup:[],excluded:['Tony Finau'],sort:{col:'dg_final',dir:'desc'},panelOpen:false,suggestion:null};
+let state={tab:'guide',search:'',tier:'all',salary:'all',form:'all',lineup:[],excluded:['Tony Finau'],sort:{col:'dg_final',dir:'desc'},panelOpen:false,suggestion:null,builds:null};
 let tpView_g='all';let buildMode_g='all';
 const CAP=50000;
 const MIN_SPEND=49700;
@@ -898,36 +904,132 @@ function _buildSubtitle(lp){
   return `Σproj ${proj.toFixed(0)} · Σceil ${ceil.toFixed(0)} · APP avg ${appAvg} · Cum own ${own.toFixed(0)}%`;
 }
 
+const BASE_RECIPES=[
+  {key:'cash', fn:p=>SCORE_FNS.cash(p),       title:'💰 Cash — Proj + Floor + Form',     kind:'CASH'},
+  {key:'qh',   fn:p=>SCORE_FNS.qhV4(p),       title:'🎯 GPP — Course History + APP',     kind:'GPP'},
+  {key:'app',  fn:p=>SCORE_FNS.appStack(p),   title:'🎯 GPP — APP Stack (long iron)',    kind:'GPP'},
+  {key:'form', fn:p=>SCORE_FNS.form(p),       title:'🎯 GPP — Form (vs-BL + SG L20)',    kind:'GPP'},
+  {key:'ceil', fn:p=>SCORE_FNS.ceiling(p),    title:'🎯 GPP — Ceiling + Leverage',       kind:'GPP'},
+  {key:'cont', fn:p=>SCORE_FNS.contrarian(p), title:'🎯 GPP — Contrarian (low own)',     kind:'GPP'}
+];
+
+function _usedCnt(builds){
+  const c={};
+  builds.forEach(b=>b.players.forEach(p=>{c[p.name]=(c[p.name]||0)+1}));
+  return c;
+}
+
+function _solveBuild(recipe,builds,penalty){
+  const used=_usedCnt(builds);
+  const wrapped=p=>recipe.fn(p)-(used[p.name]||0)*penalty;
+  const lp=solveLineup({scoreFn:wrapped,excluded:state.excluded.slice()});
+  if(!lp||lp.length!==6)return null;
+  return {recipe,players:lp};
+}
+
+function _blendRecipe(idx){
+  // Random convex blend of two base GPP recipes for variety lineups
+  const gpp=BASE_RECIPES.filter(r=>r.kind==='GPP');
+  const a=gpp[Math.floor(Math.random()*gpp.length)];
+  let b=gpp[Math.floor(Math.random()*gpp.length)];
+  if(b.key===a.key)b=gpp[(gpp.indexOf(a)+1)%gpp.length];
+  const w=0.3+Math.random()*0.4;
+  return {
+    key:`mix${idx}-${a.key}+${b.key}`,
+    kind:'GPP',
+    title:`🎲 GPP #${idx} — ${a.key.toUpperCase()}×${(w).toFixed(2)} + ${b.key.toUpperCase()}×${(1-w).toFixed(2)}`,
+    fn:p=>w*a.fn(p)+(1-w)*b.fn(p)
+  };
+}
+
+function generateBaseBuilds(){
+  state.builds=[];
+  BASE_RECIPES.forEach(r=>{
+    const b=_solveBuild(r,state.builds,6);
+    if(b)state.builds.push(b);
+  });
+  renderBuilds();
+}
+
+function generateMore(n){
+  if(!state.builds)state.builds=[];
+  let added=0,attempts=0;
+  while(added<n&&attempts<n*4){
+    attempts++;
+    const idx=state.builds.length+1;
+    const recipe=_blendRecipe(idx);
+    // Stronger penalty as we add more lineups, to keep diversifying
+    const penalty=6+Math.floor(state.builds.length/3);
+    const b=_solveBuild(recipe,state.builds,penalty);
+    if(!b)continue;
+    // Skip duplicates (exact same 6 names as an existing build)
+    const sig=b.players.map(p=>p.name).sort().join('|');
+    if(state.builds.some(x=>x.players.map(p=>p.name).sort().join('|')===sig))continue;
+    state.builds.push(b);
+    added++;
+  }
+  renderBuilds();
+}
+
+function resetBuilds(){
+  generateBaseBuilds();
+}
+
 function renderBuilds(){
   const show=m=>buildMode_g==='all'||buildMode_g===m;
-  const recipes=[
-    {key:'cash',  fn:SCORE_FNS.cash,       title:'💰 Cash — Proj + Floor + Form',     kind:'CASH'},
-    {key:'qh',    fn:SCORE_FNS.qhV4,       title:'🎯 GPP — Course History + APP',     kind:'GPP'},
-    {key:'app',   fn:SCORE_FNS.appStack,   title:'🎯 GPP — APP Stack (long iron)',    kind:'GPP'},
-    {key:'form',  fn:SCORE_FNS.form,       title:'🎯 GPP — Form (vs-BL + SG L20)',    kind:'GPP'},
-    {key:'ceil',  fn:SCORE_FNS.ceiling,    title:'🎯 GPP — Ceiling + Leverage',       kind:'GPP'},
-    {key:'cont',  fn:SCORE_FNS.contrarian, title:'🎯 GPP — Contrarian (low own)',     kind:'GPP'}
-  ];
-  const usedCnt={};
-  const builds=[];
-  recipes.forEach(r=>{
-    const wrapped=p=>r.fn(p)-(usedCnt[p.name]||0)*6;
-    const lp=solveLineup({scoreFn:wrapped,excluded:state.excluded.slice()});
-    if(lp&&lp.length===6){
-      lp.forEach(p=>{usedCnt[p.name]=(usedCnt[p.name]||0)+1});
-      builds.push({recipe:r,players:lp});
-    }
-  });
-
-  let html=`<div style="background:var(--bg-2);border:1px solid rgba(94,234,212,0.2);border-radius:10px;padding:14px;margin-bottom:18px"><div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:6px">🏆 v5 Engine — Branch & Bound Optimizer</div><div style="font-size:11px;color:var(--text-2);line-height:1.5">Each build is solved as a true knapsack ($50K cap, ≥1 stud ≥$9.4K) under a different objective: Cash (proj+floor+form), QH (course-history+APP), APP-stack (long iron), Form (vs-BL+SG L20), Ceiling (upside+leverage), Contrarian (low own). Diversity penalty (−6/repeat) spreads exposure across the 6 builds.</div></div>`;
-  builds.forEach(b=>{
+  if(state.builds===null){
+    generateBaseBuilds();
+    return;
+  }
+  let html=`<div style="background:var(--bg-2);border:1px solid rgba(94,234,212,0.2);border-radius:10px;padding:14px;margin-bottom:18px;display:flex;justify-content:space-between;align-items:center;gap:12px"><div><div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:6px">🏆 v5 Engine — Branch & Bound Optimizer</div><div style="font-size:11px;color:var(--text-2);line-height:1.5">Knapsack-optimal lineups under 6 base objectives. "Generate +N" adds randomized blends with stronger diversity penalty. Use Export CSV for DraftKings upload.</div></div><div style="font-size:11px;color:var(--text-2);text-align:right;white-space:nowrap"><div style="font-size:18px;font-weight:700;color:var(--text-0)">${state.builds.length}</div>lineups</div></div>`;
+  let shown=0;
+  state.builds.forEach((b,i)=>{
     if(b.recipe.kind==='CASH'&&!show('cash'))return;
     if(b.recipe.kind==='GPP'&&!show('gpp'))return;
     const names=b.players.map(p=>p.name);
-    html+=renderBuildCard(names,b.recipe.title,_buildSubtitle(b.players),b.recipe.kind);
+    const title=`#${i+1} · ${b.recipe.title}`;
+    html+=renderBuildCard(names,title,_buildSubtitle(b.players),b.recipe.kind);
+    shown++;
   });
-  if(!builds.length)html+='<div style="text-align:center;padding:48px;color:var(--text-2)">No feasible builds (try unexcluding players)</div>';
+  if(!shown)html+='<div style="text-align:center;padding:48px;color:var(--text-2)">No builds match the current filter</div>';
   document.getElementById('builds-content').innerHTML=html;
+}
+
+function _csvCell(s){
+  const v=String(s==null?'':s);
+  return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;
+}
+
+function exportLineups(){
+  const builds=state.builds||[];
+  if(!builds.length){alert('No lineups to export. Click Generate first.');return}
+  const rows=[['Build','Type','G1','G2','G3','G4','G5','G6','Salary','Σ Proj','Σ Ceil','Cum Own %']];
+  builds.forEach((b,i)=>{
+    const lp=b.players.slice().sort((a,b)=>b.salary-a.salary);
+    const sal=lp.reduce((s,p)=>s+p.salary,0);
+    const proj=lp.reduce((s,p)=>s+(p.cash_proj||0),0);
+    const ceil=lp.reduce((s,p)=>s+(p.ceiling||0),0);
+    const own=lp.reduce((s,p)=>s+(p.own_pct||0),0);
+    const names=lp.map(p=>p.name);
+    while(names.length<6)names.push('');
+    rows.push([
+      `#${i+1} ${b.recipe.key}`,
+      b.recipe.kind,
+      ...names.slice(0,6),
+      sal,
+      proj.toFixed(1),
+      ceil.toFixed(0),
+      own.toFixed(1)
+    ]);
+  });
+  const csv=rows.map(r=>r.map(_csvCell).join(',')).join('\n');
+  const blob=new Blob([csv],{type:'text/csv'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  const ts=new Date().toISOString().replace(/[:.]/g,'-').slice(0,19);
+  a.href=url;a.download=`lineups-${ts}.csv`;
+  document.body.appendChild(a);a.click();
+  setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url)},0);
 }
 
 
