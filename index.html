@@ -457,6 +457,7 @@ function renderSteam(pct){if(!pct)return`<span style="color:var(--text-3)">—</
 let state={tab:'guide',search:'',tier:'all',salary:'all',form:'all',lineup:[],excluded:['Tony Finau'],sort:{col:'dg_final',dir:'desc'},panelOpen:false,suggestion:null};
 let tpView_g='all';let buildMode_g='all';
 const CAP=50000;
+const MIN_SPEND=49700;
 function getP(name){return PLAYERS.find(p=>p.name===name)}
 function linSal(){return state.lineup.reduce((s,n)=>{const p=getP(n);return s+(p?p.salary:0)},0)}
 function linRemaining(){return CAP-linSal()}
@@ -520,58 +521,145 @@ function suggestNext(){
     if(needsStud&&best.salary>=9400)reasons.push('STUD slot');
     state.suggestion={name:best.name,salary:best.salary,why:reasons.join(' · ')||'Best QH composite'};renderPanel();
 }
-function optimizeLineup(){
-  const EXCLUDE=['Tony Finau','Patrick Cantlay','Jake Knapp','Collin Morikawa'];
-  while(state.lineup.length<6){
-    const rem=linRemaining();const sl=linSlots();
-    if(sl<=0)break;
-    const maxFor=rem-(sl-1)*6000;
-    const pool=PLAYERS.filter(p=>p.salary&&p.dg_final&&p.dg_final>-0.5&&!state.lineup.includes(p.name)&&!state.excluded.includes(p.name)&&!EXCLUDE.includes(p.name)&&p.salary<=maxFor);
-    if(!pool.length)break;
-    const hasStuds=state.lineup.filter(n=>{const p=getP(n);return p&&p.salary>=9400}).length;
-    const needsStud=hasStuds<1&&sl>=3;
-    // v4 QH ENGINE (same weights as suggestNext — APP elevated)
-    pool.forEach(p=>{
-      const dg=p.dg_final||0;const app=p.app_composite||0;const own=p.own_pct||5;
-      const vpk=p.value_per_k||0;const delta=Math.max(0,p.delta_fit||0);
-      const sgL20=p.true_sg_l20||0;const vsBL=p.vs_baseline||0;
-      const qhPts=p.qh_pts||0;const dgHist=p.dg_history||0;
-      const qh25=p.qh_2025_finish;const l5=p.l5_finishes||'';
-      const sg200=p.app_sg_200_plus||0;const sg150=p.app_sg_150_200||0;
-      const cuts=(l5.match(/CUT|WD/g)||[]).length;
-      let top10s=0;l5.split(',').forEach(f=>{if(f&&f!=='CUT'&&f!=='WD'){try{if(parseInt(f.replace('T',''))<=10)top10s++}catch(e){}}});
-      p._optScore=qhPts*0.8+(qh25?Math.max(0,(20-qh25))*0.5:0)+dgHist*20;
-      p._optScore+=sgL20*5+vsBL*6-cuts*2.5+top10s*1.5;
-      p._optScore+=(app/100)*10+sg200*80+sg150*40;if(app>=80)p._optScore+=3;
-      p._optScore+=delta*0.4;
-      p._optScore+=dg*8-own*0.3+vpk*0.5;
-      if(vsBL<-0.5)p._optScore-=5;
-      if(needsStud&&p.salary>=9400&&dg>=1.5)p._optScore+=10;
-      if(hasStuds>=1&&p.salary<=7300&&dg>=0.3)p._optScore+=3;
-    });
-    pool.sort((a,b)=>b._optScore-a._optScore);
-    // Pick best that keeps salary feasible
-    let picked=null;
-    for(const p of pool){
-      const newRem=rem-p.salary;
-      const newSlots=sl-1;
-      if(newSlots===0&&newRem>=0&&newRem<=300){picked=p;break;}
-      if(newSlots>0&&newRem>=newSlots*6000){picked=p;break;}
-    }
-    if(!picked)break;
-    state.lineup.push(picked.name);
+function _cuts(p){return((p.l5_finishes||'').match(/CUT|WD/g)||[]).length}
+function _top10(p){let n=0;(p.l5_finishes||'').split(',').forEach(f=>{if(f&&f!=='CUT'&&f!=='WD'){const x=parseInt(f.replace('T',''));if(!isNaN(x)&&x<=10)n++}});return n}
+
+function solveLineup(opts){
+  const scoreFn=opts.scoreFn;
+  const locked=opts.locked||[];
+  const excluded=opts.excluded||[];
+  const cap=opts.cap||CAP;
+  const minSpend=opts.minSpend||MIN_SPEND;
+  const totalSlots=opts.slots||6;
+  const requireStud=opts.requireStud!==false;
+  const studMin=opts.studMin||9400;
+  const stepLimit=opts.stepLimit||500000;
+
+  const lockedP=locked.map(n=>getP(n)).filter(Boolean);
+  const lockedSal=lockedP.reduce((s,p)=>s+p.salary,0);
+  const lockedScore=lockedP.reduce((s,p)=>s+scoreFn(p),0);
+  const lockedHasStud=lockedP.some(p=>p.salary>=studMin);
+  const need=totalSlots-lockedP.length;
+  const capLeft=cap-lockedSal;
+  if(need<=0){
+    return lockedSal>=minSpend?lockedP.slice():null;
   }
+  if(capLeft<0)return null;
+
+  const pool=PLAYERS.filter(p=>p.salary&&p.dg_final!=null&&p.dg_final>-0.5
+    &&!locked.includes(p.name)&&!excluded.includes(p.name));
+  if(pool.length<need)return null;
+  pool.forEach(p=>{p._sc=scoreFn(p)});
+  pool.sort((a,b)=>b._sc-a._sc);
+  const N=pool.length;
+  const minSal=Math.min.apply(null,pool.map(p=>p.salary));
+  const studSuf=new Array(N+1).fill(false);
+  for(let i=N-1;i>=0;i--)studSuf[i]=studSuf[i+1]||pool[i].salary>=studMin;
+  // Precompute, for each suffix idx and k=1..totalSlots, max salary spend = sum of top-k salaries in pool[idx..]
+  const maxSalSuf=new Array(N+1);
+  maxSalSuf[N]=new Array(totalSlots+1).fill(0);
+  for(let i=N-1;i>=0;i--){
+    const sals=pool.slice(i).map(p=>p.salary).sort((a,b)=>b-a);
+    const arr=[0];let acc=0;
+    for(let k=0;k<totalSlots;k++){acc+=(sals[k]||0);arr.push(acc)}
+    maxSalSuf[i]=arr;
+  }
+
+  let best={score:-Infinity,picks:null};
+  let steps=0;
+  const picks=[];
+  function dfs(idx,slotsLeft,capRem,score,hasStud){
+    if(++steps>stepLimit)return;
+    if(slotsLeft===0){
+      const spent=cap-capRem;
+      if(capRem>=0&&spent>=minSpend&&(!requireStud||hasStud)){
+        if(score>best.score)best={score,picks:picks.slice()};
+      }
+      return;
+    }
+    if(N-idx<slotsLeft)return;
+    if(slotsLeft*minSal>capRem)return;
+    // Min-spend feasibility: max we can still spend must reach minSpend
+    const spent=cap-capRem;
+    const maxAdd=Math.min(capRem,maxSalSuf[idx][slotsLeft]);
+    if(spent+maxAdd<minSpend)return;
+    if(requireStud&&!hasStud&&!studSuf[idx])return;
+    let ub=score;
+    for(let i=idx,k=0;i<N&&k<slotsLeft;i++,k++)ub+=pool[i]._sc;
+    if(ub<=best.score)return;
+    const p=pool[idx];
+    if(p.salary<=capRem-(slotsLeft-1)*minSal){
+      const ns=hasStud||p.salary>=studMin;
+      if(!(requireStud&&slotsLeft===1&&!ns)){
+        picks.push(p);
+        dfs(idx+1,slotsLeft-1,capRem-p.salary,score+p._sc,ns);
+        picks.pop();
+      }
+    }
+    dfs(idx+1,slotsLeft,capRem,score,hasStud);
+  }
+  dfs(0,need,capLeft,lockedScore,lockedHasStud);
+  if(!best.picks)return null;
+  return lockedP.concat(best.picks);
+}
+
+const SCORE_FNS={
+  qhV4:p=>{
+    const dg=p.dg_final||0,app=p.app_composite||0,own=p.own_pct||5;
+    const vpk=p.value_per_k||0,delta=Math.max(0,p.delta_fit||0);
+    const sgL20=p.true_sg_l20||0,vsBL=p.vs_baseline||0;
+    const qhPts=p.qh_pts||0,dgHist=p.dg_history||0;
+    const qh25=p.qh_2025_finish;
+    const sg200=p.app_sg_200_plus||0,sg150=p.app_sg_150_200||0;
+    let s=qhPts*0.8+(qh25?Math.max(0,(20-qh25))*0.5:0)+dgHist*20;
+    s+=sgL20*5+vsBL*6-_cuts(p)*2.5+_top10(p)*1.5;
+    s+=(app/100)*10+sg200*80+sg150*40;if(app>=80)s+=3;
+    s+=delta*0.4+dg*8-own*0.3+vpk*0.5;
+    if(vsBL<-0.5)s-=5;
+    return s;
+  },
+  cash:p=>{
+    const proj=p.cash_proj||p.proj||0,sigma=p.sigma||20,vsBL=p.vs_baseline||0;
+    const floor=proj-sigma*0.6;
+    return proj+floor*0.4+vsBL*5+_top10(p)*2-_cuts(p)*4+(p.app_composite||0)*0.05;
+  },
+  ceiling:p=>{
+    const ceil=p.ceiling||0,lev=p.leverage||1,dg=p.dg_final||0,proj=p.cash_proj||0;
+    return ceil+proj*0.4+dg*14+lev*4-(p.own_pct||5)*0.3;
+  },
+  appStack:p=>{
+    const app=p.app_composite||0,sg200=p.app_sg_200_plus||0,sg150=p.app_sg_150_200||0;
+    return app*0.8+sg200*120+sg150*60+(p.dg_final||0)*5+(app>=80?5:0);
+  },
+  form:p=>{
+    const sgL20=p.true_sg_l20||0,vsBL=p.vs_baseline||0,qhPts=p.qh_pts||0;
+    return sgL20*8+vsBL*10+qhPts*0.6+_top10(p)*3-_cuts(p)*5+(p.dg_final||0)*4;
+  },
+  contrarian:p=>{
+    const dg=p.dg_final||0,ceil=p.ceiling||0,own=p.own_pct||5;
+    return dg*10+ceil*0.4-own*0.8+(p.delta_fit||0)*0.5;
+  }
+};
+
+function optimizeLineup(){
+  const result=solveLineup({
+    scoreFn:SCORE_FNS.qhV4,
+    locked:state.lineup.slice(),
+    excluded:state.excluded.slice()
+  });
+  const sa=document.getElementById('lp-sug-area');
+  if(!result||result.length<6){
+    if(sa)sa.innerHTML='<div class="lp-suggestion"><div class="lp-sug-name">⚠️ No feasible lineup</div><div class="lp-sug-why">Try unlocking or unexcluding players</div></div>';
+    return;
+  }
+  state.lineup=result.map(p=>p.name);
   state.suggestion=null;
   renderAll();
-  // Show result
   const rem=linRemaining();
-  const sa=document.getElementById('lp-sug-area');
-  if(state.lineup.length===6){
-    const cumOwn=state.lineup.reduce((s,n)=>{const p=getP(n);return s+(p?.own_pct||0)},0);
-    sa.innerHTML='<div class="lp-suggestion"><div class="lp-sug-name">✅ Lineup Complete</div><div class="lp-sug-why">$'+rem.toLocaleString()+' remaining · '+cumOwn.toFixed(0)+'% cumulative ownership</div></div>';
-  } else {
-    sa.innerHTML='<div class="lp-suggestion"><div class="lp-sug-name">⚠️ Could not fill all slots</div><div class="lp-sug-why">$'+rem.toLocaleString()+' remaining · '+linSlots()+' slots open</div></div>';
-  }
+  const cumOwn=result.reduce((s,p)=>s+(p.own_pct||0),0);
+  const studs=result.filter(p=>p.salary>=9400).length;
+  const sa2=document.getElementById('lp-sug-area');
+  if(sa2)sa2.innerHTML='<div class="lp-suggestion"><div class="lp-sug-name">✅ Optimal Lineup</div><div class="lp-sug-why">$'+rem.toLocaleString()+' rem · '+cumOwn.toFixed(0)+'% own · '+studs+' stud</div></div>';
 }
 function renderPanel(){
   const rem=linRemaining();
@@ -801,26 +889,44 @@ function renderBuildCard(lineup,title,subtitle,mode){
   </div>`;
 }
 
+function _buildSubtitle(lp){
+  const proj=lp.reduce((s,p)=>s+(p.cash_proj||0),0);
+  const ceil=lp.reduce((s,p)=>s+(p.ceiling||0),0);
+  const own=lp.reduce((s,p)=>s+(p.own_pct||0),0);
+  const apps=lp.map(p=>p.app_composite||0).filter(x=>x>0);
+  const appAvg=apps.length?Math.round(apps.reduce((s,x)=>s+x,0)/apps.length):0;
+  return `Σproj ${proj.toFixed(0)} · Σceil ${ceil.toFixed(0)} · APP avg ${appAvg} · Cum own ${own.toFixed(0)}%`;
+}
+
 function renderBuilds(){
-  const cashLineup=['Rory McIlroy','Xander Schauffele','Gary Woodland','Max Homa','Brian Harman','Alex Fitzpatrick'];
-  const gpp1=['Rory McIlroy','Xander Schauffele','Gary Woodland','Max Homa','Brian Harman','Alex Fitzpatrick'];
-  const gpp2=['Matt Fitzpatrick','Adam Scott','Sepp Straka','Jason Day','J.J. Spaun','Corey Conners'];
-  const gpp3=['Si Woo Kim','Rickie Fowler','Viktor Hovland','Nicolai Hojgaard','Justin Rose','Justin Thomas'];
-  const gpp4=['Matt Fitzpatrick','Tommy Fleetwood','Jason Day','J.J. Spaun','Alex Noren','Brian Harman'];
-  const gpp5=['Ludvig Aberg','Adam Scott','Ben Griffin','J.J. Spaun','Justin Thomas','Corey Conners'];
-  let html='';
   const show=m=>buildMode_g==='all'||buildMode_g===m;
-  html+=`<div style="background:var(--bg-2);border:1px solid rgba(94,234,212,0.2);border-radius:10px;padding:14px;margin-bottom:18px"><div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:6px">🏆 v4 Engine — QH + Long Iron Approach</div><div style="font-size:11px;color:var(--text-2);line-height:1.5">QH winner profile: Course History → Form (SG L20 + consistency) → APP 175+ (elevated: SG200+ ×80, APP composite ×10, APP≥80 bonus) → Delta Fit → Raw Talent. 56% of QH approaches from 175+. 4 of last 5 winners top-12 in SG:APP.</div></div>`;
-  if(show('cash')){
-    html+=renderBuildCard(cashLineup,'💰 Cash — QH Horses + Form','Rory 80 QH pts · Schauffele APP 98 · Woodland +1.46 vsBL · $49.9K','CASH');
-  }
-  if(show('gpp')){
-    html+=renderBuildCard(gpp1,'🎯 GPP #1 — History + Hot Form','Rory+Xander studs · Woodland QH horse · Harman 15 QH pts','GPP');
-    html+=renderBuildCard(gpp2,'🎯 GPP #2 — APP Stack (avg 70)','Straka 88 + Spaun 90 + Conners 81 · Fitz hot form · $50K exact','GPP');
-    html+=renderBuildCard(gpp3,'🎯 GPP #3 — Elite Iron Play (avg 73)','Hovland 89 + Hojgaard 86 + Kim 91 · Low own 54%','GPP');
-    html+=renderBuildCard(gpp4,'🎯 GPP #4 — Fitz + Fleetwood Form','Fitz #1 vsBL + Spaun APP 90 + Day 23 QH pts · $49.7K','GPP');
-    html+=renderBuildCard(gpp5,'🎯 GPP #5 — Contrarian APP','Aberg hot + Conners 81 + Spaun 90 · Low own 51%','GPP');
-  }
+  const recipes=[
+    {key:'cash',  fn:SCORE_FNS.cash,       title:'💰 Cash — Proj + Floor + Form',     kind:'CASH'},
+    {key:'qh',    fn:SCORE_FNS.qhV4,       title:'🎯 GPP — Course History + APP',     kind:'GPP'},
+    {key:'app',   fn:SCORE_FNS.appStack,   title:'🎯 GPP — APP Stack (long iron)',    kind:'GPP'},
+    {key:'form',  fn:SCORE_FNS.form,       title:'🎯 GPP — Form (vs-BL + SG L20)',    kind:'GPP'},
+    {key:'ceil',  fn:SCORE_FNS.ceiling,    title:'🎯 GPP — Ceiling + Leverage',       kind:'GPP'},
+    {key:'cont',  fn:SCORE_FNS.contrarian, title:'🎯 GPP — Contrarian (low own)',     kind:'GPP'}
+  ];
+  const usedCnt={};
+  const builds=[];
+  recipes.forEach(r=>{
+    const wrapped=p=>r.fn(p)-(usedCnt[p.name]||0)*6;
+    const lp=solveLineup({scoreFn:wrapped,excluded:state.excluded.slice()});
+    if(lp&&lp.length===6){
+      lp.forEach(p=>{usedCnt[p.name]=(usedCnt[p.name]||0)+1});
+      builds.push({recipe:r,players:lp});
+    }
+  });
+
+  let html=`<div style="background:var(--bg-2);border:1px solid rgba(94,234,212,0.2);border-radius:10px;padding:14px;margin-bottom:18px"><div style="font-size:12px;font-weight:700;color:var(--accent);margin-bottom:6px">🏆 v5 Engine — Branch & Bound Optimizer</div><div style="font-size:11px;color:var(--text-2);line-height:1.5">Each build is solved as a true knapsack ($50K cap, ≥1 stud ≥$9.4K) under a different objective: Cash (proj+floor+form), QH (course-history+APP), APP-stack (long iron), Form (vs-BL+SG L20), Ceiling (upside+leverage), Contrarian (low own). Diversity penalty (−6/repeat) spreads exposure across the 6 builds.</div></div>`;
+  builds.forEach(b=>{
+    if(b.recipe.kind==='CASH'&&!show('cash'))return;
+    if(b.recipe.kind==='GPP'&&!show('gpp'))return;
+    const names=b.players.map(p=>p.name);
+    html+=renderBuildCard(names,b.recipe.title,_buildSubtitle(b.players),b.recipe.kind);
+  });
+  if(!builds.length)html+='<div style="text-align:center;padding:48px;color:var(--text-2)">No feasible builds (try unexcluding players)</div>';
   document.getElementById('builds-content').innerHTML=html;
 }
 
