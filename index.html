@@ -931,14 +931,16 @@ function _verdict(p){
 
 function _reasons(p){
   const r=[];
-  // Course-history headlines from the parsed Tournament History strip.
+  // Headlines derived from the past-event finish strip. Keep them venue-
+  // neutral because the Wells Fargo/Truist field has been at Eagle Point
+  // (2017), TPC Potomac (2022) and Philadelphia Cricket Club (2025) too.
   const hist=qhFor(p);
   if(hist){
     const wins=hist.filter(x=>x==='1').length;
     const top5=hist.filter(x=>{const n=parseInt(String(x).replace('T',''));return !isNaN(n)&&n<=5}).length;
-    if(wins>=1)r.push(`Won at QH${wins>1?' ×'+wins:''}`);
-    else if(top5>=2)r.push(`${top5} top-5s at QH`);
-    else if(top5===1)r.push(`Top-5 at QH before`);
+    if(wins>=1)r.push(`Won this event${wins>1?' ×'+wins:''}`);
+    else if(top5>=2)r.push(`${top5} top-5s in event`);
+    else if(top5===1)r.push(`Top-5 in event before`);
   }
   if(p.qh_2025_finish&&p.qh_2025_finish<=15)r.push(`PGA25 T${p.qh_2025_finish} here`);
   if((p.qh_pts||0)>=10)r.push(`${p.qh_pts.toFixed(0)} QH course pts`);
@@ -1001,7 +1003,7 @@ function _swipeCardHTML(p,depth){
   </div>`;
   const reasonsBlock=reasons.length?`<div class="sc-reasons">${reasons.map(r=>'<div>✓ <b>'+r+'</b></div>').join('')}</div>`:'';
   const consBlock=cons.length?`<div class="sc-reasons cons">${cons.map(r=>'<div>⚠ <b>'+r+'</b></div>').join('')}</div>`:'';
-  const qhStrip=qhFor(p)?`<div style="font-size:10px;color:var(--text-2);display:flex;flex-direction:column;gap:4px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="text-transform:uppercase;letter-spacing:0.06em;font-weight:700;color:var(--text-1)">Quail Hollow History</span><span style="color:var(--text-3);font-size:9px">oldest → newest</span></div>${qhStripHTML(p)}</div>`:'';
+  const qhStrip=qhFor(p)?`<div style="font-size:10px;color:var(--text-2);display:flex;flex-direction:column;gap:4px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="text-transform:uppercase;letter-spacing:0.06em;font-weight:700;color:var(--text-1)">Truist / Wells Fargo History</span><span style="color:var(--text-3);font-size:9px">oldest → newest</span></div>${qhStripHTML(p)}<div style="font-size:9px;color:var(--text-3);font-style:italic">Mixed venues — '17 Eagle Point, '22 TPC Potomac, '25 Phila. Cricket; rest at Quail Hollow.</div></div>`:'';
   const back=`<div class="sc-key" style="grid-template-columns:repeat(3,1fr);font-size:11px"><div class="sc-key-cell"><div class="sc-key-val">${p.true_sg_l20?.toFixed(2)||'—'}</div><div class="sc-key-lbl">SG L20</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.vs_baseline?.toFixed(2)||'—'}</div><div class="sc-key-lbl">vs BL</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.value_per_k?.toFixed(1)||'—'}</div><div class="sc-key-lbl">Val/K</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.app_sg_200_plus?.toFixed(3)||'—'}</div><div class="sc-key-lbl">SG 200+</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.app_sg_150_200?.toFixed(3)||'—'}</div><div class="sc-key-lbl">SG 150-200</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.delta_fit??'—'}</div><div class="sc-key-lbl">ΔFit</div></div></div>`;
   const l5=p.l5_finishes?`<div style="font-size:10px;color:var(--text-2);text-align:center">L5 events: ${p.l5_finishes}</div>`:'';
   const note=p.news_note?`<div style="font-size:10px;color:var(--text-2);font-style:italic">📰 ${p.news_note}</div>`:'';
