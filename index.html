@@ -261,6 +261,24 @@ tbody tr{transition:background 0.1s}tbody tr:hover{background:var(--bg-2)}tbody 
 .swipe-empty h3{color:var(--text-0);margin:0 0 8px;font-size:18px}
 .swipe-summary-line{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
 .swipe-summary-line:last-child{border-bottom:none}
+/* === EXPORT MODAL === */
+.exp-backdrop{position:fixed;inset:0;background:rgba(5,8,14,0.78);backdrop-filter:blur(4px);z-index:200;display:flex;align-items:center;justify-content:center;padding:16px}
+.exp-modal{background:linear-gradient(165deg,#222b3c,#161c28);border:1px solid rgba(94,234,212,0.25);border-radius:16px;max-width:560px;width:100%;max-height:90vh;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 24px 64px rgba(0,0,0,0.7)}
+.exp-head{padding:16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:12px}
+.exp-title{font-size:15px;font-weight:800;color:var(--text-0);letter-spacing:-0.01em}
+.exp-close{background:none;border:none;color:var(--text-2);font-size:22px;cursor:pointer;padding:0 4px;line-height:1}
+.exp-status{padding:10px 18px;font-size:11px;color:var(--text-2);background:var(--bg-2);border-bottom:1px solid var(--border)}
+.exp-status .ok{color:var(--good);font-weight:700}
+.exp-status .warn{color:var(--warn);font-weight:700}
+.exp-instructions{padding:10px 18px;font-size:11px;color:var(--text-1);line-height:1.6;background:rgba(94,234,212,0.05);border-bottom:1px solid var(--border)}
+.exp-instructions ol{margin:4px 0;padding-left:18px}
+.exp-instructions code{background:var(--bg-3);padding:1px 5px;border-radius:3px;font-size:10px;color:var(--accent)}
+.exp-pre{flex:1;overflow:auto;padding:12px 14px;background:#0e131b;color:var(--text-1);font-family:ui-monospace,Menlo,monospace;font-size:11px;line-height:1.5;margin:0;white-space:pre;border-bottom:1px solid var(--border)}
+.exp-actions{padding:12px 18px;display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+.exp-btn{padding:10px 16px;border-radius:9px;border:1px solid var(--border-strong);background:var(--bg-2);color:var(--text-0);font-size:13px;font-weight:600;cursor:pointer;transition:transform 0.1s,background 0.15s}
+.exp-btn:hover{background:var(--bg-3)}
+.exp-btn.primary{background:var(--accent);color:#000;border-color:var(--accent)}
+.exp-btn.primary:hover{filter:brightness(1.1)}
 </style>
 </head>
 <body>
@@ -457,8 +475,8 @@ SG per shot (35%) · Proximity (25%) · Green hit rate (20%) · Bad shot avoidan
 <button class="filter-chip" id="gen-more-btn" onclick="generateMore(5)">➕ Generate +5</button>
 <button class="filter-chip" onclick="generateMore(10)">➕ +10</button>
 <button class="filter-chip" onclick="resetBuilds()">↺ Reset</button>
-<label class="filter-chip" style="cursor:pointer" id="dk-load-label" title="Upload the DKSalaries.csv from your DraftKings contest entry page so exports match player IDs">📥 Load DK CSV<input type="file" id="dk-csv-input" accept=".csv,text/csv" style="display:none" onchange="loadDkCsv(event)"></label>
-<button class="filter-chip" style="background:var(--accent);color:#000;font-weight:700" onclick="exportLineups()">⬇ Export CSV</button>
+<button class="filter-chip" style="background:var(--accent);color:#000;font-weight:700;padding:0 14px" onclick="exportLineups()">⬇ Export to DraftKings</button>
+<label class="filter-chip" style="cursor:pointer;font-size:10px" id="dk-load-label" title="Optional: replace the built-in DK player IDs with a fresher DKSalaries.csv">⚙️<input type="file" id="dk-csv-input" accept=".csv,text/csv" style="display:none" onchange="loadDkCsv(event)"></label>
 </div>
 </div>
 <div id="builds-content"></div>
@@ -1512,53 +1530,95 @@ function _dkCellFor(p){
   return `${m.name} (${m.id})`;
 }
 
+function _buildDkCsv(builds){
+  const unmatched=[];
+  const matched=[];
+  const rows=[['G','G','G','G','G','G']];
+  builds.forEach(b=>{
+    const lp=b.players.slice().sort((a,b)=>b.salary-a.salary);
+    const cells=lp.map(p=>{
+      const m=state.dkIds&&state.dkIds[_normName(p.name)];
+      if(!m){unmatched.push(p.name);return p.name}
+      matched.push(p.name);
+      return `${m.name} (${m.id})`;
+    });
+    while(cells.length<6)cells.push('');
+    rows.push(cells.slice(0,6));
+  });
+  const csv=rows.map(r=>r.map(_csvCell).join(',')).join('\n');
+  return {csv,unmatched,matched,lineupCount:builds.length};
+}
+
 function exportLineups(){
   const builds=state.builds||[];
   if(!builds.length){alert('No lineups to export. Click Generate first.');return}
-  const haveIds=!!state.dkIds&&Object.keys(state.dkIds).length>0;
-  let rows;
-  let unmatched=[];
-  if(haveIds){
-    // DK upload format: 6 G columns with "Name (ID)" cells.
-    rows=[['G','G','G','G','G','G']];
-    builds.forEach(b=>{
-      const lp=b.players.slice().sort((a,b)=>b.salary-a.salary);
-      const cells=lp.map(p=>{
-        const m=state.dkIds[_normName(p.name)];
-        if(!m){unmatched.push(p.name);return p.name}
-        return `${m.name} (${m.id})`;
-      });
-      while(cells.length<6)cells.push('');
-      rows.push(cells.slice(0,6));
-    });
-  } else {
-    // No DK IDs loaded — keep the human-readable export but warn the user.
-    rows=[['Build','Type','G1','G2','G3','G4','G5','G6','Salary','Σ Proj','Σ Ceil','Cum Own %']];
-    builds.forEach((b,i)=>{
-      const lp=b.players.slice().sort((a,b)=>b.salary-a.salary);
-      const sal=lp.reduce((s,p)=>s+p.salary,0);
-      const proj=lp.reduce((s,p)=>s+(p.cash_proj||0),0);
-      const ceil=lp.reduce((s,p)=>s+(p.ceiling||0),0);
-      const own=lp.reduce((s,p)=>s+(p.own_pct||0),0);
-      const names=lp.map(p=>p.name);
-      while(names.length<6)names.push('');
-      rows.push([`#${i+1} ${b.recipe.key}`,b.recipe.kind,...names.slice(0,6),sal,proj.toFixed(1),ceil.toFixed(0),own.toFixed(1)]);
-    });
+  const {csv,unmatched,lineupCount}=_buildDkCsv(builds);
+  const total=lineupCount*6;
+  const ok=total-unmatched.length;
+  const statusHtml=unmatched.length
+    ?`<span class="warn">⚠ ${unmatched.length} of ${total} player slots not matched to a DK ID</span><br><span style="color:var(--text-3)">${Array.from(new Set(unmatched)).join(' · ')}</span>`
+    :`<span class="ok">✅ ${lineupCount} lineups · ${ok}/${total} player slots matched · ready to upload</span>`;
+  const escaped=csv.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  const html=`<div class="exp-backdrop" onclick="if(event.target===this)closeExportModal()">
+    <div class="exp-modal">
+      <div class="exp-head"><div class="exp-title">⬇ Export to DraftKings</div><button class="exp-close" onclick="closeExportModal()">×</button></div>
+      <div class="exp-status">${statusHtml}</div>
+      <div class="exp-instructions">
+        <b>Upload steps:</b>
+        <ol>
+          <li>Click <b>Download .csv</b> below.</li>
+          <li>On DraftKings: <code>Lineups</code> → <code>Upload Lineups</code> → choose the file.</li>
+          <li>Pick the contest, confirm, and submit.</li>
+        </ol>
+      </div>
+      <pre class="exp-pre" id="exp-pre">${escaped}</pre>
+      <div class="exp-actions">
+        <button class="exp-btn" onclick="closeExportModal()">Close</button>
+        <button class="exp-btn" id="exp-copy" onclick="copyExportCsv()">📋 Copy CSV</button>
+        <button class="exp-btn primary" onclick="downloadExportCsv()">⬇ Download .csv</button>
+      </div>
+    </div>
+  </div>`;
+  document.getElementById('export-modal-mount').innerHTML=html;
+  // stash for copy/download
+  state._lastCsv=csv;
+}
+
+function closeExportModal(){
+  const m=document.getElementById('export-modal-mount');
+  if(m)m.innerHTML='';
+}
+
+function copyExportCsv(){
+  const csv=state._lastCsv||'';
+  const btn=document.getElementById('exp-copy');
+  const reset=()=>{if(btn)btn.textContent='📋 Copy CSV'};
+  const flash=ok=>{if(btn){btn.textContent=ok?'✅ Copied':'⚠ Copy failed';setTimeout(reset,1400)}};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(csv).then(()=>flash(true),()=>flash(false));
+    return;
   }
-  const csv=rows.map(r=>r.map(_csvCell).join(',')).join('\n');
+  // Fallback for older browsers / non-https
+  try{
+    const ta=document.createElement('textarea');
+    ta.value=csv;ta.style.position='fixed';ta.style.opacity='0';
+    document.body.appendChild(ta);ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    flash(true);
+  }catch(_){flash(false)}
+}
+
+function downloadExportCsv(){
+  const csv=state._lastCsv||'';
+  if(!csv)return;
   const blob=new Blob([csv],{type:'text/csv'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
   const ts=new Date().toISOString().replace(/[:.]/g,'-').slice(0,19);
-  a.href=url;
-  a.download=haveIds?`dk-lineups-${ts}.csv`:`lineups-${ts}.csv`;
+  a.href=url;a.download=`dk-lineups-${ts}.csv`;
   document.body.appendChild(a);a.click();
   setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url)},0);
-  if(!haveIds){
-    setTimeout(()=>alert('Heads up: DraftKings will reject this CSV because it has names but no player IDs. Click 📥 Load DK CSV first and upload the DKSalaries.csv from your DK contest entry page, then re-export.'),100);
-  } else if(unmatched.length){
-    setTimeout(()=>alert('Exported, but '+unmatched.length+' player(s) had no match in the DK CSV — DK may reject those rows:\n\n'+Array.from(new Set(unmatched)).join('\n')+'\n\nUsually means a name spelling difference. Try re-loading a fresher DKSalaries.csv.'),100);
-  }
 }
 
 
@@ -1693,5 +1753,6 @@ document.getElementById('priced-count').textContent=`Live · ${priced} players`;
 document.getElementById('pool-count').textContent=priced;
 renderPanel();
 </script>
+<div id="export-modal-mount"></div>
 </body>
 </html>
