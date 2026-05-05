@@ -941,6 +941,10 @@ function _reasons(p){
     else if(top5>=2)r.push(`${top5} top-5s at QH`);
     else if(top5===1)r.push(`Top-5 at QH before`);
   }
+  // Elite SG performances at QH (e.g., Rory's +20.1 in 2015).
+  const eliteSG=bestSGAtQH(p);
+  if(eliteSG.length>=2)r.push(`${eliteSG.length}× elite SG at QH (best +${eliteSG[0].sg})`);
+  else if(eliteSG.length===1)r.push(`Elite SG +${eliteSG[0].sg} at QH ('${String(eliteSG[0].year).slice(2)})`);
   if(p.qh_2025_finish&&p.qh_2025_finish<=15)r.push(`PGA25 T${p.qh_2025_finish} here`);
   if((p.qh_pts||0)>=10)r.push(`${p.qh_pts.toFixed(0)} QH course pts`);
   if((p.app_composite||0)>=80)r.push(`Elite APP ${p.app_composite}`);
@@ -1002,7 +1006,9 @@ function _swipeCardHTML(p,depth){
   </div>`;
   const reasonsBlock=reasons.length?`<div class="sc-reasons">${reasons.map(r=>'<div>✓ <b>'+r+'</b></div>').join('')}</div>`:'';
   const consBlock=cons.length?`<div class="sc-reasons cons">${cons.map(r=>'<div>⚠ <b>'+r+'</b></div>').join('')}</div>`:'';
-  const qhStrip=qhFor(p)?`<div style="font-size:10px;color:var(--text-2);display:flex;flex-direction:column;gap:4px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="text-transform:uppercase;letter-spacing:0.06em;font-weight:700;color:var(--text-1)">Truist / Wells Fargo History</span><span style="color:var(--text-3);font-size:9px">'15→'25 · * = not QH</span></div>${qhStripHTML(p)}</div>`:'';
+  const sgList=bestSGAtQH(p);
+  const sgLine=sgList.length?`<div style="font-size:10px;color:var(--accent);font-weight:600;display:flex;align-items:center;gap:6px;flex-wrap:wrap"><span>🏆 Elite SG at QH:</span>${sgList.map(e=>`<span style="background:rgba(94,234,212,0.12);padding:2px 7px;border-radius:4px;font-size:10px">+${e.sg} '${String(e.year).slice(2)} (${e.finish})</span>`).join('')}</div>`:'';
+  const qhStrip=qhFor(p)?`<div style="font-size:10px;color:var(--text-2);display:flex;flex-direction:column;gap:4px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="text-transform:uppercase;letter-spacing:0.06em;font-weight:700;color:var(--text-1)">Truist / Wells Fargo History</span><span style="color:var(--text-3);font-size:9px">'15→'25 · * = not QH</span></div>${qhStripHTML(p)}${sgLine}</div>`:sgLine;
   const back=`<div class="sc-key" style="grid-template-columns:repeat(3,1fr);font-size:11px"><div class="sc-key-cell"><div class="sc-key-val">${p.true_sg_l20?.toFixed(2)||'—'}</div><div class="sc-key-lbl">SG L20</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.vs_baseline?.toFixed(2)||'—'}</div><div class="sc-key-lbl">vs BL</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.value_per_k?.toFixed(1)||'—'}</div><div class="sc-key-lbl">Val/K</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.app_sg_200_plus?.toFixed(3)||'—'}</div><div class="sc-key-lbl">SG 200+</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.app_sg_150_200?.toFixed(3)||'—'}</div><div class="sc-key-lbl">SG 150-200</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.delta_fit??'—'}</div><div class="sc-key-lbl">ΔFit</div></div></div>`;
   const l5=p.l5_finishes?`<div style="font-size:10px;color:var(--text-2);text-align:center">L5 events: ${p.l5_finishes}</div>`:'';
   const note=p.news_note?`<div style="font-size:10px;color:var(--text-2);font-style:italic">📰 ${p.news_note}</div>`:'';
@@ -1482,6 +1488,30 @@ function _normName(s){
 const QH_HIST_YEARS=[2015,2016,2017,2018,2019,2021,2022,2023,2024,2025];
 const QH_HIST_VENUE=['QH','QH','Eagle Point','QH','QH','QH','TPC Potomac','QH','QH','Phila Cricket'];
 const QH_HIST_IS_QH=QH_HIST_VENUE.map(v=>v==='QH');
+// Years the event left QH: 2017 (Eagle Point), 2020 (cancelled),
+// 2022 (TPC Potomac), 2025 (Philadelphia Cricket).
+function _isQHYear(y){return y!==2017&&y!==2020&&y!==2022&&y!==2025}
+
+// Top historical strokes-gained performances at this event. Year+venue
+// filter applied via _isQHYear so e.g. Homa's 2022 Potomac SG drops out.
+const BEST_SG_AT_QH={
+  "Rory McIlroy":[{sg:20.1,year:2015,finish:'W'},{sg:19.9,year:2024,finish:'W'},{sg:18.3,year:2010,finish:'W'},{sg:14.8,year:2021,finish:'W'}],
+  "Max Homa":[{sg:17.3,year:2019,finish:'W'},{sg:15.0,year:2022,finish:'W'}],
+  "Xander Schauffele":[{sg:15.5,year:2023,finish:'2'},{sg:14.9,year:2024,finish:'2'}],
+  "Jason Day":[{sg:15.7,year:2018,finish:'W'}],
+  "Lucas Glover":[{sg:14.3,year:2011,finish:'W'}]
+};
+const _SG_BY_NORM=(function(){
+  const o={};
+  Object.keys(BEST_SG_AT_QH).forEach(k=>{o[_normName(k)]=BEST_SG_AT_QH[k]});
+  return o;
+})();
+function bestSGAtQH(p){
+  if(!p)return [];
+  const list=_SG_BY_NORM[_normName(p.name)];
+  if(!list)return [];
+  return list.filter(e=>_isQHYear(e.year)).slice().sort((a,b)=>b.sg-a.sg);
+}
 
 const _QH_BY_NORM=(function(){
   const o={};
