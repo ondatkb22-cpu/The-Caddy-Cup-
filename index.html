@@ -864,21 +864,22 @@ function _buildDeck(mode){
     &&!state.excluded.includes(p.name));
   pool.forEach(p=>p._h=_horsesScore(p));
   if(mode==='balanced'){
-    // Top N from each salary tier so the deck spans the cap evenly
+    // All priced players, ordered by horses-score (best plays first).
+    // Interleave salary tiers so the user sees variety instead of 20 studs in a row.
     const tiers=[
-      pool.filter(p=>p.salary>=10000).sort((a,b)=>b._h-a._h).slice(0,4),
-      pool.filter(p=>p.salary>=8000&&p.salary<10000).sort((a,b)=>b._h-a._h).slice(0,5),
-      pool.filter(p=>p.salary>=7000&&p.salary<8000).sort((a,b)=>b._h-a._h).slice(0,5),
-      pool.filter(p=>p.salary<7000).sort((a,b)=>b._h-a._h).slice(0,4)
+      pool.filter(p=>p.salary>=10000).sort((a,b)=>b._h-a._h),
+      pool.filter(p=>p.salary>=8000&&p.salary<10000).sort((a,b)=>b._h-a._h),
+      pool.filter(p=>p.salary>=7000&&p.salary<8000).sort((a,b)=>b._h-a._h),
+      pool.filter(p=>p.salary<7000).sort((a,b)=>b._h-a._h)
     ];
-    // Interleave so user sees a mix of tiers
     const deck=[];const max=Math.max(...tiers.map(t=>t.length));
     for(let i=0;i<max;i++)tiers.forEach(t=>{if(t[i])deck.push(t[i].name)});
     return deck;
   }
-  // studs & duds: top studs then top punts (skip mid-tier intentionally)
-  const studs=pool.filter(p=>p.salary>=9400).sort((a,b)=>b._h-a._h).slice(0,8);
-  const duds=pool.filter(p=>p.salary<=7300).sort((a,b)=>b._h-a._h).slice(0,10);
+  // studs & duds: ALL studs + ALL punts, mid-tier filtered out by design.
+  // Alternate so the user always has a stud option visible alongside punts.
+  const studs=pool.filter(p=>p.salary>=9400).sort((a,b)=>b._h-a._h);
+  const duds=pool.filter(p=>p.salary<=7300).sort((a,b)=>b._h-a._h);
   const deck=[];const max=Math.max(studs.length,duds.length);
   for(let i=0;i<max;i++){if(studs[i])deck.push(studs[i].name);if(duds[i])deck.push(duds[i].name)}
   return deck;
