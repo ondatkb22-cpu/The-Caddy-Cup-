@@ -457,6 +457,7 @@ function renderSteam(pct){if(!pct)return`<span style="color:var(--text-3)">—</
 let state={tab:'guide',search:'',tier:'all',salary:'all',form:'all',lineup:[],excluded:['Tony Finau'],sort:{col:'dg_final',dir:'desc'},panelOpen:false,suggestion:null};
 let tpView_g='all';let buildMode_g='all';
 const CAP=50000;
+const MIN_SPEND=49700;
 function getP(name){return PLAYERS.find(p=>p.name===name)}
 function linSal(){return state.lineup.reduce((s,n)=>{const p=getP(n);return s+(p?p.salary:0)},0)}
 function linRemaining(){return CAP-linSal()}
@@ -528,6 +529,7 @@ function solveLineup(opts){
   const locked=opts.locked||[];
   const excluded=opts.excluded||[];
   const cap=opts.cap||CAP;
+  const minSpend=opts.minSpend||MIN_SPEND;
   const totalSlots=opts.slots||6;
   const requireStud=opts.requireStud!==false;
   const studMin=opts.studMin||9400;
@@ -539,7 +541,9 @@ function solveLineup(opts){
   const lockedHasStud=lockedP.some(p=>p.salary>=studMin);
   const need=totalSlots-lockedP.length;
   const capLeft=cap-lockedSal;
-  if(need<=0)return lockedP.slice();
+  if(need<=0){
+    return lockedSal>=minSpend?lockedP.slice():null;
+  }
   if(capLeft<0)return null;
 
   const pool=PLAYERS.filter(p=>p.salary&&p.dg_final!=null&&p.dg_final>-0.5
@@ -551,6 +555,15 @@ function solveLineup(opts){
   const minSal=Math.min.apply(null,pool.map(p=>p.salary));
   const studSuf=new Array(N+1).fill(false);
   for(let i=N-1;i>=0;i--)studSuf[i]=studSuf[i+1]||pool[i].salary>=studMin;
+  // Precompute, for each suffix idx and k=1..totalSlots, max salary spend = sum of top-k salaries in pool[idx..]
+  const maxSalSuf=new Array(N+1);
+  maxSalSuf[N]=new Array(totalSlots+1).fill(0);
+  for(let i=N-1;i>=0;i--){
+    const sals=pool.slice(i).map(p=>p.salary).sort((a,b)=>b-a);
+    const arr=[0];let acc=0;
+    for(let k=0;k<totalSlots;k++){acc+=(sals[k]||0);arr.push(acc)}
+    maxSalSuf[i]=arr;
+  }
 
   let best={score:-Infinity,picks:null};
   let steps=0;
@@ -558,13 +571,18 @@ function solveLineup(opts){
   function dfs(idx,slotsLeft,capRem,score,hasStud){
     if(++steps>stepLimit)return;
     if(slotsLeft===0){
-      if(capRem>=0&&(!requireStud||hasStud)){
+      const spent=cap-capRem;
+      if(capRem>=0&&spent>=minSpend&&(!requireStud||hasStud)){
         if(score>best.score)best={score,picks:picks.slice()};
       }
       return;
     }
     if(N-idx<slotsLeft)return;
     if(slotsLeft*minSal>capRem)return;
+    // Min-spend feasibility: max we can still spend must reach minSpend
+    const spent=cap-capRem;
+    const maxAdd=Math.min(capRem,maxSalSuf[idx][slotsLeft]);
+    if(spent+maxAdd<minSpend)return;
     if(requireStud&&!hasStud&&!studSuf[idx])return;
     let ub=score;
     for(let i=idx,k=0;i<N&&k<slotsLeft;i++,k++)ub+=pool[i]._sc;
