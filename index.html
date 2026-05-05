@@ -783,7 +783,7 @@ function renderTable(){
 
 
 // === SWIPE LINEUP BUILDER ===
-const swipeState={skipped:[],flipped:false,priced:null,percentiles:null};
+const swipeState={skipped:[],flipped:false,priced:null,percentiles:null,busy:false,lastActed:null,_listeners:null,mode:null,deck:null,deckSeen:[]};
 
 function _percentile(arr,v){
   if(v==null)return null;
@@ -819,15 +819,74 @@ function _swipeRank(p){
   if(p.salary>rem-(slots-1)*Math.min(...PLAYERS.filter(x=>x.salary).map(x=>x.salary)))s-=200;
   return s;
 }
+// Score for "horses + top plays" — used by deck construction and auto-fill
+function _horsesScore(p){
+  const proj=p.cash_proj||0,dg=p.dg_final||0,qhPts=p.qh_pts||0;
+  const qh25=p.qh_2025_finish;
+  const sgL20=p.true_sg_l20||0,vsBL=p.vs_baseline||0;
+  const app=p.app_composite||0;
+  let s=proj*1.0+dg*8+qhPts*1.2;
+  if(qh25)s+=Math.max(0,30-qh25)*0.4;
+  s+=sgL20*4+vsBL*5+(app/100)*4-_cuts(p)*3;
+  return s;
+}
+
+// Build a one-pass deck of curated cards for the chosen mode
+function _buildDeck(mode){
+  const pool=PLAYERS.filter(p=>p.salary&&p.dg_final!=null&&p.dg_final>-0.5
+    &&!state.excluded.includes(p.name));
+  pool.forEach(p=>p._h=_horsesScore(p));
+  if(mode==='balanced'){
+    // Top N from each salary tier so the deck spans the cap evenly
+    const tiers=[
+      pool.filter(p=>p.salary>=10000).sort((a,b)=>b._h-a._h).slice(0,4),
+      pool.filter(p=>p.salary>=8000&&p.salary<10000).sort((a,b)=>b._h-a._h).slice(0,5),
+      pool.filter(p=>p.salary>=7000&&p.salary<8000).sort((a,b)=>b._h-a._h).slice(0,5),
+      pool.filter(p=>p.salary<7000).sort((a,b)=>b._h-a._h).slice(0,4)
+    ];
+    // Interleave so user sees a mix of tiers
+    const deck=[];const max=Math.max(...tiers.map(t=>t.length));
+    for(let i=0;i<max;i++)tiers.forEach(t=>{if(t[i])deck.push(t[i].name)});
+    return deck;
+  }
+  // studs & duds: top studs then top punts (skip mid-tier intentionally)
+  const studs=pool.filter(p=>p.salary>=9400).sort((a,b)=>b._h-a._h).slice(0,8);
+  const duds=pool.filter(p=>p.salary<=7300).sort((a,b)=>b._h-a._h).slice(0,10);
+  const deck=[];const max=Math.max(studs.length,duds.length);
+  for(let i=0;i<max;i++){if(studs[i])deck.push(studs[i].name);if(duds[i])deck.push(duds[i].name)}
+  return deck;
+}
+
 function _swipeQueue(){
-  const filt=filterPlayers().filter(p=>
+  if(!swipeState.deck)return [];
+  return swipeState.deck.map(getP).filter(p=>p&&
     !state.lineup.includes(p.name)&&
     !state.excluded.includes(p.name)&&
     !swipeState.skipped.includes(p.name)
   );
-  filt.forEach(p=>p._swipeS=_swipeRank(p));
-  filt.sort((a,b)=>b._swipeS-a._swipeS);
-  return filt;
+}
+
+// Called when the curated deck is exhausted — auto-fill remaining slots
+function _swipeFinishWithAutoFill(){
+  if(state.lineup.length>=6){renderAll();return}
+  const scoreFn=swipeState.mode==='duds'
+    ?p=>_horsesScore(p)-((p.salary>=7300&&p.salary<=9400)?15:0)
+    :_horsesScore;
+  const result=solveLineup({scoreFn,locked:state.lineup.slice(),excluded:state.excluded.slice()});
+  if(result&&result.length===6){
+    state.lineup=result.map(p=>p.name);
+  }
+  renderAll();
+}
+
+function swipeChooseMode(mode){
+  swipeState.mode=mode;
+  swipeState.deck=_buildDeck(mode);
+  swipeState.deckSeen=[];
+  swipeState.skipped=[];
+  swipeState.flipped=false;
+  swipeState.lastActed=null;
+  renderSwipe();
 }
 
 function _verdict(p){
@@ -919,11 +978,46 @@ function _swipeCardHTML(p,depth){
   </div>`;
 }
 
+function _renderModeChooser(root){
+  root.innerHTML=`<div class="swipe-wrap">
+    <div style="max-width:420px;width:100%;background:linear-gradient(165deg,#2b3447 0%,#1d2433 100%);border:1px solid rgba(94,234,212,0.18);border-radius:18px;padding:22px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,0.5)">
+      <h2 style="margin:0 0 6px;font-size:20px;color:var(--text-0);letter-spacing:-0.01em">Pick your build style</h2>
+      <p style="margin:0 0 18px;font-size:12px;color:var(--text-2);line-height:1.5">We'll curate a single deck for you to swipe through. After one pass, the optimizer auto-fills any remaining slots with course horses + top plays.</p>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <button onclick="swipeChooseMode('balanced')" style="background:linear-gradient(165deg,#243246,#1a2231);border:1.5px solid var(--accent);color:var(--text-0);padding:14px 16px;border-radius:14px;cursor:pointer;text-align:left;display:flex;gap:12px;align-items:center">
+          <div style="font-size:30px">💪</div>
+          <div style="flex:1">
+            <div style="font-weight:800;font-size:15px;color:var(--accent);letter-spacing:0.02em">BALANCED</div>
+            <div style="font-size:11px;color:var(--text-2);margin-top:2px;line-height:1.4">Players spread across all salary tiers. Higher floor — best for cash games & double-ups.</div>
+          </div>
+        </button>
+        <button onclick="swipeChooseMode('duds')" style="background:linear-gradient(165deg,#2c2440,#1f1830);border:1.5px solid var(--sharp);color:var(--text-0);padding:14px 16px;border-radius:14px;cursor:pointer;text-align:left;display:flex;gap:12px;align-items:center">
+          <div style="font-size:30px">⭐</div>
+          <div style="flex:1">
+            <div style="font-weight:800;font-size:15px;color:var(--sharp);letter-spacing:0.02em">STUDS &amp; DUDS</div>
+            <div style="font-size:11px;color:var(--text-2);margin-top:2px;line-height:1.4">2-3 elite studs + cheap punts. Higher ceiling — best for GPP tournaments.</div>
+          </div>
+        </button>
+      </div>
+    </div>
+  </div>`;
+}
+
 function renderSwipe(){
   _swipePriced();
   const root=document.getElementById('swipe-root');
   if(!root)return;
+  // Mode chooser if no mode picked yet
+  if(!swipeState.mode||!swipeState.deck){
+    _renderModeChooser(root);
+    return;
+  }
   const queue=_swipeQueue();
+  // One-pass enforcement: if deck is exhausted and lineup not complete, auto-fill
+  if(!queue.length&&state.lineup.length<6){
+    _swipeFinishWithAutoFill();
+    return;
+  }
   const studs=state.lineup.filter(n=>{const x=getP(n);return x&&x.salary>=9400}).length;
   const slots=linSlots();
   const rem=linRemaining();
@@ -935,9 +1029,12 @@ function renderSwipe(){
     }
     return '<div class="swipe-slot"></div>';
   }).join('');
+  const deckTotal=swipeState.deck.length;
+  const deckSeen=deckTotal-queue.length;
+  const modeLbl=swipeState.mode==='duds'?'⭐ Studs & Duds':'💪 Balanced';
   const hud=`<div class="swipe-hud">
-    <div class="swipe-hud-row"><div>Slots <b>${state.lineup.length}/6</b> · Studs <b>${studs}</b></div><div>Remaining <b>$${rem.toLocaleString()}</b></div></div>
-    <div class="swipe-hud-row"><div>Σ Projected <b>${projTotal.toFixed(1)}</b></div><div>${state.lineup.length?'$'+Math.round(rem/Math.max(1,slots)).toLocaleString()+' avg/slot':'—'}</div></div>
+    <div class="swipe-hud-row"><div><b>${modeLbl}</b> · Card <b>${Math.min(deckSeen+1,deckTotal)}/${deckTotal}</b></div><div>Remaining <b>$${rem.toLocaleString()}</b></div></div>
+    <div class="swipe-hud-row"><div>Slots <b>${state.lineup.length}/6</b> · Studs <b>${studs}</b></div><div>Σ Proj <b>${projTotal.toFixed(1)}</b></div></div>
     <div class="swipe-slots">${slotsHTML}</div>
   </div>`;
   let stack='';
@@ -951,10 +1048,6 @@ function renderSwipe(){
       <div style="display:flex;gap:8px;justify-content:space-around;font-size:13px;margin:12px 0"><div><b>$${sal.toLocaleString()}</b><div style="font-size:10px;color:var(--text-3)">SALARY</div></div><div><b>${projTotal.toFixed(1)}</b><div style="font-size:10px;color:var(--text-3)">Σ PROJ</div></div><div><b>${ceil.toFixed(0)}</b><div style="font-size:10px;color:var(--text-3)">Σ CEIL</div></div><div><b>${own.toFixed(0)}%</b><div style="font-size:10px;color:var(--text-3)">CUM OWN</div></div></div>
       <div style="display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap"><button class="swipe-btn auto" onclick="swipeReset()">↺ Start Over</button><button class="swipe-btn auto" onclick="state.tab='builds';document.querySelector('[data-tab=builds]').click()">🏗️ Open Builds</button></div>
     </div>`;
-  } else if(!queue.length){
-    stack=`<div class="swipe-empty" style="max-width:420px;width:100%"><h3>No more cards</h3><p style="color:var(--text-2);font-size:13px">All players swiped or filtered out. Reset skipped, change filters, or auto-fill remaining slots.</p>
-      <div style="display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap"><button class="swipe-btn auto" onclick="swipeUnskip()">↺ Restore Skipped</button><button class="swipe-btn auto" onclick="swipeAutoFill()">⚡ Auto-Fill (${slots})</button></div>
-    </div>`;
   } else {
     const top3=queue.slice(0,3);
     stack='<div class="swipe-stack" id="swipe-stack">'+top3.map((p,i)=>_swipeCardHTML(p,i)).reverse().join('')+'</div>';
@@ -964,12 +1057,20 @@ function renderSwipe(){
     <button class="swipe-btn skip" onclick="swipeAct('skip')" title="Skip (↑)">↑</button>
     <button class="swipe-btn flip" onclick="swipeFlip()" title="Flip details (↓)">🔍</button>
     <button class="swipe-btn lock" onclick="swipeAct('lock')" title="Lock (→)">✅</button>
-  </div><div style="display:flex;gap:8px;justify-content:center;margin-top:8px"><button class="swipe-btn auto" onclick="swipeAutoFill()">⚡ Auto-Fill Remaining ${slots}</button></div>`:'';
+  </div><div style="display:flex;gap:8px;justify-content:center;margin-top:8px"><button class="swipe-btn auto" onclick="_swipeFinishWithAutoFill()">⚡ Skip Rest — Auto-Fill (${slots})</button></div>`:'';
   root.innerHTML=`<div class="swipe-wrap">${hud}${stack}${buttons}</div>`;
   _swipeAttachGestures();
 }
 
+function _swipeDetachGestures(){
+  const ls=swipeState._listeners;
+  if(!ls)return;
+  window.removeEventListener('pointermove',ls.onMove);
+  window.removeEventListener('pointerup',ls.onUp);
+  swipeState._listeners=null;
+}
 function _swipeAttachGestures(){
+  _swipeDetachGestures();
   const stack=document.getElementById('swipe-stack');
   if(!stack)return;
   const top=stack.querySelector('.swipe-card[data-depth="0"]');
@@ -978,12 +1079,13 @@ function _swipeAttachGestures(){
   const overlayAdd=top.querySelector('.sc-overlay.add');
   const overlayFade=top.querySelector('.sc-overlay.fade');
   const onDown=e=>{
+    if(swipeState.busy)return;
     const t=e.touches?e.touches[0]:e;
     startX=t.clientX;startY=t.clientY;dx=0;dy=0;dragging=true;didMove=false;
     top.classList.add('dragging');
   };
   const onMove=e=>{
-    if(!dragging)return;
+    if(!dragging||swipeState.busy)return;
     const t=e.touches?e.touches[0]:e;
     dx=t.clientX-startX;dy=t.clientY-startY;
     if(Math.abs(dx)>5||Math.abs(dy)>5)didMove=true;
@@ -996,8 +1098,8 @@ function _swipeAttachGestures(){
   const onUp=()=>{
     if(!dragging)return;
     dragging=false;top.classList.remove('dragging');
+    if(swipeState.busy)return;
     if(!didMove){
-      // tap = flip
       swipeFlip();
       return;
     }
@@ -1013,39 +1115,53 @@ function _swipeAttachGestures(){
   };
   top.addEventListener('pointerdown',onDown);
   window.addEventListener('pointermove',onMove,{passive:false});
-  window.addEventListener('pointerup',onUp,{once:true});
+  window.addEventListener('pointerup',onUp);
   top.addEventListener('touchstart',onDown,{passive:true});
   top.addEventListener('touchmove',onMove,{passive:false});
   top.addEventListener('touchend',onUp);
+  swipeState._listeners={onMove,onUp};
 }
 
 function swipeAct(action){
+  if(swipeState.busy)return;
   const stack=document.getElementById('swipe-stack');
   if(!stack)return;
   const top=stack.querySelector('.swipe-card[data-depth="0"]');
   if(!top)return;
+  if(top.classList.contains('fly-right')||top.classList.contains('fly-left')||top.classList.contains('fly-up'))return;
   const name=top.dataset.player;
+  if(!name||name===swipeState.lastActed)return;
   const p=getP(name);
   if(!p)return;
+  // Already handled by an earlier action? Skip silently.
+  if(state.lineup.includes(name)||state.excluded.includes(name)||swipeState.skipped.includes(name))return;
+  swipeState.busy=true;
+  swipeState.lastActed=name;
   // Validate lock fits
   if(action==='lock'){
-    if(state.lineup.length>=6)return;
+    if(state.lineup.length>=6){swipeState.busy=false;return}
     const slotsAfter=6-state.lineup.length-1;
     const remAfter=linRemaining()-p.salary;
     if(p.salary>linRemaining()||(slotsAfter>0&&remAfter<slotsAfter*6000)){
-      // can't fit — bounce back
+      // can't fit — bounce up and skip
       top.classList.add('fly-up');
-      setTimeout(()=>{swipeState.skipped.push(name);swipeState.flipped=false;renderSwipe()},220);
+      setTimeout(()=>{
+        if(!swipeState.skipped.includes(name))swipeState.skipped.push(name);
+        swipeState.flipped=false;swipeState.busy=false;
+        renderSwipe();
+      },220);
       return;
     }
   }
   const flyClass=action==='lock'?'fly-right':action==='fade'?'fly-left':'fly-up';
   top.classList.add(flyClass);
   setTimeout(()=>{
-    if(action==='lock')state.lineup.push(name);
+    if(action==='lock'){if(!state.lineup.includes(name))state.lineup.push(name)}
     else if(action==='fade'){if(!state.excluded.includes(name))state.excluded.push(name)}
-    else swipeState.skipped.push(name);
+    else{if(!swipeState.skipped.includes(name))swipeState.skipped.push(name)}
     swipeState.flipped=false;
+    swipeState.busy=false;
+    swipeState.lastActed=null;
     renderAll();
   },220);
 }
@@ -1055,7 +1171,10 @@ function swipeFlip(){
   renderSwipe();
 }
 function swipeReset(){
-  state.lineup=[];swipeState.skipped=[];swipeState.flipped=false;renderAll();
+  state.lineup=[];swipeState.skipped=[];swipeState.flipped=false;
+  swipeState.mode=null;swipeState.deck=null;swipeState.deckSeen=[];
+  swipeState.lastActed=null;swipeState.busy=false;
+  renderAll();
 }
 function swipeUnskip(){
   swipeState.skipped=[];renderSwipe();
