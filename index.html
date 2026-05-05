@@ -471,10 +471,13 @@ SG per shot (35%) · Proximity (25%) · Green hit rate (20%) · Bad shot avoidan
 <button class="filter-chip build-mode" data-bm="cash">💰 Cash</button>
 <button class="filter-chip build-mode" data-bm="gpp">🎯 GPP</button>
 </div>
-<div class="filter-group" style="margin-left:auto">
+<div class="filter-group" style="margin-left:auto;flex-wrap:wrap">
 <button class="filter-chip" id="gen-more-btn" onclick="generateMore(5)">➕ Generate +5</button>
 <button class="filter-chip" onclick="generateMore(10)">➕ +10</button>
 <button class="filter-chip" onclick="resetBuilds()">↺ Reset</button>
+<button class="filter-chip" onclick="openExposureModal()" title="Cap how often each player can appear across your builds">📊 Exposure</button>
+<button class="filter-chip" onclick="saveLineupSet()" title="Save current builds to your browser">💾 Save</button>
+<button class="filter-chip" onclick="openLoadModal()" title="Load a previously saved set">📂 Load</button>
 <button class="filter-chip" style="background:var(--accent);color:#000;font-weight:700;padding:0 14px" onclick="exportLineups()">⬇ Export to DraftKings</button>
 <label class="filter-chip" style="cursor:pointer;font-size:10px" id="dk-load-label" title="Optional: replace the built-in DK player IDs with a fresher DKSalaries.csv">⚙️<input type="file" id="dk-csv-input" accept=".csv,text/csv" style="display:none" onchange="loadDkCsv(event)"></label>
 </div>
@@ -1097,12 +1100,13 @@ function renderSwipe(){
     const top3=queue.slice(0,3);
     stack='<div class="swipe-stack" id="swipe-stack">'+top3.map((p,i)=>_swipeCardHTML(p,i)).reverse().join('')+'</div>';
   }
+  const histLen=(swipeState.history||[]).length;
   const buttons=(state.lineup.length<6&&queue.length)?`<div class="swipe-buttons">
     <button class="swipe-btn fade" onclick="swipeAct('fade')" title="Fade (←)">🚫</button>
     <button class="swipe-btn skip" onclick="swipeAct('skip')" title="Skip (↑)">↑</button>
     <button class="swipe-btn flip" onclick="swipeFlip()" title="Flip details (↓)">🔍</button>
     <button class="swipe-btn lock" onclick="swipeAct('lock')" title="Lock (→)">✅</button>
-  </div><div style="display:flex;gap:8px;justify-content:center;margin-top:8px"><button class="swipe-btn auto" onclick="_swipeFinishWithAutoFill()">⚡ Skip Rest — Auto-Fill (${slots})</button></div>`:'';
+  </div><div style="display:flex;gap:8px;justify-content:center;margin-top:8px;flex-wrap:wrap"><button class="swipe-btn auto" onclick="swipeUndo()" ${histLen?'':'disabled style="opacity:0.4;cursor:not-allowed"'} title="Undo last (Z)">↶ Undo${histLen?' ('+histLen+')':''}</button><button class="swipe-btn auto" onclick="_swipeFinishWithAutoFill()">⚡ Skip Rest — Auto-Fill (${slots})</button></div>`:'';
   root.innerHTML=`<div class="swipe-wrap">${hud}${stack}${buttons}</div>`;
   _swipeAttachGestures();
 }
@@ -1204,11 +1208,25 @@ function swipeAct(action){
     if(action==='lock'){if(!state.lineup.includes(name))state.lineup.push(name)}
     else if(action==='fade'){if(!state.excluded.includes(name))state.excluded.push(name)}
     else{if(!swipeState.skipped.includes(name))swipeState.skipped.push(name)}
+    if(!swipeState.history)swipeState.history=[];
+    swipeState.history.push({action,name});
     swipeState.flipped=false;
     swipeState.busy=false;
     swipeState.lastActed=null;
     renderAll();
   },220);
+}
+
+function swipeUndo(){
+  if(swipeState.busy)return;
+  const h=swipeState.history;
+  if(!h||!h.length)return;
+  const last=h.pop();
+  const arr=last.action==='lock'?state.lineup:last.action==='fade'?state.excluded:swipeState.skipped;
+  const i=arr.indexOf(last.name);
+  if(i>=0)arr.splice(i,1);
+  swipeState.lastActed=null;
+  renderAll();
 }
 
 function swipeFlip(){
@@ -1218,7 +1236,7 @@ function swipeFlip(){
 function swipeReset(){
   state.lineup=[];swipeState.skipped=[];swipeState.flipped=false;
   swipeState.mode=null;swipeState.deck=null;swipeState.deckSeen=[];
-  swipeState.lastActed=null;swipeState.busy=false;
+  swipeState.lastActed=null;swipeState.busy=false;swipeState.history=[];
   renderAll();
 }
 function swipeUnskip(){
@@ -1238,6 +1256,7 @@ function _swipeKey(e){
   else if(e.key==='ArrowLeft'){e.preventDefault();swipeAct('fade')}
   else if(e.key==='ArrowUp'){e.preventDefault();swipeAct('skip')}
   else if(e.key==='ArrowDown'){e.preventDefault();swipeFlip()}
+  else if(e.key==='z'||e.key==='Z'){e.preventDefault();swipeUndo()}
 }
 window.addEventListener('keydown',_swipeKey);
 function renderCards(){renderSwipe()}
@@ -1314,7 +1333,7 @@ function renderTopPlays(){
   document.getElementById('tp-content').innerHTML=html||'<div style="text-align:center;padding:48px;color:var(--text-2)">Select a view above</div>';
 }
 
-function renderBuildCard(lineup,title,subtitle,mode){
+function renderBuildCard(lineup,title,subtitle,mode,buildIdx){
   const lp=lineup.map(n=>PLAYERS.find(x=>x.name===n)).filter(Boolean).sort((a,b)=>b.salary-a.salary);
   const sal=lp.reduce((s,p)=>s+p.salary,0);
   const rem=50000-sal;
@@ -1323,6 +1342,7 @@ function renderBuildCard(lineup,title,subtitle,mode){
   const studs=lp.filter(p=>p.salary>=9400).length;
   const duds=lp.filter(p=>p.salary<=7300).length;
   const modeColor=mode==='CASH'?'var(--good)':'var(--accent)';
+  const editBtn=buildIdx!=null?`<button onclick="editLineup(${buildIdx})" style="background:var(--bg-3);border:1px solid var(--border-strong);color:var(--text-0);padding:6px 12px;border-radius:7px;cursor:pointer;font-size:11px;font-weight:600">✏️ Edit</button>`:'';
   return`<div class="build-section">
     <div class="build-header">
       <div>
@@ -1335,6 +1355,7 @@ function renderBuildCard(lineup,title,subtitle,mode){
         <div class="build-stat"><div class="build-stat-val" style="color:var(--text-0)">${cumOwn.toFixed(0)}%</div><div class="build-stat-label">Cum Own</div></div>
         <div class="build-stat"><div class="build-stat-val" style="color:var(--text-0)">${avgProj.toFixed(0)}</div><div class="build-stat-label">Σ Proj</div></div>
         <div class="build-stat"><div class="build-stat-val" style="color:var(--text-0)">${studs}S+${duds}D</div><div class="build-stat-label">Structure</div></div>
+        ${editBtn}
       </div>
     </div>
     <div class="build-body">
@@ -1380,10 +1401,27 @@ function _usedCnt(builds){
   return c;
 }
 
-function _solveBuild(recipe,builds,penalty){
+function _capExclusions(builds,targetTotal){
+  // Players that have hit their max exposure cap relative to the target total.
+  const caps=state.exposureCaps||{};
+  const used=_usedCnt(builds);
+  const out=[];
+  Object.keys(caps).forEach(name=>{
+    const cap=caps[name];
+    if(cap<=0){out.push(name);return}
+    if(cap>=100)return;
+    const max=Math.floor((cap/100)*targetTotal);
+    if((used[name]||0)>=max)out.push(name);
+  });
+  return out;
+}
+
+function _solveBuild(recipe,builds,penalty,targetTotal){
   const used=_usedCnt(builds);
   const wrapped=p=>recipe.fn(p)-(used[p.name]||0)*penalty;
-  const lp=solveLineup({scoreFn:wrapped,excluded:state.excluded.slice()});
+  const capped=_capExclusions(builds,targetTotal||(builds.length+1));
+  const excluded=state.excluded.slice().concat(capped);
+  const lp=solveLineup({scoreFn:wrapped,excluded});
   if(!lp||lp.length!==6)return null;
   return {recipe,players:lp};
 }
@@ -1405,8 +1443,9 @@ function _blendRecipe(idx){
 
 function generateBaseBuilds(){
   state.builds=[];
+  const total=BASE_RECIPES.length;
   BASE_RECIPES.forEach(r=>{
-    const b=_solveBuild(r,state.builds,6);
+    const b=_solveBuild(r,state.builds,6,total);
     if(b)state.builds.push(b);
   });
   renderBuilds();
@@ -1414,16 +1453,15 @@ function generateBaseBuilds(){
 
 function generateMore(n){
   if(!state.builds)state.builds=[];
+  const targetTotal=state.builds.length+n;
   let added=0,attempts=0;
   while(added<n&&attempts<n*4){
     attempts++;
     const idx=state.builds.length+1;
     const recipe=_blendRecipe(idx);
-    // Stronger penalty as we add more lineups, to keep diversifying
     const penalty=6+Math.floor(state.builds.length/3);
-    const b=_solveBuild(recipe,state.builds,penalty);
+    const b=_solveBuild(recipe,state.builds,penalty,targetTotal);
     if(!b)continue;
-    // Skip duplicates (exact same 6 names as an existing build)
     const sig=b.players.map(p=>p.name).sort().join('|');
     if(state.builds.some(x=>x.players.map(p=>p.name).sort().join('|')===sig))continue;
     state.builds.push(b);
@@ -1449,7 +1487,7 @@ function renderBuilds(){
     if(b.recipe.kind==='GPP'&&!show('gpp'))return;
     const names=b.players.map(p=>p.name);
     const title=`#${i+1} · ${b.recipe.title}`;
-    html+=renderBuildCard(names,title,_buildSubtitle(b.players),b.recipe.kind);
+    html+=renderBuildCard(names,title,_buildSubtitle(b.players),b.recipe.kind,i);
     shown++;
   });
   if(!shown)html+='<div style="text-align:center;padding:48px;color:var(--text-2)">No builds match the current filter</div>';
@@ -1798,8 +1836,198 @@ function downloadExportCsv(){
   setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url)},0);
 }
 
+// === SAVE / LOAD lineup sets ===
+function _savedSets(){
+  try{return JSON.parse(localStorage.getItem('saved_lineup_sets')||'{}')}catch(_){return {}}
+}
+function _writeSavedSets(o){
+  try{localStorage.setItem('saved_lineup_sets',JSON.stringify(o))}catch(_){}
+}
+function saveLineupSet(){
+  if(!state.builds||!state.builds.length){alert('Generate at least one lineup first.');return}
+  const dflt='Set '+(new Date().toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}));
+  const name=prompt('Name this lineup set:',dflt);
+  if(!name)return;
+  const data=state.builds.map(b=>({
+    recipeKey:b.recipe.key,
+    recipeKind:b.recipe.kind,
+    recipeTitle:b.recipe.title,
+    playerNames:b.players.map(p=>p.name)
+  }));
+  const all=_savedSets();
+  all[name]={ts:Date.now(),data};
+  _writeSavedSets(all);
+  alert('Saved as "'+name+'" — '+data.length+' lineups.');
+}
+function loadLineupSetByName(name){
+  const all=_savedSets();
+  const entry=all[name];
+  if(!entry){alert('Set not found.');return}
+  const builds=[];
+  entry.data.forEach(d=>{
+    const players=d.playerNames.map(getP).filter(Boolean);
+    if(players.length===6){
+      const recipe={
+        key:d.recipeKey||'saved',
+        kind:d.recipeKind||'GPP',
+        title:d.recipeTitle||('💾 '+(d.recipeKey||'saved')),
+        fn:SCORE_FNS[d.recipeKey]||SCORE_FNS.qhV4
+      };
+      builds.push({recipe,players});
+    }
+  });
+  state.builds=builds;
+  closeGenericModal();
+  renderBuilds();
+}
+function deleteLineupSet(name){
+  if(!confirm('Delete saved set "'+name+'"?'))return;
+  const all=_savedSets();
+  delete all[name];
+  _writeSavedSets(all);
+  openLoadModal();
+}
+function openLoadModal(){
+  const all=_savedSets();
+  const names=Object.keys(all).sort((a,b)=>all[b].ts-all[a].ts);
+  const body=names.length?names.map(n=>{
+    const e=all[n];const when=new Date(e.ts).toLocaleString();
+    return `<div class="swipe-summary-line" style="padding:10px 0">
+      <div><div style="font-weight:700;color:var(--text-0)">${n}</div><div style="font-size:10px;color:var(--text-3)">${e.data.length} lineups · ${when}</div></div>
+      <div style="display:flex;gap:6px"><button class="exp-btn primary" style="padding:6px 12px;font-size:12px" onclick="loadLineupSetByName(${JSON.stringify(n).replace(/"/g,'&quot;')})">Load</button><button class="exp-btn" style="padding:6px 10px;font-size:12px" onclick="deleteLineupSet(${JSON.stringify(n).replace(/"/g,'&quot;')})">🗑️</button></div>
+    </div>`;
+  }).join(''):'<div style="padding:30px 0;text-align:center;color:var(--text-2);font-size:12px">No saved sets yet. Click 💾 Save after generating builds.</div>';
+  _showGenericModal('📂 Saved Lineup Sets',body);
+}
 
-// Trending tab
+// === Generic modal helper (reuses .exp-* styles) ===
+function _showGenericModal(title,bodyHtml,actionsHtml){
+  const html=`<div class="exp-backdrop" onclick="if(event.target===this)closeGenericModal()">
+    <div class="exp-modal">
+      <div class="exp-head"><div class="exp-title">${title}</div><button class="exp-close" onclick="closeGenericModal()">×</button></div>
+      <div style="padding:14px 18px;overflow:auto;max-height:60vh">${bodyHtml}</div>
+      ${actionsHtml?`<div class="exp-actions">${actionsHtml}</div>`:''}
+    </div>
+  </div>`;
+  document.getElementById('export-modal-mount').innerHTML=html;
+}
+function closeGenericModal(){
+  const m=document.getElementById('export-modal-mount');
+  if(m)m.innerHTML='';
+}
+
+// === EDIT a single lineup — swap one player at a time ===
+function editLineup(idx){
+  const b=(state.builds||[])[idx];
+  if(!b)return;
+  state._editingIdx=idx;state._editingSwap=null;
+  _renderEditModal();
+}
+function _renderEditModal(){
+  const b=(state.builds||[])[state._editingIdx];
+  if(!b)return;
+  const lp=b.players.slice().sort((a,b)=>b.salary-a.salary);
+  const sal=lp.reduce((s,p)=>s+p.salary,0);
+  const proj=lp.reduce((s,p)=>s+(p.cash_proj||0),0);
+  const swapIdx=state._editingSwap;
+  let body=`<div style="font-size:11px;color:var(--text-2);margin-bottom:10px">Tap a player to swap. Candidates fit the cap with the rest of the lineup unchanged.</div>`;
+  body+=`<div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">`;
+  lp.forEach((p,i)=>{
+    const sel=swapIdx===i;
+    body+=`<button onclick="state._editingSwap=${sel?'null':i};_renderEditModal()" style="all:unset;cursor:pointer;display:flex;justify-content:space-between;align-items:center;padding:8px 12px;border-radius:8px;background:${sel?'rgba(94,234,212,0.15)':'var(--bg-2)'};border:1px solid ${sel?'var(--accent)':'var(--border)'}">
+      <div><div style="font-weight:700;color:var(--text-0);font-size:13px">${p.salary>=9400?'⭐ ':''}${p.name}</div><div style="font-size:10px;color:var(--text-3)">DG ${p.dg_final?.toFixed(2)||'—'} · Proj ${p.cash_proj?.toFixed(1)||'—'} · Own ${p.own_pct?.toFixed(1)||'—'}%</div></div>
+      <div style="text-align:right"><div style="color:var(--accent);font-weight:700;font-size:13px">${fmtMoney(p.salary)}</div><div style="font-size:10px;color:var(--text-3)">${sel?'tap below to swap':'tap to swap'}</div></div>
+    </button>`;
+  });
+  body+=`</div>`;
+  body+=`<div style="font-size:11px;color:var(--text-2);display:flex;justify-content:space-between"><span>Salary <b style="color:var(--text-0)">$${sal.toLocaleString()}</b> · Σ Proj <b style="color:var(--text-0)">${proj.toFixed(1)}</b></span><span>${swapIdx==null?'':'Pick a replacement below ↓'}</span></div>`;
+  if(swapIdx!=null){
+    const target=lp[swapIdx];
+    const otherSal=sal-target.salary;
+    const remaining=CAP-otherSal;
+    const otherNames=new Set(lp.filter((_,i)=>i!==swapIdx).map(x=>x.name));
+    const cands=PLAYERS
+      .filter(p=>p.salary&&p.dg_final!=null&&p.dg_final>-0.5&&!otherNames.has(p.name))
+      .filter(p=>p.salary<=remaining&&otherSal+p.salary>=MIN_SPEND)
+      .map(p=>({p,score:SCORE_FNS.qhV4(p)}))
+      .sort((a,b)=>b.score-a.score)
+      .slice(0,15);
+    body+=`<div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--border)"><div style="font-size:11px;color:var(--text-1);font-weight:700;margin-bottom:8px">Replace <span style="color:var(--accent)">${target.name}</span> with…</div>`;
+    if(!cands.length){
+      body+='<div style="color:var(--warn);font-size:11px">No swap fits — every alternative breaks the salary range.</div>';
+    } else {
+      body+='<div style="display:flex;flex-direction:column;gap:5px">'+cands.map(({p})=>{
+        return `<button onclick="_doSwap(${state._editingIdx},${swapIdx},${JSON.stringify(p.name).replace(/"/g,'&quot;')})" style="all:unset;cursor:pointer;display:flex;justify-content:space-between;padding:7px 10px;border-radius:6px;background:var(--bg-3);border:1px solid var(--border)">
+          <div><span style="font-weight:600;color:var(--text-0)">${p.name}</span><span style="font-size:10px;color:var(--text-3);margin-left:8px">DG ${p.dg_final?.toFixed(2)} · Proj ${p.cash_proj?.toFixed(1)||'—'} · Own ${p.own_pct?.toFixed(1)||'—'}%</span></div>
+          <div style="color:var(--accent);font-weight:700">${fmtMoney(p.salary)}</div>
+        </button>`;
+      }).join('')+'</div>';
+    }
+    body+='</div>';
+  }
+  _showGenericModal('✏️ Edit Lineup #'+(state._editingIdx+1),body,'<button class="exp-btn primary" onclick="closeGenericModal()">Done</button>');
+}
+function _doSwap(buildIdx,playerIdx,newName){
+  const b=(state.builds||[])[buildIdx];
+  if(!b)return;
+  const lp=b.players.slice().sort((a,b)=>b.salary-a.salary);
+  const replacement=getP(newName);
+  if(!replacement)return;
+  // Replace in the build's underlying players list (match by name).
+  const orig=lp[playerIdx];
+  const i=b.players.findIndex(x=>x.name===orig.name);
+  if(i>=0)b.players[i]=replacement;
+  state._editingSwap=null;
+  _renderEditModal();
+  renderBuilds();
+}
+
+// === EXPOSURE caps ===
+function _exposureMap(){
+  const cnt={};
+  (state.builds||[]).forEach(b=>b.players.forEach(p=>{cnt[p.name]=(cnt[p.name]||0)+1}));
+  return cnt;
+}
+function openExposureModal(){
+  const total=(state.builds||[]).length;
+  if(!total){alert('Generate at least one lineup first.');return}
+  const cnt=_exposureMap();
+  const caps=state.exposureCaps||{};
+  const rows=Object.keys(cnt).map(n=>({name:n,cnt:cnt[n],pct:Math.round(100*cnt[n]/total),cap:caps[n]??100}))
+    .sort((a,b)=>b.cnt-a.cnt);
+  const body=`
+    <div style="font-size:11px;color:var(--text-2);line-height:1.5;margin-bottom:12px">Set the maximum % of your lineups each player can appear in. The optimizer applies caps as <b>hard constraints</b> on the next Generate. 0% = exclude, 100% = no cap.</div>
+    <div style="display:flex;flex-direction:column;gap:6px">${rows.map(r=>`
+      <div style="display:grid;grid-template-columns:1fr auto 80px;align-items:center;gap:10px;padding:6px 10px;background:var(--bg-2);border-radius:7px">
+        <div><div style="font-weight:600;color:var(--text-0);font-size:13px">${r.name}</div><div style="font-size:10px;color:var(--text-3)">In ${r.cnt}/${total} lineups · ${r.pct}%</div></div>
+        <input id="cap-${_normName(r.name).replace(/ /g,'-')}" type="number" min="0" max="100" step="5" value="${r.cap}" data-name="${r.name.replace(/"/g,'&quot;')}" style="width:64px;background:var(--bg-3);border:1px solid var(--border);color:var(--text-0);padding:5px 8px;border-radius:5px;font-size:12px;text-align:right">
+        <span style="color:var(--text-3);font-size:11px">% max</span>
+      </div>`).join('')}</div>`;
+  const actions=`
+    <button class="exp-btn" onclick="_clearExposureCaps()">Clear all caps</button>
+    <button class="exp-btn primary" onclick="_applyExposureCaps()">Save & regenerate</button>`;
+  _showGenericModal('📊 Player Exposure Caps',body,actions);
+}
+function _applyExposureCaps(){
+  const caps={};
+  document.querySelectorAll('[id^="cap-"]').forEach(inp=>{
+    const v=parseInt(inp.value);
+    const name=inp.dataset.name;
+    if(!isNaN(v)&&v<100&&name)caps[name]=Math.max(0,Math.min(100,v));
+  });
+  state.exposureCaps=caps;
+  closeGenericModal();
+  // Regenerate from scratch under new caps.
+  const targetCount=(state.builds||[]).length||6;
+  state.builds=[];
+  generateBaseBuilds();
+  if(targetCount>6)generateMore(targetCount-6);
+}
+function _clearExposureCaps(){
+  state.exposureCaps={};
+  closeGenericModal();
+  alert('Caps cleared. Existing builds unchanged — click Reset or Generate to apply.');
+}
 let trendSort={col:'true_sg_l20',dir:'desc'};
 function renderTrending(){
   const pl=PLAYERS.filter(p=>p.salary&&p.true_sg_l20!=null).sort((a,b)=>{
