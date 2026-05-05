@@ -1563,20 +1563,48 @@ function loadDkCsv(ev){
   reader.onload=e=>{
     try{
       const text=String(e.target.result||'');
-      const lines=text.split(/\r?\n/).filter(l=>l.length);
-      if(!lines.length){alert('CSV is empty.');return}
-      const header=_csvParseLine(lines[0]).map(h=>h.trim().toLowerCase());
-      // DK template columns: "Position","Name + ID","Name","ID","Roster Position","Salary",...
-      const idxName=header.indexOf('name');
-      const idxId=header.indexOf('id');
-      const idxNamePlus=header.indexOf('name + id');
+      const rawLines=text.split(/\r?\n/);
+      // Drop trailing empty lines but keep blanks in the middle so we don't
+      // shift indices.
+      while(rawLines.length&&rawLines[rawLines.length-1]==='')rawLines.pop();
+      if(!rawLines.length){alert('CSV is empty.');return}
+      const header=_csvParseLine(rawLines[0]).map(h=>h.trim());
+      const headerLc=header.map(h=>h.toLowerCase());
+      // Auto-detect: Entries template has "Entry ID" column.
+      const idxEntry=headerLc.indexOf('entry id');
+      if(idxEntry>=0){
+        // Save the whole file structure; we'll replace player columns at export time.
+        const gIdxs=[];
+        headerLc.forEach((h,i)=>{if(h==='g')gIdxs.push(i)});
+        if(gIdxs.length<6){alert('This entries CSV does not have 6 G columns. Make sure you exported the entries CSV for a 6-player golf contest.');return}
+        const rows=[];
+        for(let i=1;i<rawLines.length;i++){
+          const cells=_csvParseLine(rawLines[i]);
+          // Pad to header length if shorter
+          while(cells.length<header.length)cells.push('');
+          // Skip rows with no Entry ID (instructions/footer).
+          if(!cells[idxEntry]||!String(cells[idxEntry]).trim())continue;
+          rows.push(cells);
+        }
+        if(!rows.length){alert('No entry rows found in this CSV.');return}
+        state.dkEntriesTemplate={header,rows,gIdxs:gIdxs.slice(0,6),raw:text};
+        try{localStorage.setItem('dk_entries_template',JSON.stringify(state.dkEntriesTemplate))}catch(_){}
+        const lbl=document.getElementById('dk-load-label');
+        if(lbl)lbl.innerHTML=`✅ Entries (${rows.length}) · Update<input type="file" id="dk-csv-input" accept=".csv,text/csv" style="display:none" onchange="loadDkCsv(event)">`;
+        alert(`Loaded DK entries template with ${rows.length} entries. Exports will now slot players into your existing entries.`);
+        return;
+      }
+      // Otherwise: salaries CSV.
+      const idxName=headerLc.indexOf('name');
+      const idxId=headerLc.indexOf('id');
+      const idxNamePlus=headerLc.indexOf('name + id');
       if(idxName<0||idxId<0){
-        if(idxNamePlus<0){alert('Could not find "Name" + "ID" columns. Make sure this is the DKSalaries.csv from your DK contest entry page.');return}
+        if(idxNamePlus<0){alert('Could not detect this CSV. Expected either DKSalaries.csv (Name + ID columns) or your DK entries CSV (Entry ID column).');return}
       }
       const map={};
       let n=0;
-      for(let i=1;i<lines.length;i++){
-        const cells=_csvParseLine(lines[i]);
+      for(let i=1;i<rawLines.length;i++){
+        const cells=_csvParseLine(rawLines[i]);
         let name='',id='';
         if(idxName>=0&&idxId>=0){name=cells[idxName];id=cells[idxId]}
         else if(idxNamePlus>=0){
@@ -1589,8 +1617,8 @@ function loadDkCsv(ev){
       state.dkIds=map;
       try{localStorage.setItem('dk_player_ids',JSON.stringify(map))}catch(_){}
       const lbl=document.getElementById('dk-load-label');
-      if(lbl)lbl.innerHTML='✅ DK IDs ('+n+') · Re-upload<input type="file" id="dk-csv-input" accept=".csv,text/csv" style="display:none" onchange="loadDkCsv(event)">';
-      alert('Loaded '+n+' DK player IDs. Exports will now use the DK upload format.');
+      if(lbl)lbl.innerHTML='✅ DK IDs ('+n+') · Update<input type="file" id="dk-csv-input" accept=".csv,text/csv" style="display:none" onchange="loadDkCsv(event)">';
+      alert('Loaded '+n+' DK player IDs. To upload to DK you also need to load your DK entries CSV (a separate file with Entry IDs).');
     } catch(err){
       alert('Failed to parse CSV: '+err.message);
     }
@@ -1611,9 +1639,20 @@ function loadDkCsv(ev){
       Object.keys(saved||{}).forEach(k=>{state.dkIds[k]=saved[k]});
     }
   }catch(_){}
+  // Restore previously-uploaded entries template if any
+  try{
+    const t=localStorage.getItem('dk_entries_template');
+    if(t)state.dkEntriesTemplate=JSON.parse(t);
+  }catch(_){}
   const lbl=document.getElementById('dk-load-label');
-  const n=Object.keys(state.dkIds).length;
-  if(lbl)lbl.innerHTML='✅ DK IDs ('+n+') · Update<input type="file" id="dk-csv-input" accept=".csv,text/csv" style="display:none" onchange="loadDkCsv(event)">';
+  if(lbl){
+    const n=Object.keys(state.dkIds).length;
+    if(state.dkEntriesTemplate){
+      lbl.innerHTML=`✅ Entries (${state.dkEntriesTemplate.rows.length}) · Update<input type="file" id="dk-csv-input" accept=".csv,text/csv" style="display:none" onchange="loadDkCsv(event)">`;
+    } else {
+      lbl.innerHTML='✅ IDs ('+n+') · Load Entries<input type="file" id="dk-csv-input" accept=".csv,text/csv" style="display:none" onchange="loadDkCsv(event)">';
+    }
+  }
 })();
 
 function _dkCellFor(p){
@@ -1626,6 +1665,34 @@ function _dkCellFor(p){
 function _buildDkCsv(builds){
   const unmatched=[];
   const matched=[];
+  const tpl=state.dkEntriesTemplate;
+  if(tpl&&tpl.rows&&tpl.gIdxs&&tpl.gIdxs.length===6){
+    // Fill in the player columns of the user's existing entries CSV.
+    const rows=[tpl.header.slice()];
+    const tplRows=tpl.rows.map(r=>r.slice());
+    const N=Math.min(builds.length,tplRows.length);
+    for(let i=0;i<N;i++){
+      const lp=builds[i].players.slice().sort((a,b)=>b.salary-a.salary);
+      const cells=lp.map(p=>{
+        const m=state.dkIds&&state.dkIds[_normName(p.name)];
+        if(!m){unmatched.push(p.name);return p.name}
+        matched.push(p.name);
+        return `${m.name} (${m.id})`;
+      });
+      while(cells.length<6)cells.push('');
+      tpl.gIdxs.forEach((g,k)=>{tplRows[i][g]=cells[k]||''});
+    }
+    tplRows.forEach(r=>rows.push(r));
+    const csv=rows.map(r=>r.map(_csvCell).join(',')).join('\n');
+    return {
+      csv,unmatched,matched,
+      lineupCount:N,
+      entriesAvailable:tplRows.length,
+      mode:'entries'
+    };
+  }
+  // Fallback: bare G-only CSV (DK won't accept this for "edit entries"
+  // upload, but it's still useful for human review / manual entry).
   const rows=[['G','G','G','G','G','G']];
   builds.forEach(b=>{
     const lp=b.players.slice().sort((a,b)=>b.salary-a.salary);
@@ -1639,41 +1706,57 @@ function _buildDkCsv(builds){
     rows.push(cells.slice(0,6));
   });
   const csv=rows.map(r=>r.map(_csvCell).join(',')).join('\n');
-  return {csv,unmatched,matched,lineupCount:builds.length};
+  return {csv,unmatched,matched,lineupCount:builds.length,mode:'bare'};
 }
 
 function exportLineups(){
   const builds=state.builds||[];
   if(!builds.length){alert('No lineups to export. Click Generate first.');return}
-  const {csv,unmatched,lineupCount}=_buildDkCsv(builds);
+  const result=_buildDkCsv(builds);
+  const {csv,unmatched,lineupCount,mode,entriesAvailable}=result;
   const total=lineupCount*6;
   const ok=total-unmatched.length;
-  const statusHtml=unmatched.length
-    ?`<span class="warn">⚠ ${unmatched.length} of ${total} player slots not matched to a DK ID</span><br><span style="color:var(--text-3)">${Array.from(new Set(unmatched)).join(' · ')}</span>`
-    :`<span class="ok">✅ ${lineupCount} lineups · ${ok}/${total} player slots matched · ready to upload</span>`;
+  let statusHtml;
+  if(mode==='entries'){
+    const extra=entriesAvailable>lineupCount?` <span class="warn">(${entriesAvailable-lineupCount} of your ${entriesAvailable} entries left blank — generate more lineups to fill)</span>`:'';
+    statusHtml=unmatched.length
+      ?`<span class="warn">⚠ ${unmatched.length} of ${total} player slots not matched to a DK ID</span><br><span style="color:var(--text-3)">${Array.from(new Set(unmatched)).join(' · ')}</span>`
+      :`<span class="ok">✅ Entries-template ready · ${lineupCount} lineups · ${ok}/${total} slots matched${extra}</span>`;
+  } else {
+    statusHtml=`<span class="warn">⚠ No DK entries CSV loaded — DK will reject this with "Unable to edit entries". Load it below.</span>`;
+  }
+  const instructions=mode==='entries'
+    ?`<b>Upload steps:</b><ol>
+        <li>Click <b>Download .csv</b> below.</li>
+        <li>On DraftKings: <code>Lineups</code> → <code>Upload Lineups</code> → pick the file.</li>
+        <li>Confirm and submit. DK matches each row's Entry ID to your existing entries.</li>
+      </ol>`
+    :`<b>Why this won't upload yet:</b> DK's bulk upload edits <i>existing entries</i>, so it requires Entry IDs.
+      <ol>
+        <li>On DraftKings, enter your contests with default/blank lineups.</li>
+        <li>Open the contest's lineup page → <code>Export to CSV</code> (or <code>Lineups</code> → <code>Upload Lineups</code> → <code>Download Template</code>).</li>
+        <li>Upload that file here:
+          <label style="display:inline-block;margin-left:6px;background:var(--accent);color:#000;padding:4px 10px;border-radius:6px;cursor:pointer;font-weight:700">
+            📥 Load DK Entries CSV
+            <input type="file" accept=".csv,text/csv" style="display:none" onchange="loadDkCsv(event);closeExportModal()">
+          </label>
+        </li>
+      </ol>`;
   const escaped=csv.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   const html=`<div class="exp-backdrop" onclick="if(event.target===this)closeExportModal()">
     <div class="exp-modal">
       <div class="exp-head"><div class="exp-title">⬇ Export to DraftKings</div><button class="exp-close" onclick="closeExportModal()">×</button></div>
       <div class="exp-status">${statusHtml}</div>
-      <div class="exp-instructions">
-        <b>Upload steps:</b>
-        <ol>
-          <li>Click <b>Download .csv</b> below.</li>
-          <li>On DraftKings: <code>Lineups</code> → <code>Upload Lineups</code> → choose the file.</li>
-          <li>Pick the contest, confirm, and submit.</li>
-        </ol>
-      </div>
+      <div class="exp-instructions">${instructions}</div>
       <pre class="exp-pre" id="exp-pre">${escaped}</pre>
       <div class="exp-actions">
         <button class="exp-btn" onclick="closeExportModal()">Close</button>
         <button class="exp-btn" id="exp-copy" onclick="copyExportCsv()">📋 Copy CSV</button>
-        <button class="exp-btn primary" onclick="downloadExportCsv()">⬇ Download .csv</button>
+        <button class="exp-btn primary" onclick="downloadExportCsv()" ${mode!=='entries'?'disabled style="opacity:0.5;cursor:not-allowed"':''}>⬇ Download .csv</button>
       </div>
     </div>
   </div>`;
   document.getElementById('export-modal-mount').innerHTML=html;
-  // stash for copy/download
   state._lastCsv=csv;
 }
 
