@@ -521,6 +521,9 @@ let state={tab:'guide',search:'',tier:'all',salary:'all',form:'all',lineup:[],ex
 let tpView_g='all';let buildMode_g='all';
 const CAP=50000;
 const MIN_SPEND=49700;
+// Recent Quail Hollow finishes per player (left=oldest, right=most recent).
+// Source: DraftKings/DataGolf Tournament History column for this venue.
+const QH_HISTORY={"Rory McILROY":["1","T4","—","T16","T8","1","5","T47","1","T7"],"Max Homa":["T76","—","CUT","—","1","CUT","1","T8","T8","T30"],"Jason Day":["—","—","—","1","T24","CUT","T15","CUT","T4","—"],"Xander Schauffele":["—","—","T24","T72","—","T14","—","2","2","T11"],"Sepp Straka":["—","—","—","—","CUT","T54","CUT","CUT","T8","1"],"Brian Harman":["CUT","T35","1","74","T24","T18","T9","CUT","T47","T46"],"Justin Thomas":["T7","CUT","—","T21","—","T26","—","T14","T21","T2"],"Rickie Fowler":["—","T4","—","T21","T4","CUT","T21","T14","T43","T15"],"Justin Rose":["—","3","—","—","3","—","—","—","T52","WD"],"Tommy Fleetwood":["—","—","—","CUT","—","T14","—","T5","T13","T4"],"Gary Woodland":["T4","T24","—","CUT","WD","5","CUT","T14","T38","T34"],"Harris English":["—","T17","CUT","—","T54","T43","—","T3","T34","T11"],"Webb Simpson":["T2","CUT","CUT","T21","T18","—","CUT","T64","T24","—"],"Patrick Rodgers":["T2","CUT","CUT","T34","—","T37","—","CUT","T29","T42"],"Sungjae Im":["—","—","—","—","T31","CUT","—","T8","T4","T23"],"Keegan Bradley":["—","—","—","T76","CUT","T18","T2","T35","T21","T30"],"Cameron Young":["—","—","—","—","—","—","T2","T59","T34","T7"],"Viktor Hovland":["—","—","—","—","—","T3","—","T43","T24","T54"],"Corey Conners":["CUT","—","—","T42","—","T43","T21","T8","T13","T11"],"Adam Scott":["CUT","T17","T36","T76","—","—","—","T5","T29","T34"],"Denny McCARTHY":["—","—","—","CUT","CUT","CUT","T25","T8","T6","T46"],"Matt Fitzpatrick":["—","—","—","—","—","—","T2","T35","T52","T23"],"Patrick Cantlay":["—","—","—","—","—","CUT","—","T21","T29","T4"],"Tony Finau":["T16","T28","—","T21","T60","CUT","T41","T23","T52","T15"],"Mackenzie Hughes":["—","CUT","T31","T59","CUT","CUT","T9","CUT","T6","—"],"Lucas Glover":["T28","8","T52","CUT","T31","CUT","CUT","CUT","T16","T66"],"Nick Taylor":["CUT","CUT","T8","CUT","T54","T26","T15","—","T43","T17"],"Hideki Matsuyama":["T20","T11","—","T76","T31","—","—","—","—","T17"],"Jacob Bridgeman":["—","—","—","—","—","—","CUT","—","—","T4"],"Daniel Berger":["T28","T17","T36","T55","T54","—","—","—","—","T11"],"Jhonattan Vegas":["T76","T53","—","T42","T8","T43","T15","—","—","—"],"J.T. Poston":["—","—","T24","CUT","CUT","T26","T9","CUT","T60","T23"],"Michael Kim":["—","T69","—","—","—","CUT","—","7","—","WD"],"Matt Wallace":["—","—","—","—","—","T6","CUT","CUT","—","—"],"Si Woo Kim":["—","CUT","—","—","—","—","T37","T43","T16","T17"],"J.J. Spaun":["—","—","—","—","—","T18","—","T27","—","T17"],"Taylor Pendrith":["—","—","—","—","—","—","—","CUT","T10","65"],"Sam Burns":["—","—","—","T55","WD","—","—","CUT","T13","T30"],"Kurt Kitayama":["—","—","—","—","—","—","T15","CUT","T34","—"],"Alex Smalley":["—","—","—","—","—","—","CUT","T18","—","—"],"Alex Noren":["—","—","T31","CUT","—","—","—","CUT","T24","T51"],"Andrew Novak":["—","—","—","—","—","—","CUT","—","—","T17"],"Andrew Putnam":["CUT","—","—","T82","—","T43","CUT","—","T29","—"],"Akshay Bhatia":["—","—","—","—","—","CUT","—","T43","42","T46"],"Sam Stevens":["—","—","—","—","—","—","—","T47","—","T23"],"Bud Cauley":["—","CUT","—","T67","T24","—","—","—","—","—"],"Jordan Spieth":["—","—","—","—","—","—","—","CUT","T29","T34"],"Tom Hoge":["CUT","T41","CUT","T76","T65","CUT","—","—","T38","T63"],"Robert MacINTYRE":["—","—","—","—","—","—","—","—","—","T34"],"Brian Campbell":["—","—","CUT","—","—","—","—","—","—","T34"],"Ryan Gerard":["—","—","—","—","—","—","—","CUT","—","T42"],"Ben Griffin":["—","—","—","—","—","—","—","CUT","—","T46"],"Ludvig Aberg":["—","—","—","—","—","—","—","—","—","T60"],"Maverick McNEALY":["—","—","—","—","—","CUT","—","—","—","T60"],"Jake Knapp":["—","—","—","—","—","—","—","—","T58","—"],"Chris Gotterup":["—","—","—","—","—","—","—","—","—","—"],"Min Woo Lee":["—","—","—","—","—","—","—","—","—","T51"],"Nicolai Hojgaard":["—","—","—","—","—","—","—","—","—","—"],"Harry Hall":["—","—","—","—","—","—","—","—","—","—"],"Sahith Theegala":["—","—","—","—","—","—","—","T56","T52","WD"],"Matt McCARTY":["—","—","—","—","—","—","—","—","—","—"],"Ryan Fox":["—","—","—","—","—","—","—","—","—","—"],"Kristoffer Reitan":["—","—","—","—","—","—","—","—","—","—"],"Alex Fitzpatrick":["—","—","—","—","—","—","—","—","—","—"],"Pierceson Coody":["—","—","—","—","—","—","—","CUT","—","—"],"Ryo Hisatsune":["—","—","—","—","—","—","—","—","—","—"],"Sudarshan Yellamaraju":["—","—","—","—","—","—","—","—","—","—"],"Ricky Castillo":["—","—","—","—","—","—","—","—","—","—"],"Nico Echavarria":["—","—","—","—","—","—","—","CUT","—","—"],"Chandler Blanchet":["—","—","—","—","—","—","—","—","—","—"],"David Lipsky":["—","—","—","—","—","—","CUT","CUT","—","—"],"Aldrich Potgieter":["—","—","—","—","—","—","—","—","—","—"]};
 // Built-in DK player IDs for the current slate. Used as a fallback so
 // exports work without needing a manual DKSalaries.csv upload.
 const DK_IDS_DEFAULT={
@@ -928,6 +931,15 @@ function _verdict(p){
 
 function _reasons(p){
   const r=[];
+  // Course-history headlines from the parsed Tournament History strip.
+  const hist=qhFor(p);
+  if(hist){
+    const wins=hist.filter(x=>x==='1').length;
+    const top5=hist.filter(x=>{const n=parseInt(String(x).replace('T',''));return !isNaN(n)&&n<=5}).length;
+    if(wins>=1)r.push(`Won at QH${wins>1?' ×'+wins:''}`);
+    else if(top5>=2)r.push(`${top5} top-5s at QH`);
+    else if(top5===1)r.push(`Top-5 at QH before`);
+  }
   if(p.qh_2025_finish&&p.qh_2025_finish<=15)r.push(`PGA25 T${p.qh_2025_finish} here`);
   if((p.qh_pts||0)>=10)r.push(`${p.qh_pts.toFixed(0)} QH course pts`);
   if((p.app_composite||0)>=80)r.push(`Elite APP ${p.app_composite}`);
@@ -989,12 +1001,13 @@ function _swipeCardHTML(p,depth){
   </div>`;
   const reasonsBlock=reasons.length?`<div class="sc-reasons">${reasons.map(r=>'<div>✓ <b>'+r+'</b></div>').join('')}</div>`:'';
   const consBlock=cons.length?`<div class="sc-reasons cons">${cons.map(r=>'<div>⚠ <b>'+r+'</b></div>').join('')}</div>`:'';
+  const qhStrip=qhFor(p)?`<div style="font-size:10px;color:var(--text-2);display:flex;flex-direction:column;gap:4px"><div style="display:flex;justify-content:space-between;align-items:center"><span style="text-transform:uppercase;letter-spacing:0.06em;font-weight:700;color:var(--text-1)">Quail Hollow History</span><span style="color:var(--text-3);font-size:9px">oldest → newest</span></div>${qhStripHTML(p)}</div>`:'';
   const back=`<div class="sc-key" style="grid-template-columns:repeat(3,1fr);font-size:11px"><div class="sc-key-cell"><div class="sc-key-val">${p.true_sg_l20?.toFixed(2)||'—'}</div><div class="sc-key-lbl">SG L20</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.vs_baseline?.toFixed(2)||'—'}</div><div class="sc-key-lbl">vs BL</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.value_per_k?.toFixed(1)||'—'}</div><div class="sc-key-lbl">Val/K</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.app_sg_200_plus?.toFixed(3)||'—'}</div><div class="sc-key-lbl">SG 200+</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.app_sg_150_200?.toFixed(3)||'—'}</div><div class="sc-key-lbl">SG 150-200</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.delta_fit??'—'}</div><div class="sc-key-lbl">ΔFit</div></div></div>`;
-  const l5=p.l5_finishes?`<div style="font-size:10px;color:var(--text-2);text-align:center">L5: ${p.l5_finishes}${p.qh_pts?' · QH '+p.qh_pts.toFixed(0)+'pts':''}</div>`:'';
+  const l5=p.l5_finishes?`<div style="font-size:10px;color:var(--text-2);text-align:center">L5 events: ${p.l5_finishes}</div>`:'';
   const note=p.news_note?`<div style="font-size:10px;color:var(--text-2);font-style:italic">📰 ${p.news_note}</div>`:'';
   const inner=swipeState.flipped&&depth===0
-    ? head+verdictRow+keyStats+back+l5+note
-    : head+verdictRow+keyStats+bars+reasonsBlock+consBlock+l5;
+    ? head+verdictRow+keyStats+back+qhStrip+l5+note
+    : head+verdictRow+keyStats+bars+qhStrip+reasonsBlock+consBlock+l5;
   return `<div class="swipe-card ${cls}" data-player="${p.name}" data-depth="${depth}">
     <div class="sc-overlay add">LOCK</div>
     <div class="sc-overlay fade">FADE</div>
@@ -1461,6 +1474,47 @@ function _csvParseLine(line){
 
 function _normName(s){
   return String(s||'').toLowerCase().replace(/[.\-']/g,'').replace(/\s+/g,' ').trim();
+}
+
+// Normalize-keyed lookup of QH_HISTORY so "Rory McIlroy" matches "Rory McILROY" etc.
+const _QH_BY_NORM=(function(){
+  const o={};
+  Object.keys(QH_HISTORY).forEach(k=>{o[_normName(k)]=QH_HISTORY[k]});
+  return o;
+})();
+function qhFor(p){
+  if(!p)return null;
+  return _QH_BY_NORM[_normName(p.name)]||null;
+}
+// Last N non-dash finishes (most recent on the right). Returns array.
+function qhRecent(p,n){
+  const h=qhFor(p);if(!h)return [];
+  const recent=h.slice(-(n||5)).filter(x=>x&&x!=='—');
+  return recent;
+}
+function _qhClass(f){
+  if(!f||f==='—')return 'sigma-low';
+  if(f==='CUT'||f==='WD')return 'red';
+  const num=parseInt(String(f).replace('T',''));
+  if(isNaN(num))return '';
+  if(num<=5)return 'gold';
+  if(num<=15)return 'green';
+  if(num<=30)return 'teal';
+  return 'amber';
+}
+// Renders the full 10-finish strip (oldest left, newest right).
+function qhStripHTML(p){
+  const h=qhFor(p);if(!h)return '';
+  return '<div style="display:flex;gap:3px;flex-wrap:wrap">'+h.map(f=>{
+    const cls=_qhClass(f);
+    const bg=cls==='gold'?'background:#facc15;color:#000':
+             cls==='green'?'background:rgba(16,185,129,0.25);color:var(--good)':
+             cls==='teal'?'background:rgba(94,234,212,0.18);color:var(--accent)':
+             cls==='amber'?'background:rgba(245,158,11,0.18);color:var(--warn)':
+             cls==='red'?'background:rgba(239,68,68,0.22);color:var(--bad)':
+             'background:var(--bg-3);color:var(--text-3)';
+    return '<span style="font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;'+bg+'">'+(f||'—')+'</span>';
+  }).join('')+'</div>';
 }
 
 function loadDkCsv(ev){
