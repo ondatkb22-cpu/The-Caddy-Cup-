@@ -457,6 +457,7 @@ SG per shot (35%) · Proximity (25%) · Green hit rate (20%) · Bad shot avoidan
 <button class="filter-chip" id="gen-more-btn" onclick="generateMore(5)">➕ Generate +5</button>
 <button class="filter-chip" onclick="generateMore(10)">➕ +10</button>
 <button class="filter-chip" onclick="resetBuilds()">↺ Reset</button>
+<label class="filter-chip" style="cursor:pointer" id="dk-load-label" title="Upload the DKSalaries.csv from your DraftKings contest entry page so exports match player IDs">📥 Load DK CSV<input type="file" id="dk-csv-input" accept=".csv,text/csv" style="display:none" onchange="loadDkCsv(event)"></label>
 <button class="filter-chip" style="background:var(--accent);color:#000;font-weight:700" onclick="exportLineups()">⬇ Export CSV</button>
 </div>
 </div>
@@ -1416,36 +1417,132 @@ function _csvCell(s){
   return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v;
 }
 
+// Parse a single CSV line respecting double-quoted fields
+function _csvParseLine(line){
+  const out=[];let cur='',inQ=false;
+  for(let i=0;i<line.length;i++){
+    const c=line[i];
+    if(inQ){
+      if(c==='"'&&line[i+1]==='"'){cur+='"';i++}
+      else if(c==='"')inQ=false;
+      else cur+=c;
+    } else {
+      if(c===','){out.push(cur);cur=''}
+      else if(c==='"')inQ=true;
+      else cur+=c;
+    }
+  }
+  out.push(cur);
+  return out;
+}
+
+function _normName(s){
+  return String(s||'').toLowerCase().replace(/[.\-']/g,'').replace(/\s+/g,' ').trim();
+}
+
+function loadDkCsv(ev){
+  const file=ev.target.files&&ev.target.files[0];
+  if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const text=String(e.target.result||'');
+      const lines=text.split(/\r?\n/).filter(l=>l.length);
+      if(!lines.length){alert('CSV is empty.');return}
+      const header=_csvParseLine(lines[0]).map(h=>h.trim().toLowerCase());
+      // DK template columns: "Position","Name + ID","Name","ID","Roster Position","Salary",...
+      const idxName=header.indexOf('name');
+      const idxId=header.indexOf('id');
+      const idxNamePlus=header.indexOf('name + id');
+      if(idxName<0||idxId<0){
+        if(idxNamePlus<0){alert('Could not find "Name" + "ID" columns. Make sure this is the DKSalaries.csv from your DK contest entry page.');return}
+      }
+      const map={};
+      let n=0;
+      for(let i=1;i<lines.length;i++){
+        const cells=_csvParseLine(lines[i]);
+        let name='',id='';
+        if(idxName>=0&&idxId>=0){name=cells[idxName];id=cells[idxId]}
+        else if(idxNamePlus>=0){
+          const m=cells[idxNamePlus]&&cells[idxNamePlus].match(/^(.*?)\s*\((\d+)\)\s*$/);
+          if(m){name=m[1];id=m[2]}
+        }
+        if(name&&id){map[_normName(name)]={name:name.trim(),id:String(id).trim()};n++}
+      }
+      if(!n){alert('No player rows parsed from CSV.');return}
+      state.dkIds=map;
+      try{localStorage.setItem('dk_player_ids',JSON.stringify(map))}catch(_){}
+      const lbl=document.getElementById('dk-load-label');
+      if(lbl)lbl.innerHTML='✅ DK IDs ('+n+') · Re-upload<input type="file" id="dk-csv-input" accept=".csv,text/csv" style="display:none" onchange="loadDkCsv(event)">';
+      alert('Loaded '+n+' DK player IDs. Exports will now use the DK upload format.');
+    } catch(err){
+      alert('Failed to parse CSV: '+err.message);
+    }
+  };
+  reader.readAsText(file);
+}
+
+(function _restoreDkIds(){
+  try{
+    const v=localStorage.getItem('dk_player_ids');
+    if(v){state.dkIds=JSON.parse(v)}
+  }catch(_){}
+})();
+
+function _dkCellFor(p){
+  if(!state.dkIds)return p.name;
+  const m=state.dkIds[_normName(p.name)];
+  if(!m)return p.name; // fallback (DK won't accept, but user gets to see)
+  return `${m.name} (${m.id})`;
+}
+
 function exportLineups(){
   const builds=state.builds||[];
   if(!builds.length){alert('No lineups to export. Click Generate first.');return}
-  const rows=[['Build','Type','G1','G2','G3','G4','G5','G6','Salary','Σ Proj','Σ Ceil','Cum Own %']];
-  builds.forEach((b,i)=>{
-    const lp=b.players.slice().sort((a,b)=>b.salary-a.salary);
-    const sal=lp.reduce((s,p)=>s+p.salary,0);
-    const proj=lp.reduce((s,p)=>s+(p.cash_proj||0),0);
-    const ceil=lp.reduce((s,p)=>s+(p.ceiling||0),0);
-    const own=lp.reduce((s,p)=>s+(p.own_pct||0),0);
-    const names=lp.map(p=>p.name);
-    while(names.length<6)names.push('');
-    rows.push([
-      `#${i+1} ${b.recipe.key}`,
-      b.recipe.kind,
-      ...names.slice(0,6),
-      sal,
-      proj.toFixed(1),
-      ceil.toFixed(0),
-      own.toFixed(1)
-    ]);
-  });
+  const haveIds=!!state.dkIds&&Object.keys(state.dkIds).length>0;
+  let rows;
+  let unmatched=[];
+  if(haveIds){
+    // DK upload format: 6 G columns with "Name (ID)" cells.
+    rows=[['G','G','G','G','G','G']];
+    builds.forEach(b=>{
+      const lp=b.players.slice().sort((a,b)=>b.salary-a.salary);
+      const cells=lp.map(p=>{
+        const m=state.dkIds[_normName(p.name)];
+        if(!m){unmatched.push(p.name);return p.name}
+        return `${m.name} (${m.id})`;
+      });
+      while(cells.length<6)cells.push('');
+      rows.push(cells.slice(0,6));
+    });
+  } else {
+    // No DK IDs loaded — keep the human-readable export but warn the user.
+    rows=[['Build','Type','G1','G2','G3','G4','G5','G6','Salary','Σ Proj','Σ Ceil','Cum Own %']];
+    builds.forEach((b,i)=>{
+      const lp=b.players.slice().sort((a,b)=>b.salary-a.salary);
+      const sal=lp.reduce((s,p)=>s+p.salary,0);
+      const proj=lp.reduce((s,p)=>s+(p.cash_proj||0),0);
+      const ceil=lp.reduce((s,p)=>s+(p.ceiling||0),0);
+      const own=lp.reduce((s,p)=>s+(p.own_pct||0),0);
+      const names=lp.map(p=>p.name);
+      while(names.length<6)names.push('');
+      rows.push([`#${i+1} ${b.recipe.key}`,b.recipe.kind,...names.slice(0,6),sal,proj.toFixed(1),ceil.toFixed(0),own.toFixed(1)]);
+    });
+  }
   const csv=rows.map(r=>r.map(_csvCell).join(',')).join('\n');
   const blob=new Blob([csv],{type:'text/csv'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
   const ts=new Date().toISOString().replace(/[:.]/g,'-').slice(0,19);
-  a.href=url;a.download=`lineups-${ts}.csv`;
+  a.href=url;
+  a.download=haveIds?`dk-lineups-${ts}.csv`:`lineups-${ts}.csv`;
   document.body.appendChild(a);a.click();
   setTimeout(()=>{document.body.removeChild(a);URL.revokeObjectURL(url)},0);
+  if(!haveIds){
+    setTimeout(()=>alert('Heads up: DraftKings will reject this CSV because it has names but no player IDs. Click 📥 Load DK CSV first and upload the DKSalaries.csv from your DK contest entry page, then re-export.'),100);
+  } else if(unmatched.length){
+    setTimeout(()=>alert('Exported, but '+unmatched.length+' player(s) had no match in the DK CSV — DK may reject those rows:\n\n'+Array.from(new Set(unmatched)).join('\n')+'\n\nUsually means a name spelling difference. Try re-loading a fresher DKSalaries.csv.'),100);
+  }
 }
 
 
