@@ -214,9 +214,7 @@ tbody tr{transition:background 0.1s}tbody tr:hover{background:var(--bg-2)}tbody 
 .swipe-card.fly-right{transform:translate(120vw,-30px) rotate(28deg) !important;opacity:0}
 .swipe-card.fly-left{transform:translate(-120vw,-30px) rotate(-28deg) !important;opacity:0}
 .swipe-card.fly-up{transform:translateY(-120vh) !important;opacity:0}
-.swipe-card.behind-1{transform:translateY(10px) scale(0.96);opacity:0.85;z-index:2;pointer-events:none}
-.swipe-card.behind-2{transform:translateY(20px) scale(0.92);opacity:0.55;z-index:1;pointer-events:none}
-.swipe-card.behind-1 > *,.swipe-card.behind-2 > *{visibility:hidden}
+.swipe-card.behind-1,.swipe-card.behind-2{display:none}
 .sc-top{display:flex;align-items:center;gap:10px}
 .sc-avatar{width:50px;height:50px;border-radius:50%;background:var(--bg-3);border:1.5px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:var(--text-1);flex-shrink:0;letter-spacing:-0.02em}
 .sc-name{font-size:18px;font-weight:800;color:var(--text-0);line-height:1.15}
