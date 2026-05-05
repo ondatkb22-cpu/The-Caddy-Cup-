@@ -503,6 +503,11 @@ let state={tab:'guide',search:'',tier:'all',salary:'all',form:'all',lineup:[],ex
 let tpView_g='all';let buildMode_g='all';
 const CAP=50000;
 const MIN_SPEND=49700;
+// Built-in DK player IDs for the current slate. Used as a fallback so
+// exports work without needing a manual DKSalaries.csv upload.
+const DK_IDS_DEFAULT={
+"Rory McIlroy":"42976067","Cameron Young":"42976068","Xander Schauffele":"42976069","Matt Fitzpatrick":"42976070","Tommy Fleetwood":"42976071","Ludvig Aberg":"42976072","Si Woo Kim":"42976073","Robert MacIntyre":"42976074","Patrick Cantlay":"42976075","Sam Burns":"42976076","Rickie Fowler":"42976077","Adam Scott":"42976078","Hideki Matsuyama":"42976079","Ben Griffin":"42976080","Chris Gotterup":"42976081","Maverick McNealy":"42976082","Viktor Hovland":"42976083","Min Woo Lee":"42976084","Harris English":"42976085","Sepp Straka":"42976086","Jake Knapp":"42976087","Jordan Spieth":"42976088","J.J. Spaun":"42976089","Jason Day":"42976090","Kurt Kitayama":"42976091","Nicolai Hojgaard":"42976092","Justin Rose":"42976093","Akshay Bhatia":"42976094","Justin Thomas":"42976095","Gary Woodland":"42976096","Jacob Bridgeman":"42976097","Alex Smalley":"42976098","Alex Noren":"42976099","Keegan Bradley":"42976100","Ryan Gerard":"42976101","Sahith Theegala":"42976102","Corey Conners":"42976103","Sam Stevens":"42976104","Harry Hall":"42976105","Nick Taylor":"42976106","Max Homa":"42976107","Matthew McCarty":"42976108","Kristoffer Reitan":"42976109","Daniel Berger":"42976110","Pierceson Coody":"42976111","Bud Cauley":"42976112","Brian Harman":"42976113","Alex Fitzpatrick":"42976114","Aldrich Potgieter":"42976115","Sudarshan Yellamaraju":"42976116","Ryo Hisatsune":"42976117","Taylor Pendrith":"42976118","Ryan Fox":"42976119","Matt Wallace":"42976120","Denny McCarthy":"42976121","J.T. Poston":"42976122","Ricky Castillo":"42976123","Michael Kim":"42976124","Patrick Rodgers":"42976125","Andrew Novak":"42976126","Sungjae Im":"42976127","Tony Finau":"42976128","Andrew Putnam":"42976129","Lucas Glover":"42976130","Mackenzie Hughes":"42976131","Tom Hoge":"42976132","Webb Simpson":"42976133","Nicolas Echavarria":"42976134","David Lipsky":"42976135","Jhonattan Vegas":"42976136","Chandler Blanchet":"42976137","Brian Campbell":"42976138"
+};
 function getP(name){return PLAYERS.find(p=>p.name===name)}
 function linSal(){return state.lineup.reduce((s,n)=>{const p=getP(n);return s+(p?p.salary:0)},0)}
 function linRemaining(){return CAP-linSal()}
@@ -1483,10 +1488,21 @@ function loadDkCsv(ev){
 }
 
 (function _restoreDkIds(){
+  const seeded={};
+  Object.keys(DK_IDS_DEFAULT).forEach(name=>{
+    seeded[_normName(name)]={name,id:DK_IDS_DEFAULT[name]};
+  });
+  state.dkIds=seeded;
   try{
     const v=localStorage.getItem('dk_player_ids');
-    if(v){state.dkIds=JSON.parse(v)}
+    if(v){
+      const saved=JSON.parse(v);
+      Object.keys(saved||{}).forEach(k=>{state.dkIds[k]=saved[k]});
+    }
   }catch(_){}
+  const lbl=document.getElementById('dk-load-label');
+  const n=Object.keys(state.dkIds).length;
+  if(lbl)lbl.innerHTML='✅ DK IDs ('+n+') · Update<input type="file" id="dk-csv-input" accept=".csv,text/csv" style="display:none" onchange="loadDkCsv(event)">';
 })();
 
 function _dkCellFor(p){
