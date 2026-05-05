@@ -199,6 +199,68 @@ tbody tr{transition:background 0.1s}tbody tr:hover{background:var(--bg-2)}tbody 
 @media(max-width:767px){.header{position:static}.tabs{top:0}}
 @media(min-width:768px){html{font-size:15px}.header{padding:var(--s3) var(--s5);min-height:64px}.tabs{top:64px;padding:0 var(--s5)}.tab{padding:var(--s4) var(--s5);font-size:14px}main{padding:var(--s5) var(--s5) var(--s7);max-width:1400px;margin:0 auto}.guide-grid{grid-template-columns:1fr 1fr}.built-cards{grid-template-columns:repeat(2,1fr)}}
 @media(min-width:1200px){.built-cards{grid-template-columns:repeat(3,1fr)}}
+/* === SWIPE BUILDER === */
+.swipe-wrap{display:flex;flex-direction:column;align-items:center;gap:var(--s4);padding:var(--s3) 0;user-select:none}
+.swipe-hud{width:100%;max-width:420px;background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:10px 14px;display:grid;grid-template-columns:1fr auto;gap:6px}
+.swipe-hud-row{display:flex;justify-content:space-between;font-size:11px;color:var(--text-2);grid-column:1/-1}
+.swipe-hud-row b{color:var(--text-0);font-weight:700}
+.swipe-slots{display:flex;gap:4px;grid-column:1/-1;margin-top:4px}
+.swipe-slot{flex:1;height:6px;border-radius:3px;background:var(--bg-3)}
+.swipe-slot.filled{background:var(--accent)}
+.swipe-slot.stud{background:var(--good)}
+.swipe-stack{position:relative;width:100%;max-width:420px;height:520px}
+.swipe-card{position:absolute;inset:0;background:var(--grad-bg-1);border:1px solid var(--border);border-radius:18px;box-shadow:0 12px 40px rgba(0,0,0,0.35),var(--inset-top);padding:18px;display:flex;flex-direction:column;gap:10px;transition:transform 0.25s cubic-bezier(.2,.8,.2,1),opacity 0.25s;cursor:grab;overflow:hidden;will-change:transform,opacity}
+.swipe-card.dragging{transition:none;cursor:grabbing}
+.swipe-card.fly-right{transform:translate(120vw,-30px) rotate(28deg) !important;opacity:0}
+.swipe-card.fly-left{transform:translate(-120vw,-30px) rotate(-28deg) !important;opacity:0}
+.swipe-card.fly-up{transform:translateY(-120vh) !important;opacity:0}
+.swipe-card.behind-1{transform:translateY(10px) scale(0.96);opacity:0.85;z-index:2;pointer-events:none}
+.swipe-card.behind-2{transform:translateY(20px) scale(0.92);opacity:0.55;z-index:1;pointer-events:none}
+.sc-top{display:flex;align-items:center;gap:10px}
+.sc-avatar{width:50px;height:50px;border-radius:50%;background:var(--bg-3);border:1.5px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:var(--text-1);flex-shrink:0;letter-spacing:-0.02em}
+.sc-name{font-size:18px;font-weight:800;color:var(--text-0);line-height:1.15}
+.sc-sub{font-size:11px;color:var(--text-2);margin-top:2px}
+.sc-sal{font-size:18px;font-weight:800;color:var(--accent);text-align:right}
+.sc-sal-lbl{font-size:9px;color:var(--text-3);letter-spacing:0.08em;text-transform:uppercase}
+.sc-verdict{display:inline-block;padding:4px 10px;border-radius:14px;font-size:11px;font-weight:800;letter-spacing:0.04em}
+.sc-verdict.lock{background:rgba(94,234,212,0.18);color:var(--accent);border:1px solid var(--accent)}
+.sc-verdict.like{background:rgba(94,234,212,0.10);color:var(--accent)}
+.sc-verdict.lean{background:rgba(245,158,11,0.15);color:var(--warn)}
+.sc-verdict.fade{background:rgba(239,68,68,0.15);color:var(--bad)}
+.sc-key{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;background:var(--bg-2);border-radius:10px;padding:10px}
+.sc-key-cell{display:flex;flex-direction:column;align-items:center;gap:2px}
+.sc-key-val{font-size:14px;font-weight:800;color:var(--text-0)}
+.sc-key-lbl{font-size:9px;color:var(--text-3);text-transform:uppercase;letter-spacing:0.06em}
+.sc-bars{display:flex;flex-direction:column;gap:6px}
+.sc-bar-row{display:grid;grid-template-columns:60px 1fr 36px;align-items:center;gap:8px;font-size:10px}
+.sc-bar-lbl{color:var(--text-2);text-transform:uppercase;letter-spacing:0.05em;font-weight:600}
+.sc-bar-track{height:6px;background:var(--bg-3);border-radius:3px;overflow:hidden}
+.sc-bar-fill{height:100%;background:var(--accent);border-radius:3px}
+.sc-bar-fill.warn{background:var(--warn)}
+.sc-bar-fill.bad{background:var(--bad)}
+.sc-bar-fill.good{background:var(--good)}
+.sc-bar-val{color:var(--text-1);font-weight:700;text-align:right;font-size:10px}
+.sc-reasons{display:flex;flex-direction:column;gap:3px;font-size:11px;color:var(--text-1);line-height:1.4}
+.sc-reasons b{color:var(--good);font-weight:700}
+.sc-reasons.cons b{color:var(--bad)}
+.sc-flags{display:flex;flex-wrap:wrap;gap:4px;margin-top:auto}
+.sc-overlay{position:absolute;top:18px;font-size:32px;font-weight:900;letter-spacing:0.1em;padding:6px 14px;border:3px solid;border-radius:10px;opacity:0;transition:opacity 0.1s;pointer-events:none}
+.sc-overlay.add{right:18px;color:var(--good);border-color:var(--good);transform:rotate(12deg)}
+.sc-overlay.fade{left:18px;color:var(--bad);border-color:var(--bad);transform:rotate(-12deg)}
+.swipe-buttons{display:flex;gap:14px;justify-content:center;margin-top:6px}
+.swipe-btn{width:60px;height:60px;border-radius:50%;border:2px solid var(--border-strong);background:var(--bg-2);color:var(--text-0);font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform 0.1s,background 0.15s}
+.swipe-btn:hover{transform:scale(1.08)}
+.swipe-btn.fade{border-color:var(--bad);color:var(--bad)}
+.swipe-btn.fade:hover{background:rgba(239,68,68,0.15)}
+.swipe-btn.skip{border-color:var(--text-2);color:var(--text-2)}
+.swipe-btn.lock{border-color:var(--good);color:var(--good)}
+.swipe-btn.lock:hover{background:rgba(94,234,212,0.15)}
+.swipe-btn.flip{border-color:var(--text-3);color:var(--text-3);font-size:16px}
+.swipe-btn.auto{width:auto;padding:0 18px;border-radius:30px;font-size:12px;font-weight:700;border-color:var(--accent);color:var(--accent)}
+.swipe-empty{padding:48px 24px;text-align:center;color:var(--text-2);background:var(--bg-2);border-radius:14px;border:1px dashed var(--border)}
+.swipe-empty h3{color:var(--text-0);margin:0 0 8px;font-size:18px}
+.swipe-summary-line{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
+.swipe-summary-line:last-child{border-bottom:none}
 </style>
 </head>
 <body>
@@ -211,7 +273,7 @@ tbody tr{transition:background 0.1s}tbody tr:hover{background:var(--bg-2)}tbody 
 <div class="tabs">
 <div class="tab active" data-tab="guide">📋 Guide</div>
 <div class="tab" data-tab="table">📊 Table</div>
-<div class="tab" data-tab="cards">🃏 Cards</div>
+<div class="tab" data-tab="cards">👆 Swipe</div>
 <div class="tab" data-tab="top-plays">⭐ Top Plays</div>
 <div class="tab" data-tab="builds">🏗️ Builds</div>
 </div>
@@ -338,32 +400,8 @@ SG per shot (35%) · Proximity (25%) · Green hit rate (20%) · Bad shot avoidan
 
 <!-- CARDS TAB -->
 <div id="tab-cards" class="hidden">
-<p class="pool-blurb">All <b id="pool-count">71</b> active players as cards. Two stat rows: SG/Fit/ΔFit/Own + Steam/APP/σ/Val. Tap Details for full breakdown.</p>
-<div class="toolbar" id="toolbar-cards">
-<input type="text" class="search-input search-cards" placeholder="Search players...">
-<div class="filter-strip">
-<div class="filter-group"><span class="filter-group-label">Tier</span>
-<button class="filter-chip active" data-tier="all">All</button>
-<button class="filter-chip" data-tier="SHARP">Sharp</button>
-<button class="filter-chip" data-tier="CONTRARIAN">Contra</button>
-<button class="filter-chip" data-tier="CHALK">Chalk</button>
-</div>
-<div class="filter-group"><span class="filter-group-label">Salary</span>
-<button class="filter-chip active" data-salary="all">All</button>
-<button class="filter-chip" data-salary="elite">$10K+</button>
-<button class="filter-chip" data-salary="high">$8–10K</button>
-<button class="filter-chip" data-salary="mid">$7–8K</button>
-<button class="filter-chip" data-salary="value">&lt;$7K</button>
-</div>
-<div class="filter-group"><span class="filter-group-label">Form</span>
-<button class="filter-chip active" data-form="all">All</button>
-<button class="filter-chip" data-form="hot">Hot</button>
-<button class="filter-chip" data-form="good">Good</button>
-<button class="filter-chip" data-form="ok">OK</button>
-</div>
-</div>
-</div>
-<div class="player-cards" id="player-cards" style="display:flex"></div>
+<p class="pool-blurb">Swipe to build your lineup — <b>right</b> to lock, <b>left</b> to fade, <b>up</b> to skip, tap to flip for full stats. Cards are smart-sorted by best fit for your remaining slots/cap.</p>
+<div id="swipe-root"></div>
 </div>
 
 <!-- TOP PLAYS TAB -->
@@ -744,42 +782,301 @@ function renderTable(){
 }
 
 
-function renderCards(){
-  const players=filterPlayers();
-  const el=document.getElementById('player-cards');
-  if(!players.length){el.innerHTML='<div style="text-align:center;padding:48px;color:var(--text-2)">No players match</div>';return}
-  el.innerHTML=players.map(p=>{
-    const inLineup=state.lineup.includes(p.name);
-    const isExcl=state.excluded.includes(p.name);
-    const qhNote=p.qh_2025_finish?`PGA25:T${p.qh_2025_finish}`:'';
-    const qhPts=p.qh_pts?`${p.qh_pts}pts`:'';
-    const cadNote=p.cadillac_score!=null?`LW:${p.cadillac_score>0?'+':''}${p.cadillac_score}`:'';
-    const subParts=[`QH#${p.qh_rank||'—'}`,`Dist#${p.dist_rank||'—'}`,qhNote,qhPts].filter(Boolean);
-    return`<article class="p-card" data-player="${p.name}">
-      <div class="player-avatar">${getInitials(p.name)}</div>
-      <div class="pc-name">${p.name}</div>
-      <div class="pc-sub">${subParts.join(' · ')}</div>
-      <div class="pc-salary">${fmtMoney(p.salary)}</div>
-      <div class="pc-proj">${p.cash_proj?.toFixed(1)||'—'} proj · ${p.ceiling||'—'} ceil</div>
-      <div class="pc-stats">
-        <div class="pc-stat"><span class="pc-stat-label">SG</span>${renderScoreBar(p.sg_score)}</div>
-        <div class="pc-stat"><span class="pc-stat-label">Fit</span>${renderScoreBar(p.fit_score)}</div>
-        <div class="pc-stat"><span class="pc-stat-label">ΔFit</span><span class="pc-stat-val">${renderDelta(p.delta_fit)}</span></div>
-        <div class="pc-stat"><span class="pc-stat-label">Own</span><span class="pc-stat-val">${p.own_pct?.toFixed(1)||'—'}%</span></div>
-      </div>
-      <div class="pc-stats2">
-        <div class="pc-stat"><span class="pc-stat-label">Steam</span><span class="pc-stat-val">${renderSteam(p.steam_pct)}</span></div>
-        <div class="pc-stat"><span class="pc-stat-label">APP</span><span class="pc-stat-val">${renderApp(p.sg_app)}</span></div>
-        <div class="pc-stat"><span class="pc-stat-label">Odds</span><span class="pc-stat-val">${renderOdds(p.dk_odds)}</span></div>
-        <div class="pc-stat"><span class="pc-stat-label">Val/K</span><span class="pc-stat-val">${p.value_per_k?.toFixed(1)||'—'}</span></div>
-      </div>
-      <div class="pc-tags">${renderTier(p.tout_tier)} ${renderForm(p.form_grade)} ${renderStars(p.equity_tier||1)}${cadNote?` <span style="font-size:10px;color:var(--text-2)">${cadNote}</span>`:''}</div>
-      <div class="pc-actions">
-        <button class="pc-btn" onclick="toggleLock('${p.name.replace(/'/g,"\\\\'")}')">${inLineup?'🔒 Locked':'🔒 Lock'}</button>
-        <button class="pc-btn ${isExcl?'add in-lineup':''}" onclick="toggleExclude('${p.name.replace(/'/g,"\\\\'")}')">${isExcl?'🚫 Excluded':'🚫 Exclude'}</button>
-      </div>
-    </article>`}).join('');
+// === SWIPE LINEUP BUILDER ===
+const swipeState={skipped:[],flipped:false,priced:null,percentiles:null};
+
+function _percentile(arr,v){
+  if(v==null)return null;
+  let n=0;arr.forEach(x=>{if(x!=null&&x<=v)n++});
+  return Math.round(100*n/arr.length);
 }
+function _swipePriced(){
+  if(!swipeState.priced){
+    swipeState.priced=PLAYERS.filter(p=>p.salary&&p.dg_final!=null);
+    const keys=['cash_proj','ceiling','app_composite','dg_final','value_per_k'];
+    const pcts={};
+    keys.forEach(k=>{pcts[k]=swipeState.priced.map(p=>p[k]).filter(x=>x!=null).sort((a,b)=>a-b)});
+    pcts.own_inv=swipeState.priced.map(p=>-(p.own_pct||0)).sort((a,b)=>a-b); // low own = high pct
+    swipeState.percentiles=pcts;
+  }
+  return swipeState.priced;
+}
+function _swipeRank(p){
+  // Smart score for "what to show next" — prioritizes high-proj fit for remaining cap
+  const slots=linSlots(),rem=linRemaining();
+  if(slots<=0)return -Infinity;
+  const avgPer=rem/slots;
+  const proj=p.cash_proj||0,dg=p.dg_final||0,app=p.app_composite||0;
+  // base: high proj + dg
+  let s=proj*1.5+dg*8+(app/100)*4;
+  // salary fit: prefer players whose salary is close to avgPer±$2K
+  const fit=Math.abs(p.salary-avgPer);
+  s-=fit/1000;
+  // need a stud? boost studs hard if none locked yet
+  const haveStud=state.lineup.some(n=>{const x=getP(n);return x&&x.salary>=9400});
+  if(!haveStud&&slots>=3&&p.salary>=9400)s+=15;
+  // can't fit? push way down (but show — auto-skip happens elsewhere)
+  if(p.salary>rem-(slots-1)*Math.min(...PLAYERS.filter(x=>x.salary).map(x=>x.salary)))s-=200;
+  return s;
+}
+function _swipeQueue(){
+  const filt=filterPlayers().filter(p=>
+    !state.lineup.includes(p.name)&&
+    !state.excluded.includes(p.name)&&
+    !swipeState.skipped.includes(p.name)
+  );
+  filt.forEach(p=>p._swipeS=_swipeRank(p));
+  filt.sort((a,b)=>b._swipeS-a._swipeS);
+  return filt;
+}
+
+function _verdict(p){
+  const slots=linSlots(),rem=linRemaining();
+  const fits=p.salary<=rem-(slots>1?(slots-1)*6000:0);
+  if(!fits)return {label:'NO FIT',cls:'fade'};
+  const dg=p.dg_final||0,app=p.app_composite||0,proj=p.cash_proj||0;
+  const cuts=_cuts(p);const t10=_top10(p);
+  const score=dg*8+(app/100)*10+proj*0.3+t10*2-cuts*3;
+  if(score>=22)return {label:'LOCK',cls:'lock'};
+  if(score>=14)return {label:'LIKE',cls:'like'};
+  if(score>=7)return {label:'LEAN',cls:'lean'};
+  return {label:'FADE',cls:'fade'};
+}
+
+function _reasons(p){
+  const r=[];
+  if(p.qh_2025_finish&&p.qh_2025_finish<=15)r.push(`PGA25 T${p.qh_2025_finish} here`);
+  if((p.qh_pts||0)>=10)r.push(`${p.qh_pts.toFixed(0)} QH course pts`);
+  if((p.app_composite||0)>=80)r.push(`Elite APP ${p.app_composite}`);
+  if((p.true_sg_l20||0)>=2)r.push(`SG L20 +${p.true_sg_l20.toFixed(2)}`);
+  if((p.vs_baseline||0)>=0.7)r.push(`vsBL +${p.vs_baseline.toFixed(2)} (hot)`);
+  if((p.steam_pct||0)>=15)r.push(`Steaming +${p.steam_pct}%`);
+  if((p.delta_fit||0)>=10)r.push(`ΔFit +${p.delta_fit}`);
+  if((p.value_per_k||0)>=10.5)r.push(`Value ${p.value_per_k.toFixed(1)} pts/$K`);
+  if(_top10(p)>=3)r.push(`${_top10(p)} top-10s in L5`);
+  if(p.form_grade==='hot')r.push(`Hot form`);
+  return r.slice(0,3);
+}
+function _cons(p){
+  const c=[];
+  const cuts=_cuts(p);
+  if(cuts>=2)c.push(`${cuts} cuts in L5`);
+  else if(cuts>=1)c.push(`${cuts} cut in L5`);
+  if((p.vs_baseline||0)<=-0.5)c.push(`vsBL ${p.vs_baseline.toFixed(2)} (cold)`);
+  if((p.own_pct||0)>=20)c.push(`Chalk own ${p.own_pct.toFixed(0)}%`);
+  if((p.steam_pct||0)<=-15)c.push(`Steam out ${p.steam_pct}%`);
+  if((p.app_composite||0)<40&&p.app_composite!=null)c.push(`Weak APP ${p.app_composite}`);
+  if((p.delta_fit||0)<=-10)c.push(`ΔFit ${p.delta_fit}`);
+  return c.slice(0,3);
+}
+
+function _swipeCardHTML(p,depth){
+  _swipePriced();
+  const pct=swipeState.percentiles;
+  const v=_verdict(p);
+  const reasons=_reasons(p);
+  const cons=_cons(p);
+  const projPct=_percentile(pct.cash_proj,p.cash_proj);
+  const ceilPct=_percentile(pct.ceiling,p.ceiling);
+  const appPct=p.app_composite!=null?_percentile(pct.app_composite,p.app_composite):null;
+  const ownInvPct=_percentile(pct.own_inv,-(p.own_pct||0));
+  const cls=depth===0?'':(depth===1?'behind-1':'behind-2');
+  const bar=(label,val,pctRank,suffix)=>{
+    const w=pctRank==null?0:pctRank;
+    const fc=w>=75?'good':w>=50?'':w>=25?'warn':'bad';
+    return `<div class="sc-bar-row"><div class="sc-bar-lbl">${label}</div><div class="sc-bar-track"><div class="sc-bar-fill ${fc}" style="width:${w}%"></div></div><div class="sc-bar-val">${val??'—'}${suffix||''}</div></div>`;
+  };
+  const head=`<div class="sc-top">
+    <div class="sc-avatar">${getInitials(p.name)}</div>
+    <div style="flex:1;min-width:0"><div class="sc-name">${p.name}${p.salary>=9400?' ⭐':''}</div><div class="sc-sub">${p.tour_rank?'Tour #'+p.tour_rank:''}${p.owgr_rank?(p.tour_rank?' · ':'')+'OWGR #'+p.owgr_rank:''}${p.dk_odds?' · +'+p.dk_odds.toLocaleString():''}</div></div>
+    <div><div class="sc-sal">${fmtMoney(p.salary)}</div><div class="sc-sal-lbl">salary</div></div>
+  </div>`;
+  const verdictRow=`<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="sc-verdict ${v.cls}">${v.label}</span>${renderTier(p.tout_tier)}${renderForm(p.form_grade)}${p.qh_2025_finish?'<span class="tp-tag amber">PGA25 T'+p.qh_2025_finish+'</span>':''}${(p.steam_pct||0)>=15?'<span class="tp-tag green">🔥 +'+p.steam_pct+'%</span>':(p.steam_pct||0)<=-15?'<span class="tp-tag red">❄️ '+p.steam_pct+'%</span>':''}</div>`;
+  const keyStats=`<div class="sc-key">
+    <div class="sc-key-cell"><div class="sc-key-val">${p.cash_proj?.toFixed(1)||'—'}</div><div class="sc-key-lbl">Proj</div></div>
+    <div class="sc-key-cell"><div class="sc-key-val">${p.ceiling||'—'}</div><div class="sc-key-lbl">Ceil</div></div>
+    <div class="sc-key-cell"><div class="sc-key-val">${p.dg_final?.toFixed(2)||'—'}</div><div class="sc-key-lbl">DG</div></div>
+    <div class="sc-key-cell"><div class="sc-key-val">${p.own_pct?.toFixed(0)||'—'}%</div><div class="sc-key-lbl">Own</div></div>
+  </div>`;
+  const bars=`<div class="sc-bars">
+    ${bar('Proj',p.cash_proj?.toFixed(1),projPct,'')}
+    ${bar('Ceil',p.ceiling,ceilPct,'')}
+    ${bar('APP',p.app_composite,appPct,'')}
+    ${bar('Leverage',p.own_pct?.toFixed(1),ownInvPct,'%')}
+  </div>`;
+  const reasonsBlock=reasons.length?`<div class="sc-reasons">${reasons.map(r=>'<div>✓ <b>'+r+'</b></div>').join('')}</div>`:'';
+  const consBlock=cons.length?`<div class="sc-reasons cons">${cons.map(r=>'<div>⚠ <b>'+r+'</b></div>').join('')}</div>`:'';
+  const back=`<div class="sc-key" style="grid-template-columns:repeat(3,1fr);font-size:11px"><div class="sc-key-cell"><div class="sc-key-val">${p.true_sg_l20?.toFixed(2)||'—'}</div><div class="sc-key-lbl">SG L20</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.vs_baseline?.toFixed(2)||'—'}</div><div class="sc-key-lbl">vs BL</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.value_per_k?.toFixed(1)||'—'}</div><div class="sc-key-lbl">Val/K</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.app_sg_200_plus?.toFixed(3)||'—'}</div><div class="sc-key-lbl">SG 200+</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.app_sg_150_200?.toFixed(3)||'—'}</div><div class="sc-key-lbl">SG 150-200</div></div><div class="sc-key-cell"><div class="sc-key-val">${p.delta_fit??'—'}</div><div class="sc-key-lbl">ΔFit</div></div></div>`;
+  const l5=p.l5_finishes?`<div style="font-size:10px;color:var(--text-2);text-align:center">L5: ${p.l5_finishes}${p.qh_pts?' · QH '+p.qh_pts.toFixed(0)+'pts':''}</div>`:'';
+  const note=p.news_note?`<div style="font-size:10px;color:var(--text-2);font-style:italic">📰 ${p.news_note}</div>`:'';
+  const inner=swipeState.flipped&&depth===0
+    ? head+verdictRow+keyStats+back+l5+note
+    : head+verdictRow+keyStats+bars+reasonsBlock+consBlock+l5;
+  return `<div class="swipe-card ${cls}" data-player="${p.name}" data-depth="${depth}">
+    <div class="sc-overlay add">LOCK</div>
+    <div class="sc-overlay fade">FADE</div>
+    ${inner}
+  </div>`;
+}
+
+function renderSwipe(){
+  _swipePriced();
+  const root=document.getElementById('swipe-root');
+  if(!root)return;
+  const queue=_swipeQueue();
+  const studs=state.lineup.filter(n=>{const x=getP(n);return x&&x.salary>=9400}).length;
+  const slots=linSlots();
+  const rem=linRemaining();
+  const projTotal=state.lineup.reduce((s,n)=>{const x=getP(n);return s+(x?.cash_proj||0)},0);
+  const slotsHTML=Array.from({length:6},(_,i)=>{
+    if(i<state.lineup.length){
+      const p=getP(state.lineup[i]);
+      return `<div class="swipe-slot ${p&&p.salary>=9400?'stud':'filled'}" title="${p?.name||''}"></div>`;
+    }
+    return '<div class="swipe-slot"></div>';
+  }).join('');
+  const hud=`<div class="swipe-hud">
+    <div class="swipe-hud-row"><div>Slots <b>${state.lineup.length}/6</b> · Studs <b>${studs}</b></div><div>Remaining <b>$${rem.toLocaleString()}</b></div></div>
+    <div class="swipe-hud-row"><div>Σ Projected <b>${projTotal.toFixed(1)}</b></div><div>${state.lineup.length?'$'+Math.round(rem/Math.max(1,slots)).toLocaleString()+' avg/slot':'—'}</div></div>
+    <div class="swipe-slots">${slotsHTML}</div>
+  </div>`;
+  let stack='';
+  if(state.lineup.length>=6){
+    const players=state.lineup.map(getP).filter(Boolean).sort((a,b)=>b.salary-a.salary);
+    const sal=players.reduce((s,p)=>s+p.salary,0);
+    const ceil=players.reduce((s,p)=>s+(p.ceiling||0),0);
+    const own=players.reduce((s,p)=>s+(p.own_pct||0),0);
+    stack=`<div class="swipe-empty" style="max-width:420px;width:100%"><h3>✅ Lineup Complete</h3>
+      <div style="margin:12px 0">${players.map(p=>`<div class="swipe-summary-line"><span>${p.salary>=9400?'⭐ ':''}${p.name}</span><span style="color:var(--text-2)">${fmtMoney(p.salary)} · ${p.cash_proj?.toFixed(1)||'—'}</span></div>`).join('')}</div>
+      <div style="display:flex;gap:8px;justify-content:space-around;font-size:13px;margin:12px 0"><div><b>$${sal.toLocaleString()}</b><div style="font-size:10px;color:var(--text-3)">SALARY</div></div><div><b>${projTotal.toFixed(1)}</b><div style="font-size:10px;color:var(--text-3)">Σ PROJ</div></div><div><b>${ceil.toFixed(0)}</b><div style="font-size:10px;color:var(--text-3)">Σ CEIL</div></div><div><b>${own.toFixed(0)}%</b><div style="font-size:10px;color:var(--text-3)">CUM OWN</div></div></div>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap"><button class="swipe-btn auto" onclick="swipeReset()">↺ Start Over</button><button class="swipe-btn auto" onclick="state.tab='builds';document.querySelector('[data-tab=builds]').click()">🏗️ Open Builds</button></div>
+    </div>`;
+  } else if(!queue.length){
+    stack=`<div class="swipe-empty" style="max-width:420px;width:100%"><h3>No more cards</h3><p style="color:var(--text-2);font-size:13px">All players swiped or filtered out. Reset skipped, change filters, or auto-fill remaining slots.</p>
+      <div style="display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap"><button class="swipe-btn auto" onclick="swipeUnskip()">↺ Restore Skipped</button><button class="swipe-btn auto" onclick="swipeAutoFill()">⚡ Auto-Fill (${slots})</button></div>
+    </div>`;
+  } else {
+    const top3=queue.slice(0,3);
+    stack='<div class="swipe-stack" id="swipe-stack">'+top3.map((p,i)=>_swipeCardHTML(p,i)).reverse().join('')+'</div>';
+  }
+  const buttons=(state.lineup.length<6&&queue.length)?`<div class="swipe-buttons">
+    <button class="swipe-btn fade" onclick="swipeAct('fade')" title="Fade (←)">🚫</button>
+    <button class="swipe-btn skip" onclick="swipeAct('skip')" title="Skip (↑)">↑</button>
+    <button class="swipe-btn flip" onclick="swipeFlip()" title="Flip details (↓)">🔍</button>
+    <button class="swipe-btn lock" onclick="swipeAct('lock')" title="Lock (→)">✅</button>
+  </div><div style="display:flex;gap:8px;justify-content:center;margin-top:8px"><button class="swipe-btn auto" onclick="swipeAutoFill()">⚡ Auto-Fill Remaining ${slots}</button></div>`:'';
+  root.innerHTML=`<div class="swipe-wrap">${hud}${stack}${buttons}</div>`;
+  _swipeAttachGestures();
+}
+
+function _swipeAttachGestures(){
+  const stack=document.getElementById('swipe-stack');
+  if(!stack)return;
+  const top=stack.querySelector('.swipe-card[data-depth="0"]');
+  if(!top)return;
+  let startX=0,startY=0,dx=0,dy=0,dragging=false,didMove=false;
+  const overlayAdd=top.querySelector('.sc-overlay.add');
+  const overlayFade=top.querySelector('.sc-overlay.fade');
+  const onDown=e=>{
+    const t=e.touches?e.touches[0]:e;
+    startX=t.clientX;startY=t.clientY;dx=0;dy=0;dragging=true;didMove=false;
+    top.classList.add('dragging');
+  };
+  const onMove=e=>{
+    if(!dragging)return;
+    const t=e.touches?e.touches[0]:e;
+    dx=t.clientX-startX;dy=t.clientY-startY;
+    if(Math.abs(dx)>5||Math.abs(dy)>5)didMove=true;
+    const rot=dx*0.06;
+    top.style.transform=`translate(${dx}px,${dy}px) rotate(${rot}deg)`;
+    if(overlayAdd)overlayAdd.style.opacity=Math.max(0,Math.min(1,dx/120));
+    if(overlayFade)overlayFade.style.opacity=Math.max(0,Math.min(1,-dx/120));
+    if(e.touches)e.preventDefault();
+  };
+  const onUp=()=>{
+    if(!dragging)return;
+    dragging=false;top.classList.remove('dragging');
+    if(!didMove){
+      // tap = flip
+      swipeFlip();
+      return;
+    }
+    const TH=90;
+    if(dx>TH)swipeAct('lock');
+    else if(dx<-TH)swipeAct('fade');
+    else if(dy<-TH)swipeAct('skip');
+    else{
+      top.style.transform='';
+      if(overlayAdd)overlayAdd.style.opacity=0;
+      if(overlayFade)overlayFade.style.opacity=0;
+    }
+  };
+  top.addEventListener('pointerdown',onDown);
+  window.addEventListener('pointermove',onMove,{passive:false});
+  window.addEventListener('pointerup',onUp,{once:true});
+  top.addEventListener('touchstart',onDown,{passive:true});
+  top.addEventListener('touchmove',onMove,{passive:false});
+  top.addEventListener('touchend',onUp);
+}
+
+function swipeAct(action){
+  const stack=document.getElementById('swipe-stack');
+  if(!stack)return;
+  const top=stack.querySelector('.swipe-card[data-depth="0"]');
+  if(!top)return;
+  const name=top.dataset.player;
+  const p=getP(name);
+  if(!p)return;
+  // Validate lock fits
+  if(action==='lock'){
+    if(state.lineup.length>=6)return;
+    const slotsAfter=6-state.lineup.length-1;
+    const remAfter=linRemaining()-p.salary;
+    if(p.salary>linRemaining()||(slotsAfter>0&&remAfter<slotsAfter*6000)){
+      // can't fit — bounce back
+      top.classList.add('fly-up');
+      setTimeout(()=>{swipeState.skipped.push(name);swipeState.flipped=false;renderSwipe()},220);
+      return;
+    }
+  }
+  const flyClass=action==='lock'?'fly-right':action==='fade'?'fly-left':'fly-up';
+  top.classList.add(flyClass);
+  setTimeout(()=>{
+    if(action==='lock')state.lineup.push(name);
+    else if(action==='fade'){if(!state.excluded.includes(name))state.excluded.push(name)}
+    else swipeState.skipped.push(name);
+    swipeState.flipped=false;
+    renderAll();
+  },220);
+}
+
+function swipeFlip(){
+  swipeState.flipped=!swipeState.flipped;
+  renderSwipe();
+}
+function swipeReset(){
+  state.lineup=[];swipeState.skipped=[];swipeState.flipped=false;renderAll();
+}
+function swipeUnskip(){
+  swipeState.skipped=[];renderSwipe();
+}
+function swipeAutoFill(){
+  const result=solveLineup({scoreFn:SCORE_FNS.qhV4,locked:state.lineup.slice(),excluded:state.excluded.slice()});
+  if(!result||result.length<6){alert('Auto-fill could not produce a feasible lineup. Try unfading some players.');return}
+  state.lineup=result.map(p=>p.name);
+  renderAll();
+}
+
+function _swipeKey(e){
+  if(state.tab!=='cards')return;
+  if(['INPUT','TEXTAREA'].includes(document.activeElement?.tagName))return;
+  if(e.key==='ArrowRight'){e.preventDefault();swipeAct('lock')}
+  else if(e.key==='ArrowLeft'){e.preventDefault();swipeAct('fade')}
+  else if(e.key==='ArrowUp'){e.preventDefault();swipeAct('skip')}
+  else if(e.key==='ArrowDown'){e.preventDefault();swipeFlip()}
+}
+window.addEventListener('keydown',_swipeKey);
+function renderCards(){renderSwipe()}
 
 function renderPlayerRow(p,rank,type){
   const cls=type||'';
